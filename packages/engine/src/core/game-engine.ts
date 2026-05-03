@@ -64,21 +64,37 @@ export class GameEngine extends EventEmitter {
       }
 
       if (!combat.active) {
-        // Sync player HP and cleanup dead NPCs
+        // Compute total XP and cleanup dead NPCs
+        let totalXp = 0;
+        combat.participants.forEach(p => {
+          if (!p.isPlayer && p.hpCurrent <= 0) {
+            const npc = this.entities.getNPC(p.entityId);
+            if (npc) {
+              totalXp += npc.getXpReward();
+              if (npc.roomId) {
+                const room = this.entities.getRoom(npc.roomId);
+                if (room) room.removeEntity(npc.id);
+              }
+            }
+          }
+        });
+
+        // Sync player HP, award XP, and save
         combat.participants.forEach(p => {
           if (p.isPlayer) {
             const player = this.getPlayer(p.entityId);
             if (player) {
               player.hpCurrent = p.hpCurrent;
+              
+              if (p.hpCurrent > 0 && totalXp > 0) {
+                const xpLogs = player.addExperience(totalXp);
+                if (xpLogs.length > 0) {
+                  this.emit('combat_message', player.id, ['\n' + xpLogs.join('\n')]);
+                }
+              }
+
               // Fire and forget save
-              Database.savePlayer(player).catch(err => console.error('Error saving player HP:', err));
-            }
-          } else if (p.hpCurrent <= 0) {
-            // Remove dead NPC from room
-            const npc = this.entities.getNPC(p.entityId);
-            if (npc && npc.roomId) {
-              const room = this.entities.getRoom(npc.roomId);
-              if (room) room.removeEntity(npc.id);
+              Database.savePlayer(player).catch(err => console.error('Error saving player HP/XP:', err));
             }
           }
         });

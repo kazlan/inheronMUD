@@ -58,4 +58,37 @@ export class Player extends Entity {
       coins: this.coins
     };
   }
+
+  public getXpToNextLevel(): number {
+    return this.level * 100;
+  }
+
+  public addExperience(amount: number): string[] {
+    const logs: string[] = [];
+    this.experience += amount;
+    logs.push(`<yellow>Has ganado ${amount} puntos de experiencia.</yellow>`);
+
+    while (this.experience >= this.getXpToNextLevel()) {
+      this.experience -= this.getXpToNextLevel();
+      this.level++;
+      
+      this.hpCurrent = 50 + (this.stats.constitucion * 10) + (this.level * 5);
+      this.energyCurrent = 20 + (this.stats.ingenio * 5) + (this.level * 2);
+
+      if (this.level % 5 === 0) {
+         this.stats.fuerza++;
+         this.stats.destreza++;
+         this.stats.constitucion++;
+         this.stats.ingenio++;
+         this.stats.sabiduria++;
+         this.stats.presencia++;
+         this.stats.percepcion++;
+      }
+
+      logs.push(`<magenta><b>¡HAS SUBIDO DE NIVEL!</b></magenta> Ahora eres nivel ${this.level}.`);
+      logs.push(`<green>Tu vida y energía se han restaurado y tu máximo ha aumentado.</green>`);
+    }
+
+    return logs;
+  }
 }

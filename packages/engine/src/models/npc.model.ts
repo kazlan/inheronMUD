@@ -23,6 +23,10 @@ export class NPC extends Entity {
     this.roomId = roomId;
   }
 
+  public getXpReward(): number {
+    return this.level * 25 + (this.stats.fuerza + this.stats.constitucion) * 2;
+  }
+
   toJSON() {
     return {
       ...super.toJSON(),
