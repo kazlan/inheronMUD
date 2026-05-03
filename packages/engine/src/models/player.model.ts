@@ -21,6 +21,7 @@ export class Player extends Entity {
   public classId: string;
   public raceId: string;
   public hpCurrent?: number;
+  public energyCurrent?: number;
   public coins: number = 0;
 
   constructor(
@@ -47,6 +48,7 @@ export class Player extends Entity {
       level: this.level,
       experience: this.experience,
       hpCurrent: this.hpCurrent,
+      energyCurrent: this.energyCurrent,
       stats: this.stats,
       roomId: this.roomId,
       inventory: this.inventory,

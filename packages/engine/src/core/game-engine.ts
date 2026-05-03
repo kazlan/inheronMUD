@@ -12,6 +12,7 @@ import { EntityManager } from './entity-manager';
 import { CommandManager } from './command-manager';
 import { Database } from '../data/database';
 import { RespawnManager } from './respawn-manager';
+import { SkillManager } from './skill-manager';
 
 export class GameEngine extends EventEmitter {
   private eventLog: EventLog;
@@ -20,6 +21,7 @@ export class GameEngine extends EventEmitter {
   private activeCombats: Map<string, CombatManager> = new Map();
   private playerCronicas: Map<string, CronicaViva> = new Map();
   private respawnManager: RespawnManager;
+  public skills: SkillManager;
 
   private tickInterval: NodeJS.Timeout | null = null;
 
@@ -27,6 +29,7 @@ export class GameEngine extends EventEmitter {
     super();
     this.eventLog = new EventLog();
     this.entities = new EntityManager();
+    this.skills = new SkillManager();
     this.commands = new CommandManager(this);
     this.respawnManager = new RespawnManager(this);
     console.log('Inheron Game Engine initialized.');

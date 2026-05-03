@@ -450,4 +450,39 @@ export class CommandManager {
 
     return { success: true, message: `Has vendido <magenta>${itemInst?.name}</magenta> por <yellow>${sellPrice} soles</yellow>.` };
   }
+
+  // --- Skills Commands ---
+
+  getSkills(playerId: string): { success: boolean; message: string; data?: any } {
+    const player = this.engine.entities.getPlayer(playerId);
+    if (!player) return { success: false, message: 'Jugador no encontrado.' };
+
+    const playerSkills = player.metadata.skills || [];
+    if (playerSkills.length === 0) {
+      return { success: true, message: 'Aún no conoces ninguna habilidad.' };
+    }
+
+    let msg = `<b>Tus habilidades:</b>\n`;
+    playerSkills.forEach((skillId: string) => {
+      const skillDef = this.engine.skills.getSkill(skillId);
+      if (skillDef) {
+        msg += ` - <cyan>${skillDef.name}</cyan> [${skillDef.energyCost} EN]: ${skillDef.description}\n`;
+      }
+    });
+
+    return { success: true, message: msg };
+  }
+
+  cast(playerId: string, skillName: string, targetName?: string): { success: boolean; message: string; combatLog?: string[] } {
+    const player = this.engine.entities.getPlayer(playerId);
+    if (!player) return { success: false, message: 'Jugador no encontrado.' };
+
+    const playerSkills = player.metadata.skills || [];
+    const skillDef = this.engine.skills.getSkill(skillName);
+
+    if (!skillDef) return { success: false, message: `No existe la habilidad "${skillName}".` };
+    if (!playerSkills.includes(skillDef.id)) return { success: false, message: `No conoces la habilidad "${skillDef.name}".` };
+
+    return this.engine.skills.getSkill(skillDef.id)!.execute(this.engine, playerId, targetName);
+  }
 }

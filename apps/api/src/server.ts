@@ -84,6 +84,10 @@ const start = async () => {
       console.log(`[Persistence] Nuevo jugador guardado en SQLite: ${mainPlayer.name}`);
     }
 
+    // Force some skills for testing
+    mainPlayer.metadata = mainPlayer.metadata || {};
+    mainPlayer.metadata.skills = ['tajo_juramentado', 'curacion_radiante', 'palma_serena'];
+
     engine.entities.registerPlayer(mainPlayer);
     engine.startTick(2000); // Start async combat ticks
 
@@ -170,6 +174,14 @@ fastify.register(async (fastify) => {
           response = { ...engine.commands.buy(mainPlayer.id, args.join(' ')), command: 'buy' };
         } else if (command === 'sell' || command === 'vender') {
           response = { ...engine.commands.sell(mainPlayer.id, args.join(' ')), command: 'sell' };
+        } else if (command === 'skills' || command === 'habilidades') {
+          response = { ...engine.commands.getSkills(mainPlayer.id), command: 'skills' };
+        } else if (command === 'cast' || command === 'use' || command === 'usar' || command === 'lanzar') {
+          // Syntax: cast [skill] [target]
+          // If skill has spaces, this gets tricky, but we assume the first arg is the skill ID or one word name.
+          const skillName = args[0];
+          const targetName = args.slice(1).join(' ');
+          response = { ...engine.commands.cast(mainPlayer.id, skillName, targetName), command: 'cast' };
         }
 
         socket.send(JSON.stringify({
