@@ -53,6 +53,28 @@ engine.on('combat_message', (playerId: string, log: string[]) => {
   }
 });
 
+engine.on('chat_message', (payload: any) => {
+  for (const session of activeSessions) {
+    if (!session.playerId) continue;
+
+    if (payload.type === 'say') {
+      const player = engine.getPlayer(session.playerId);
+      if (player && player.roomId === payload.roomId) {
+        session.send({ type: 'CHAT', data: payload });
+      }
+    } else if (payload.type === 'tell') {
+      if (session.playerId === payload.targetId || session.playerId === payload.sourceId) {
+        session.send({ type: 'CHAT', data: payload });
+      }
+    } else if (payload.type === 'yell') {
+      session.send({ type: 'CHAT', data: payload });
+    } else if (payload.type === 'channel') {
+      // Broadcast to all for now (global channels)
+      session.send({ type: 'CHAT', data: payload });
+    }
+  }
+});
+
 const start = async () => {
   try {
     // Engine ticks

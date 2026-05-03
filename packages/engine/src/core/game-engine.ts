@@ -13,6 +13,7 @@ import { CommandManager } from './command-manager';
 import { Database } from '../data/database';
 import { RespawnManager } from './respawn-manager';
 import { SkillManager } from './skill-manager';
+import { ChatManager } from './chat-manager';
 
 export class GameEngine extends EventEmitter {
   public eventLog: EventLog;
@@ -22,6 +23,7 @@ export class GameEngine extends EventEmitter {
   private playerCronicas: Map<string, CronicaViva> = new Map();
   public skills: SkillManager;
   public respawnManager: RespawnManager;
+  public chat: ChatManager;
 
   public classesData: any[] = [];
   public racesData: any[] = [];
@@ -34,6 +36,7 @@ export class GameEngine extends EventEmitter {
     this.entities = new EntityManager();
     this.skills = new SkillManager();
     this.commands = new CommandManager(this);
+    this.chat = new ChatManager(this);
     this.respawnManager = new RespawnManager(this);
     console.log('Inheron Game Engine initialized.');
   }

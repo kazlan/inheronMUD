@@ -38,6 +38,7 @@ export class Database {
         metadata: JSON.stringify(playerData.metadata || {}),
         inventory: JSON.stringify(playerData.inventory),
         equipment: JSON.stringify(playerData.equipment || {}),
+        role: playerData.role || 'USER',
       },
       create: {
         id: playerData.id,
@@ -54,6 +55,7 @@ export class Database {
         metadata: JSON.stringify(playerData.metadata || {}),
         inventory: JSON.stringify(playerData.inventory),
         equipment: JSON.stringify(playerData.equipment || {}),
+        role: playerData.role || 'USER',
         account: {
           connectOrCreate: {
             where: { username: playerData.accountId },
@@ -87,7 +89,8 @@ export class Database {
       stats: JSON.parse(dbPlayer.stats),
       metadata: JSON.parse(dbPlayer.metadata),
       inventory: JSON.parse(dbPlayer.inventory),
-      equipment: JSON.parse(dbPlayer.equipment || "{}")
+      equipment: JSON.parse(dbPlayer.equipment || "{}"),
+      role: dbPlayer.role
     };
   }
 

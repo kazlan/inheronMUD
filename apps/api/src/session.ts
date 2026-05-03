@@ -62,7 +62,7 @@ export class Session {
         await this.handleCreationClass(text);
         break;
       case SessionState.IN_GAME:
-        this.handleGameCommand(text);
+        await this.handleGameCommand(text);
         break;
     }
   }
@@ -243,7 +243,7 @@ export class Session {
     });
   }
 
-  private handleGameCommand(text: string) {
+  private async handleGameCommand(text: string) {
     if (!this.playerId) return;
 
     // Route command logic currently in server.ts to here
@@ -305,6 +305,16 @@ export class Session {
       const skillName = args[0];
       const targetName = args.slice(1).join(' ');
       response = { ...this.engine.commands.cast(this.playerId, skillName, targetName), command: 'cast' };
+    } else if (command === 'say' || command === 'decir') {
+      response = this.engine.chat.say(this.playerId, args.join(' '));
+    } else if (command === 'tell' || command === 'susurrar') {
+      response = this.engine.chat.tell(this.playerId, args[0], args.slice(1).join(' '));
+    } else if (command === 'yell' || command === 'gritar') {
+      response = this.engine.chat.yell(this.playerId, args.join(' '));
+    } else if (command === 'channel') {
+      response = await this.engine.chat.processAdminCommand(this.playerId, args);
+    } else if (command === 'chat' || command === 'c') {
+      response = await this.engine.chat.channelMessage(this.playerId, args[0], args.slice(1).join(' '));
     }
 
     this.send(response);

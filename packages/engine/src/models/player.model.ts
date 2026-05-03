@@ -22,6 +22,9 @@ export class Player extends Entity {
   public raceId: string;
   public hpCurrent?: number;
   public energyCurrent?: number;
+  public hpMax?: number;
+  public energyMax?: number;
+  public role: string = 'USER';
   public coins: number = 0;
 
   constructor(
@@ -55,7 +58,8 @@ export class Player extends Entity {
       equipment: this.equipment,
       classId: this.classId,
       raceId: this.raceId,
-      coins: this.coins
+      coins: this.coins,
+      role: this.role
     };
   }
 

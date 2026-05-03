@@ -20,6 +20,7 @@ model Player {
   id             String       @id @default(uuid())
   accountId      String
   name           String       @unique
+  role           String       @default("USER") // USER, ADMIN
   raceId         String
   classId        String
   roomId         String       @default("villaclara_plaza")
@@ -50,4 +51,16 @@ model MemoryFlag {
   player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
 
   @@unique([playerId, key])
+}
+
+model Channel {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String   @default("")
+  ownerId     String?  // Player ID
+  admins      String   @default("[]") // JSON array of Player IDs
+  muted       String   @default("[]") // JSON array of Player IDs
+  banned      String   @default("[]") // JSON array of Player IDs
+  isGlobal    Boolean  @default(false) // True for system channels like 'gossip'
+  createdAt   DateTime @default(now())
 }

@@ -60,6 +60,14 @@ export class EntityManager {
     this.npcs.delete(id);
   }
 
+  getPlayers(): Player[] {
+    return Array.from(this.players.values());
+  }
+
+  getNPCsInRoom(roomId: string): NPC[] {
+    return Array.from(this.npcs.values()).filter(npc => npc.roomId === roomId);
+  }
+
   removeItem(id: string): void {
     this.items.delete(id);
   }
