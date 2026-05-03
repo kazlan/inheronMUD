@@ -317,8 +317,12 @@ Cada zona debe ser jugable, clara, atmosférica y conectada con quests, NPCs, co
 - NPCs ubicados.
 - Encuentros.
 - Secretos.
-- Rasgos de combate.
+- Rutas de patrulla y comportamiento AI de mobs.
 - YAML/JSON sugerido para WorldFactory.
+
+## Herramientas Recientes Disponibles
+- **Flags de AI en NPCs**: `wandering` (movimiento libre por zona), `patrol` (movimiento cíclico según `metadata.patrolPath`), `agresivo` (ataque nada más ver), `social` (pide ayuda a mobs de igual nombre), `cobarde` (huye con <30% de vida). Úsalas para darle más vida y dinamismo a las zonas.
+- **Canales de Chat & Roles**: Eventos espaciales `spatial_message` para broadcasting. Mobs pueden oir chats si tienen `metadata.listenRules`.
 
 ## Formato recomendado
 1. Concepto de zona.
@@ -635,7 +639,7 @@ Eres responsable de diseñar combates por turnos, enemigos, bosses y encuentros 
 - Fichas de enemigos.
 - Bosses por fases.
 - Encuentros de sala.
-- IA enemiga.
+- IA enemiga (uso intensivo de flags `agresivo`, `social`, `cobarde`).
 - Estados aplicados.
 - Loot y recompensas de bestiario.
 ```
