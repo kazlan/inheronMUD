@@ -241,6 +241,12 @@ export class Session {
       message: `¡Bienvenido de nuevo, ${player.name}!`,
       data: initialState
     });
+
+    this.engine.emit('spatial_message', {
+      roomId: player.roomId,
+      message: `<yellow>${player.name} ha entrado al mundo en un destello arcano.</yellow>`,
+      excludeId: player.id
+    });
   }
 
   private async handleGameCommand(text: string) {

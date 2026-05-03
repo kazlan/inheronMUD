@@ -63,6 +63,40 @@ export class CommandManager {
 
     player.roomId = targetRoom.id;
 
+    // Opposite direction helper
+    const opposites: Record<string, string> = {
+      north: 'sur', south: 'norte', east: 'oeste', west: 'este',
+      northeast: 'suroeste', northwest: 'sureste', southeast: 'noroeste', southwest: 'noreste',
+      up: 'abajo', down: 'arriba',
+      norte: 'sur', sur: 'norte', este: 'oeste', oeste: 'este',
+      noreste: 'suroeste', noroeste: 'sureste', sureste: 'noroeste', suroeste: 'noreste',
+      arriba: 'abajo', abajo: 'arriba'
+    };
+    const opp = opposites[direction.toLowerCase()] || 'algún lugar';
+
+    // Translate leaving direction to Spanish for log
+    const dirTranslate: Record<string, string> = {
+      north: 'el norte', south: 'el sur', east: 'el este', west: 'el oeste',
+      northeast: 'el noreste', northwest: 'el noroeste', southeast: 'el sureste', southwest: 'el suroeste',
+      up: 'arriba', down: 'abajo',
+      norte: 'el norte', sur: 'el sur', este: 'el este', oeste: 'el oeste',
+      noreste: 'el noreste', noroeste: 'el noroeste', sureste: 'el sureste', suroeste: 'el suroeste',
+      arriba: 'arriba', abajo: 'abajo'
+    };
+    const dirStr = dirTranslate[direction.toLowerCase()] || direction;
+
+    this.engine.emit('spatial_message', {
+      roomId: currentRoom.id,
+      message: `<yellow>${player.name} se ha ido hacia ${dirStr}.</yellow>`,
+      excludeId: player.id
+    });
+
+    this.engine.emit('spatial_message', {
+      roomId: targetRoom.id,
+      message: `<yellow>${player.name} llega desde el ${opp}.</yellow>`,
+      excludeId: player.id
+    });
+
     this.engine.getEventLog().log({
       type: 'PLAYER_MOVED',
       actorId: playerId,

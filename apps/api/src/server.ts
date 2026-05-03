@@ -75,6 +75,18 @@ engine.on('chat_message', (payload: any) => {
   }
 });
 
+engine.on('spatial_message', (payload: any) => {
+  for (const session of activeSessions) {
+    if (!session.playerId) continue;
+    if (payload.excludeId && session.playerId === payload.excludeId) continue;
+
+    const player = engine.getPlayer(session.playerId);
+    if (player && player.roomId === payload.roomId) {
+      session.send({ type: 'SPATIAL', message: payload.message });
+    }
+  }
+});
+
 const start = async () => {
   try {
     // Engine ticks
@@ -116,6 +128,11 @@ fastify.register(async (fastify) => {
       if (session.playerId) {
         const player = engine.getPlayer(session.playerId);
         if (player) {
+          engine.emit('spatial_message', {
+            roomId: player.roomId,
+            message: `<yellow>${player.name} desaparece en un haz de luz de desconexión.</yellow>`,
+            excludeId: player.id
+          });
           Database.savePlayer(player).catch(console.error);
         }
       }
