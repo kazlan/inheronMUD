@@ -74,6 +74,7 @@ export class WorldFactory {
         );
         if (data.level) npc.level = data.level;
         if (data.metadata) npc.metadata = data.metadata;
+        if (data.flags) npc.flags = data.flags;
         
         // Register the template data to allow spawning clones later
         engine.entities.registerNPCTemplate(data.id, data);

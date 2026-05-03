@@ -7,6 +7,8 @@ export class NPC extends Entity {
   public inventory: string[] = [];
   public behaviorId: string; // Strategy pattern ID for AI
   public level: number = 1;
+  public flags: string[] = []; // wandering, patrol, cobarde, agresivo, social
+  public aiState: Record<string, any> = {}; // internal state for patrol routes, etc.
   public metadata: Record<string, any> = {};
 
   constructor(
@@ -35,6 +37,7 @@ export class NPC extends Entity {
       inventory: this.inventory,
       behaviorId: this.behaviorId,
       level: this.level,
+      flags: this.flags,
       metadata: this.metadata
     };
   }

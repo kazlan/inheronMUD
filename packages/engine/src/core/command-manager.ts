@@ -274,7 +274,19 @@ export class CommandManager {
       return { success: false, message: `¡No puedes atacar a ${target.name}! No es hostil.` };
     }
 
-    const combatId = this.engine.initiateCombat([playerId], [target.id]);
+    const enemies = [target.id];
+
+    // Check for social NPCs
+    if (target.flags?.includes('social')) {
+      const npcsInRoom = this.engine.entities.getNPCsInRoom(player.roomId);
+      npcsInRoom.forEach(npc => {
+        if (npc.id !== target.id && npc.flags?.includes('social') && npc.name === target.name) {
+          enemies.push(npc.id);
+        }
+      });
+    }
+
+    const combatId = this.engine.initiateCombat([playerId], enemies);
     const combat = this.engine.getActiveCombat(combatId);
     
     if (!combat) return { success: false, message: 'Error iniciando combate.' };

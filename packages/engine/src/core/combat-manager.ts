@@ -11,6 +11,7 @@ export interface CombatParticipant {
   energyMax: number;
   resources: Record<string, number>;
   equipment?: Record<string, any>;
+  flags?: string[];
 }
 
 export interface CombatRound {
@@ -43,8 +44,17 @@ export class CombatManager {
     for (const participant of this.participants) {
       if (!this.active) break;
       if (participant.hpCurrent <= 0) continue;
+      if ((participant as any).hasFled) continue;
 
-      const targetEntity = this.participants.find(p => p.isPlayer !== participant.isPlayer && p.hpCurrent > 0);
+      if (!participant.isPlayer && participant.flags?.includes('cobarde')) {
+        if (participant.hpCurrent / participant.hpMax < 0.3) {
+          log.push(`¡<yellow>${participant.name}</yellow> entra en pánico y huye despavorido del combate!`);
+          (participant as any).hasFled = true;
+          continue;
+        }
+      }
+
+      const targetEntity = this.participants.find(p => p.isPlayer !== participant.isPlayer && p.hpCurrent > 0 && !(p as any).hasFled);
       if (!targetEntity) {
         this.active = false;
         break;
@@ -105,6 +115,9 @@ export class CombatManager {
         log.push(`<b>¡${targetEntity.name} se desploma sin vida!</b>`);
       }
     }
+
+    // Cleanup fled participants
+    this.participants = this.participants.filter(p => !(p as any).hasFled);
 
     // Check if one side is entirely dead
     const playersAlive = this.participants.some(p => p.isPlayer && p.hpCurrent > 0);

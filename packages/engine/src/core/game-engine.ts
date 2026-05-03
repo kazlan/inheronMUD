@@ -14,6 +14,7 @@ import { Database } from '../data/database';
 import { RespawnManager } from './respawn-manager';
 import { SkillManager } from './skill-manager';
 import { ChatManager } from './chat-manager';
+import { AIManager } from './ai-manager';
 
 export class GameEngine extends EventEmitter {
   public eventLog: EventLog;
@@ -24,6 +25,7 @@ export class GameEngine extends EventEmitter {
   public skills: SkillManager;
   public respawnManager: RespawnManager;
   public chat: ChatManager;
+  public ai: AIManager;
 
   public classesData: any[] = [];
   public racesData: any[] = [];
@@ -38,6 +40,7 @@ export class GameEngine extends EventEmitter {
     this.commands = new CommandManager(this);
     this.chat = new ChatManager(this);
     this.respawnManager = new RespawnManager(this);
+    this.ai = new AIManager(this);
     console.log('Inheron Game Engine initialized.');
   }
 
@@ -50,6 +53,7 @@ export class GameEngine extends EventEmitter {
   private processTick(): void {
     const now = Date.now();
     this.respawnManager.tick(now);
+    this.ai.tick(now);
 
     for (const [combatId, combat] of this.activeCombats.entries()) {
       if (!combat.active) {
@@ -199,7 +203,8 @@ export class GameEngine extends EventEmitter {
           hpCurrent: 50,
           energyMax: 20,
           energyCurrent: 20,
-          resources: {}
+          resources: {},
+          flags: npc.flags
         });
       }
     }
