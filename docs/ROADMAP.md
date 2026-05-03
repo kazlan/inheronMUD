@@ -58,8 +58,8 @@ Esta es la hoja de ruta exhaustiva del proyecto InheronMUD. Documenta la transic
 ## 🟡 MILESTONE 5: Multijugador y Onboarding (En progreso)
 *Abrir las puertas al mundo y habilitar la red cooperativa.*
 
-- [ ] **Flujo de Conexión (Login)**: Pantalla de inicio de sesión/registro vía WebSocket enlazada a cuentas en base de datos.
-- [ ] **Creación de Personaje**: Menú interactivo al crear cuenta nueva para elegir Raza, Clase y repartir atributos iniciales.
+- [x] **Flujo de Conexión (Login)**: Pantalla de inicio de sesión/registro vía WebSocket enlazada a cuentas en base de datos.
+- [x] **Creación de Personaje**: Menú interactivo al crear cuenta nueva para elegir Raza y Clase (con generación de atributos y skills 100% Data-Driven desde YAML).
+- [x] **Sistema de Experiencia**: Recompensas de XP tras los combates por turnos, sistema de escalado, subida de nivel automática y mejora pasiva de stats.
 - [ ] **Broadcasting (Sincronización de Sala)**: Emitir eventos espaciales. Si el Jugador A se mueve, el Jugador B debe ver: *"Perseus ha entrado desde el sur"*.
 - [ ] **Comunicaciones (Chat)**: Comandos `say` (para los que están en la misma sala), `gossip` (canal global).
-- [ ] **Sistema de Experiencia**: Entregar XP tras los combates, tabla de subida de nivel, incremento manual/automático de stats.
