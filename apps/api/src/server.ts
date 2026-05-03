@@ -1,6 +1,7 @@
 import Fastify from 'fastify';
 import fastifyWebsocket from '@fastify/websocket';
 import { GameEngine, WorldFactory, CharacterCreator, Database, Player } from 'engine';
+import { Session } from './session';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -36,60 +37,26 @@ const engine = new GameEngine();
 WorldFactory.populate(engine);
 WorldFactory.watchAllData(engine);
 
-let mainPlayer: Player;
-const activeSockets = new Map<string, any>();
+let engineStarted = false;
+const activeSessions = new Set<Session>();
 
 // Event listeners for async push
 engine.on('combat_message', (playerId: string, log: string[]) => {
-  const socket = activeSockets.get(playerId);
-  if (socket) {
-    socket.send(JSON.stringify({
-      type: 'COMBAT_UPDATE',
-      combatLog: log
-    }));
+  for (const session of activeSessions) {
+    if (session.playerId === playerId) {
+      session.send({
+        type: 'COMBAT_UPDATE',
+        combatLog: log
+      });
+      break;
+    }
   }
 });
 
 const start = async () => {
   try {
-    // 1. Try to load player from Database
-    const dbData = await Database.loadPlayer('live_user_id');
-    
-    if (dbData) {
-      // Reconstruct Player model
-      mainPlayer = new Player(
-        dbData.accountId,
-        dbData.name,
-        dbData.stats,
-        dbData.classId,
-        dbData.raceId,
-        dbData.roomId,
-        dbData.id
-      );
-      mainPlayer.hpCurrent = dbData.hpCurrent;
-      mainPlayer.inventory = dbData.inventory;
-      console.log(`[Persistence] Jugador cargado de SQLite: ${mainPlayer.name} (HP: ${mainPlayer.hpCurrent})`);
-    } else {
-      // 2. Create and Save if missing
-      mainPlayer = CharacterCreator.create({
-        accountId: 'live_user',
-        name: 'Aventurero',
-        raceId: 'humano_altherion',
-        classId: 'caballero_alba',
-        distributedPoints: { fuerza: 2, constitucion: 2, presencia: 2 },
-        startingRoomId: 'villaclara_plaza',
-        id: 'live_user_id'
-      });
-      await Database.savePlayer(mainPlayer);
-      console.log(`[Persistence] Nuevo jugador guardado en SQLite: ${mainPlayer.name}`);
-    }
-
-    // Force some skills for testing
-    mainPlayer.metadata = mainPlayer.metadata || {};
-    mainPlayer.metadata.skills = ['tajo_juramentado', 'curacion_radiante', 'palma_serena'];
-
-    engine.entities.registerPlayer(mainPlayer);
-    engine.startTick(2000); // Start async combat ticks
+    // Engine ticks
+    engine.startTick(2000);
 
     await fastify.listen({ port: 4001, host: '0.0.0.0' });
     console.log('--- InheronMUD API Live at ws://localhost:4001/ws ---');
@@ -105,99 +72,31 @@ fastify.register(async (fastify) => {
   fastify.get('/ws', { websocket: true }, (socket, req) => {
     fastify.log.info('Client connected to WebSocket');
     
-    // Track connection
-    activeSockets.set(mainPlayer.id, socket);
+    // Create new session
+    const session = new Session(socket, engine);
+    activeSessions.add(session);
 
-    // Send initial state
-    const initialState = engine.commands.look(mainPlayer.id);
-    socket.send(JSON.stringify({
-      type: 'INIT',
-      message: `¡Bienvenido a InheronMUD, ${mainPlayer.name}!`,
-      data: initialState
-    }));
-
-    socket.on('message', (message: any) => {
+    socket.on('message', async (message: any) => {
       try {
         const payload = JSON.parse(message.toString());
-        const { command, args } = payload;
-
-        fastify.log.info(`Command received: ${command} ${args?.join(' ')}`);
-
-        let response: any = { success: false, message: 'Comando no reconocido.' };
-
-        // Direction mapping
-        const directions: Record<string, string> = {
-          n: 'north', s: 'south', e: 'east', o: 'west', w: 'west', u: 'up', d: 'down',
-          ne: 'northeast', nw: 'northwest', se: 'southeast', sw: 'southwest',
-          norte: 'north', sur: 'south', este: 'east', oeste: 'west',
-          north: 'north', south: 'south', east: 'east', west: 'west', up: 'up', down: 'down',
-          northeast: 'northeast', northwest: 'northwest', southeast: 'southeast', southwest: 'southwest'
-        };
-
-        if (command === 'look' || command === 'l') {
-          response = { success: true, data: engine.commands.look(mainPlayer.id) };
-        } else if (command === 'move' || directions[command]) {
-          const dir = directions[command] || args[0];
-          const moveRes = engine.commands.move(mainPlayer.id, dir);
-          response = { ...moveRes, command, data: moveRes.success ? engine.commands.look(mainPlayer.id) : null };
-        } else if (command === 'cronica') {
-          response = { success: true, data: engine.getCronica(mainPlayer.id) };
-        } else if (command === 'get' || command === 'coger') {
-          response = engine.commands.get(mainPlayer.id, args.join(' '));
-        } else if (command === 'drop' || command === 'soltar') {
-          response = engine.commands.drop(mainPlayer.id, args.join(' '));
-        } else if (command === 'inventory' || command === 'i') {
-          response = { success: true, data: engine.commands.getInventory(mainPlayer.id), command: 'inventory' };
-        } else if (command === 'score' || command === 'puntuacion') {
-          response = { success: true, data: engine.commands.getScore(mainPlayer.id), command: 'score' };
-        } else if (command === 'kill' || command === 'matar' || command === 'atacar') {
-          response = { ...engine.commands.kill(mainPlayer.id, args.join(' ')), command: 'kill' };
-        } else if (command === 'flee' || command === 'huir') {
-          const fleeRes = engine.commands.flee(mainPlayer.id);
-          response = { ...fleeRes, command: 'flee', data: fleeRes.success ? engine.commands.look(mainPlayer.id) : null };
-        } else if (command === 'heal' || command === 'curar') {
-          response = { ...engine.commands.heal(mainPlayer.id), command: 'heal' };
-        } else if (command === 'equip' || command === 'equipar') {
-          response = { ...engine.commands.equip(mainPlayer.id, args.join(' ')), command: 'equip' };
-        } else if (command === 'unequip' || command === 'desequipar') {
-          response = { ...engine.commands.unequip(mainPlayer.id, args.join(' ')), command: 'unequip' };
-        } else if (command === 'talk' || command === 'hablar' || command === 'ask') {
-          response = { ...engine.commands.talk(mainPlayer.id, args.join(' ')), command: 'talk' };
-        } else if (command === 'list' || command === 'comprar' || command === 'tienda') {
-          // Si no hay args, asumimos list
-          if (command === 'list' || args.length === 0) {
-            response = { ...engine.commands.list(mainPlayer.id, args.join(' ')), command: 'list' };
-          } else {
-            response = { ...engine.commands.buy(mainPlayer.id, args.join(' ')), command: 'buy' };
-          }
-        } else if (command === 'buy') {
-          response = { ...engine.commands.buy(mainPlayer.id, args.join(' ')), command: 'buy' };
-        } else if (command === 'sell' || command === 'vender') {
-          response = { ...engine.commands.sell(mainPlayer.id, args.join(' ')), command: 'sell' };
-        } else if (command === 'skills' || command === 'habilidades') {
-          response = { ...engine.commands.getSkills(mainPlayer.id), command: 'skills' };
-        } else if (command === 'cast' || command === 'use' || command === 'usar' || command === 'lanzar') {
-          // Syntax: cast [skill] [target]
-          // If skill has spaces, this gets tricky, but we assume the first arg is the skill ID or one word name.
-          const skillName = args[0];
-          const targetName = args.slice(1).join(' ');
-          response = { ...engine.commands.cast(mainPlayer.id, skillName, targetName), command: 'cast' };
-        }
-
-        socket.send(JSON.stringify({
-          type: 'RESPONSE',
-          command,
-          ...response
-        }));
-      } catch (err) {
-        socket.send(JSON.stringify({ type: 'ERROR', message: 'Error procesando comando.' }));
+        // For backwards compatibility with the client, we combine command + args into a text line
+        // or just let session handle string
+        const text = payload.command + (payload.args?.length ? ' ' + payload.args.join(' ') : '');
+        await session.handleMessage(text);
+      } catch (e: any) {
+        fastify.log.error('Error handling message:', e);
       }
     });
 
     socket.on('close', () => {
       fastify.log.info('Client disconnected');
-      activeSockets.delete(mainPlayer.id);
-      Database.savePlayer(mainPlayer).catch(console.error); // Save on disconnect
+      activeSessions.delete(session);
+      if (session.playerId) {
+        const player = engine.getPlayer(session.playerId);
+        if (player) {
+          Database.savePlayer(player).catch(console.error);
+        }
+      }
     });
   });
 });

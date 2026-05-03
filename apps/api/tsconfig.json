@@ -9,10 +9,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
-    "baseUrl": ".",
-    "paths": {
-      "engine": ["../../packages/engine/src"]
-    }
+    "baseUrl": "."
   },
   "include": ["src/**/*"]
 }
