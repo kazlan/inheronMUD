@@ -1,0 +1,10 @@
+- id: spawner_conejos_campo_norte
+  roomId: villaclara_campo_norte
+  maxActive: 2
+  intervalMs: 15000
+  variants:
+    - npcId: npc_conejo_acorazado_1
+      chance: 80
+    - npcId: npc_conejo_general
+      chance: 20
+      unique: true

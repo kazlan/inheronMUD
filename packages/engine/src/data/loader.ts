@@ -23,18 +23,19 @@ export class DataLoader {
       .map(dirent => dirent.name);
   }
 
-  public loadArea(areaName: string): { rooms: any[]; npcs: any[]; items: any[] } {
+  public loadArea(areaName: string): { rooms: any[]; npcs: any[]; items: any[]; spawners: any[] } {
     const areaPath = this.getAreaPath(areaName);
     
     if (!fs.existsSync(areaPath)) {
       console.warn(`[DataLoader] Area folder not found: ${areaPath}`);
-      return { rooms: [], npcs: [], items: [] };
+      return { rooms: [], npcs: [], items: [], spawners: [] };
     }
 
     return {
       rooms: this.loadYamlFile(path.join(areaPath, 'rooms.yml')),
       npcs: this.loadYamlFile(path.join(areaPath, 'npcs.yml')),
-      items: this.loadYamlFile(path.join(areaPath, 'items.yml'))
+      items: this.loadYamlFile(path.join(areaPath, 'items.yml')),
+      spawners: this.loadYamlFile(path.join(areaPath, 'spawners.yml'))
     };
   }
 

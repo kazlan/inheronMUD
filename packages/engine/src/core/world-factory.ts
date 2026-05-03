@@ -2,6 +2,7 @@ import { GameEngine } from './game-engine';
 import { Room } from '../models/room.model';
 import { NPC } from '../models/npc.model';
 import { Item, ItemType } from '../models/item.model';
+import { Spawner } from '../models/spawner.model';
 import { DataLoader } from '../data/loader';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -56,6 +57,11 @@ export class WorldFactory {
           data.id
         );
         if (data.level) npc.level = data.level;
+        if (data.metadata) npc.metadata = data.metadata;
+        
+        // Register the template data to allow spawning clones later
+        engine.entities.registerNPCTemplate(data.id, data);
+
         engine.registerNPC(npc);
         totalNpcs++;
         
@@ -65,9 +71,23 @@ export class WorldFactory {
           room.addEntity(npc.id);
         }
       });
+
+      // 4. Create and register Spawners
+      if (areaData.spawners) {
+        areaData.spawners.forEach(data => {
+          const spawner = new Spawner(
+            data.id,
+            data.roomId,
+            data.maxActive || 1,
+            data.intervalMs || 30000,
+            data.variants || []
+          );
+          engine.entities.registerSpawner(spawner);
+        });
+      }
     }
 
-    console.log(`World populated from YAML: ${totalRooms} rooms, ${totalNpcs} NPCs, ${totalItems} items.`);
+    console.log(`World populated from YAML: ${totalRooms} rooms, ${totalNpcs} NPCs, ${totalItems} items, and spawners.`);
   }
 
   static reloadArea(engine: GameEngine, areaName: string): void {
