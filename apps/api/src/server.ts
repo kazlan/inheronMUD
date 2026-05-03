@@ -1,6 +1,32 @@
 import Fastify from 'fastify';
 import fastifyWebsocket from '@fastify/websocket';
 import { GameEngine, WorldFactory, CharacterCreator, Database, Player } from 'engine';
+import * as fs from 'fs';
+import * as path from 'path';
+
+// Crash Logging Setup (DevOpsMaster)
+const logsDir = path.join(process.cwd(), 'logs');
+if (!fs.existsSync(logsDir)) {
+  fs.mkdirSync(logsDir);
+}
+
+function logCrash(err: Error, type: string) {
+  const timestamp = new Date().toISOString();
+  const logMessage = `\n--- CRASH: ${type} at ${timestamp} ---\n${err.stack || err.message}\n`;
+  fs.appendFileSync(path.join(logsDir, 'crash.log'), logMessage);
+  console.error(`[Faro] Sistema crítico detectado (${type}). Revisa logs/crash.log`);
+}
+
+process.on('uncaughtException', (err) => {
+  logCrash(err, 'Uncaught Exception');
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (reason: any) => {
+  const err = reason instanceof Error ? reason : new Error(String(reason));
+  logCrash(err, 'Unhandled Rejection');
+  process.exit(1);
+});
 
 const fastify = Fastify({ logger: true });
 fastify.register(fastifyWebsocket);
@@ -133,6 +159,17 @@ fastify.register(async (fastify) => {
           response = { ...engine.commands.unequip(mainPlayer.id, args.join(' ')), command: 'unequip' };
         } else if (command === 'talk' || command === 'hablar' || command === 'ask') {
           response = { ...engine.commands.talk(mainPlayer.id, args.join(' ')), command: 'talk' };
+        } else if (command === 'list' || command === 'comprar' || command === 'tienda') {
+          // Si no hay args, asumimos list
+          if (command === 'list' || args.length === 0) {
+            response = { ...engine.commands.list(mainPlayer.id, args.join(' ')), command: 'list' };
+          } else {
+            response = { ...engine.commands.buy(mainPlayer.id, args.join(' ')), command: 'buy' };
+          }
+        } else if (command === 'buy') {
+          response = { ...engine.commands.buy(mainPlayer.id, args.join(' ')), command: 'buy' };
+        } else if (command === 'sell' || command === 'vender') {
+          response = { ...engine.commands.sell(mainPlayer.id, args.join(' ')), command: 'sell' };
         }
 
         socket.send(JSON.stringify({

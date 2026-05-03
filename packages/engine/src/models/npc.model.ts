@@ -7,6 +7,7 @@ export class NPC extends Entity {
   public inventory: string[] = [];
   public behaviorId: string; // Strategy pattern ID for AI
   public level: number = 1;
+  public metadata: Record<string, any> = {};
 
   constructor(
     name: string,
@@ -29,7 +30,8 @@ export class NPC extends Entity {
       roomId: this.roomId,
       inventory: this.inventory,
       behaviorId: this.behaviorId,
-      level: this.level
+      level: this.level,
+      metadata: this.metadata
     };
   }
 }

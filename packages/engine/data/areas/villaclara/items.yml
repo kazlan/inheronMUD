@@ -9,6 +9,7 @@
   description: Una espada básica entregada a los iniciados del gremio. Fiable, aunque poco glamurosa.
   type: EQUIPMENT
   equipSlot: weapon
+  value: 30
   metadata:
     damage: 5
     rarity: bueno
@@ -25,6 +26,7 @@
   description: Un martillo de herrero excesivamente pesado con el mango astillado. Sirve como arma contundente improvisada.
   type: EQUIPMENT
   equipSlot: weapon
+  value: 45
   metadata:
     damage: 8
     rarity: raro

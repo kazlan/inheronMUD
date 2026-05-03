@@ -347,4 +347,107 @@ export class CommandManager {
 
     return { success: true, message: `<green>Te concentras y usas tu energía vital. Recuperas ${healAmount} puntos de vida.</green>` };
   }
+
+  // --- Economy Commands ---
+
+  private getMerchantInRoom(room: any, targetName?: string) {
+    let npcs = room.entities
+      .map((id: string) => this.engine.entities.getNPC(id))
+      .filter((npc: any) => !!npc && npc.metadata && npc.metadata.merchant);
+
+    if (targetName) {
+      npcs = npcs.filter((npc: any) => npc.name.toLowerCase().includes(targetName.toLowerCase()));
+    }
+    return npcs[0];
+  }
+
+  list(playerId: string, targetName?: string): { success: boolean; message: string; data?: any } {
+    const player = this.engine.entities.getPlayer(playerId);
+    if (!player) return { success: false, message: 'Jugador no encontrado.' };
+
+    const room = this.engine.entities.getRoom(player.roomId);
+    if (!room) return { success: false, message: 'Sala no encontrada.' };
+
+    const merchant = this.getMerchantInRoom(room, targetName);
+    if (!merchant) return { success: false, message: targetName ? `No ves a ningún mercader llamado "${targetName}" aquí.` : 'No hay ningún mercader aquí.' };
+
+    const stock = merchant.metadata.inventory || [];
+    if (stock.length === 0) return { success: true, message: `${merchant.name} no tiene nada a la venta en este momento.` };
+
+    let msg = `<b>${merchant.name} ofrece los siguientes artículos:</b>\n`;
+    stock.forEach((itemId: string) => {
+      const itemInst = this.engine.entities.getItem(itemId);
+      if (itemInst) {
+        msg += ` - <magenta>${itemInst.name}</magenta> : <yellow>${itemInst.value || 10} soles</yellow>\n`;
+      }
+    });
+
+    return { success: true, message: msg };
+  }
+
+  buy(playerId: string, itemName: string, targetName?: string): { success: boolean; message: string } {
+    const player = this.engine.entities.getPlayer(playerId);
+    if (!player) return { success: false, message: 'Jugador no encontrado.' };
+
+    const room = this.engine.entities.getRoom(player.roomId);
+    if (!room) return { success: false, message: 'Sala no encontrada.' };
+
+    const merchant = this.getMerchantInRoom(room, targetName);
+    if (!merchant) return { success: false, message: 'No hay mercaderes aquí.' };
+
+    const stock = merchant.metadata.inventory || [];
+    const itemInst = stock.map((id: string) => this.engine.entities.getItem(id)).find((i: any) => i && i.name.toLowerCase().includes(itemName.toLowerCase()));
+
+    if (!itemInst) return { success: false, message: `${merchant.name} no vende eso.` };
+
+    const price = itemInst.value || 10;
+    if ((player.coins || 0) < price) {
+      return { success: false, message: `No tienes suficientes soles. Cuesta ${price}.` };
+    }
+
+    // Deduct coins
+    player.coins = (player.coins || 0) - price;
+
+    // Create a clone of the item for the player
+    const newItem = new Item(itemInst.name, itemInst.description, itemInst.type, itemInst.id + '_' + Date.now());
+    newItem.value = itemInst.value;
+    newItem.equipSlot = itemInst.equipSlot;
+    newItem.metadata = { ...itemInst.metadata };
+    
+    this.engine.registerItem(newItem);
+    player.inventory.push(newItem.id);
+
+    return { success: true, message: `Has comprado <magenta>${itemInst.name}</magenta> por <yellow>${price} soles</yellow>.` };
+  }
+
+  sell(playerId: string, itemName: string, targetName?: string): { success: boolean; message: string } {
+    const player = this.engine.entities.getPlayer(playerId);
+    if (!player) return { success: false, message: 'Jugador no encontrado.' };
+
+    const room = this.engine.entities.getRoom(player.roomId);
+    if (!room) return { success: false, message: 'Sala no encontrada.' };
+
+    const merchant = this.getMerchantInRoom(room, targetName);
+    if (!merchant) return { success: false, message: 'No hay mercaderes aquí.' };
+
+    const itemIndex = player.inventory.findIndex(id => {
+      const i = this.engine.entities.getItem(id);
+      return i && i.name.toLowerCase().includes(itemName.toLowerCase());
+    });
+
+    if (itemIndex === -1) return { success: false, message: `No tienes eso en tu inventario.` };
+
+    const itemId = player.inventory[itemIndex];
+    const itemInst = this.engine.entities.getItem(itemId);
+    
+    // Sell price is 50%
+    const sellPrice = Math.floor((itemInst?.value || 10) * 0.5);
+    
+    player.inventory.splice(itemIndex, 1);
+    this.engine.entities.removeItem(itemId); // Remove from world
+    
+    player.coins = (player.coins || 0) + sellPrice;
+
+    return { success: true, message: `Has vendido <magenta>${itemInst?.name}</magenta> por <yellow>${sellPrice} soles</yellow>.` };
+  }
 }

@@ -101,11 +101,13 @@ export class WorldFactory {
         item.type = data.type as ItemType;
         if (data.equipSlot) item.equipSlot = data.equipSlot;
         if (data.metadata) item.metadata = data.metadata;
+        if (data.value !== undefined) item.value = data.value;
         updatedItems++;
       } else {
         const newItem = new Item(data.name, data.description, data.type as ItemType, data.id);
         if (data.equipSlot) newItem.equipSlot = data.equipSlot;
         if (data.metadata) newItem.metadata = data.metadata;
+        if (data.value !== undefined) newItem.value = data.value;
         engine.registerItem(newItem);
         if (data.roomId) {
           const r = engine.getRoom(data.roomId);
@@ -124,11 +126,13 @@ export class WorldFactory {
         npc.stats = data.stats;
         npc.behaviorId = data.behaviorId;
         if (data.level) npc.level = data.level;
+        if (data.metadata) npc.metadata = data.metadata;
         // Not touching npc.roomId to avoid moving them if they walked away
         updatedNpcs++;
       } else {
         const newNpc = new NPC(data.name, data.description, data.stats, data.behaviorId, data.roomId, data.id);
         if (data.level) newNpc.level = data.level;
+        if (data.metadata) newNpc.metadata = data.metadata;
         engine.registerNPC(newNpc);
         if (data.roomId) {
           const r = engine.getRoom(data.roomId);

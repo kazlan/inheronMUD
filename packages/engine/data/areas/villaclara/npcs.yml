@@ -67,6 +67,9 @@
     percepcion: 12
   behaviorId: merchant_blacksmith
   roomId: villaclara_forja
+  metadata:
+    merchant: true
+    inventory: ["espada_cobre", "martillo_pesado"]
 
 - id: npc_conejo_acorazado_1
   name: Conejo Acorazado
