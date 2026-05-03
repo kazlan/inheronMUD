@@ -65,22 +65,34 @@ export class SkillManager {
     // Process effects
     if (skill.effects) {
       for (const effect of skill.effects) {
+        
+        let amount = 0;
+        if (effect.diceCount && effect.diceSides) {
+          for (let i = 0; i < effect.diceCount; i++) {
+            amount += Math.floor(Math.random() * effect.diceSides) + 1;
+          }
+        } else if (effect.amount) {
+          amount = effect.amount;
+        }
+        
+        if (effect.modifier) amount += effect.modifier;
+
         if (effect.type === 'damage') {
           if (!combat) return { success: false, message: 'Debes estar en combate para atacar.' };
           if (!target) return { success: false, message: 'Objetivo inválido.' };
           
-          target.hpCurrent -= effect.amount;
-          combatLog.push(`<cyan>${caster.name}</cyan> utiliza <yellow>${skill.name}</yellow> sobre <red>${target.name}</red> por ${effect.amount} de daño.`);
+          target.hpCurrent -= amount;
+          combatLog.push(`<cyan>${caster.name}</cyan> utiliza <yellow>${skill.name}</yellow> sobre <red>${target.name}</red> por ${amount} de daño.`);
         } else if (effect.type === 'heal') {
           if (combat) {
             if (!target) target = combatCaster; // Self heal fallback
             if (target) {
-              target.hpCurrent = Math.min((target.hpCurrent || 0) + effect.amount, target.hpMax || 100);
-              combatLog.push(`<cyan>${caster.name}</cyan> invoca <yellow>${skill.name}</yellow> sobre <green>${target.name}</green> sanando ${effect.amount} HP.`);
+              target.hpCurrent = Math.min((target.hpCurrent || 0) + amount, target.hpMax || 100);
+              combatLog.push(`<cyan>${caster.name}</cyan> invoca <yellow>${skill.name}</yellow> sobre <green>${target.name}</green> sanando ${amount} HP.`);
             }
           } else {
-            caster.hpCurrent = Math.min((caster.hpCurrent || 0) + effect.amount, 100);
-            return { success: true, message: `Te has curado ${effect.amount} HP con ${skill.name}.` };
+            caster.hpCurrent = Math.min((caster.hpCurrent || 0) + amount, 100);
+            return { success: true, message: `Te has curado ${amount} HP con ${skill.name}.` };
           }
         }
       }
