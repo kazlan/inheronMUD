@@ -39,6 +39,20 @@ export class DataLoader {
     };
   }
 
+  public loadSystem(): { skills: any[]; classes: any[] } {
+    const systemPath = path.join(this.baseDir, 'system');
+    
+    if (!fs.existsSync(systemPath)) {
+      console.warn(`[DataLoader] System folder not found: ${systemPath}`);
+      return { skills: [], classes: [] };
+    }
+
+    return {
+      skills: this.loadYamlFile(path.join(systemPath, 'skills.yml')),
+      classes: this.loadYamlFile(path.join(systemPath, 'classes.yml'))
+    };
+  }
+
   private loadYamlFile(filePath: string): any[] {
     if (!fs.existsSync(filePath)) {
       return [];

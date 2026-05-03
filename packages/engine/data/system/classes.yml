@@ -1,0 +1,32 @@
+- id: caballero_alba
+  name: Caballero del Alba
+  description: Defensor de Villaclara, protector de los débiles.
+  baseStats:
+    fuerza: 2
+    constitucion: 2
+    presencia: 1
+  skills:
+    - level: 1
+      skillId: tajo_juramentado
+
+- id: monje_candaluz
+  name: Monje de Candaluz
+  description: Maestro del cuerpo y la mente, ágil y disciplinado.
+  baseStats:
+    destreza: 2
+    sabiduria: 2
+    constitucion: 1
+  skills:
+    - level: 1
+      skillId: palma_serena
+
+- id: clerigo_sol_quieto
+  name: Clérigo del Sol Quieto
+  description: Sanador y portador de la luz radiante.
+  baseStats:
+    sabiduria: 3
+    presencia: 1
+    constitucion: 1
+  skills:
+    - level: 1
+      skillId: curacion_radiante

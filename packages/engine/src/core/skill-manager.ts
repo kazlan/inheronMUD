@@ -13,6 +13,7 @@ export interface SkillDef {
   energyCost: number;
   cooldown: number; // rounds or ms
   type: 'damage' | 'heal' | 'buff' | 'utility';
+  effects?: any[];
   execute: (engine: GameEngine, casterId: string, targetId?: string) => SkillResult;
 }
 
@@ -20,108 +21,80 @@ export class SkillManager {
   private skills: Map<string, SkillDef> = new Map();
 
   constructor() {
-    this.registerBaseSkills();
+    // Loaded later by GameEngine / WorldFactory
   }
 
-  private registerBaseSkills() {
-    // Caballero del Alba
-    this.skills.set('tajo_juramentado', {
-      id: 'tajo_juramentado',
-      name: 'Tajo Juramentado',
-      description: 'Un ataque frontal potente cargado de convicción.',
-      energyCost: 10,
-      cooldown: 0,
-      type: 'damage',
-      execute: (engine, casterId, targetId) => {
-        const combat = engine.getCombatByPlayerId(casterId);
-        if (!combat) return { success: false, message: 'Debes estar en combate para usar esto.' };
-        
-        const caster = combat.participants.find(p => p.entityId === casterId);
-        const target = combat.participants.find(p => targetId ? p.entityId === targetId || p.name.toLowerCase().includes(targetId) : !p.isPlayer);
-        
-        if (!caster || !target) return { success: false, message: 'Objetivo inválido.' };
-        if ((caster.energyCurrent || 0) < 10) return { success: false, message: 'No tienes suficiente energía.' };
-        
-        caster.energyCurrent = (caster.energyCurrent || 10) - 10;
-        const dmg = 15; // Base dmg
-        target.hpCurrent -= dmg;
-        
-        return { 
-          success: true, 
-          message: 'Has usado Tajo Juramentado.',
-          combatLog: [`<cyan>${caster.name}</cyan> utiliza <yellow>Tajo Juramentado</yellow> sobre <red>${target.name}</red> por ${dmg} de daño.`]
-        };
-      }
-    });
+  public loadFromData(skillsData: any[]) {
+    this.skills.clear();
+    for (const data of skillsData) {
+      const skillDef: SkillDef = {
+        id: data.id,
+        name: data.name,
+        description: data.description,
+        energyCost: data.energyCost || 0,
+        cooldown: data.cooldown || 0,
+        type: data.type || 'utility',
+        effects: data.effects || [],
+        execute: (engine, casterId, targetId) => this.executeSkill(data.id, engine, casterId, targetId)
+      };
+      this.skills.set(data.id, skillDef);
+    }
+  }
 
-    // Monje de Candaluz
-    this.skills.set('palma_serena', {
-      id: 'palma_serena',
-      name: 'Palma Serena',
-      description: 'Un golpe rápido y preciso al pecho del oponente.',
-      energyCost: 5,
-      cooldown: 0,
-      type: 'damage',
-      execute: (engine, casterId, targetId) => {
-        const combat = engine.getCombatByPlayerId(casterId);
-        if (!combat) return { success: false, message: 'Debes estar en combate.' };
-        
-        const caster = combat.participants.find(p => p.entityId === casterId);
-        const target = combat.participants.find(p => targetId ? p.entityId === targetId || p.name.toLowerCase().includes(targetId) : !p.isPlayer);
-        
-        if (!caster || !target) return { success: false, message: 'Objetivo inválido.' };
-        if ((caster.energyCurrent || 0) < 5) return { success: false, message: 'Energía insuficiente.' };
-        
-        caster.energyCurrent = (caster.energyCurrent || 5) - 5;
-        const dmg = 10;
-        target.hpCurrent -= dmg;
-        
-        return { 
-          success: true, 
-          message: 'Has usado Palma Serena.',
-          combatLog: [`<cyan>${caster.name}</cyan> golpea con <yellow>Palma Serena</yellow> a <red>${target.name}</red> causando ${dmg} de daño.`]
-        };
-      }
-    });
+  private executeSkill(skillId: string, engine: GameEngine, casterId: string, targetId?: string): SkillResult {
+    const skill = this.skills.get(skillId);
+    if (!skill) return { success: false, message: 'Habilidad desconocida.' };
 
-    // Clérigo del Sol Quieto
-    this.skills.set('curacion_radiante', {
-      id: 'curacion_radiante',
-      name: 'Curación Radiante',
-      description: 'Sana las heridas de un aliado.',
-      energyCost: 15,
-      cooldown: 0,
-      type: 'heal',
-      execute: (engine, casterId, targetId) => {
-        const combat = engine.getCombatByPlayerId(casterId);
-        const caster = engine.entities.getPlayer(casterId);
-        if (!caster) return { success: false, message: 'Jugador inválido.' };
+    const combat = engine.getCombatByPlayerId(casterId);
+    const caster = engine.entities.getPlayer(casterId);
+    if (!caster) return { success: false, message: 'Jugador inválido.' };
 
-        if ((caster.energyCurrent || 0) < 15) return { success: false, message: 'Energía insuficiente.' };
-        caster.energyCurrent = (caster.energyCurrent || 15) - 15;
+    if ((caster.energyCurrent || 0) < skill.energyCost) {
+      return { success: false, message: 'Energía insuficiente.' };
+    }
 
-        const healAmount = 25;
+    caster.energyCurrent = (caster.energyCurrent || 0) - skill.energyCost;
 
-        if (combat) {
-            const combatCaster = combat.participants.find(p => p.entityId === casterId);
-            if(combatCaster) combatCaster.energyCurrent = caster.energyCurrent;
-            const combatTarget = combat.participants.find(p => targetId ? p.entityId === targetId || p.name.toLowerCase().includes(targetId) : p.entityId === casterId);
-            
-            if (combatTarget) {
-                combatTarget.hpCurrent = Math.min((combatTarget.hpCurrent || 0) + healAmount, combatTarget.hpMax || 100);
-                return { 
-                  success: true, 
-                  message: 'Has usado Curación Radiante.',
-                  combatLog: [`<cyan>${caster.name}</cyan> invoca <yellow>Curación Radiante</yellow> sobre <green>${combatTarget.name}</green> sanando ${healAmount} HP.`]
-                };
+    let combatCaster = combat?.participants.find(p => p.entityId === casterId);
+    if (combatCaster) combatCaster.energyCurrent = caster.energyCurrent;
+
+    let target = combat?.participants.find(p => targetId ? p.entityId === targetId || p.name.toLowerCase().includes(targetId) : (skill.type === 'heal' ? p.entityId === casterId : !p.isPlayer));
+
+    const combatLog: string[] = [];
+
+    // Process effects
+    if (skill.effects) {
+      for (const effect of skill.effects) {
+        if (effect.type === 'damage') {
+          if (!combat) return { success: false, message: 'Debes estar en combate para atacar.' };
+          if (!target) return { success: false, message: 'Objetivo inválido.' };
+          
+          target.hpCurrent -= effect.amount;
+          combatLog.push(`<cyan>${caster.name}</cyan> utiliza <yellow>${skill.name}</yellow> sobre <red>${target.name}</red> por ${effect.amount} de daño.`);
+        } else if (effect.type === 'heal') {
+          if (combat) {
+            if (!target) target = combatCaster; // Self heal fallback
+            if (target) {
+              target.hpCurrent = Math.min((target.hpCurrent || 0) + effect.amount, target.hpMax || 100);
+              combatLog.push(`<cyan>${caster.name}</cyan> invoca <yellow>${skill.name}</yellow> sobre <green>${target.name}</green> sanando ${effect.amount} HP.`);
             }
-        } else {
-            caster.hpCurrent = Math.min((caster.hpCurrent || 0) + healAmount, 100); // simplify max hp 100
+          } else {
+            caster.hpCurrent = Math.min((caster.hpCurrent || 0) + effect.amount, 100);
+            return { success: true, message: `Te has curado ${effect.amount} HP con ${skill.name}.` };
+          }
         }
-
-        return { success: true, message: `Te has curado ${healAmount} HP con Curación Radiante.` };
       }
-    });
+    }
+
+    if (combatLog.length === 0) {
+      combatLog.push(`<cyan>${caster.name}</cyan> utiliza <yellow>${skill.name}</yellow>.`);
+    }
+
+    return { 
+      success: true, 
+      message: `Has usado ${skill.name}.`,
+      combatLog
+    };
   }
 
   getSkill(nameOrId: string): SkillDef | undefined {

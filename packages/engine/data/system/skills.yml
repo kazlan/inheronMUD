@@ -1,0 +1,29 @@
+- id: tajo_juramentado
+  name: Tajo Juramentado
+  description: Un ataque frontal potente cargado de convicción.
+  energyCost: 10
+  cooldown: 0
+  type: damage
+  effects:
+    - type: damage
+      amount: 15
+
+- id: palma_serena
+  name: Palma Serena
+  description: Un golpe rápido y preciso al pecho del oponente.
+  energyCost: 5
+  cooldown: 0
+  type: damage
+  effects:
+    - type: damage
+      amount: 10
+
+- id: curacion_radiante
+  name: Curación Radiante
+  description: Sana las heridas de un aliado o de ti mismo.
+  energyCost: 15
+  cooldown: 0
+  type: heal
+  effects:
+    - type: heal
+      amount: 25

@@ -10,6 +10,14 @@ import * as path from 'path';
 export class WorldFactory {
   static populate(engine: GameEngine, areaNames?: string[]): void {
     const loader = new DataLoader();
+    
+    // Load System Data (Skills, Classes)
+    const systemData = loader.loadSystem();
+    if (systemData.skills) {
+      engine.skills.loadFromData(systemData.skills);
+      console.log(`[WorldFactory] Loaded ${systemData.skills.length} skills from system data.`);
+    }
+    
     const areasToLoad = areaNames || loader.getAllAreaNames();
 
     let totalRooms = 0;
