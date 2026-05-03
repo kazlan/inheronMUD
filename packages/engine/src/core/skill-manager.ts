@@ -71,8 +71,6 @@ export class SkillManager {
           for (let i = 0; i < effect.diceCount; i++) {
             amount += Math.floor(Math.random() * effect.diceSides) + 1;
           }
-        } else if (effect.amount) {
-          amount = effect.amount;
         }
         
         if (effect.modifier) amount += effect.modifier;
