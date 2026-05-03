@@ -28,14 +28,16 @@ InheronMUD es un MUD (Multi-User Dungeon) de nueva generación, diseñado bajo u
 - **Hot-Reload:** El motor detecta cambios en los YAML y actualiza el mundo *en caliente* sin reiniciar.
 - **Persistencia SQLite:** Usando Prisma ORM, se guardan instantáneamente el inventario, vida, equipo y "flags" de la *Crónica Viva* del jugador.
 
-### Milestone 4: Sistemas Avanzados 🔄 (En progreso)
-- **Combate en Tiempo Real**: Comandos asíncronos (`flee`, `heal`), mensajes críticos y evasión. ✅
+### Milestone 4: Sistemas Avanzados y Progresión ✅
+- **Combate en Tiempo Real**: Comandos asíncronos (`kill`, `flee`), mensajes críticos, mitigaciones y evasión. ✅
 - **Sistema de Equipamiento**: Sistema de ranuras (`weapon`, `head`, etc.) con impacto real en los atributos derivados (`StatCalculator`). ✅
-- **Diálogos y Misiones**: Motor de `talk` condicionado por la memoria, con marcadores visuales `[!]` y `[?]` en el mundo. ✅
-- **Identificadores Visuales y Tácticos**: Rarezas de equipo coloreadas (común a legendario) y niveles relativos de MOBs coloreados por peligrosidad. ✅
-- **Economía**: *(En progreso)* Moneda en base de datos (`coins`), pendientes comandos de tienda (`buy`, `sell`).
+- **Diálogos y Misiones**: Motor de `talk` condicionado por la memoria. ✅
+- **Identificadores Visuales y Tácticos**: Rarezas de equipo coloreadas y niveles relativos de MOBs coloreados por peligrosidad. ✅
+- **Economía**: Moneda en base de datos (`coins`), comandos de tienda (`buy`, `sell`, `list`) gestionados por mercaderes. ✅
+- **Ecosistema Vivo**: Motor `RespawnManager` basado en configuraciones YAML (`spawners.yml`) con soporte para variantes raras de monstruos (bosses). ✅
+- **Habilidades y Clases Data-Driven**: Sistema dinámico de `skills` configurables puramente en YAML (`skills.yml`, `classes.yml`) que interpretan tiradas de dados (N d M + X) y efectos variados. ✅
 
-### Milestone 5: Multijugador y Onboarding ⏳ (Pendiente)
+### Milestone 5: Multijugador y Onboarding ⏳ (Próximo objetivo)
 - Login y creación de personajes vía WebSocket.
 - Broadcasting espacial (sincronización entre jugadores en la misma sala).
 - Chat de sala (`say`) y global (`gossip`).
