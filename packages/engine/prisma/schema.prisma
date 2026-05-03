@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  password  String?  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  players   Player[]
+}
+
+model Player {
+  id             String       @id @default(uuid())
+  accountId      String
+  name           String       @unique
+  raceId         String
+  classId        String
+  roomId         String       @default("villaclara_plaza")
+  hpCurrent      Int
+  stats          String       // JSON encoded string
+  inventory      String       @default("[]") // JSON array of item IDs
+  equipment      String       @default("{}") // JSON string of equipSlot -> itemId
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  
+  account        Account      @relation(fields: [accountId], references: [id])
+  memoryFlags    MemoryFlag[]
+}
+
+model MemoryFlag {
+  id        String   @id @default(uuid())
+  playerId  String
+  key       String
+  value     String   // Can store boolean ("true"/"false") or strings
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@unique([playerId, key])
+}

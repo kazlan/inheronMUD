@@ -1,0 +1,80 @@
+- id: villaclara_plaza
+  name: Plaza del Alba Chica
+  description: Adoquines blanqueados por el sol forman un amplio círculo en el centro del pueblo, brillando bajo el cielo. En el medio se alza la estatua de mármol de un caballero solar, cuya espada pulida refleja la luz diurna. El murmullo de voces lejanas se mezcla con el olor a especias dulces que flota en la brisa cálida.
+  exits:
+    - direction: north
+      targetRoomId: villaclara_campo_norte
+    - direction: south
+      targetRoomId: villaclara_pozo
+    - direction: east
+      targetRoomId: villaclara_panaderia
+    - direction: west
+      targetRoomId: villaclara_gremio
+
+- id: villaclara_panaderia
+  name: Panadería Panbendito
+  description: El intenso aroma a masa madre y levadura satura esta pequeña estancia enharinada. Cuatro hornos de piedra rústica crepitan con calor de brasa, iluminando las paredes de adobe con destellos anaranjados. Sacos de grano de lino apilados dejan apenas un pasillo estrecho hacia el mostrador de roble.
+  exits:
+    - direction: west
+      targetRoomId: villaclara_plaza
+    - direction: south
+      targetRoomId: villaclara_forja
+
+- id: villaclara_pozo
+  name: El Pozo Cantante
+  description: Piedras milenarias, resbaladizas y cubiertas de espeso musgo esmeralda, delimitan el brocal de este pozo hundido. Una nota musical baja y cristalina reverbera desde las profundidades oscuras cada pocos segundos. El aire en esta depresión es notablemente más frío, oliendo a tierra húmeda y ozono.
+  exits:
+    - direction: north
+      targetRoomId: villaclara_plaza
+    - direction: east
+      targetRoomId: villaclara_forja
+
+- id: villaclara_gremio
+  name: Gremio de Aventureros
+  description: Banderines carmesí cuelgan del alto techo de madera, meciéndose con las corrientes de aire. Taburetes gastados rodean mesas redondas donde el tintineo de jarras de metal acompaña carcajadas ahogadas. El penetrante olor a cerveza enana y cuero curtido lo impregna todo.
+  exits:
+    - direction: east
+      targetRoomId: villaclara_plaza
+    - direction: north
+      targetRoomId: villaclara_tablon
+
+- id: villaclara_tablon
+  name: El Tablón de Contratos
+  description: Centenares de pergaminos sujetos con clavos oxidados cubren por completo esta pared de corcho. Un tenue olor a lacre y tinta seca rodea el lugar. El sonido de las discusiones en la sala principal del gremio llega aquí de forma amortiguada.
+  exits:
+    - direction: south
+      targetRoomId: villaclara_gremio
+
+- id: villaclara_forja
+  name: Forja del Yunque Quebrado
+  description: El sofocante calor de una fragua al rojo vivo golpea como una pared física. Chispas brillantes saltan en el aire seco, iluminando un taller desordenado lleno de armaduras a medio terminar. El sonido metálico de herramientas golpeando acero resuena con un ritmo casi hipnótico.
+  exits:
+    - direction: north
+      targetRoomId: villaclara_panaderia
+    - direction: west
+      targetRoomId: villaclara_pozo
+
+- id: villaclara_campo_norte
+  name: Campo Norte
+  description: Llanuras de hierba plateada y alta se mecen rítmicamente bajo el cielo abierto. El viento silba incesantemente al rasgar las espigas, transportando el frescor matutino. A lo lejos, una cordillera de colinas dentadas e irregulares dibuja una barrera natural en el horizonte norte.
+  exits:
+    - direction: south
+      targetRoomId: villaclara_plaza
+    - direction: north
+      targetRoomId: colinas_inicio
+
+- id: colinas_inicio
+  name: Colinas de los Conejos Acorazados
+  description: Montículos de tierra removida salpican esta colina escarpada y rocosa. El sonido constante de rasguños contra la piedra emana de docenas de pequeños túneles oscuros. Un olor terroso y rancio advierte de la presencia de territorio salvaje.
+  exits:
+    - direction: south
+      targetRoomId: villaclara_campo_norte
+    - direction: down
+      targetRoomId: colinas_madriguera
+
+- id: colinas_madriguera
+  name: Madriguera Principal
+  description: Una caverna subterránea excavada con sorprendente precisión geométrica. Huesos roídos y piezas de armaduras oxidadas ensucian el suelo de tierra apisonada. El aire es denso y caliente, vibrando con siseos amenazantes que resuenan en la oscuridad.
+  exits:
+    - direction: up
+      targetRoomId: colinas_inicio

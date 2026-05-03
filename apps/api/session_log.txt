@@ -1,0 +1,14 @@
+--- Sesión Iniciada ---
+--- Conectado ---
+Recibido: INIT
+Localización: Plaza del Alba Chica
+Ocupantes: 
+> look
+Recibido: RESPONSE
+Localización: Plaza del Alba Chica
+Ocupantes: 
+> move este
+Recibido: RESPONSE
+Localización: Panadería Panbendito
+Ocupantes: Doña Marga, Pex
+--- Sesión Finalizada ---

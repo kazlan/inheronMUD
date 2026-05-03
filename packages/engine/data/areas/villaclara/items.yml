@@ -1,0 +1,31 @@
+- id: item_pan_bendito
+  name: Pan Bendito
+  description: Un panecillo caliente que restaura un poco de vida y calma el espíritu.
+  type: CONSUMABLE
+  roomId: villaclara_panaderia
+
+- id: item_espada_cobre
+  name: Espada de Cobre del Gremio
+  description: Una espada básica entregada a los iniciados del gremio. Fiable, aunque poco glamurosa.
+  type: EQUIPMENT
+  equipSlot: weapon
+  metadata:
+    damage: 5
+    rarity: bueno
+  roomId: villaclara_plaza
+
+- id: item_contrato_conejos
+  name: 'Contrato: Plaga Acorazada'
+  description: Un pergamino oficial del gremio que ofrece una recompensa por abatir al General Pelusa.
+  type: QUEST
+  roomId: villaclara_tablon
+
+- id: item_martillo_pesado
+  name: Martillo de Fragua Quebrado
+  description: Un martillo de herrero excesivamente pesado con el mango astillado. Sirve como arma contundente improvisada.
+  type: EQUIPMENT
+  equipSlot: weapon
+  metadata:
+    damage: 8
+    rarity: raro
+  roomId: villaclara_forja
