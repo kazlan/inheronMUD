@@ -11,11 +11,19 @@ export class WorldFactory {
   static populate(engine: GameEngine, areaNames?: string[]): void {
     const loader = new DataLoader();
     
-    // Load System Data (Skills, Classes)
+    // Load System Data (Skills, Classes, Races)
     const systemData = loader.loadSystem();
     if (systemData.skills) {
       engine.skills.loadFromData(systemData.skills);
       console.log(`[WorldFactory] Loaded ${systemData.skills.length} skills from system data.`);
+    }
+    if (systemData.classes) {
+      engine.classesData = systemData.classes;
+      console.log(`[WorldFactory] Loaded ${systemData.classes.length} classes from system data.`);
+    }
+    if (systemData.races) {
+      engine.racesData = systemData.races;
+      console.log(`[WorldFactory] Loaded ${systemData.races.length} races from system data.`);
     }
     
     const areasToLoad = areaNames || loader.getAllAreaNames();

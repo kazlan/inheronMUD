@@ -1,0 +1,20 @@
+- id: humano_altherion
+  name: Humano de Altherion
+  description: Habitantes del reino solar. Acostumbrados a gremios, capillas y burocracia luminosa.
+  baseStats:
+    presencia: 1
+    sabiduria: 1
+
+- id: humano_arvell
+  name: Humano de Arvell
+  description: Gentes de llanura, milicias y caminos. Prácticos y resistentes.
+  baseStats:
+    constitucion: 1
+    percepcion: 1
+
+- id: elfo_hojaluna
+  name: Eldáryn de Hojaluna
+  description: Menos cerrados que los bosques profundos, sensibles a los pactos feéricos.
+  baseStats:
+    destreza: 1
+    sabiduria: 1

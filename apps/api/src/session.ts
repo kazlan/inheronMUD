@@ -7,7 +7,6 @@ export enum SessionState {
   CHARACTER_SELECTION,
   CHARACTER_CREATION_RACE,
   CHARACTER_CREATION_CLASS,
-  CHARACTER_CREATION_STATS,
   IN_GAME
 }
 
@@ -60,10 +59,7 @@ export class Session {
         this.handleCreationRace(text);
         break;
       case SessionState.CHARACTER_CREATION_CLASS:
-        this.handleCreationClass(text);
-        break;
-      case SessionState.CHARACTER_CREATION_STATS:
-        await this.handleCreationStats(text);
+        await this.handleCreationClass(text);
         break;
       case SessionState.IN_GAME:
         this.handleGameCommand(text);
@@ -136,43 +132,52 @@ export class Session {
       }
       this.creationData.name = text;
       this.state = SessionState.CHARACTER_CREATION_RACE;
-      this.sendSystemMessage(`Nombre fijado: ${text}.\nElige una Raza (ej. humano_altherion, humano_arvell, drakonita, saurio, elfo):`);
+      
+      const raceIds = this.engine.racesData.map(r => r.id).join(', ');
+      this.sendSystemMessage(`Nombre fijado: ${text}.\nElige una Raza (${raceIds}):`);
     }
   }
 
   private handleCreationRace(text: string) {
-    // Basic validation could be here
+    const race = this.engine.racesData.find(r => r.id === text);
+    if (!race) {
+      this.sendSystemMessage(`Raza no encontrada. Elige una válida (${this.engine.racesData.map(r => r.id).join(', ')}):`);
+      return;
+    }
+    
     this.creationData.raceId = text;
     this.state = SessionState.CHARACTER_CREATION_CLASS;
-    this.sendSystemMessage(`Raza fijada: ${text}.\nElige una Clase (ej. caballero_alba, monje_candaluz, clerigo_sol_quieto):`);
+    
+    const classIds = this.engine.classesData.map(c => c.id).join(', ');
+    this.sendSystemMessage(`Raza fijada: ${race.name}.\nElige una Clase (${classIds}):`);
   }
 
-  private handleCreationClass(text: string) {
+  private async handleCreationClass(text: string) {
+    const cls = this.engine.classesData.find(c => c.id === text);
+    if (!cls) {
+      this.sendSystemMessage(`Clase no encontrada. Elige una válida (${this.engine.classesData.map(c => c.id).join(', ')}):`);
+      return;
+    }
+
     this.creationData.classId = text;
-    this.state = SessionState.CHARACTER_CREATION_STATS;
-    this.sendSystemMessage(`Clase fijada: ${text}.\nTienes 6 puntos para repartir (FUE DES CON ING SAB PRE PER). Ejemplo: FUE:2 CON:2 PRE:2. Escribe 'auto' para reparto por defecto.`);
-  }
-
-  private async handleCreationStats(text: string) {
-    // Simplified stat parsing for now
+    
+    // Auto calculate stats
+    const race = this.engine.racesData.find(r => r.id === this.creationData.raceId);
+    
     const baseStats = { fuerza: 5, destreza: 5, constitucion: 5, ingenio: 5, sabiduria: 5, presencia: 5, percepcion: 5 };
     
-    if (text.toLowerCase() !== 'auto') {
-      // Very crude parse logic: FUE:2
-      const parts = text.split(' ');
-      parts.forEach(p => {
-        const [stat, val] = p.split(':');
-        if (stat && val && !isNaN(parseInt(val))) {
-          const map: any = { FUE: 'fuerza', DES: 'destreza', CON: 'constitucion', ING: 'ingenio', SAB: 'sabiduria', PRE: 'presencia', PER: 'percepcion' };
-          if (map[stat]) {
-            baseStats[map[stat] as keyof typeof baseStats] += parseInt(val);
-          }
-        }
-      });
-    } else {
-      baseStats.fuerza += 2;
-      baseStats.constitucion += 2;
-      baseStats.presencia += 2;
+    // Add Race stats
+    if (race && race.baseStats) {
+      for (const [key, val] of Object.entries(race.baseStats)) {
+        if (key in baseStats) baseStats[key as keyof typeof baseStats] += val as number;
+      }
+    }
+    
+    // Add Class stats
+    if (cls.baseStats) {
+      for (const [key, val] of Object.entries(cls.baseStats)) {
+        if (key in baseStats) baseStats[key as keyof typeof baseStats] += val as number;
+      }
     }
 
     const newPlayer = new Player(
@@ -185,10 +190,17 @@ export class Session {
     );
     newPlayer.hpCurrent = 100;
     newPlayer.energyCurrent = 100;
-    newPlayer.metadata = { skills: ['tajo_juramentado', 'palma_serena'] }; // Add default skills
+    
+    // Assign starting skills from class
+    newPlayer.metadata = { skills: [] };
+    if (cls.skills) {
+       cls.skills.forEach((s: any) => {
+         if (s.level === 1) newPlayer.metadata.skills.push(s.skillId);
+       });
+    }
 
     await Database.savePlayer(newPlayer);
-    this.sendSystemMessage("¡Personaje creado exitosamente!");
+    this.sendSystemMessage("¡Personaje creado exitosamente! Entrando al mundo...");
     await this.loginCharacter(newPlayer.id);
   }
 

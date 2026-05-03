@@ -15,13 +15,16 @@ import { RespawnManager } from './respawn-manager';
 import { SkillManager } from './skill-manager';
 
 export class GameEngine extends EventEmitter {
-  private eventLog: EventLog;
+  public eventLog: EventLog;
   public entities: EntityManager;
   public commands: CommandManager;
   private activeCombats: Map<string, CombatManager> = new Map();
   private playerCronicas: Map<string, CronicaViva> = new Map();
-  private respawnManager: RespawnManager;
   public skills: SkillManager;
+  public respawnManager: RespawnManager;
+
+  public classesData: any[] = [];
+  public racesData: any[] = [];
 
   private tickInterval: NodeJS.Timeout | null = null;
 
