@@ -55,11 +55,21 @@ Esta es la hoja de ruta exhaustiva del proyecto InheronMUD. Documenta la transic
 
 ---
 
-## 🟡 MILESTONE 5: Multijugador y Onboarding (En progreso)
+## 🟢 MILESTONE 5: Multijugador y Onboarding (Completado)
 *Abrir las puertas al mundo y habilitar la red cooperativa.*
 
 - [x] **Flujo de Conexión (Login)**: Pantalla de inicio de sesión/registro vía WebSocket enlazada a cuentas en base de datos.
 - [x] **Creación de Personaje**: Menú interactivo al crear cuenta nueva para elegir Raza y Clase (con generación de atributos y skills 100% Data-Driven desde YAML).
 - [x] **Sistema de Experiencia**: Recompensas de XP tras los combates por turnos, sistema de escalado, subida de nivel automática y mejora pasiva de stats.
-- [ ] **Broadcasting (Sincronización de Sala)**: Emitir eventos espaciales. Si el Jugador A se mueve, el Jugador B debe ver: *"Perseus ha entrado desde el sur"*.
-- [ ] **Comunicaciones (Chat)**: Comandos `say` (para los que están en la misma sala), `gossip` (canal global).
+- [x] **Broadcasting (Sincronización de Sala)**: Emisión de eventos espaciales de movimiento y conexión de jugadores.
+- [x] **Comunicaciones (Chat)**: Sistema de `say`, `tell`, `yell` y canales persistentes por roles.
+- [x] **IA de NPCs Autónoma**: Mobs con rutinas y comportamiento dinámico mediante flags (`wandering`, `patrol`, `agresivo`, `social`, `cobarde`).
+
+---
+
+## 🟡 MILESTONE 6: Interfaz Gráfica y Consolidación (En progreso)
+*Conectar el motor robusto a una experiencia de usuario moderna y fluida.*
+
+- [ ] **Cliente Web**: Adaptación del frontend en React (`apps/web`) para interpretar los nuevos comandos, canales de chat y estado multi-sesión.
+- [ ] **Sistema de Inventario Ampliado**: Implementación final de reliquias, afijos de equipo y loot tables basado en el documento de sistemas.
+- [ ] **Motor de Misiones y Facciones**: Transición del sistema de Crónica Viva a un QuestManager guiado por datos (YAML) para arcos largos.
