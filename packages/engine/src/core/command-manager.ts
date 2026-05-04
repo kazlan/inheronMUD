@@ -83,6 +83,7 @@ export class CommandManager {
         json.questIndicator = this.getQuestIndicator(playerId, npc.id);
         json.isMob = npc.behaviorId === 'hostile_beast' || npc.behaviorId === 'hostile_boss';
         json.levelDiff = npc.level - (player?.level || 1);
+        console.log(`[Command:Look] NPC ${npc.name} isMob: ${json.isMob}, behaviorId: ${npc.behaviorId}`);
         return json;
       }
       if (item) {

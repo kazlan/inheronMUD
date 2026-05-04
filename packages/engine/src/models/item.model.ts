@@ -13,6 +13,7 @@ export class Item extends Entity {
   public weight: number = 0;
   public value: number = 0;
   public equipSlot?: string;
+  public roomId?: string;
   public metadata: Record<string, any> = {};
 
   constructor(

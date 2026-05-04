@@ -112,7 +112,7 @@ class TesterPlayer {
     private analyzeRoom(data: any) {
         const room = data.room;
         const occupants = data.occupants || [];
-        this.currentRoom = room;
+        this.currentRoom = { ...room, entities: occupants };
         
         this.report('Exploración', `Entrando en "${room.name}" (${room.id})`);
 
@@ -156,15 +156,28 @@ class TesterPlayer {
         }
     }
 
-    private analyzeCombat(message: string) {
-        const cleanMsg = message.replace(/<[^>]*>/g, '');
-        if (message.includes('HAS SUBIDO DE NIVEL')) {
-            const levelMatch = message.match(/nivel (\d+)/);
+    private analyzeCombat(message: string | string[]) {
+        const fullMsg = Array.isArray(message) ? message.join('\n') : message;
+        const cleanMsg = fullMsg.replace(/<[^>]*>/g, '');
+        
+        if (fullMsg.includes('HAS SUBIDO DE NIVEL')) {
+            const levelMatch = fullMsg.match(/nivel (\d+)/);
             const level = levelMatch ? levelMatch[1] : '?';
             this.report('Progreso', `¡LEVEL UP! El personaje ha alcanzado el nivel ${level}.`);
         }
-        if (message.includes('muere') || message.includes('vencido')) {
-            this.report('Combate', `Victoria detectada: ${cleanMsg}`);
+        
+        if (fullMsg.includes('monedas de cobre')) {
+            const coinsMatch = fullMsg.match(/recibido (\d+) monedas/);
+            const coins = coinsMatch ? coinsMatch[1] : '?';
+            this.report('Progreso', `¡LOOT! Ganadas ${coins} monedas.`);
+        }
+
+        if (fullMsg.includes('soltado:')) {
+            this.report('Progreso', `¡LOOT! Los enemigos soltaron items.`);
+        }
+
+        if (fullMsg.includes('muere') || fullMsg.includes('vencido')) {
+            this.report('Combate', `Victoria detectada: ${cleanMsg.substring(0, 100)}...`);
             if (this.currentCombat) {
                 const duration = (Date.now() - this.currentCombat.startTime) / 1000;
                 this.report('Dificultad', `Combate finalizado en ${duration}s. Loot y XP recibidos.`);
@@ -183,17 +196,19 @@ class TesterPlayer {
             const roll = Math.random();
             const mobs = this.currentRoom?.entities?.filter((e: any) => e.isMob) || [];
 
-            if (mobs.length > 0 && roll < 0.7) {
+            if (mobs.length > 0 && roll < 0.8) {
                 const target = mobs[0].name.split(' ')[0].toLowerCase();
                 cmd = `k ${target}`;
-            } else if (roll < 0.3) {
+            } else if (roll < 0.6 || mobs.length === 0) {
+                // If no mobs, 100% chance to move or look.
+                // If mobs, 60% chance to move anyway to explore more.
                 if (this.currentRoom?.exits?.length > 0) {
                     const exit = this.currentRoom.exits[Math.floor(Math.random() * this.currentRoom.exits.length)];
                     cmd = exit.direction;
                 } else {
-                    cmd = 's';
+                    cmd = 'look';
                 }
-            } else if (roll < 0.5) {
+            } else if (roll < 0.8) {
                 cmd = 'score';
             } else {
                 cmd = 'look';

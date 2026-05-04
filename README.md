@@ -37,10 +37,16 @@ InheronMUD es un MUD (Multi-User Dungeon) de nueva generación, diseñado bajo u
 - **Ecosistema Vivo**: Motor `RespawnManager` basado en configuraciones YAML (`spawners.yml`) con soporte para variantes raras de monstruos (bosses). ✅
 - **Habilidades y Clases Data-Driven**: Sistema dinámico de `skills` configurables puramente en YAML (`skills.yml`, `classes.yml`) que interpretan tiradas de dados (N d M + X) y efectos variados. ✅
 
-### Milestone 5: Multijugador y Onboarding ⏳ (Próximo objetivo)
+### Milestone 5: Multijugador y Onboarding ✅
 - Login y creación de personajes vía WebSocket.
 - Broadcasting espacial (sincronización entre jugadores en la misma sala).
 - Chat de sala (`say`) y global (`gossip`).
+- Gestión de muerte y respawn penalizado.
+
+### Milestone 6: Calidad, Estabilidad e IA de Testing ✅
+- **Flota de Testers Autónomos**: Scripts de IA que exploran el mundo, combaten y reportan fallos cualitativos (narrativa, bugs de mapa, balanceo).
+- **Sistema de Recompensas Completo**: Los NPCs ahora sueltan loot y monedas al morir, integrando la economía base.
+- **Deduplicación de Logs**: Sistema de reportes inteligente que evita el spam de mensajes repetitivos en la crónica del juego.
 
 ---
 

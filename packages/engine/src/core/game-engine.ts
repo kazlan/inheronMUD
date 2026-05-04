@@ -139,11 +139,37 @@ export class GameEngine extends EventEmitter {
       if (!combat.active) {
         // Compute total XP and cleanup dead NPCs
         let totalXp = 0;
+        let totalCoins = 0;
+        const droppedItems: string[] = [];
+
         combat.participants.forEach(p => {
           if (!p.isPlayer && p.hpCurrent <= 0) {
             const npc = this.entities.getNPC(p.entityId);
             if (npc) {
               totalXp += npc.getXpReward();
+              
+              // 1. Calcular monedas (ej: Nivel * random(2-5))
+              const npcCoins = npc.level * (Math.floor(Math.random() * 4) + 2);
+              totalCoins += npcCoins;
+              console.log(`[Combat:Loot] NPC ${npc.name} dropped ${npcCoins} coins. Total: ${totalCoins}`);
+
+              // 2. Procesar Inventario (soltar a la sala)
+              if (npc.inventory.length > 0 && npc.roomId) {
+                const room = this.entities.getRoom(npc.roomId);
+                if (room) {
+                  npc.inventory.forEach(itemId => {
+                    const item = this.entities.getItem(itemId);
+                    if (item) {
+                       room.addEntity(item.id);
+                       item.roomId = room.id;
+                       droppedItems.push(item.name);
+                    }
+                  });
+                  npc.inventory = [];
+                }
+              }
+
+              // 3. Remover de la sala
               if (npc.roomId) {
                 const room = this.entities.getRoom(npc.roomId);
                 if (room) room.removeEntity(npc.id);
@@ -152,25 +178,43 @@ export class GameEngine extends EventEmitter {
           }
         });
 
-        // Sync player HP, award XP, and save (for surviving players)
-        combat.participants.forEach(p => {
-          if (p.isPlayer) {
-            const player = this.getPlayer(p.entityId);
-            if (player && p.hpCurrent > 0) {
-              player.hpCurrent = p.hpCurrent;
-              
-              if (totalXp > 0) {
-                const xpLogs = player.addExperience(totalXp);
-                if (xpLogs.length > 0) {
-                  this.emit('combat_message', player.id, ['\n' + xpLogs.join('\n')]);
+        // Award rewards to surviving players
+        const survivingPlayers = combat.participants.filter(p => p.isPlayer && p.hpCurrent > 0);
+        if (survivingPlayers.length > 0) {
+           const coinsPerPlayer = Math.floor(totalCoins / survivingPlayers.length);
+           
+           survivingPlayers.forEach(p => {
+             const player = this.getPlayer(p.entityId);
+             if (player) {
+                const logs: string[] = [];
+                
+                // XP
+                if (totalXp > 0) {
+                  const xpLogs = player.addExperience(totalXp);
+                  logs.push(...xpLogs);
                 }
-              }
 
-              // Fire and forget save
-              Database.savePlayer(player).catch(err => console.error('Error saving player HP/XP:', err));
-            }
-          }
-        });
+                // Coins
+                if (coinsPerPlayer > 0) {
+                  player.coins += coinsPerPlayer;
+                  logs.push(`<yellow>Has recibido ${coinsPerPlayer} monedas de cobre.</yellow>`);
+                }
+
+                // Notify about loot in room
+                if (droppedItems.length > 0) {
+                   logs.push(`<cyan>Al morir, los enemigos han soltado: ${droppedItems.map(i => `<white>${i}</white>`).join(', ')}.</cyan>`);
+                }
+
+                if (logs.length > 0) {
+                  this.emit('combat_message', player.id, ['\n' + logs.join('\n')]);
+                }
+
+                // Sync HP and Save
+                player.hpCurrent = p.hpCurrent;
+                Database.savePlayer(player).catch(err => console.error('Error saving player post-combat:', err));
+             }
+           });
+        }
         this.endCombat(combatId);
       }
     }

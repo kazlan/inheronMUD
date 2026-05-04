@@ -97,6 +97,22 @@ export class WorldFactory {
             npc.activeEffects.push({ ...eff, startTime: Date.now(), id: eff.id || `eff_${Math.random()}` });
           });
         }
+        if (data.inventory) {
+          data.inventory.forEach((itemId: string) => {
+            const template = engine.entities.itemTemplates.get(itemId as string);
+            if (template) {
+              const itemClone = new Item(template.name, template.description, template.type as ItemType);
+              if (template.equipSlot) itemClone.equipSlot = template.equipSlot;
+              if (template.metadata) itemClone.metadata = template.metadata;
+              if (template.value !== undefined) itemClone.value = template.value;
+              engine.registerItem(itemClone);
+              npc.inventory.push(itemClone.id);
+            } else {
+              console.warn(`[WorldFactory] Could not find item template ${itemId} for NPC ${npc.name}'s inventory!`);
+            }
+          });
+        }
+
         if (data.equipment) {
           for (const [slot, itemId] of Object.entries(data.equipment)) {
             const template = engine.entities.itemTemplates.get(itemId as string);

@@ -83,6 +83,20 @@ export class RespawnManager {
       });
     }
 
+    if (template.inventory) {
+      template.inventory.forEach((itemId: string) => {
+        const itemTemplate = this.engine.entities.itemTemplates.get(itemId as string);
+        if (itemTemplate) {
+          const itemClone = new (require('../models/item.model').Item)(itemTemplate.name, itemTemplate.description, itemTemplate.type);
+          if (itemTemplate.equipSlot) itemClone.equipSlot = itemTemplate.equipSlot;
+          if (itemTemplate.metadata) itemClone.metadata = itemTemplate.metadata;
+          if (itemTemplate.value !== undefined) itemClone.value = itemTemplate.value;
+          this.engine.registerItem(itemClone);
+          npc.inventory.push(itemClone.id);
+        }
+      });
+    }
+
     if (template.equipment) {
       for (const [slot, itemId] of Object.entries(template.equipment)) {
         const itemTemplate = this.engine.entities.itemTemplates.get(itemId as string);

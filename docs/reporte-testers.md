@@ -1,3 +1,102 @@
+- [ ] [IA] [2026-05-04 07:29:52] **BetaTester**: Interacción social de NPC: Ignis el Yunque murmura algo ininteligible.
+- [ ] [IA] [2026-05-04 07:29:35] **AlphaTester**: Interacción social de NPC: Doña Marga murmura algo ininteligible.
+- [ ] [IA] [2026-05-04 07:29:28] **BetaTester**: Avistado NPC social: Anciano Sabio en "Plaza del Alba Chica".
+- [ ] [IA] [2026-05-04 07:29:20] **BetaTester**: Interacción social de NPC: Anciano Sabio murmura algo ininteligible.
+- [ ] [IA] [2026-05-04 07:29:20] **BetaTester**: Interacción social de NPC: Anciano Sabio saluda amablemente a BetaTesterHero.
+- [ ] [IA] [2026-05-04 07:29:18] **BetaTester**: Avistado NPC social: Anciano Sabio, Guardia del Alba en "Plaza del Alba Chica".
+- [ ] [Mapa] [2026-05-04 07:29:18] **BetaTester**: La salida "west" no se menciona claramente en la descripción de "Plaza del Alba Chica".
+- [ ] [Mapa] [2026-05-04 07:29:18] **BetaTester**: La salida "east" no se menciona claramente en la descripción de "Plaza del Alba Chica".
+- [ ] [Mapa] [2026-05-04 07:29:18] **BetaTester**: La salida "south" no se menciona claramente en la descripción de "Plaza del Alba Chica".
+- [ ] [Mapa] [2026-05-04 07:29:18] **BetaTester**: La salida "north" no se menciona claramente en la descripción de "Plaza del Alba Chica".
+- [ ] [Exploración] [2026-05-04 07:29:18] **BetaTester**: Entrando en "Plaza del Alba Chica" (villaclara_plaza)
+- [ ] [IA] [2026-05-04 07:29:05] **AlphaTester**: Interacción social de NPC: Doña Marga saluda amablemente a AlphaTesterHero.
+- [ ] [Mapa] [2026-05-04 07:28:49] **BetaTester**: La salida "south" no se menciona claramente en la descripción de "Llanuras de Ámbar".
+- [ ] [Exploración] [2026-05-04 07:28:49] **BetaTester**: Entrando en "Llanuras de Ámbar" (villaclara_campo_norte)
+- [ ] [IA] [2026-05-04 07:28:44] **AlphaTester**: Avistado NPC social: Ignis el Yunque en "Forja del Yunque Quebrado".
+- [ ] [Mapa] [2026-05-04 07:28:44] **AlphaTester**: La salida "nw" no se menciona claramente en la descripción de "Forja del Yunque Quebrado".
+- [ ] [Mapa] [2026-05-04 07:28:44] **AlphaTester**: La salida "north" no se menciona claramente en la descripción de "Forja del Yunque Quebrado".
+- [ ] [Exploración] [2026-05-04 07:28:44] **AlphaTester**: Entrando en "Forja del Yunque Quebrado" (villaclara_forja)
+- [ ] [INFO] [2026-05-04 07:28:44] **AlphaTester**: Entrada exitosa al mundo.
+- [ ] [IA] [2026-05-04 07:26:01] **BetaTester**: Interacción social de NPC: Anciano Sabio murmura algo ininteligible.
+- [ ] [IA] [2026-05-04 07:24:06] **AlphaTester**: Interacción social de NPC: Ignis el Yunque murmura algo ininteligible.
+- [ ] [IA] [2026-05-04 07:24:06] **BetaTester**: Interacción social de NPC: Grom el Férreo murmura algo ininteligible.
+- [ ] [IA] [2026-05-04 07:23:53] **BetaTester**: Interacción social de NPC: Grom el Férreo saluda amablemente a BetaTesterHero.
+- [ ] [IA] [2026-05-04 07:23:31] **BetaTester**: Avistado NPC social: Anciano Sabio, Tomasito, Guardia del Alba en "Plaza del Alba Chica".
+- [ ] [Mapa] [2026-05-04 07:23:31] **BetaTester**: La salida "west" no se menciona claramente en la descripción de "Plaza del Alba Chica".
+- [ ] [Mapa] [2026-05-04 07:23:31] **BetaTester**: La salida "east" no se menciona claramente en la descripción de "Plaza del Alba Chica".
+- [ ] [Mapa] [2026-05-04 07:23:31] **BetaTester**: La salida "south" no se menciona claramente en la descripción de "Plaza del Alba Chica".
+- [ ] [Mapa] [2026-05-04 07:23:31] **BetaTester**: La salida "north" no se menciona claramente en la descripción de "Plaza del Alba Chica".
+- [ ] [Exploración] [2026-05-04 07:23:31] **BetaTester**: Entrando en "Plaza del Alba Chica" (villaclara_plaza)
+- [ ] [IA] [2026-05-04 07:23:26] **AlphaTester**: Avistado NPC social: Doña Marga en "Panadería Panbendito".
+- [ ] [Mapa] [2026-05-04 07:23:26] **AlphaTester**: La salida "south" no se menciona claramente en la descripción de "Panadería Panbendito".
+- [ ] [Mapa] [2026-05-04 07:23:26] **AlphaTester**: La salida "west" no se menciona claramente en la descripción de "Panadería Panbendito".
+- [ ] [Exploración] [2026-05-04 07:23:26] **AlphaTester**: Entrando en "Panadería Panbendito" (villaclara_panaderia)
+- [ ] [INFO] [2026-05-04 07:23:26] **AlphaTester**: Entrada exitosa al mundo.
+- [ ] [IA] [2026-05-04 07:22:42] **BetaTester**: Avistado NPC social: Anciano Sabio, Guardia del Alba en "Plaza del Alba Chica".
+- [ ] [IA] [2026-05-04 07:22:34] **BetaTester**: Interacción social de NPC: Anciano Sabio murmura algo ininteligible.
+- [ ] [IA] [2026-05-04 07:22:32] **BetaTester**: Avistado NPC social: Anciano Sabio en "Plaza del Alba Chica".
+- [ ] [Mapa] [2026-05-04 07:22:32] **BetaTester**: La salida "west" no se menciona claramente en la descripción de "Plaza del Alba Chica".
+- [ ] [Mapa] [2026-05-04 07:22:32] **BetaTester**: La salida "east" no se menciona claramente en la descripción de "Plaza del Alba Chica".
+- [ ] [Mapa] [2026-05-04 07:22:32] **BetaTester**: La salida "south" no se menciona claramente en la descripción de "Plaza del Alba Chica".
+- [ ] [Mapa] [2026-05-04 07:22:32] **BetaTester**: La salida "north" no se menciona claramente en la descripción de "Plaza del Alba Chica".
+- [ ] [Exploración] [2026-05-04 07:22:32] **BetaTester**: Entrando en "Plaza del Alba Chica" (villaclara_plaza)
+- [ ] [IA] [2026-05-04 07:22:11] **AlphaTester**: Interacción social de NPC: Doña Marga murmura algo ininteligible.
+- [ ] [IA] [2026-05-04 07:22:11] **AlphaTester**: Interacción social de NPC: Doña Marga saluda amablemente a AlphaTesterHero.
+- [ ] [IA] [2026-05-04 07:21:19] **BetaTester**: Interacción social de NPC: Conejo Acorazado Veterano saluda amablemente a BetaTesterHero.
+- [ ] [Mapa] [2026-05-04 07:21:18] **BetaTester**: La salida "down" no se menciona claramente en la descripción de "Colinas de los Conejos Acorazados".
+- [ ] [Mapa] [2026-05-04 07:21:18] **BetaTester**: La salida "south" no se menciona claramente en la descripción de "Colinas de los Conejos Acorazados".
+- [ ] [Exploración] [2026-05-04 07:21:18] **BetaTester**: Entrando en "Colinas de los Conejos Acorazados" (colinas_inicio)
+- [ ] [IA] [2026-05-04 07:21:13] **AlphaTester**: Avistado NPC social: Ignis el Yunque en "Forja del Yunque Quebrado".
+- [ ] [Mapa] [2026-05-04 07:21:13] **AlphaTester**: La salida "nw" no se menciona claramente en la descripción de "Forja del Yunque Quebrado".
+- [ ] [Mapa] [2026-05-04 07:21:13] **AlphaTester**: La salida "north" no se menciona claramente en la descripción de "Forja del Yunque Quebrado".
+- [ ] [Exploración] [2026-05-04 07:21:13] **AlphaTester**: Entrando en "Forja del Yunque Quebrado" (villaclara_forja)
+- [ ] [INFO] [2026-05-04 07:21:13] **AlphaTester**: Entrada exitosa al mundo.
+- [ ] [IA] [2026-05-04 07:19:38] **BetaTester**: Interacción social de NPC: Conejo Acorazado Veterano saluda amablemente a BetaTesterHero.
+- [ ] [IA] [2026-05-04 07:19:38] **BetaTester**: Interacción social de NPC: Conejo Acorazado Veterano murmura algo ininteligible.
+- [ ] [IA] [2026-05-04 07:19:31] **AlphaTester**: Interacción social de NPC: Ignis el Yunque murmura algo ininteligible.
+- [ ] [IA] [2026-05-04 07:19:11] **BetaTester**: Interacción social de NPC: Anciano Sabio murmura algo ininteligible.
+- [ ] [IA] [2026-05-04 07:18:56] **AlphaTester**: Interacción social de NPC: Ignis el Yunque saluda amablemente a AlphaTesterHero.
+- [ ] [IA] [2026-05-04 07:18:46] **BetaTester**: Interacción social de NPC: Grom el Férreo saluda amablemente a BetaTesterHero.
+- [ ] [IA] [2026-05-04 07:18:44] **BetaTester**: Avistado NPC social: Grom el Férreo en "Gremio de Aventureros".
+- [ ] [Mapa] [2026-05-04 07:18:44] **BetaTester**: La salida "north" no se menciona claramente en la descripción de "Gremio de Aventureros".
+- [ ] [Mapa] [2026-05-04 07:18:44] **BetaTester**: La salida "east" no se menciona claramente en la descripción de "Gremio de Aventureros".
+- [ ] [Exploración] [2026-05-04 07:18:44] **BetaTester**: Entrando en "Gremio de Aventureros" (villaclara_gremio)
+- [ ] [IA] [2026-05-04 07:18:39] **AlphaTester**: Avistado NPC social: Doña Marga en "Panadería Panbendito".
+- [ ] [Mapa] [2026-05-04 07:18:39] **AlphaTester**: La salida "south" no se menciona claramente en la descripción de "Panadería Panbendito".
+- [ ] [Mapa] [2026-05-04 07:18:39] **AlphaTester**: La salida "west" no se menciona claramente en la descripción de "Panadería Panbendito".
+- [ ] [Exploración] [2026-05-04 07:18:39] **AlphaTester**: Entrando en "Panadería Panbendito" (villaclara_panaderia)
+- [ ] [INFO] [2026-05-04 07:18:39] **AlphaTester**: Entrada exitosa al mundo.
+- [ ] [IA] [2026-05-04 07:17:44] **AlphaTester**: Interacción social de NPC: Doña Marga murmura algo ininteligible.
+- [ ] [IA] [2026-05-04 07:17:36] **AlphaTester**: Interacción social de NPC: Anciano Sabio murmura algo ininteligible.
+- [ ] [IA] [2026-05-04 07:17:36] **AlphaTester**: Interacción social de NPC: Anciano Sabio saluda amablemente a AlphaTesterHero.
+- [ ] [IA] [2026-05-04 07:16:21] **AlphaTester**: Interacción social de NPC: Grom el Férreo murmura algo ininteligible.
+- [ ] [IA] [2026-05-04 07:16:09] **AlphaTester**: Interacción social de NPC: Grom el Férreo saluda amablemente a BetaTesterHero.
+- [ ] [IA] [2026-05-04 07:15:42] **BetaTester**: Avistado NPC social: Anciano Sabio, Tomasito en "Plaza del Alba Chica".
+- [ ] [Mapa] [2026-05-04 07:15:42] **BetaTester**: La salida "west" no se menciona claramente en la descripción de "Plaza del Alba Chica".
+- [ ] [Mapa] [2026-05-04 07:15:42] **BetaTester**: La salida "east" no se menciona claramente en la descripción de "Plaza del Alba Chica".
+- [ ] [Mapa] [2026-05-04 07:15:42] **BetaTester**: La salida "south" no se menciona claramente en la descripción de "Plaza del Alba Chica".
+- [ ] [Mapa] [2026-05-04 07:15:42] **BetaTester**: La salida "north" no se menciona claramente en la descripción de "Plaza del Alba Chica".
+- [ ] [Exploración] [2026-05-04 07:15:42] **BetaTester**: Entrando en "Plaza del Alba Chica" (villaclara_plaza)
+- [ ] [IA] [2026-05-04 07:15:39] **AlphaTester**: Interacción social de NPC: Grom el Férreo saluda amablemente a AlphaTesterHero.
+- [ ] [IA] [2026-05-04 07:15:37] **AlphaTester**: Avistado NPC social: Grom el Férreo en "Gremio de Aventureros".
+- [ ] [Mapa] [2026-05-04 07:15:37] **AlphaTester**: La salida "north" no se menciona claramente en la descripción de "Gremio de Aventureros".
+- [ ] [Mapa] [2026-05-04 07:15:37] **AlphaTester**: La salida "east" no se menciona claramente en la descripción de "Gremio de Aventureros".
+- [ ] [Exploración] [2026-05-04 07:15:37] **AlphaTester**: Entrando en "Gremio de Aventureros" (villaclara_gremio)
+- [ ] [INFO] [2026-05-04 07:15:37] **AlphaTester**: Entrada exitosa al mundo.
+- [ ] [IA] [2026-05-04 07:14:21] **AlphaTester**: Interacción social de NPC: Grom el Férreo murmura algo ininteligible.
+- [ ] [IA] [2026-05-04 07:14:21] **AlphaTester**: Interacción social de NPC: Grom el Férreo saluda amablemente a AlphaTesterHero.
+- [ ] [IA] [2026-05-04 07:13:54] **AlphaTester**: Interacción social de NPC: Anciano Sabio saluda amablemente a BetaTesterHero.
+- [ ] [IA] [2026-05-04 07:13:41] **AlphaTester**: Interacción social de NPC: Anciano Sabio murmura algo ininteligible.
+- [ ] [IA] [2026-05-04 07:13:24] **AlphaTester**: Interacción social de NPC: Anciano Sabio saluda amablemente a AlphaTesterHero.
+- [ ] [IA] [2026-05-04 07:13:04] **BetaTester**: Interacción social de NPC: Conejo Acorazado Veterano saluda amablemente a BetaTesterHero.
+- [ ] [Mapa] [2026-05-04 07:13:03] **BetaTester**: La salida "down" no se menciona claramente en la descripción de "Colinas de los Conejos Acorazados".
+- [ ] [Mapa] [2026-05-04 07:13:03] **BetaTester**: La salida "south" no se menciona claramente en la descripción de "Colinas de los Conejos Acorazados".
+- [ ] [Exploración] [2026-05-04 07:13:03] **BetaTester**: Entrando en "Colinas de los Conejos Acorazados" (colinas_inicio)
+- [ ] [IA] [2026-05-04 07:12:58] **AlphaTester**: Avistado NPC social: Doña Marga en "Panadería Panbendito".
+- [ ] [Mapa] [2026-05-04 07:12:58] **AlphaTester**: La salida "south" no se menciona claramente en la descripción de "Panadería Panbendito".
+- [ ] [Mapa] [2026-05-04 07:12:58] **AlphaTester**: La salida "west" no se menciona claramente en la descripción de "Panadería Panbendito".
+- [ ] [Exploración] [2026-05-04 07:12:58] **AlphaTester**: Entrando en "Panadería Panbendito" (villaclara_panaderia)
+- [ ] [INFO] [2026-05-04 07:12:58] **AlphaTester**: Entrada exitosa al mundo.
 - [ ] [IA] [2026-05-04 07:07:53] **BetaTester**: Interacción social de NPC: Conejo Acorazado Veterano saluda amablemente a BetaTesterHero.
 - [ ] [IA] [2026-05-04 07:07:53] **BetaTester**: Interacción social de NPC: Conejo Acorazado Veterano murmura algo ininteligible.
 - [ ] [IA] [2026-05-04 07:06:33] **BetaTester**: Interacción social de NPC: Anciano Sabio murmura algo ininteligible.

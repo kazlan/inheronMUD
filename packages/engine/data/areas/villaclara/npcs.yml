@@ -191,7 +191,7 @@
   behaviorId: hostile_boss
   roomId: colinas_madriguera
   level: 5
-  flags: ['agresivo', 'social']
+  flags: ['agresivo']
   effects:
     - id: regeneracion_mutante
       name: Regeneración Mutante
