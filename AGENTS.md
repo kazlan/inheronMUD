@@ -20,3 +20,8 @@
 5. **Safety**:
    - Do not perform destructive database actions without explicit approval.
    - Backups are only considered valid once restoration has been successfully tested.
+
+6. **World Building & Areas**:
+   - Rooms are loaded from `data/areas/<areaName>/rooms.yml` and automatically inherit the `areaId` based on their folder name.
+   - NPCs and spawners placed in those rooms automatically inherit this `areaId`.
+   - Wandering AI restricts mobs to their inherited `areaId`, preventing them from roaming into different zones (like a beast entering a town center). You do not need to manually tag rooms to achieve this basic confinement.

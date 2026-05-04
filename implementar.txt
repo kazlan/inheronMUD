@@ -1,0 +1,100 @@
+implementar
+- weapon skills
+- magic skills
+
+entusiasmo en el bardo: alto-pemite canciones de ritmo alto, al bajar mejora las de ritmo lento (lento heal, regens y así, alto DSs ataques)
+magos: atunnement, castear una escuela te balancea hacia ella
+
+no hay sistemas de comida/bebida
+
+
+
+en el panel de detalle de un mob no deberían aparecer talk/buy o quest pero sí su descripción y skills que se puedan usar contra él. (como judge cuando está disponible)
+
+implementar comando autoloot on/off para recoger automáticamente el loot cuando muera un mob. también un get all (coge todo lo que hay en el suelo) con alias get . también ha de servir para coger todo lo de un contenedor. ej. get all chest o get . chest
+
+no veo que los goblins suelten oro (monedas para usar en las tiendas)
+moneda de oro sucio es item para vender en tienda?
+
+problema de diseño, el campamento goblin solo debería ser accesible desde la puerta principal. 
+Definir bien áreas dentro de las zonas cuando se creen y diseñar rooms que sirvan de enlaces de unas con otras.
+
+lo mismo con los edificios, tienen puertas en una o varias direcciones pero solo dejan salir por las puertas el resto de direcciones etán bloqueadas a menos que haya otras habitaciones, escaleras interiores, trampillas o puertas secretas.
+
+retocar skills y guía-creacion-zonas para tenerlo en cuenta.
+
+En los textos descriptivos no añadas (sentido) solo su descripción. 
+ej incorrecto: 
+El aire es helado dentro de este majestuoso mausoleo de mármol negro (Tacto). El
+sonido de tus pasos  resuena con un eco perturbador contra las bóvedas de piedra
+(Oído), revelando sarcófagos de antiguos  héroes de Aethelgard cubiertos de
+polvo y telarañas (Vista). En la parte trasera, una pesada reja de  hierro
+forjado desciende hacia la oscuridad absoluta de las criptas olvidadas. El olor
+a tierra rancia  y muerte antigua emana de las profundidades (Olfato).
+
+correcto:
+El aire es helado dentro de este majestuoso mausoleo de mármol negro . El sonido de tus pasos  resuena con un eco perturbador contra las bóvedas de piedra, revelando sarcófagos de antiguos  héroes de Aethelgard cubiertos de polvo y telarañas. En la parte trasera, una pesada reja de  hierro forjado desciende hacia la oscuridad absoluta de las criptas olvidadas. El olor a tierra rancia  y muerte antigua emana de las profundidades.
+
+también debería haber un segundo párrafo que describa brevemente las salidas.
+ej:
+Hacia arriba volvemos al pueblo, hacia el norte nos adentramos en un oscuro pasillo, ...
+
+si una habitación describe que la única salida es hacia el norte no debe de tener una salida hacia el norte y otra al noreste y similares.
+
+item 'cadaver encadenado' no abre el panel de detalle
+
+si describes una habitación minúscula no debería de tener 3 salidas, debería ser una pequeña área de 1 room con solo 1 entrada/salida (quizás alguna otra secreta,como un agujero detras de un cuadro o una rendija detrás de un mueble, una trampilla o así)
+
+la antorcha tampoco abre panel
+usar la antorcha muestra el texto descriptivo pero sigo viendo las mismas salidas que antes.  ok, parece que la salida west era la sasla secreta pero aparecía en la lista de salidas antes de darle a la antorcha.
+
+En el panel dereche, donde pone map debería de poner el nombre de la room,
+
+parece que los mobs que he matado en la cripta ninguno ha dado loot
+
+-------------
+la llave de hielo debería de desaparecer del inventario una vez usada correctamente (las llaves en general)
+
+el tema de las salidas nos lo hemos de hacer mirar, es incongruente entre las descripciones y las salidas reales.
+
+ejemplo:
+Una pequeña tumba saqueada. Los sarcófagos están abiertos y sus tapas rotas en
+el suelo.
+Solo hay salida hacia el este.
+
+Exits:
+E
+N
+S
+NE
+SE
+
+sigo sin ver loot en los mobs de los sótanos IMPORTANTE
+----------
+
+clickar en un objeto en el chat box debería abrir su panel de detalle
+
+setlevel no reajusta bien los hp.. setlevel 1 me deja con 501 hp
+la recuperación de vida fuera de combate es anormalmente rápida
+
+La White room y su rata parecen usar bien el sistema de quests, ver porqué las nuestras no funcionan. Revisar la UI, la ! de la rata debería de estar en la misma linea que el mob. estilo [!] [Mob] A Rat
+
+valorar ambiente en las rooms (areas de veneno, oscuras, con carga electroestática, malditas...). También como superarlas, fuentes de luz o infravisión para oscuridad, antídotos para zonas de venenos....
+
+parece que la antorcha dejó de funcionar, aparece el mensaje pero no la nueva salida ni se recarga el look
+seguimos sin loot
+----------------------
+
+ no se parsea el HTML en el web cliente: ejemplo aparece <b>hornos</b>
+debe haber un tiempo definido para que los Wanderers cambien de zona, por defecto 20 segundos pero configurable para poder tener gente muy lenta (el animal healer) o bichos muy rápidos, algún conejo especialmente escurridizo.
+el combate es un poco frenético,subamos el tick a 2.5
+
+---------
+<gray>Guardia del Alba llega patrullando la zona.</gray>
+<gray>Guardia del Alba continúa su patrulla.</gray>
+
+en el cliente web hay que dejar una linea entre la descripción y las direcciones
+los conejos y los guardias parecen moverse entre salas a toda velocidad
+los conejos deberían de quedarse el las salas del prado y no entrar al pueblo
+k se ha de reconocer como comando.. el comando es kill, si solo existe ese comando que comience por k tanto k, como ki, como kil deberían de activarlo.. lo mismo con los objetivos, si se llama 'conejo acorazado' y solo ese empieza por c entonces k c debería atacar al conejo. lo mismo con el resto e comandos y parámetros de comando
+

@@ -1,11 +1,53 @@
-- [ ] [2026-05-03 23:43:11] **AlphaTester**: Muerte detectada en la sala: <yellow>Conejo Acorazado no resiste el ataque y muere.</yellow>
-- [ ] [2026-05-03 23:29:54] **AlphaTester**: Jugador ha entrado al mundo con éxito.
-- [ ] [2026-05-03 23:29:54] **BetaTester**: Jugador ha entrado al mundo con éxito.
-- [ ] [2026-05-03 23:15:00] **BetaTester**: Jugador ha entrado al mundo con éxito.
-- [ ] [2026-05-03 23:15:00] **AlphaTester**: Jugador ha entrado al mundo con éxito.
-- [ ] [2026-05-03 23:09:27] **BetaTester**: Jugador ha entrado al mundo con éxito.
-- [ ] [2026-05-03 23:09:27] **AlphaTester**: Jugador ha entrado al mundo con éxito.
-- [ ] [2026-05-03 23:08:42] **AlphaTester**: Jugador ha entrado al mundo con éxito.
-- [ ] [2026-05-03 23:08:42] **BetaTester**: Jugador ha entrado al mundo con éxito.
-- [ ] [2026-05-03 22:49:00] **BetaTester**: Jugador ha entrado al mundo con éxito.
-- [ ] [2026-05-03 22:49:00] **AlphaTester**: Jugador ha entrado al mundo con éxito.
+- [ ] [IA] [2026-05-04 07:07:53] **BetaTester**: Interacción social de NPC: Conejo Acorazado Veterano saluda amablemente a BetaTesterHero.
+- [ ] [IA] [2026-05-04 07:07:53] **BetaTester**: Interacción social de NPC: Conejo Acorazado Veterano murmura algo ininteligible.
+- [ ] [IA] [2026-05-04 07:06:33] **BetaTester**: Interacción social de NPC: Anciano Sabio murmura algo ininteligible.
+- [ ] [Ambiente] [2026-05-04 07:05:51] **BetaTester**: Efecto perceptible: Un aura de devoción reconforta a los presentes.
+- [ ] [IA] [2026-05-04 07:05:51] **AlphaTester**: Interacción social de NPC: Doña Marga murmura algo ininteligible.
+- [ ] [IA] [2026-05-04 07:05:48] **BetaTester**: Interacción social de NPC: Hermano Tobías murmura algo ininteligible.
+- [ ] [IA] [2026-05-04 07:05:47] **BetaTester**: Avistado NPC social: Hermano Tobías en "Capilla de la Luz Eterna".
+- [ ] [Mapa] [2026-05-04 07:05:47] **BetaTester**: La salida "north" no se menciona claramente en la descripción de "Capilla de la Luz Eterna".
+- [ ] [Exploración] [2026-05-04 07:05:47] **BetaTester**: Entrando en "Capilla de la Luz Eterna" (villaclara_iglesia)
+- [ ] [IA] [2026-05-04 07:05:43] **AlphaTester**: Interacción social de NPC: Ignis el Yunque murmura algo ininteligible.
+- [ ] [IA] [2026-05-04 07:05:42] **AlphaTester**: Avistado NPC social: Ignis el Yunque en "Forja del Yunque Quebrado".
+- [ ] [Mapa] [2026-05-04 07:05:42] **AlphaTester**: La salida "nw" no se menciona claramente en la descripción de "Forja del Yunque Quebrado".
+- [ ] [Mapa] [2026-05-04 07:05:42] **AlphaTester**: La salida "north" no se menciona claramente en la descripción de "Forja del Yunque Quebrado".
+- [ ] [Exploración] [2026-05-04 07:05:42] **AlphaTester**: Entrando en "Forja del Yunque Quebrado" (villaclara_forja)
+- [ ] [INFO] [2026-05-04 07:05:42] **AlphaTester**: Entrada exitosa al mundo.
+- [ ] [Ambiente] [2026-05-04 06:51:05] **AlphaTester**: Efecto perceptible detectado: <green>Hermano Tobías conjura una suave luz curativa sobre BetaTesterHero, restaurando sus heridas.</green>
+- [ ] [Habilidades] [2026-05-04 06:51:05] **AlphaTester**: Habilidad detectada: <green>Hermano Tobías conjura una suave luz curativa sobre BetaTesterHero, restaurando sus heridas.</green>
+- [ ] [Ambiente] [2026-05-04 06:51:05] **AlphaTester**: Efecto perceptible detectado: <green>Hermano Tobías conjura una suave luz curativa sobre BetaTesterHero, restaurando sus heridas.</green>
+- [ ] [Habilidades] [2026-05-04 06:51:05] **AlphaTester**: Habilidad detectada: <green>Hermano Tobías conjura una suave luz curativa sobre BetaTesterHero, restaurando sus heridas.</green>
+- [ ] [IA] [2026-05-04 06:49:12] **AlphaTester**: Los NPCs en "Gremio de Aventureros" parecen estatuas (1 min sin actividad).
+- [ ] [IA] [2026-05-04 06:46:53] **BetaTester**: Los NPCs en "Llanuras de Ámbar" parecen estatuas (1 min sin actividad).
+- [ ] [Ambiente] [2026-05-04 06:46:21] **AlphaTester**: Efecto perceptible detectado: <cyan>Un aura de devoción reconforta a los presentes.</cyan>
+- [ ] [Exploración] [2026-05-04 06:45:08] **AlphaTester**: Entrando en "Gremio de Aventureros" (villaclara_gremio)
+- [ ] [Exploración] [2026-05-04 06:45:08] **BetaTester**: Entrando en "Llanuras de Ámbar" (villaclara_campo_norte)
+- [ ] [INFO] [2026-05-04 06:45:08] **BetaTester**: Entrada exitosa al mundo.
+- [ ] [IA] [2026-05-04 06:45:07] **BetaTester**: Los NPCs en "Llanuras de Ámbar" parecen estatuas (1 min sin actividad).
+- [ ] [INFO] [2026-05-04 06:44:03] **BetaTester**: Entrada exitosa al mundo.
+- [ ] [IA] [2026-05-04 06:43:42] **AlphaTester**: Los NPCs en "Gremio de Aventureros" parecen estatuas (1 min sin actividad).
+- [ ] [INFO] [2026-05-04 06:42:40] **BetaTester**: Entrada exitosa al mundo.
+- [ ] [Ambiente] [2026-05-04 06:42:32] **BetaTester**: Efecto perceptible detectado: <cyan>Un aura de devoción reconforta a los presentes.</cyan>
+- [ ] [Ambiente] [2026-05-04 06:42:32] **BetaTester**: Efecto perceptible detectado: <cyan>Un aura de devoción reconforta a los presentes.</cyan>
+- [ ] [INFO] [2026-05-04 06:42:26] **AlphaTester**: Entrada exitosa al mundo.
+- [ ] [Ambiente] [2026-05-04 06:41:11] **BetaTester**: Efecto perceptible detectado: <cyan>Un aura de devoción reconforta a los presentes.</cyan>
+- [ ] [Ambiente] [2026-05-04 06:39:01] **BetaTester**: Efecto perceptible detectado: <cyan>Un aura de devoción reconforta a los presentes.</cyan>
+- [ ] [Ambiente] [2026-05-04 06:38:41] **AlphaTester**: Efecto perceptible detectado: <cyan>Un aura de devoción reconforta a los presentes.</cyan>
+- [ ] [Ambiente] [2026-05-04 06:38:31] **AlphaTester**: Efecto perceptible detectado: <cyan>Un aura de devoción reconforta a los presentes.</cyan>
+- [ ] [INFO] [2026-05-04 06:38:30] **BetaTester**: Entrada exitosa al mundo.
+# Informe de Calidad y Sensaciones (Qualitative Report)
+
+## Resumen Ejecutivo de la Sesión
+- **Inmersión Narrativa**: [Pendiente]
+- **Consistencia Espacial**: [Pendiente]
+- **Vida del Mundo (IA)**: [En proceso] NPCs saludando y lanzando mensajes de ambiente.
+- **Feedback de Efectos**: [Excelente] Se detectan auras espaciales (Iglesia) de forma correcta.
+- **Economía y Progreso**: [Pendiente]
+- **Dificultad y Reto**: [En proceso] Monitoreando duración de combates y muertes.
+- **Habilidades y Tácticas**: [En proceso] Verificando uso de técnicas especiales por mobs.
+- **Diseño de Mapa**: [Pendiente]
+
+## Logs de los Testers
+- [ ] [Ambiente] [2026-05-04 06:29:08] **BetaTester**: Efecto perceptible detectado: <cyan>Un aura de devoción reconforta a los presentes.</cyan>
+- [ ] [INFO] [2026-05-04 06:29:01] **BetaTester**: Entrada exitosa al mundo.
+- [ ] [INFO] [2026-05-04 06:29:01] **AlphaTester**: Entrada exitosa al mundo.

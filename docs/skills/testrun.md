@@ -1,27 +1,35 @@
 # Skill: testrun
 
 ## Descripción
-Inicia una sesión de prueba automatizada con dos jugadores tester que interactúan con el mundo de InheronMUD durante un tiempo determinado (por defecto 15 minutos).
+Inicia una sesión de prueba automatizada para evaluar la calidad técnica y narrativa de InheronMUD. Los testers no solo verifican bugs, sino que sirven de base para un análisis cualitativo de la experiencia de juego.
+
+## Objetivos de Análisis (Benchmarks)
+Para cada acción del tester, el Agente debe evaluar:
+1. **Inmersión Narrativa**: ¿La descripción de la sala es suficientemente larga, rica y evocadora?
+2. **Consistencia Espacial**: ¿Las salidas mencionadas en la descripción coinciden con las salidas técnicas?
+3. **Vida del Mundo**: ¿Los NPCs interactúan, se mueven o lanzan mensajes que los hagan sentir vivos? ¿Or parecen estatuas?
+4. **Feedback de Efectos**: ¿Son perceptibles los efectos ambientales o de combate? ¿Mejoran la atmósfera?
+5. **Economía y Loot**: ¿Es el loot adecuado al esfuerzo? ¿El progreso de nivel es satisfactorio o frustrante?
+6. **Dificultad y Reto**: ¿Los mobs son adecuados al nivel? ¿Las quests son realizables o imposibles?
+7. **Habilidades y Tácticas**: ¿Los mobs usan sus habilidades especiales? ¿Son coherentes con su descripción?
+8. **Diseño de Mapa**: ¿La zona se siente como un mundo variado o un pasillo monótono de enemigos?
 
 ## Procedimiento
 1. **Preparación**: 
-   - Asegurarse de que el servidor API está corriendo (`pnpm --filter api run dev`).
-   - Crear/Limpiar el archivo `docs/reporte-testers.md`.
+   - Asegurarse de que el servidor API está corriendo.
+   - Limpiar o rotar `docs/reporte-testers.md`.
 2. **Ejecución**:
-   - Lanzar dos instancias del cliente de prueba (`pnpm --filter engine run test:client`).
-   - Los testers deben explorar, combatir e interactuar con el entorno.
-   - Cualquier error, comportamiento extraño o bug debe ser registrado inmediatamente en `docs/reporte-testers.md`.
-3. **Registro de Hallazgos**:
-   - Formato: Checklist (`- [ ]`).
-   - Timestamp obligatorio: `[YYYY-MM-DD HH:mm:ss]`.
-   - Orden: Lo más reciente arriba (al principio del archivo).
+   - Lanzar los clientes de prueba (`pnpm --filter engine run test:client`).
+   - El Agente debe observar los logs en tiempo real o analizarlos post-mortem buscando patrones de los benchmarks anteriores.
+3. **Registro Cualitativo**:
+   - No registrar solo "éxito/fallo". Registrar observaciones sobre la "sensación" del juego.
+   - Formato: `[Tipo: Narrativa/IA/Mapa] [Timestamp] Observación detallada`.
 4. **Cierre**:
-   - Tras 15 minutos, detener los clientes.
-   - Escribir un análisis final resumido en la parte superior de `docs/reporte-testers.md`.
+   - Tras la sesión, generar un "Informe de Sensaciones" en la parte superior de `docs/reporte-testers.md` evaluando los 6 puntos de análisis.
 
 ## Configuración del Tester
-Los testers simulan:
-- Movimiento aleatorio entre áreas.
-- Ataque a mobs cercanos.
-- Uso de comandos abreviados (k, l, i).
-- Interacción con objetos del escenario.
+Los testers están programados para maximizar la exposición a diferentes sistemas:
+- Exploración de bordes de zona.
+- Interacción con scenery (mirar objetos).
+- Estancia prolongada en zonas con efectos (ej. Capilla).
+- Combates variados.
