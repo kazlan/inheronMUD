@@ -1,0 +1,65 @@
+- id: npc_treant_corrupto
+  name: Treant Corrompido
+  description: Un árbol monstruoso con raíces como piernas y ramas que terminan en garras afiladas. La savia negra gotea de sus heridas abiertas.
+  behaviorId: hostile_beast
+  roomId: bosque_3_3
+  level: 8
+  flags: ['agresivo']
+  stats:
+    fuerza: 20
+    destreza: 6
+    constitucion: 25
+    ingenio: 4
+    sabiduria: 5
+    presencia: 10
+    percepcion: 10
+  effects:
+    - id: savia_venenosa
+      name: Savia Venenosa
+      type: damage
+      magnitude: 2
+      tickInterval: 12000
+  enemies: ['npc_lobo_sombrio']
+  metadata:
+    enemyReactions: [30, 50, 20]
+
+- id: npc_lobo_sombrio
+  name: Lobo Sombrío
+  description: Un lobo antinaturalmente grande cuyo pelaje parece absorber la luz a su alrededor. Sus ojos brillan con un violeta mortecino.
+  behaviorId: hostile_beast
+  roomId: bosque_5_5
+  level: 6
+  flags: ['social', 'wandering']
+  stats:
+    fuerza: 14
+    destreza: 20
+    constitucion: 12
+    ingenio: 8
+    sabiduria: 8
+    presencia: 15
+    percepcion: 18
+  enemies: ['npc_treant_corrupto']
+  metadata:
+    enemyReactions: [10, 60, 30]
+
+- id: npc_espiritu_eco
+  name: Espíritu del Eco
+  description: Una aparición translúcida que repite murmullos inteligibles. Parece lamentar algo del pasado.
+  behaviorId: idle
+  roomId: bosque_2_2
+  level: 4
+  flags: ['wandering']
+  stats:
+    fuerza: 5
+    destreza: 15
+    constitucion: 10
+    ingenio: 15
+    sabiduria: 20
+    presencia: 20
+    percepcion: 15
+  effects:
+    - id: aura_lamento
+      name: Lamento Helado
+      type: damage
+      magnitude: 1
+      tickInterval: 8000

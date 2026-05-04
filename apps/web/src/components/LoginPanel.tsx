@@ -7,24 +7,31 @@ interface LoginPanelProps {
   onPasswordSent?: () => void;
 }
 
-type FlowState = 'ACCOUNT' | 'LOADING';
+type FlowState = 'ACCOUNT' | 'INTERACTIVE' | 'LOADING';
 
 export default function LoginPanel({ isConnected, onCommand, logs, onPasswordSent }: LoginPanelProps) {
   const [step, setStep] = useState<FlowState>('ACCOUNT');
   const [error, setError] = useState<string | null>(null);
   const [username, setUsername] = useState(localStorage.getItem('mud_user') || '');
   const [password, setPassword] = useState(localStorage.getItem('mud_pass') || '');
+  const [genericInput, setGenericInput] = useState('');
 
-  // Error detection: if server sends an error message, return to ACCOUNT step
+  // Get the last system/message logs to show to the user during interactive steps
+  const systemLogs = logs.filter(l => l.type === 'system').slice(-3);
+  const lastLogText = systemLogs[systemLogs.length - 1]?.text || '';
+
+  // Error and step detection based on server messages
   useEffect(() => {
-    if (logs.length === 0) return;
-    const lastLog = logs[logs.length - 1].text.toLowerCase();
+    if (systemLogs.length === 0) return;
+    const lowerLog = lastLogText.toLowerCase();
 
-    if (lastLog.includes('not found') || lastLog.includes('invalid') || lastLog.includes('error') || lastLog.includes('incorrect')) {
-      setError(lastLog);
+    if (lowerLog.includes('contraseña incorrecta') || lowerLog.includes('incorrect password')) {
+      setError('Contraseña incorrecta.');
       setStep('ACCOUNT');
+    } else if (lowerLog.includes('personajes disponibles') || lowerLog.includes('elije una raza') || lowerLog.includes('elije una clase')) {
+      setStep('INTERACTIVE');
     }
-  }, [logs]);
+  }, [lastLogText]);
 
   const handleAccountLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,21 +41,28 @@ export default function LoginPanel({ isConnected, onCommand, logs, onPasswordSen
     localStorage.setItem('mud_user', username);
     localStorage.setItem('mud_pass', password);
 
-    // Send username, then password; lift curtain after password is sent
+    // Initial sequence
     onCommand(username);
     setTimeout(() => {
       onCommand(password);
       onPasswordSent?.();
-    }, 500);
+    }, 400);
 
     setStep('LOADING');
   };
 
+  const handleGenericSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!genericInput) return;
+    onCommand(genericInput);
+    setGenericInput('');
+  };
+
   return (
-    <div className="login-panel fade-in" style={{ padding: '1rem' }}>
+    <div className="login-panel fade-in" style={{ padding: '1rem', width: '100%' }}>
       {!isConnected && (
-        <div style={{ color: '#ef4444', fontSize: '0.8rem', marginBottom: '1rem', textAlign: 'center' }}>
-          Disconnected from server.
+        <div style={{ color: '#ef4444', fontSize: '0.8rem', marginBottom: '1rem', textAlign: 'center', fontWeight: 'bold' }}>
+          DESCONECTADO DEL SERVIDOR
         </div>
       )}
 
@@ -57,7 +71,7 @@ export default function LoginPanel({ isConnected, onCommand, logs, onPasswordSen
           background: 'rgba(239, 68, 68, 0.1)',
           border: '1px solid #ef4444',
           color: '#fca5a5',
-          padding: '0.5rem',
+          padding: '0.6rem',
           borderRadius: '4px',
           fontSize: '0.75rem',
           marginBottom: '1rem',
@@ -69,23 +83,23 @@ export default function LoginPanel({ isConnected, onCommand, logs, onPasswordSen
 
       {step === 'ACCOUNT' && (
         <form className="login-form" onSubmit={handleAccountLogin}>
-          <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
-            <h2 style={{ color: 'var(--gold)', fontSize: '1.2rem', marginBottom: '0.5rem' }}>Account Login</h2>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.75rem' }}>Welcome back, adventurer.</p>
+          <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+            <h2 style={{ color: 'var(--gold)', fontSize: '1.3rem', marginBottom: '0.5rem', letterSpacing: '0.1em' }}>INHERON MUD</h2>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>Identifícate para entrar en el Reino.</p>
           </div>
           <div className="input-group">
-            <label>👤 Account Name</label>
+            <label>Usuario</label>
             <input
               type="text"
               className="login-input"
               value={username}
               onChange={e => setUsername(e.target.value)}
-              placeholder="Username"
+              placeholder="Nombre de cuenta"
               autoFocus
             />
           </div>
           <div className="input-group">
-            <label>🔑 Password</label>
+            <label>Contraseña</label>
             <input
               type="password"
               className="login-input"
@@ -94,22 +108,61 @@ export default function LoginPanel({ isConnected, onCommand, logs, onPasswordSen
               placeholder="••••••••"
             />
           </div>
-          <button type="submit" className="btn-primary" disabled={!isConnected} style={{ marginTop: '0.5rem' }}>
-            Enter Inheron
+          <button type="submit" className="btn-primary" disabled={!isConnected} style={{ width: '100%', marginTop: '0.5rem' }}>
+            CONECTAR
           </button>
         </form>
       )}
 
-      {step === 'LOADING' && (
-        <div style={{ textAlign: 'center', padding: '2rem' }}>
-          <div className="spinner" style={{ marginBottom: '1rem' }}></div>
-          <p style={{ color: 'var(--gold)', fontSize: '0.9rem' }}>Entering the world...</p>
+      {(step === 'LOADING' || step === 'INTERACTIVE') && (
+        <div style={{ textAlign: 'center', padding: '1rem' }}>
+          <div className="spinner" style={{ marginBottom: '1.5rem' }}></div>
+          
+          <div style={{ 
+            background: 'rgba(0,0,0,0.4)', 
+            padding: '1rem', 
+            borderRadius: '4px', 
+            border: '1px solid var(--gold-dim)',
+            marginBottom: '1.5rem',
+            textAlign: 'left'
+          }}>
+            {systemLogs.map((log, i) => (
+              <p key={i} style={{ 
+                color: i === systemLogs.length - 1 ? 'var(--text-bright)' : 'var(--text-muted)', 
+                fontSize: '0.8rem',
+                marginBottom: '0.4rem',
+                whiteSpace: 'pre-wrap'
+              }}>
+                {log.text}
+              </p>
+            ))}
+          </div>
+
+          {step === 'INTERACTIVE' ? (
+            <form onSubmit={handleGenericSubmit}>
+              <input
+                type="text"
+                className="login-input"
+                value={genericInput}
+                onChange={e => setGenericInput(e.target.value)}
+                placeholder="Escribe tu elección..."
+                autoFocus
+                style={{ marginBottom: '1rem' }}
+              />
+              <button type="submit" className="btn-primary" style={{ width: '100%' }}>
+                ENVIAR
+              </button>
+            </form>
+          ) : (
+            <p style={{ color: 'var(--gold)', fontSize: '0.9rem', animation: 'pulse 2s infinite' }}>Estableciendo conexión arcana...</p>
+          )}
+
           <button
             type="button"
-            style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', fontSize: '0.75rem', cursor: 'pointer', marginTop: '1rem' }}
+            style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', fontSize: '0.7rem', cursor: 'pointer', marginTop: '2rem', textTransform: 'uppercase' }}
             onClick={() => setStep('ACCOUNT')}
           >
-            ← Cancel / Fix Login
+            ← Volver al inicio
           </button>
         </div>
       )}

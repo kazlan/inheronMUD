@@ -1,0 +1,770 @@
+- id: bosque_0_0
+  name: Entrada al Bosque de los Ecos
+  description: El borde del bosque marca una frontera abrupta entre la civilización
+    y lo salvaje. Un camino tenue conduce hacia la plaza de Villaclara al norte.
+  exits:
+  - direction: south
+    targetRoomId: bosque_1_0
+  - direction: east
+    targetRoomId: bosque_0_1
+  - direction: north
+    targetRoomId: villaclara_sur
+- id: bosque_0_1
+  name: Espesura del Bosque de los Ecos
+  description: Los inmensos robles grises bloquean casi por completo la luz del sol.
+    El aire huele a pino antiguo y humedad.
+  exits:
+  - direction: south
+    targetRoomId: bosque_1_1
+  - direction: east
+    targetRoomId: bosque_0_2
+  - direction: west
+    targetRoomId: bosque_0_0
+- id: bosque_0_2
+  name: Espesura del Bosque de los Ecos
+  description: Enormes raíces emergen del suelo como serpientes de madera, dificultando
+    el paso. El silencio aquí es opresivo y pesado.
+  exits:
+  - direction: south
+    targetRoomId: bosque_1_2
+  - direction: east
+    targetRoomId: bosque_0_3
+  - direction: west
+    targetRoomId: bosque_0_1
+- id: bosque_0_3
+  name: Rincón de los Ecos Perdidos
+  description: Las sombras parecen moverse de forma antinatural entre los troncos
+    oscuros. Una brisa gélida susurra a lo lejos.
+  exits:
+  - direction: south
+    targetRoomId: bosque_1_3
+  - direction: east
+    targetRoomId: bosque_0_4
+  - direction: west
+    targetRoomId: bosque_0_2
+- id: bosque_0_4
+  name: Paso Cubierto de Musgo
+  description: Las sombras parecen moverse de forma antinatural entre los troncos
+    oscuros. Una brisa gélida susurra a lo lejos.
+  exits:
+  - direction: south
+    targetRoomId: bosque_1_4
+  - direction: east
+    targetRoomId: bosque_0_5
+  - direction: west
+    targetRoomId: bosque_0_3
+- id: bosque_0_5
+  name: Espesura del Bosque de los Ecos
+  description: Los inmensos robles grises bloquean casi por completo la luz del sol.
+    El aire huele a pino antiguo y humedad.
+  exits:
+  - direction: south
+    targetRoomId: bosque_1_5
+  - direction: east
+    targetRoomId: bosque_0_6
+  - direction: west
+    targetRoomId: bosque_0_4
+- id: bosque_0_6
+  name: Claro de Sombras Danzantes
+  description: Un antiguo monolito de piedra roto descansa entre la maleza, devorado
+    por el musgo luminoso. El entorno parece observar cada uno de tus movimientos.
+  exits:
+  - direction: south
+    targetRoomId: bosque_1_6
+  - direction: east
+    targetRoomId: bosque_0_7
+  - direction: west
+    targetRoomId: bosque_0_5
+- id: bosque_0_7
+  name: Claro de Sombras Danzantes
+  description: Los inmensos robles grises bloquean casi por completo la luz del sol.
+    El aire huele a pino antiguo y humedad.
+  exits:
+  - direction: south
+    targetRoomId: bosque_1_7
+  - direction: west
+    targetRoomId: bosque_0_6
+- id: bosque_1_0
+  name: Claro de Sombras Danzantes
+  description: Lianas colgantes forman una cortina natural en este tramo del bosque.
+    Se pueden escuchar ecos distantes de conversaciones que nunca ocurrieron.
+  exits:
+  - direction: north
+    targetRoomId: bosque_0_0
+  - direction: south
+    targetRoomId: bosque_2_0
+  - direction: east
+    targetRoomId: bosque_1_1
+- id: bosque_1_1
+  name: Rincón de los Ecos Perdidos
+  description: Un antiguo monolito de piedra roto descansa entre la maleza, devorado
+    por el musgo luminoso. El entorno parece observar cada uno de tus movimientos.
+  exits:
+  - direction: north
+    targetRoomId: bosque_0_1
+  - direction: south
+    targetRoomId: bosque_2_1
+  - direction: east
+    targetRoomId: bosque_1_2
+  - direction: west
+    targetRoomId: bosque_1_0
+- id: bosque_1_2
+  name: Arboleda Silenciosa
+  description: Un claro circular rodeado de vegetación espinosa. El suelo está cubierto
+    por una alfombra de hojas crujientes de color violeta.
+  exits:
+  - direction: north
+    targetRoomId: bosque_0_2
+  - direction: south
+    targetRoomId: bosque_2_2
+  - direction: east
+    targetRoomId: bosque_1_3
+  - direction: west
+    targetRoomId: bosque_1_1
+- id: bosque_1_3
+  name: Paso Cubierto de Musgo
+  description: Un claro circular rodeado de vegetación espinosa. El suelo está cubierto
+    por una alfombra de hojas crujientes de color violeta.
+  exits:
+  - direction: north
+    targetRoomId: bosque_0_3
+  - direction: south
+    targetRoomId: bosque_2_3
+  - direction: east
+    targetRoomId: bosque_1_4
+  - direction: west
+    targetRoomId: bosque_1_2
+- id: bosque_1_4
+  name: Sendero Enmarañado
+  description: Lianas colgantes forman una cortina natural en este tramo del bosque.
+    Se pueden escuchar ecos distantes de conversaciones que nunca ocurrieron.
+  exits:
+  - direction: north
+    targetRoomId: bosque_0_4
+  - direction: south
+    targetRoomId: bosque_2_4
+  - direction: east
+    targetRoomId: bosque_1_5
+  - direction: west
+    targetRoomId: bosque_1_3
+- id: bosque_1_5
+  name: Raíces Retorcidas
+  description: Lianas colgantes forman una cortina natural en este tramo del bosque.
+    Se pueden escuchar ecos distantes de conversaciones que nunca ocurrieron.
+  exits:
+  - direction: north
+    targetRoomId: bosque_0_5
+  - direction: south
+    targetRoomId: bosque_2_5
+  - direction: east
+    targetRoomId: bosque_1_6
+  - direction: west
+    targetRoomId: bosque_1_4
+- id: bosque_1_6
+  name: Raíces Retorcidas
+  description: Las sombras parecen moverse de forma antinatural entre los troncos
+    oscuros. Una brisa gélida susurra a lo lejos.
+  exits:
+  - direction: north
+    targetRoomId: bosque_0_6
+  - direction: south
+    targetRoomId: bosque_2_6
+  - direction: east
+    targetRoomId: bosque_1_7
+  - direction: west
+    targetRoomId: bosque_1_5
+- id: bosque_1_7
+  name: Espesura del Bosque de los Ecos
+  description: Lianas colgantes forman una cortina natural en este tramo del bosque.
+    Se pueden escuchar ecos distantes de conversaciones que nunca ocurrieron.
+  exits:
+  - direction: north
+    targetRoomId: bosque_0_7
+  - direction: south
+    targetRoomId: bosque_2_7
+  - direction: west
+    targetRoomId: bosque_1_6
+- id: bosque_2_0
+  name: Sendero Enmarañado
+  description: Un antiguo monolito de piedra roto descansa entre la maleza, devorado
+    por el musgo luminoso. El entorno parece observar cada uno de tus movimientos.
+  exits:
+  - direction: north
+    targetRoomId: bosque_1_0
+  - direction: south
+    targetRoomId: bosque_3_0
+  - direction: east
+    targetRoomId: bosque_2_1
+- id: bosque_2_1
+  name: Paso Cubierto de Musgo
+  description: Enormes raíces emergen del suelo como serpientes de madera, dificultando
+    el paso. El silencio aquí es opresivo y pesado.
+  exits:
+  - direction: north
+    targetRoomId: bosque_1_1
+  - direction: south
+    targetRoomId: bosque_3_1
+  - direction: east
+    targetRoomId: bosque_2_2
+  - direction: west
+    targetRoomId: bosque_2_0
+- id: bosque_2_2
+  name: Claro de Sombras Danzantes
+  description: Lianas colgantes forman una cortina natural en este tramo del bosque.
+    Se pueden escuchar ecos distantes de conversaciones que nunca ocurrieron.
+  exits:
+  - direction: north
+    targetRoomId: bosque_1_2
+  - direction: south
+    targetRoomId: bosque_3_2
+  - direction: east
+    targetRoomId: bosque_2_3
+  - direction: west
+    targetRoomId: bosque_2_1
+- id: bosque_2_3
+  name: Espesura del Bosque de los Ecos
+  description: Las sombras parecen moverse de forma antinatural entre los troncos
+    oscuros. Una brisa gélida susurra a lo lejos.
+  exits:
+  - direction: north
+    targetRoomId: bosque_1_3
+  - direction: south
+    targetRoomId: bosque_3_3
+  - direction: east
+    targetRoomId: bosque_2_4
+  - direction: west
+    targetRoomId: bosque_2_2
+- id: bosque_2_4
+  name: Sendero Enmarañado
+  description: Los inmensos robles grises bloquean casi por completo la luz del sol.
+    El aire huele a pino antiguo y humedad.
+  exits:
+  - direction: north
+    targetRoomId: bosque_1_4
+  - direction: south
+    targetRoomId: bosque_3_4
+  - direction: east
+    targetRoomId: bosque_2_5
+  - direction: west
+    targetRoomId: bosque_2_3
+- id: bosque_2_5
+  name: Paso Cubierto de Musgo
+  description: Un claro circular rodeado de vegetación espinosa. El suelo está cubierto
+    por una alfombra de hojas crujientes de color violeta.
+  exits:
+  - direction: north
+    targetRoomId: bosque_1_5
+  - direction: south
+    targetRoomId: bosque_3_5
+  - direction: east
+    targetRoomId: bosque_2_6
+  - direction: west
+    targetRoomId: bosque_2_4
+- id: bosque_2_6
+  name: Espesura del Bosque de los Ecos
+  description: Los inmensos robles grises bloquean casi por completo la luz del sol.
+    El aire huele a pino antiguo y humedad.
+  exits:
+  - direction: north
+    targetRoomId: bosque_1_6
+  - direction: south
+    targetRoomId: bosque_3_6
+  - direction: east
+    targetRoomId: bosque_2_7
+  - direction: west
+    targetRoomId: bosque_2_5
+- id: bosque_2_7
+  name: Raíces Retorcidas
+  description: Los inmensos robles grises bloquean casi por completo la luz del sol.
+    El aire huele a pino antiguo y humedad.
+  exits:
+  - direction: north
+    targetRoomId: bosque_1_7
+  - direction: south
+    targetRoomId: bosque_3_7
+  - direction: west
+    targetRoomId: bosque_2_6
+- id: bosque_3_0
+  name: Sendero Enmarañado
+  description: Los inmensos robles grises bloquean casi por completo la luz del sol.
+    El aire huele a pino antiguo y humedad.
+  exits:
+  - direction: north
+    targetRoomId: bosque_2_0
+  - direction: south
+    targetRoomId: bosque_4_0
+  - direction: east
+    targetRoomId: bosque_3_1
+- id: bosque_3_1
+  name: Sendero Enmarañado
+  description: Enormes raíces emergen del suelo como serpientes de madera, dificultando
+    el paso. El silencio aquí es opresivo y pesado.
+  exits:
+  - direction: north
+    targetRoomId: bosque_2_1
+  - direction: south
+    targetRoomId: bosque_4_1
+  - direction: east
+    targetRoomId: bosque_3_2
+  - direction: west
+    targetRoomId: bosque_3_0
+- id: bosque_3_2
+  name: Paso Cubierto de Musgo
+  description: Enormes raíces emergen del suelo como serpientes de madera, dificultando
+    el paso. El silencio aquí es opresivo y pesado.
+  exits:
+  - direction: north
+    targetRoomId: bosque_2_2
+  - direction: south
+    targetRoomId: bosque_4_2
+  - direction: east
+    targetRoomId: bosque_3_3
+  - direction: west
+    targetRoomId: bosque_3_1
+- id: bosque_3_3
+  name: Claro de Sombras Danzantes
+  description: Las sombras parecen moverse de forma antinatural entre los troncos
+    oscuros. Una brisa gélida susurra a lo lejos.
+  exits:
+  - direction: north
+    targetRoomId: bosque_2_3
+  - direction: south
+    targetRoomId: bosque_4_3
+  - direction: east
+    targetRoomId: bosque_3_4
+  - direction: west
+    targetRoomId: bosque_3_2
+- id: bosque_3_4
+  name: Paso Cubierto de Musgo
+  description: Un antiguo monolito de piedra roto descansa entre la maleza, devorado
+    por el musgo luminoso. El entorno parece observar cada uno de tus movimientos.
+  exits:
+  - direction: north
+    targetRoomId: bosque_2_4
+  - direction: south
+    targetRoomId: bosque_4_4
+  - direction: east
+    targetRoomId: bosque_3_5
+  - direction: west
+    targetRoomId: bosque_3_3
+- id: bosque_3_5
+  name: Claro de Sombras Danzantes
+  description: Enormes raíces emergen del suelo como serpientes de madera, dificultando
+    el paso. El silencio aquí es opresivo y pesado.
+  exits:
+  - direction: north
+    targetRoomId: bosque_2_5
+  - direction: south
+    targetRoomId: bosque_4_5
+  - direction: east
+    targetRoomId: bosque_3_6
+  - direction: west
+    targetRoomId: bosque_3_4
+- id: bosque_3_6
+  name: Sendero Enmarañado
+  description: Los inmensos robles grises bloquean casi por completo la luz del sol.
+    El aire huele a pino antiguo y humedad.
+  exits:
+  - direction: north
+    targetRoomId: bosque_2_6
+  - direction: south
+    targetRoomId: bosque_4_6
+  - direction: east
+    targetRoomId: bosque_3_7
+  - direction: west
+    targetRoomId: bosque_3_5
+- id: bosque_3_7
+  name: Arboleda Silenciosa
+  description: Los inmensos robles grises bloquean casi por completo la luz del sol.
+    El aire huele a pino antiguo y humedad.
+  exits:
+  - direction: north
+    targetRoomId: bosque_2_7
+  - direction: south
+    targetRoomId: bosque_4_7
+  - direction: west
+    targetRoomId: bosque_3_6
+- id: bosque_4_0
+  name: Rincón de los Ecos Perdidos
+  description: Enormes raíces emergen del suelo como serpientes de madera, dificultando
+    el paso. El silencio aquí es opresivo y pesado.
+  exits:
+  - direction: north
+    targetRoomId: bosque_3_0
+  - direction: south
+    targetRoomId: bosque_5_0
+  - direction: east
+    targetRoomId: bosque_4_1
+- id: bosque_4_1
+  name: Paso Cubierto de Musgo
+  description: Enormes raíces emergen del suelo como serpientes de madera, dificultando
+    el paso. El silencio aquí es opresivo y pesado.
+  exits:
+  - direction: north
+    targetRoomId: bosque_3_1
+  - direction: south
+    targetRoomId: bosque_5_1
+  - direction: east
+    targetRoomId: bosque_4_2
+  - direction: west
+    targetRoomId: bosque_4_0
+- id: bosque_4_2
+  name: Rincón de los Ecos Perdidos
+  description: Un claro circular rodeado de vegetación espinosa. El suelo está cubierto
+    por una alfombra de hojas crujientes de color violeta.
+  exits:
+  - direction: north
+    targetRoomId: bosque_3_2
+  - direction: south
+    targetRoomId: bosque_5_2
+  - direction: east
+    targetRoomId: bosque_4_3
+  - direction: west
+    targetRoomId: bosque_4_1
+- id: bosque_4_3
+  name: Claro de Sombras Danzantes
+  description: Los inmensos robles grises bloquean casi por completo la luz del sol.
+    El aire huele a pino antiguo y humedad.
+  exits:
+  - direction: north
+    targetRoomId: bosque_3_3
+  - direction: south
+    targetRoomId: bosque_5_3
+  - direction: east
+    targetRoomId: bosque_4_4
+  - direction: west
+    targetRoomId: bosque_4_2
+- id: bosque_4_4
+  name: Arboleda Silenciosa
+  description: Enormes raíces emergen del suelo como serpientes de madera, dificultando
+    el paso. El silencio aquí es opresivo y pesado.
+  exits:
+  - direction: north
+    targetRoomId: bosque_3_4
+  - direction: south
+    targetRoomId: bosque_5_4
+  - direction: east
+    targetRoomId: bosque_4_5
+  - direction: west
+    targetRoomId: bosque_4_3
+- id: bosque_4_5
+  name: Claro de Sombras Danzantes
+  description: Enormes raíces emergen del suelo como serpientes de madera, dificultando
+    el paso. El silencio aquí es opresivo y pesado.
+  exits:
+  - direction: north
+    targetRoomId: bosque_3_5
+  - direction: south
+    targetRoomId: bosque_5_5
+  - direction: east
+    targetRoomId: bosque_4_6
+  - direction: west
+    targetRoomId: bosque_4_4
+- id: bosque_4_6
+  name: Raíces Retorcidas
+  description: Las sombras parecen moverse de forma antinatural entre los troncos
+    oscuros. Una brisa gélida susurra a lo lejos.
+  exits:
+  - direction: north
+    targetRoomId: bosque_3_6
+  - direction: south
+    targetRoomId: bosque_5_6
+  - direction: east
+    targetRoomId: bosque_4_7
+  - direction: west
+    targetRoomId: bosque_4_5
+- id: bosque_4_7
+  name: Paso Cubierto de Musgo
+  description: Los inmensos robles grises bloquean casi por completo la luz del sol.
+    El aire huele a pino antiguo y humedad.
+  exits:
+  - direction: north
+    targetRoomId: bosque_3_7
+  - direction: south
+    targetRoomId: bosque_5_7
+  - direction: west
+    targetRoomId: bosque_4_6
+- id: bosque_5_0
+  name: Paso Cubierto de Musgo
+  description: Lianas colgantes forman una cortina natural en este tramo del bosque.
+    Se pueden escuchar ecos distantes de conversaciones que nunca ocurrieron.
+  exits:
+  - direction: north
+    targetRoomId: bosque_4_0
+  - direction: south
+    targetRoomId: bosque_6_0
+  - direction: east
+    targetRoomId: bosque_5_1
+- id: bosque_5_1
+  name: Paso Cubierto de Musgo
+  description: Un antiguo monolito de piedra roto descansa entre la maleza, devorado
+    por el musgo luminoso. El entorno parece observar cada uno de tus movimientos.
+  exits:
+  - direction: north
+    targetRoomId: bosque_4_1
+  - direction: south
+    targetRoomId: bosque_6_1
+  - direction: east
+    targetRoomId: bosque_5_2
+  - direction: west
+    targetRoomId: bosque_5_0
+- id: bosque_5_2
+  name: Paso Cubierto de Musgo
+  description: Un claro circular rodeado de vegetación espinosa. El suelo está cubierto
+    por una alfombra de hojas crujientes de color violeta.
+  exits:
+  - direction: north
+    targetRoomId: bosque_4_2
+  - direction: south
+    targetRoomId: bosque_6_2
+  - direction: east
+    targetRoomId: bosque_5_3
+  - direction: west
+    targetRoomId: bosque_5_1
+- id: bosque_5_3
+  name: Arboleda Silenciosa
+  description: Enormes raíces emergen del suelo como serpientes de madera, dificultando
+    el paso. El silencio aquí es opresivo y pesado.
+  exits:
+  - direction: north
+    targetRoomId: bosque_4_3
+  - direction: south
+    targetRoomId: bosque_6_3
+  - direction: east
+    targetRoomId: bosque_5_4
+  - direction: west
+    targetRoomId: bosque_5_2
+- id: bosque_5_4
+  name: Paso Cubierto de Musgo
+  description: Las sombras parecen moverse de forma antinatural entre los troncos
+    oscuros. Una brisa gélida susurra a lo lejos.
+  exits:
+  - direction: north
+    targetRoomId: bosque_4_4
+  - direction: south
+    targetRoomId: bosque_6_4
+  - direction: east
+    targetRoomId: bosque_5_5
+  - direction: west
+    targetRoomId: bosque_5_3
+- id: bosque_5_5
+  name: Espesura del Bosque de los Ecos
+  description: Los inmensos robles grises bloquean casi por completo la luz del sol.
+    El aire huele a pino antiguo y humedad.
+  exits:
+  - direction: north
+    targetRoomId: bosque_4_5
+  - direction: south
+    targetRoomId: bosque_6_5
+  - direction: east
+    targetRoomId: bosque_5_6
+  - direction: west
+    targetRoomId: bosque_5_4
+- id: bosque_5_6
+  name: Raíces Retorcidas
+  description: Lianas colgantes forman una cortina natural en este tramo del bosque.
+    Se pueden escuchar ecos distantes de conversaciones que nunca ocurrieron.
+  exits:
+  - direction: north
+    targetRoomId: bosque_4_6
+  - direction: south
+    targetRoomId: bosque_6_6
+  - direction: east
+    targetRoomId: bosque_5_7
+  - direction: west
+    targetRoomId: bosque_5_5
+- id: bosque_5_7
+  name: Arboleda Silenciosa
+  description: Lianas colgantes forman una cortina natural en este tramo del bosque.
+    Se pueden escuchar ecos distantes de conversaciones que nunca ocurrieron.
+  exits:
+  - direction: north
+    targetRoomId: bosque_4_7
+  - direction: south
+    targetRoomId: bosque_6_7
+  - direction: west
+    targetRoomId: bosque_5_6
+- id: bosque_6_0
+  name: Rincón de los Ecos Perdidos
+  description: Lianas colgantes forman una cortina natural en este tramo del bosque.
+    Se pueden escuchar ecos distantes de conversaciones que nunca ocurrieron.
+  exits:
+  - direction: north
+    targetRoomId: bosque_5_0
+  - direction: south
+    targetRoomId: bosque_7_0
+  - direction: east
+    targetRoomId: bosque_6_1
+- id: bosque_6_1
+  name: Arboleda Silenciosa
+  description: Un antiguo monolito de piedra roto descansa entre la maleza, devorado
+    por el musgo luminoso. El entorno parece observar cada uno de tus movimientos.
+  exits:
+  - direction: north
+    targetRoomId: bosque_5_1
+  - direction: south
+    targetRoomId: bosque_7_1
+  - direction: east
+    targetRoomId: bosque_6_2
+  - direction: west
+    targetRoomId: bosque_6_0
+- id: bosque_6_2
+  name: Arboleda Silenciosa
+  description: Las sombras parecen moverse de forma antinatural entre los troncos
+    oscuros. Una brisa gélida susurra a lo lejos.
+  exits:
+  - direction: north
+    targetRoomId: bosque_5_2
+  - direction: south
+    targetRoomId: bosque_7_2
+  - direction: east
+    targetRoomId: bosque_6_3
+  - direction: west
+    targetRoomId: bosque_6_1
+- id: bosque_6_3
+  name: Rincón de los Ecos Perdidos
+  description: Los inmensos robles grises bloquean casi por completo la luz del sol.
+    El aire huele a pino antiguo y humedad.
+  exits:
+  - direction: north
+    targetRoomId: bosque_5_3
+  - direction: south
+    targetRoomId: bosque_7_3
+  - direction: east
+    targetRoomId: bosque_6_4
+  - direction: west
+    targetRoomId: bosque_6_2
+- id: bosque_6_4
+  name: Arboleda Silenciosa
+  description: Las sombras parecen moverse de forma antinatural entre los troncos
+    oscuros. Una brisa gélida susurra a lo lejos.
+  exits:
+  - direction: north
+    targetRoomId: bosque_5_4
+  - direction: south
+    targetRoomId: bosque_7_4
+  - direction: east
+    targetRoomId: bosque_6_5
+  - direction: west
+    targetRoomId: bosque_6_3
+- id: bosque_6_5
+  name: Arboleda Silenciosa
+  description: Las sombras parecen moverse de forma antinatural entre los troncos
+    oscuros. Una brisa gélida susurra a lo lejos.
+  exits:
+  - direction: north
+    targetRoomId: bosque_5_5
+  - direction: south
+    targetRoomId: bosque_7_5
+  - direction: east
+    targetRoomId: bosque_6_6
+  - direction: west
+    targetRoomId: bosque_6_4
+- id: bosque_6_6
+  name: Claro de Sombras Danzantes
+  description: Enormes raíces emergen del suelo como serpientes de madera, dificultando
+    el paso. El silencio aquí es opresivo y pesado.
+  exits:
+  - direction: north
+    targetRoomId: bosque_5_6
+  - direction: south
+    targetRoomId: bosque_7_6
+  - direction: east
+    targetRoomId: bosque_6_7
+  - direction: west
+    targetRoomId: bosque_6_5
+- id: bosque_6_7
+  name: Raíces Retorcidas
+  description: Las sombras parecen moverse de forma antinatural entre los troncos
+    oscuros. Una brisa gélida susurra a lo lejos.
+  exits:
+  - direction: north
+    targetRoomId: bosque_5_7
+  - direction: south
+    targetRoomId: bosque_7_7
+  - direction: west
+    targetRoomId: bosque_6_6
+- id: bosque_7_0
+  name: Raíces Retorcidas
+  description: Lianas colgantes forman una cortina natural en este tramo del bosque.
+    Se pueden escuchar ecos distantes de conversaciones que nunca ocurrieron.
+  exits:
+  - direction: north
+    targetRoomId: bosque_6_0
+  - direction: east
+    targetRoomId: bosque_7_1
+- id: bosque_7_1
+  name: Sendero Enmarañado
+  description: Un claro circular rodeado de vegetación espinosa. El suelo está cubierto
+    por una alfombra de hojas crujientes de color violeta.
+  exits:
+  - direction: north
+    targetRoomId: bosque_6_1
+  - direction: east
+    targetRoomId: bosque_7_2
+  - direction: west
+    targetRoomId: bosque_7_0
+- id: bosque_7_2
+  name: Espesura del Bosque de los Ecos
+  description: Lianas colgantes forman una cortina natural en este tramo del bosque.
+    Se pueden escuchar ecos distantes de conversaciones que nunca ocurrieron.
+  exits:
+  - direction: north
+    targetRoomId: bosque_6_2
+  - direction: east
+    targetRoomId: bosque_7_3
+  - direction: west
+    targetRoomId: bosque_7_1
+- id: bosque_7_3
+  name: Raíces Retorcidas
+  description: Lianas colgantes forman una cortina natural en este tramo del bosque.
+    Se pueden escuchar ecos distantes de conversaciones que nunca ocurrieron.
+  exits:
+  - direction: north
+    targetRoomId: bosque_6_3
+  - direction: east
+    targetRoomId: bosque_7_4
+  - direction: west
+    targetRoomId: bosque_7_2
+- id: bosque_7_4
+  name: Raíces Retorcidas
+  description: Enormes raíces emergen del suelo como serpientes de madera, dificultando
+    el paso. El silencio aquí es opresivo y pesado.
+  exits:
+  - direction: north
+    targetRoomId: bosque_6_4
+  - direction: east
+    targetRoomId: bosque_7_5
+  - direction: west
+    targetRoomId: bosque_7_3
+- id: bosque_7_5
+  name: Rincón de los Ecos Perdidos
+  description: Los inmensos robles grises bloquean casi por completo la luz del sol.
+    El aire huele a pino antiguo y humedad.
+  exits:
+  - direction: north
+    targetRoomId: bosque_6_5
+  - direction: east
+    targetRoomId: bosque_7_6
+  - direction: west
+    targetRoomId: bosque_7_4
+- id: bosque_7_6
+  name: Paso Cubierto de Musgo
+  description: Los inmensos robles grises bloquean casi por completo la luz del sol.
+    El aire huele a pino antiguo y humedad.
+  exits:
+  - direction: north
+    targetRoomId: bosque_6_6
+  - direction: east
+    targetRoomId: bosque_7_7
+  - direction: west
+    targetRoomId: bosque_7_5
+- id: bosque_7_7
+  name: Raíces Retorcidas
+  description: Lianas colgantes forman una cortina natural en este tramo del bosque.
+    Se pueden escuchar ecos distantes de conversaciones que nunca ocurrieron.
+  exits:
+  - direction: north
+    targetRoomId: bosque_6_7
+  - direction: west
+    targetRoomId: bosque_7_6

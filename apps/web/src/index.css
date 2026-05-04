@@ -284,6 +284,8 @@ body::before {
 
 .log-entry.system { color: #7a7568; font-style: italic; }
 .log-entry.say { color: var(--blue-bright); }
+.log-entry.room-chat { color: #64b5f6; }
+.log-entry.global-chat { color: #ba68c8; }
 .log-entry.combat { color: #e57373; text-shadow: 0 0 6px rgba(229, 115, 115, 0.3); }
 .log-entry.room-title {
   color: var(--gold);
@@ -574,6 +576,21 @@ body::before {
   background: rgba(0,0,0,0.6);
 }
 
+.input-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.2rem;
+}
+
+.input-group label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+}
+
 .btn-primary {
   background: linear-gradient(180deg, var(--gold) 0%, #a67c00 100%);
   color: #000;
@@ -654,11 +671,32 @@ body::before {
    ============================== */
 .compass-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   gap: 0.2rem;
   width: 130px;
   margin: 0 auto var(--spacing-md) auto;
+}
+
+.compass-grid.vertical-nav {
+  grid-template-columns: repeat(4, 1fr);
+  width: 180px;
+}
+
+.compass-btn.up-btn {
+  color: var(--blue-bright);
+  font-size: 0.6rem;
+}
+
+.compass-btn.down-btn {
+  color: var(--sp-color);
+  font-size: 0.6rem;
+}
+
+.compass-btn.active-exit {
+  border-color: var(--gold);
+  background: rgba(201, 168, 76, 0.2);
+  color: var(--text-bright);
 }
 .compass-btn {
   background: rgba(0, 0, 0, 0.4);

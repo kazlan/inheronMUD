@@ -254,7 +254,7 @@ export class Session {
 
     // Route command logic currently in server.ts to here
     const parts = text.trim().split(' ');
-    const command = parts[0].toLowerCase();
+    let command = parts[0].toLowerCase();
     const args = parts.slice(1);
 
     let response: any = { success: false, message: 'Comando no reconocido.' };
@@ -267,14 +267,36 @@ export class Session {
       northeast: 'northeast', northwest: 'northwest', southeast: 'southeast', southwest: 'southwest'
     };
 
+    const VALID_COMMANDS = [
+      'look', 'mirar', 'l', 'move', 'mover', 'cronica', 'open', 'abrir', 'get', 'coger',
+      'drop', 'soltar', 'inventory', 'inventario', 'i', 'score', 'puntuacion', 'equip', 'equipar',
+      'unequip', 'desequipar', 'kill', 'matar', 'k', 'flee', 'huir', 'heal', 'curar', 'talk', 'hablar',
+      'list', 'listar', 'tienda', 'buy', 'comprar', 'sell', 'vender', 'skills', 'habilidades',
+      'cast', 'lanzar', 'use', 'usar', 'interact', 'interactuar', 'tirar', 'say', 'decir',
+      'tell', 'susurrar', 'yell', 'gritar', 'channel', 'chat', 'c'
+    ];
+
+    let resolvedCommand = command;
+    if (!directions[command]) {
+      const matches = VALID_COMMANDS.filter(cmd => cmd.startsWith(command));
+      if (matches.length > 0) {
+        resolvedCommand = matches[0];
+      }
+    }
+    // Para simplificar, actualizamos command a resolvedCommand
+    const originalCommand = command;
+    command = resolvedCommand;
+
     if (command === 'look' || command === 'l') {
-      response = { success: true, data: this.engine.commands.look(this.playerId) };
+      response = { success: true, data: this.engine.commands.look(this.playerId, args.join(' ')), command: 'look' };
     } else if (command === 'move' || directions[command]) {
       const dir = directions[command] || args[0];
       const moveRes = this.engine.commands.move(this.playerId, dir);
       response = { ...moveRes, command, data: moveRes.success ? this.engine.commands.look(this.playerId) : null };
     } else if (command === 'cronica') {
       response = { success: true, data: this.engine.getCronica(this.playerId) };
+    } else if (command === 'open' || command === 'abrir') {
+      response = { ...this.engine.commands.open(this.playerId, args.join(' ')), command: 'open' };
     } else if (command === 'get' || command === 'coger') {
       response = this.engine.commands.get(this.playerId, args.join(' '));
     } else if (command === 'drop' || command === 'soltar') {
@@ -295,8 +317,8 @@ export class Session {
       response = { ...this.engine.commands.heal(this.playerId), command: 'heal' };
     } else if (command === 'talk' || command === 'hablar') {
       response = { ...this.engine.commands.talk(this.playerId, args.join(' ')), command: 'talk' };
-    } else if (command === 'list' || command === 'comprar' || command === 'tienda') {
-      if (command === 'list' || args.length === 0) {
+    } else if (command === 'list' || command === 'listar' || command === 'comprar' || command === 'tienda') {
+      if (command === 'list' || command === 'listar' || args.length === 0) {
         response = { ...this.engine.commands.list(this.playerId, args.join(' ')), command: 'list' };
       } else {
         response = { ...this.engine.commands.buy(this.playerId, args.join(' ')), command: 'buy' };
@@ -307,10 +329,12 @@ export class Session {
       response = { ...this.engine.commands.sell(this.playerId, args.join(' ')), command: 'sell' };
     } else if (command === 'skills' || command === 'habilidades') {
       response = { ...this.engine.commands.getSkills(this.playerId), command: 'skills' };
-    } else if (command === 'cast' || command === 'use' || command === 'usar' || command === 'lanzar') {
+    } else if (command === 'cast' || command === 'lanzar') {
       const skillName = args[0];
       const targetName = args.slice(1).join(' ');
       response = { ...this.engine.commands.cast(this.playerId, skillName, targetName), command: 'cast' };
+    } else if (command === 'use' || command === 'usar' || command === 'interact' || command === 'interactuar' || command === 'tirar') {
+      response = { ...this.engine.commands.interact(this.playerId, args.join(' ')), command: 'interact' };
     } else if (command === 'say' || command === 'decir') {
       response = this.engine.chat.say(this.playerId, args.join(' '));
     } else if (command === 'tell' || command === 'susurrar') {
@@ -321,8 +345,20 @@ export class Session {
       response = await this.engine.chat.processAdminCommand(this.playerId, args);
     } else if (command === 'chat' || command === 'c') {
       response = await this.engine.chat.channelMessage(this.playerId, args[0], args.slice(1).join(' '));
+    } else {
+      // Intentar interacción contextual (ej. "empujar piedra")
+      const targetStr = args.join(' ');
+      if (targetStr) {
+        const interactRes = this.engine.commands.interact(this.playerId, targetStr, command);
+        if (interactRes.isContextualMatch) {
+          response = { ...interactRes, command: 'interact' };
+        }
+      }
     }
 
-    this.send(response);
+    this.send({
+      type: 'RESPONSE',
+      ...response
+    });
   }
 }

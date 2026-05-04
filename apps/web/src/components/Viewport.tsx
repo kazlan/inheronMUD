@@ -4,6 +4,34 @@ import type { ContextEntity } from './ContextPanel';
 
 const ansiUp = new AnsiUp();
 ansiUp.use_classes = false;
+ansiUp.escape_html = false;
+
+// ──────────────────────────────────────────────────────────────
+// MUD Color Tags Parsing
+// ──────────────────────────────────────────────────────────────
+const COLOR_MAP: Record<string, string> = {
+  red: '#e53935',
+  blue: '#3b82f6',
+  green: '#4ade80',
+  yellow: '#facc15',
+  cyan: '#2dd4bf',
+  magenta: '#d946ef',
+  white: '#f3f4f6',
+  gray: '#9ca3af',
+  grey: '#9ca3af',
+  black: '#111827',
+  gold: '#c9a84c'
+};
+
+function parseMudColors(text: string): string {
+  let parsed = text;
+  for (const [color, hex] of Object.entries(COLOR_MAP)) {
+    const openRe = new RegExp(`<${color}>`, 'gi');
+    const closeRe = new RegExp(`</${color}>`, 'gi');
+    parsed = parsed.replace(openRe, `<span style="color: ${hex};">`).replace(closeRe, '</span>');
+  }
+  return parsed;
+}
 
 interface Log {
   id: number;
@@ -91,7 +119,7 @@ function parseEntity(rawText: string): ContextEntity | null {
     name = name.split(' - ')[0].trim();
   }
   
-  const keyword = name.split(/\s+/)[0].toLowerCase();
+  const keyword = name.replace(/^\[[!?]\]\s*/, '').split(/\s+/)[0].toLowerCase();
 
   let type: ContextEntity['type'] | null = null;
   if      (labelRaw.includes('npc') || labelRaw.includes('mob'))        type = 'npc';
@@ -130,7 +158,7 @@ function LogLine({
     return (
       <div
         className={`log-entry ${log.type} entity-link`}
-        dangerouslySetInnerHTML={{ __html: ansiUp.ansi_to_html(log.text) }}
+        dangerouslySetInnerHTML={{ __html: parseMudColors(ansiUp.ansi_to_html(log.text)) }}
         onClick={() => onEntityClick!(entity)}
         title={`Click to interact with ${entity.name}`}
         style={{ cursor: 'pointer' }}
@@ -143,12 +171,12 @@ function LogLine({
     return (
       <div
         className={`log-entry ${log.type}`}
-        dangerouslySetInnerHTML={{ __html: ansiUp.ansi_to_html(log.text) }}
+        dangerouslySetInnerHTML={{ __html: parseMudColors(ansiUp.ansi_to_html(log.text)) }}
       />
     );
   }
 
-  return <div className={`log-entry ${log.type}`}>{log.text}</div>;
+  return <div className={`log-entry ${log.type}`} dangerouslySetInnerHTML={{ __html: parseMudColors(log.text) }} />;
 }
 
 // ──────────────────────────────────────────────────────────────

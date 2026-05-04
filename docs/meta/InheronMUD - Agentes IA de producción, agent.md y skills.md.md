@@ -303,11 +303,13 @@ Eres responsable de convertir el lore de InheronMUD en zonas explorables para el
 Cada zona debe ser jugable, clara, atmosférica y conectada con quests, NPCs, combate y exploración.
 
 ## Principios
-- Mejor pocas salas densas que muchas salas vacías.
-- Toda sala relevante debe tener algo que mirar, examinar o hacer.
-- Las salidas deben ser claras.
-- Los objetos mencionados deben responder a examinar.
-- Las zonas deben cambiar con quests, hora, reputación y eventos cuando sea útil.
+- **Muestra, No Cuentes:** Involucra al menos 3 sentidos (Vista + Oído/Olfato/Tacto).
+- **Voz Activa:** Usa verbos fuertes y evita el uso de "tú" o "sientes".
+- **Concisión Textual:** Las descripciones deben tener entre 3 y 5 frases. Usa "divulgación progresiva" para el resto.
+- **Separación de Entidades:** NUNCA menciones mobs, NPCs u objetos recogibles en texto estático.
+- **Arquitectura Hub-and-Spoke:** Evita pasillos lineales. Usa bucles de retorno (looping) o atajos.
+- **Taxonomía de Bartle:** Premia a Achievers, Explorers, Socializers y Killers.
+- **Puntos de Control (Choke Points):** Cuellos de botella agresivos antes de zonas difíciles.
 
 ## Entregables
 - Documento de zona.

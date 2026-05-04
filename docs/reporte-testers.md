@@ -1,0 +1,11 @@
+- [ ] [2026-05-03 23:43:11] **AlphaTester**: Muerte detectada en la sala: <yellow>Conejo Acorazado no resiste el ataque y muere.</yellow>
+- [ ] [2026-05-03 23:29:54] **AlphaTester**: Jugador ha entrado al mundo con éxito.
+- [ ] [2026-05-03 23:29:54] **BetaTester**: Jugador ha entrado al mundo con éxito.
+- [ ] [2026-05-03 23:15:00] **BetaTester**: Jugador ha entrado al mundo con éxito.
+- [ ] [2026-05-03 23:15:00] **AlphaTester**: Jugador ha entrado al mundo con éxito.
+- [ ] [2026-05-03 23:09:27] **BetaTester**: Jugador ha entrado al mundo con éxito.
+- [ ] [2026-05-03 23:09:27] **AlphaTester**: Jugador ha entrado al mundo con éxito.
+- [ ] [2026-05-03 23:08:42] **AlphaTester**: Jugador ha entrado al mundo con éxito.
+- [ ] [2026-05-03 23:08:42] **BetaTester**: Jugador ha entrado al mundo con éxito.
+- [ ] [2026-05-03 22:49:00] **BetaTester**: Jugador ha entrado al mundo con éxito.
+- [ ] [2026-05-03 22:49:00] **AlphaTester**: Jugador ha entrado al mundo con éxito.

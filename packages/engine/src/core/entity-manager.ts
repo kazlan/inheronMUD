@@ -9,6 +9,7 @@ export class EntityManager {
   public rooms: Map<string, Room> = new Map();
   public npcs: Map<string, NPC> = new Map();
   public npcTemplates: Map<string, any> = new Map();
+  public itemTemplates: Map<string, any> = new Map();
   public items: Map<string, Item> = new Map();
   public spawners: Map<string, Spawner> = new Map();
 
@@ -58,6 +59,14 @@ export class EntityManager {
 
   removeNPC(id: string): void {
     this.npcs.delete(id);
+  }
+
+  applyEffect(entityId: string, effect: any): void {
+    const entity = this.players.get(entityId) || this.npcs.get(entityId) || this.rooms.get(entityId) || this.items.get(entityId);
+    if (entity) {
+      const effectCopy = { ...effect, startTime: Date.now(), id: effect.id || `eff_${Date.now()}_${Math.random()}` };
+      entity.activeEffects.push(effectCopy);
+    }
   }
 
   getPlayers(): Player[] {

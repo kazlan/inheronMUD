@@ -15,12 +15,22 @@ export class AIManager {
     for (const npc of npcs) {
       if (!npc.flags || npc.flags.length === 0) continue;
       
+      // Handle healer outside of combat
+      if (npc.flags.includes('healer')) {
+        this.handleHealer(npc, now);
+      }
+
       // Check if NPC is in an active combat
-      const isInCombat = Array.from(this.engine['activeCombats'].values()).some(combat => 
-        combat.active && combat.participants.some(p => p.entityId === npc.id && p.hpCurrent > 0)
+      const combat = Array.from(this.engine['activeCombats'].values()).find(c => 
+        c.active && c.participants.some(p => p.entityId === npc.id && p.hpCurrent > 0)
       );
 
-      if (isInCombat) continue;
+      if (combat) {
+        if (npc.flags.includes('cobarde')) {
+          this.handleCoward(npc, combat);
+        }
+        continue;
+      }
 
       // Handle wandering
       if (npc.flags.includes('wandering')) {
@@ -35,6 +45,79 @@ export class AIManager {
       // Handle aggressive
       if (npc.flags.includes('agresivo')) {
         this.handleAggressive(npc);
+      }
+
+      // Handle social
+      if (npc.flags.includes('social')) {
+        this.handleSocial(npc, now);
+      }
+    }
+  }
+
+  private handleHealer(npc: NPC, now: number): void {
+    if (!npc.aiState.nextHealTime) npc.aiState.nextHealTime = now + 15000;
+    if (now >= npc.aiState.nextHealTime) {
+      npc.aiState.nextHealTime = now + 15000;
+      const playersInRoom = this.engine.entities.getPlayers().filter(p => p.roomId === npc.roomId && (p.hpCurrent || 0) > 0);
+      let healedAnyone = false;
+      for (const p of playersInRoom) {
+        const score = this.engine.commands.getScore(p.id);
+        if (!score) continue;
+        const { hpMax } = score.derived;
+        if (p.hpCurrent! < hpMax) {
+          const amount = Math.floor(hpMax * 0.2) + 10;
+          p.hpCurrent = Math.min(p.hpCurrent! + amount, hpMax);
+          this.engine.savePlayer(p.id);
+          healedAnyone = true;
+          this.engine.emit('spatial_message', {
+            roomId: npc.roomId,
+            message: `<green>${npc.name} conjura una suave luz curativa sobre ${p.name}, restaurando sus heridas.</green>`,
+            excludeId: p.id
+          });
+          this.engine.emit('combat_message', p.id, [`\n<green>${npc.name} te ha curado ${amount} puntos de vida.</green>`]);
+        }
+      }
+      if (healedAnyone) {
+        this.engine.emit('spatial_message', { roomId: npc.roomId, message: `<green>${npc.name} recita unas palabras de consuelo.</green>` });
+      }
+    }
+  }
+
+  private handleCoward(npc: NPC, combat: any): void {
+    const pInfo = combat.participants.find((p: any) => p.entityId === npc.id);
+    if (pInfo && pInfo.hpCurrent / pInfo.hpMax < 0.3 && !pInfo.hasFled) {
+      pInfo.hasFled = true;
+      this.engine.emit('spatial_message', { roomId: npc.roomId, message: `<yellow>¡${npc.name} huye aterrorizado!</yellow>` });
+    }
+  }
+
+  private handleSocial(npc: NPC, now: number): void {
+    if (!npc.aiState.greetedPlayers) npc.aiState.greetedPlayers = new Set<string>();
+    if (!npc.aiState.nextAmbientTime) npc.aiState.nextAmbientTime = now + 30000 + Math.random() * 30000;
+
+    const playersInRoom = this.engine.entities.getPlayers().filter(p => p.roomId === npc.roomId);
+    
+    // Greet new players
+    for (const player of playersInRoom) {
+      if (!npc.aiState.greetedPlayers.has(player.id)) {
+        npc.aiState.greetedPlayers.add(player.id);
+        if (Math.random() < 0.5) {
+          this.engine.emit('spatial_message', {
+            roomId: npc.roomId,
+            message: `<cyan>${npc.name} saluda amablemente a ${player.name}.</cyan>`
+          });
+        }
+      }
+    }
+
+    // Ambient messages
+    if (now >= npc.aiState.nextAmbientTime && playersInRoom.length > 0) {
+      npc.aiState.nextAmbientTime = now + 45000 + Math.random() * 45000;
+      if (npc.metadata?.ambientMessages && Array.isArray(npc.metadata.ambientMessages)) {
+        const msg = npc.metadata.ambientMessages[Math.floor(Math.random() * npc.metadata.ambientMessages.length)];
+        this.engine.emit('spatial_message', { roomId: npc.roomId, message: `<gray>${msg}</gray>` });
+      } else {
+        this.engine.emit('spatial_message', { roomId: npc.roomId, message: `<gray>${npc.name} murmura algo ininteligible.</gray>` });
       }
     }
   }
@@ -54,21 +137,21 @@ export class AIManager {
       if (validExits.length === 0) return;
 
       const randomExit = validExits[Math.floor(Math.random() * validExits.length)];
-      
-      // Restrict wandering to the same area prefix if desired
-      const areaPrefix = npc.roomId.split('_')[0];
-      if (!randomExit.targetRoomId.startsWith(areaPrefix)) return;
-
       const targetRoom = this.engine.getRoom(randomExit.targetRoomId);
       if (!targetRoom) return;
+
+      // Restrict wandering to the same area
+      if (npc.metadata?.wanderArea) {
+        if (!randomExit.targetRoomId.startsWith(npc.metadata.wanderArea)) return;
+      } else if (npc.areaId && targetRoom.areaId !== npc.areaId) {
+        return; // No salir del areaId asignado
+      }
 
       // Move NPC
       room.removeEntity(npc.id);
       npc.roomId = targetRoom.id;
       targetRoom.addEntity(npc.id);
 
-      // We don't usually broadcast NPC random movements unless we want a lot of noise, 
-      // but if we do, it's just a spatial_message.
       this.engine.emit('spatial_message', {
         roomId: room.id,
         message: `<gray>${npc.name} se ha ido hacia el ${randomExit.direction}.</gray>`
@@ -131,14 +214,7 @@ export class AIManager {
         message: `<red>¡${npc.name} ataca a ${targetPlayer.name} agresivamente!</red>`
       });
 
-      this.engine.commands.kill(targetPlayer.id, npc.name); // Simulating player attacking to start combat, or directly start combat.
-      // Wait, commands.kill is driven by player ID. It works because it sets up the combat manager.
-      // But maybe it's better to bypass command parsing:
-      
-      const res = this.engine.commands.kill(targetPlayer.id, npc.name); // Actually the kill command expects targetName
-      if (!res.success) {
-        // Fallback or custom combat start logic
-      }
+      this.engine.commands.kill(targetPlayer.id, npc.name);
     }
   }
 }

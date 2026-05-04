@@ -1,0 +1,60 @@
+- id: npc_centauro_cazador
+  name: Centauro Cazador
+  description: Medio hombre, medio caballo, armado con un arco rústico. Vigila los pastos altos con gran celo.
+  behaviorId: hostile_beast
+  roomId: llanuras_3_3
+  level: 5
+  flags: ['social', 'wandering', 'agresivo']
+  stats:
+    fuerza: 15
+    destreza: 18
+    constitucion: 15
+    ingenio: 8
+    sabiduria: 10
+    presencia: 12
+    percepcion: 20
+  enemies: ['npc_bandido_llanura']
+  metadata:
+    enemyReactions: [0, 20, 80]
+
+- id: npc_ciervo_dorado
+  name: Ciervo Dorado
+  description: Un ciervo majestuoso con pelaje que parece estar hecho de hilos de oro puro. Transmite una paz inusitada.
+  behaviorId: idle
+  roomId: llanuras_5_5
+  level: 4
+  flags: ['wandering', 'healer']
+  stats:
+    fuerza: 8
+    destreza: 22
+    constitucion: 12
+    ingenio: 10
+    sabiduria: 20
+    presencia: 25
+    percepcion: 18
+  effects:
+    - id: aura_dorada
+      name: Brillo Consolador
+      type: heal
+      magnitude: 2
+      tickInterval: 10000
+      aoe: true
+      message: "<cyan>Una fresca brisa te hace sentir mejor gracias a la presencia del Ciervo Dorado.</cyan>"
+  metadata:
+    wanderTime: 40
+
+- id: npc_bandido_llanura
+  name: Bandido de las Llanuras
+  description: Un renegado oculto en la hierba alta, esperando a incautos viajeros.
+  behaviorId: hostile_beast
+  roomId: llanuras_2_6
+  level: 3
+  flags: ['social', 'agresivo']
+  stats:
+    fuerza: 12
+    destreza: 14
+    constitucion: 10
+    ingenio: 10
+    sabiduria: 6
+    presencia: 8
+    percepcion: 12

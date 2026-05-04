@@ -15,6 +15,7 @@ import { RespawnManager } from './respawn-manager';
 import { SkillManager } from './skill-manager';
 import { ChatManager } from './chat-manager';
 import { AIManager } from './ai-manager';
+import { EffectsManager } from './effects-manager';
 
 export class GameEngine extends EventEmitter {
   public eventLog: EventLog;
@@ -26,6 +27,7 @@ export class GameEngine extends EventEmitter {
   public respawnManager: RespawnManager;
   public chat: ChatManager;
   public ai: AIManager;
+  public effects: EffectsManager;
 
   public classesData: any[] = [];
   public racesData: any[] = [];
@@ -41,6 +43,7 @@ export class GameEngine extends EventEmitter {
     this.chat = new ChatManager(this);
     this.respawnManager = new RespawnManager(this);
     this.ai = new AIManager(this);
+    this.effects = new EffectsManager(this);
     console.log('Inheron Game Engine initialized.');
   }
 
@@ -54,6 +57,7 @@ export class GameEngine extends EventEmitter {
     const now = Date.now();
     this.respawnManager.tick(now);
     this.ai.tick(now);
+    this.effects.tick(now);
 
     for (const [combatId, combat] of this.activeCombats.entries()) {
       if (!combat.active) {
@@ -69,6 +73,68 @@ export class GameEngine extends EventEmitter {
           this.emit('combat_message', p.entityId, log);
         });
       }
+
+      // Inmediata rutina de muerte para jugadores caídos en la ronda
+      combat.participants.forEach(p => {
+        if (p.isPlayer && p.hpCurrent <= 0) {
+          const player = this.getPlayer(p.entityId);
+          // Verificar si ya procesamos su muerte (para no repetir en rondas siguientes si sigue en la lista)
+          if (player && (player as any).isDead) return;
+          
+          if (player) {
+            (player as any).isDead = true;
+            const oldRoom = this.getRoom(player.roomId);
+            const spawnRoomId = 'villaclara_plaza'; // Punto de respawn por defecto
+
+            this.emit('spatial_message', {
+              roomId: player.roomId,
+              message: `<red>¡${player.name} ha caído en combate!</red> Su cuerpo se desvanece en un haz de luz.`,
+              excludeId: player.id
+            });
+
+            const score = this.commands.getScore(player.id);
+            const hpMax = score?.derived.hpMax || 100;
+            
+            // Perder un 10% de la experiencia del nivel actual
+            const xpLost = Math.floor(player.experience * 0.10);
+            player.experience = Math.max(0, player.experience - xpLost);
+            
+            // Reaparece con un 10% de vida
+            player.hpCurrent = Math.floor(hpMax * 0.10);
+            
+            // Cambiar de sala
+            if (oldRoom) {
+              // El jugador no está en room.entities, pero el motor lo emite en spatial
+            }
+            player.roomId = spawnRoomId;
+            
+            this.emit('combat_message', player.id, [
+              `\n<red><b>¡HAS MUERTO!</b></red>`,
+              `Reapareces en tu punto de guardado.`,
+              `Has perdido <yellow>${xpLost}</yellow> puntos de experiencia.`,
+              `Tu salud está en estado crítico.`
+            ]);
+
+            this.emit('spatial_message', {
+              roomId: spawnRoomId,
+              message: `<yellow>Un haz de luz desciende y forma el cuerpo malherido de ${player.name}.</yellow>`,
+              excludeId: player.id
+            });
+
+            // Retirar del combate
+            combat.removeParticipant(player.id);
+
+            // Guardar jugador
+            Database.savePlayer(player).catch(err => console.error('Error guardando jugador tras muerte:', err));
+
+            // Forzar un "look" asíncrono para que vea la plaza
+            setTimeout(() => {
+              (player as any).isDead = false; // Reset flag
+              this.emit('force_look', player.id);
+            }, 500);
+          }
+        }
+      });
 
       if (!combat.active) {
         // Compute total XP and cleanup dead NPCs
@@ -86,14 +152,14 @@ export class GameEngine extends EventEmitter {
           }
         });
 
-        // Sync player HP, award XP, and save
+        // Sync player HP, award XP, and save (for surviving players)
         combat.participants.forEach(p => {
           if (p.isPlayer) {
             const player = this.getPlayer(p.entityId);
-            if (player) {
+            if (player && p.hpCurrent > 0) {
               player.hpCurrent = p.hpCurrent;
               
-              if (p.hpCurrent > 0 && totalXp > 0) {
+              if (totalXp > 0) {
                 const xpLogs = player.addExperience(totalXp);
                 if (xpLogs.length > 0) {
                   this.emit('combat_message', player.id, ['\n' + xpLogs.join('\n')]);
@@ -138,13 +204,20 @@ export class GameEngine extends EventEmitter {
     return this.entities.getPlayer(id);
   }
 
+  savePlayer(id: string): void {
+    const player = this.getPlayer(id);
+    if (player) {
+      this.emit('save_player', player);
+    }
+  }
+
   getEventLog(): EventLog {
     return this.eventLog;
   }
 
   // Interaction Commands (delegated to CommandManager)
-  look(playerId: string): any {
-    return this.commands.look(playerId);
+  look(playerId: string, targetName?: string): any {
+    return this.commands.look(playerId, targetName);
   }
 
   move(playerId: string, direction: string): { success: boolean; message: string; roomId?: string } {
@@ -204,7 +277,15 @@ export class GameEngine extends EventEmitter {
           energyMax: 20,
           energyCurrent: 20,
           resources: {},
-          flags: npc.flags
+          flags: npc.flags,
+          equipment: (() => {
+            const eq: Record<string, any> = {};
+            for (const [slot, itemId] of Object.entries(npc.equipment)) {
+              const item = this.entities.getItem(itemId);
+              if (item) eq[slot] = item;
+            }
+            return eq;
+          })()
         });
       }
     }

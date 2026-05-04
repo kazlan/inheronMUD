@@ -5,31 +5,100 @@ import { StatCalculator } from './stat-calculator';
 export class CommandManager {
   constructor(private engine: GameEngine) {}
 
-  look(playerId: string): any {
+  private matchEntityName(entityName: string, query: string): boolean {
+    if (!query) return false;
+    const nameLower = entityName.toLowerCase();
+    const queryLower = query.toLowerCase();
+    if (nameLower === queryLower) return true;
+    const words = nameLower.split(/\s+/);
+    if (words.some(w => w.startsWith(queryLower))) return true;
+    return nameLower.startsWith(queryLower);
+  }
+
+  look(playerId: string, targetName?: string): any {
     const player = this.engine.entities.getPlayer(playerId);
     if (!player) return null;
 
     const room = this.engine.entities.getRoom(player.roomId);
     if (!room) return null;
 
+    if (targetName) {
+      // 1. Try to find in scenery
+      if (room.scenery) {
+        for (const [key, desc] of Object.entries(room.scenery)) {
+          if (this.matchEntityName(key, targetName)) {
+            const message = typeof desc === 'string' ? desc : desc.description;
+            return { message };
+          }
+        }
+      }
+
+      // 2. Try to find NPC or Item
+      for (const id of room.entities) {
+        const npc = this.engine.entities.getNPC(id);
+        const item = this.engine.entities.getItem(id);
+        if (npc && this.matchEntityName(npc.name, targetName)) {
+          return { message: npc.description };
+        }
+        if (item && this.matchEntityName(item.name, targetName)) {
+          return { message: item.description };
+        }
+      }
+
+      return { message: `No ves nada especialmente interesante en "${targetName}".` };
+    }
+
+    // Default look behavior (entire room)
+    console.log(`[Command:Look] Player ${playerId} in room ${room.id}. Entities in room:`, room.entities);
+
+    // Check room effects
+    if (room.activeEffects.some(e => e.id === 'oscuridad' || e.type === 'oscuridad')) {
+      // Allow viewing if player has a light source (we could check inventory for 'torch')
+      // For now, it's just dark.
+      const hasLight = player.inventory.some(id => {
+        const item = this.engine.entities.getItem(id);
+        return item && item.metadata && item.metadata.lightSource;
+      });
+      if (!hasLight) {
+        return { message: "Está demasiado oscuro para ver nada. Necesitas una fuente de luz." };
+      }
+    }
+
+    let roomDesc = room.description;
+    if (room.scenery) {
+      for (const key of Object.keys(room.scenery)) {
+        // Regex para emparejar la palabra completa, ignorando mayúsculas/minúsculas
+        const regex = new RegExp(`\\b(${key})\\b`, 'gi');
+        roomDesc = roomDesc.replace(regex, '<b>$1</b>');
+      }
+    }
+
     const occupants = room.entities.map(id => {
       const npc = this.engine.entities.getNPC(id);
       const item = this.engine.entities.getItem(id);
       
       if (npc) {
+        console.log(`[Command:Look] Found NPC: ${npc.name} (${npc.id})`);
         const json = npc.toJSON() as any;
         json.questIndicator = this.getQuestIndicator(playerId, npc.id);
         json.isMob = npc.behaviorId === 'hostile_beast' || npc.behaviorId === 'hostile_boss';
         json.levelDiff = npc.level - (player?.level || 1);
         return json;
       }
-      if (item) return item.toJSON();
+      if (item) {
+        console.log(`[Command:Look] Found Item: ${item.name} (${item.id})`);
+        return item.toJSON();
+      }
       
+      console.warn(`[Command:Look] Entity ID ${id} in room ${room.id} not found in entity maps!`);
       return null;
     }).filter(Boolean);
 
+    const roomData = room.toJSON();
+    roomData.description = roomDesc; // Use the formatted description
+
     return {
-      room: room.toJSON(),
+      room: roomData,
       occupants: occupants
     };
   }
@@ -104,7 +173,178 @@ export class CommandManager {
       data: { direction, from: currentRoom.id, to: targetRoom.id }
     });
 
+    this.engine.savePlayer(playerId);
     return { success: true, message: `Te mueves hacia el ${direction}.`, roomId: targetRoom.id };
+  }
+
+  open(playerId: string, direction: string): { success: boolean; message: string } {
+    const player = this.engine.entities.getPlayer(playerId);
+    if (!player) return { success: false, message: 'Jugador no encontrado' };
+
+    const room = this.engine.entities.getRoom(player.roomId);
+    if (!room) return { success: false, message: 'Sala actual no encontrada' };
+
+    const exit = room.exits.find(e => e.direction.toLowerCase() === direction.toLowerCase() || e.direction.toLowerCase().startsWith(direction.toLowerCase()));
+    if (!exit) return { success: false, message: `No hay salida hacia el ${direction}.` };
+
+    if (!exit.locked) return { success: false, message: 'Esa puerta ya está abierta.' };
+
+    // Check if it requires a key
+    if ((exit as any).keyId) {
+      const keyId = (exit as any).keyId;
+      const hasKey = player.inventory.some(id => {
+        const item = this.engine.entities.getItem(id);
+        return item && (item.id === keyId || item.id.startsWith(keyId + '_'));
+      });
+      if (!hasKey) {
+        return { success: false, message: 'Necesitas una llave para abrir esto.' };
+      }
+    }
+
+    exit.locked = false;
+    
+    // Unlock reverse exit
+    const opposites: Record<string, string> = {
+      north: 'south', south: 'north', east: 'west', west: 'east',
+      northeast: 'southwest', northwest: 'southeast', southeast: 'northwest', southwest: 'northeast',
+      up: 'down', down: 'up',
+      norte: 'sur', sur: 'norte', este: 'oeste', oeste: 'este',
+      noreste: 'suroeste', noroeste: 'sureste', sureste: 'noroeste', suroeste: 'noreste',
+      arriba: 'abajo', abajo: 'arriba'
+    };
+    const opp = opposites[exit.direction.toLowerCase()] || '';
+    
+    const targetRoom = this.engine.entities.getRoom(exit.targetRoomId);
+    if (targetRoom && opp) {
+      const revExit = targetRoom.exits.find(e => e.direction.toLowerCase() === opp);
+      if (revExit) revExit.locked = false;
+    }
+
+    this.engine.emit('spatial_message', {
+      roomId: room.id,
+      message: `<yellow>${player.name} ha abierto la puerta hacia el ${exit.direction}.</yellow>`,
+      excludeId: player.id
+    });
+
+    return { success: true, message: `Has abierto la puerta hacia el ${exit.direction}.` };
+  }
+
+  interact(playerId: string, targetName: string, verb?: string): { success: boolean; message: string; data?: any; isContextualMatch?: boolean } {
+    const player = this.engine.entities.getPlayer(playerId);
+    if (!player) return { success: false, message: 'Jugador no encontrado' };
+
+    const room = this.engine.entities.getRoom(player.roomId);
+    if (!room) return { success: false, message: 'Sala actual no encontrada' };
+
+    // Check scenery interactions
+    if (room.scenery) {
+      for (const [key, value] of Object.entries(room.scenery)) {
+        if (this.matchEntityName(key, targetName)) {
+          if (typeof value === 'object' && value.interactions) {
+            
+            // Si nos pasan un verbo contextual, comprobar si está permitido
+            if (verb) {
+              const allowedVerbs = value.interactions.verbs || [];
+              if (!allowedVerbs.includes(verb.toLowerCase())) {
+                return { success: false, isContextualMatch: false, message: `No puedes ${verb} ${key}.` };
+              }
+            }
+
+            // Process interaction
+            // For now, we support "unlock_exit" and "message"
+            let msg = value.interactions.message || 'Interactúas con el objeto.';
+            
+            if (value.interactions.action === 'unlock_exit' && value.interactions.target) {
+              const exit = room.exits.find(e => e.direction === value.interactions.target);
+              if (exit && exit.locked) {
+                exit.locked = false;
+                // Try unlocking reverse exit
+                const opposites: Record<string, string> = {
+                  north: 'south', south: 'north', east: 'west', west: 'east',
+                  up: 'down', down: 'up'
+                };
+                const opp = opposites[exit.direction.toLowerCase()] || '';
+                const targetRoom = this.engine.entities.getRoom(exit.targetRoomId);
+                if (targetRoom && opp) {
+                  const revExit = targetRoom.exits.find(e => e.direction.toLowerCase() === opp);
+                  if (revExit) revExit.locked = false;
+                }
+                msg += ` Has abierto la salida hacia el ${exit.direction}.`;
+              }
+            }
+
+            this.engine.emit('spatial_message', {
+              roomId: room.id,
+              message: `<yellow>${player.name} interactúa con ${key}.</yellow>`,
+              excludeId: player.id
+            });
+
+            return { success: true, isContextualMatch: true, message: msg };
+          } else {
+            return { success: false, isContextualMatch: !!verb, message: `No puedes interactuar con eso, solo observarlo.` };
+          }
+        }
+      }
+    }
+
+    // Check inventory items (like wands with effects/charges)
+    const itemIndex = player.inventory.findIndex(id => {
+      const item = this.engine.entities.getItem(id);
+      return item && this.matchEntityName(item.name, targetName);
+    });
+
+    if (itemIndex !== -1) {
+      const itemId = player.inventory[itemIndex];
+      const item = this.engine.entities.getItem(itemId);
+      
+      if (item && (item.type === 'CONSUMABLE' || (item.metadata && item.metadata.effects))) {
+        let msg = `Usas ${item.name}. `;
+        let destroyed = false;
+        
+        // Handle charges or one-time use
+        if (item.metadata && item.metadata.charges !== undefined) {
+          if (item.metadata.charges <= 0) {
+            return { success: false, message: `${item.name} no tiene más cargas.` };
+          }
+          item.metadata.charges--;
+          msg += `(Quedan ${item.metadata.charges} cargas). `;
+          if (item.metadata.charges === 0) {
+            msg += `<red>${item.name} se desintegra tras agotar su poder.</red> `;
+            destroyed = true;
+          }
+        } else if (item.type === 'CONSUMABLE') {
+          destroyed = true; // Potions, food
+        }
+
+        if (destroyed) {
+          player.inventory.splice(itemIndex, 1);
+        }
+
+        // Apply effects
+        if (item.metadata && item.metadata.effects) {
+          const effects = Array.isArray(item.metadata.effects) ? item.metadata.effects : [item.metadata.effects];
+          for (const effect of effects) {
+            this.engine.entities.applyEffect(player.id, effect);
+            if (effect.message) msg += effect.message + ' ';
+          }
+        }
+
+        // Apply direct healing value for standard consumables
+        if (item.type === 'CONSUMABLE' && item.value > 0) {
+          const { hpMax } = this.engine.commands.getScore(player.id).derived;
+          const heal = item.value;
+          player.hpCurrent = Math.min((player.hpCurrent || 0) + heal, hpMax);
+          msg += `<green>Recuperas ${heal} puntos de vida.</green> `;
+        }
+        
+        this.engine.savePlayer(playerId);
+        return { success: true, message: msg };
+      } else {
+        return { success: false, message: `No parece que puedas usar ${item?.name} de esa manera.` };
+      }
+    }
+
+    return { success: false, message: `No ves nada con lo que interactuar llamado "${targetName}".` };
   }
 
   get(playerId: string, itemName: string): { success: boolean; message: string } {
@@ -116,7 +356,7 @@ export class CommandManager {
 
     const item = room.entities
       .map(id => this.engine.entities.getItem(id))
-      .filter((i): i is Item => !!i && i.name.toLowerCase().includes(itemName.toLowerCase()))[0];
+      .filter((i): i is Item => !!i && this.matchEntityName(i.name, itemName))[0];
 
     if (!item) return { success: false, message: `No ves ningún "${itemName}" aquí.` };
 
@@ -129,6 +369,7 @@ export class CommandManager {
       data: { itemId: item.id, itemName: item.name }
     });
 
+    this.engine.savePlayer(playerId);
     return { success: true, message: `Recoges: ${item.name}.` };
   }
 
@@ -138,7 +379,7 @@ export class CommandManager {
 
     const itemIndex = player.inventory.findIndex(id => {
       const item = this.engine.entities.getItem(id);
-      return item && item.name.toLowerCase().includes(itemName.toLowerCase());
+      return item && this.matchEntityName(item.name, itemName);
     });
 
     if (itemIndex === -1) return { success: false, message: `No llevas nada llamado "${itemName}".` };
@@ -153,6 +394,7 @@ export class CommandManager {
       data: { itemId, roomId: player.roomId }
     });
 
+    this.engine.savePlayer(playerId);
     return { success: true, message: `Sueltas: ${this.engine.entities.getItem(itemId)?.name}.` };
   }
 
@@ -183,7 +425,7 @@ export class CommandManager {
 
     const itemIndex = player.inventory.findIndex(id => {
       const item = this.engine.entities.getItem(id);
-      return item && item.name.toLowerCase().includes(itemName.toLowerCase());
+      return item && this.matchEntityName(item.name, itemName);
     });
 
     if (itemIndex === -1) return { success: false, message: `No llevas nada llamado "${itemName}".` };
@@ -207,6 +449,7 @@ export class CommandManager {
 
     this.engine.getEventLog().log({ type: 'ITEM_EQUIPPED', actorId: playerId, data: { itemId, slot: item.equipSlot } });
 
+    this.engine.savePlayer(playerId);
     return { success: true, message: `Te has equipado: ${item.name} en [${item.equipSlot}].`, data: this.getScore(playerId) };
   }
 
@@ -220,7 +463,7 @@ export class CommandManager {
 
     for (const [slot, itemId] of Object.entries(player.equipment)) {
       const item = this.engine.entities.getItem(itemId as string);
-      if (slot.toLowerCase() === slotOrName.toLowerCase() || (item && item.name.toLowerCase().includes(slotOrName.toLowerCase()))) {
+      if (slot.toLowerCase() === slotOrName.toLowerCase() || (item && this.matchEntityName(item.name, slotOrName))) {
         targetSlot = slot;
         targetItemId = itemId as string;
         break;
@@ -236,6 +479,7 @@ export class CommandManager {
 
     this.engine.getEventLog().log({ type: 'ITEM_UNEQUIPPED', actorId: playerId, data: { itemId: targetItemId, slot: targetSlot } });
 
+    this.engine.savePlayer(playerId);
     return { success: true, message: `Te has desequipado: ${item?.name || 'objeto'}.`, data: this.getScore(playerId) };
   }
 
@@ -266,7 +510,7 @@ export class CommandManager {
 
     const target = room.entities
       .map(id => this.engine.entities.getNPC(id))
-      .filter(npc => !!npc && npc.name.toLowerCase().includes(targetName.toLowerCase()))[0];
+      .filter(npc => !!npc && this.matchEntityName(npc.name, targetName))[0];
 
     if (!target) return { success: false, message: `No ves a ningún "${targetName}" aquí.` };
 
@@ -307,7 +551,7 @@ export class CommandManager {
 
     const target = room.entities
       .map(id => this.engine.entities.getNPC(id))
-      .filter(npc => !!npc && npc.name.toLowerCase().includes(targetName.toLowerCase()))[0];
+      .filter(npc => !!npc && this.matchEntityName(npc.name, targetName))[0];
 
     if (!target) return { success: false, message: `No ves a ningún "${targetName}" con quien hablar.` };
 
@@ -315,30 +559,56 @@ export class CommandManager {
       return { success: false, message: `¡${target.name} no parece dispuesto a hablar contigo!` };
     }
 
-    // Very simple dialog tree using engine memory flags
     const hasMet = this.engine.checkMemoryFlag(playerId, `met_${target.id}`);
-    
-    let dialogue = `<cyan>${target.name} te mira.</cyan>\n`;
     if (!hasMet) {
-      dialogue += `—Saludos, viajero. No creo haberte visto antes por aquí.\n`;
       this.engine.setMemoryFlag(playerId, `met_${target.id}`);
-    } else {
-      dialogue += `—Nos volvemos a encontrar, ${player.name}.\n`;
     }
 
-    // Simple quest hook
-    if (target.id === 'anciano_sabio') {
-      const lobosMuertos = parseInt(this.engine.getCronica(playerId)?.flags?.['lobos_muertos'] || '0');
-      if (lobosMuertos >= 3) {
-        if (!this.engine.checkMemoryFlag(playerId, 'quest_lobos_done')) {
-          dialogue += `—Veo que has acabado con la amenaza de los lobos. Toma esta poción como recompensa.\n`;
-          this.engine.setMemoryFlag(playerId, 'quest_lobos_done');
-          // Give item logic would go here
-        } else {
-          dialogue += `—Gracias de nuevo por encargarte de esos lobos.\n`;
+    let dialogue = `<cyan>${target.name} te mira.</cyan>\n`;
+
+    // Data-driven dialogue parsing
+    const dialogues = target.metadata?.dialogues;
+    if (dialogues && Array.isArray(dialogues)) {
+      let matchedNode = null;
+      
+      // Find the first dialogue node whose conditions are met
+      for (const node of dialogues) {
+        let conditionsMet = true;
+        
+        if (node.requires_flag && !this.engine.checkMemoryFlag(playerId, node.requires_flag)) {
+          conditionsMet = false;
         }
+        if (node.requires_not_flag && this.engine.checkMemoryFlag(playerId, node.requires_not_flag)) {
+          conditionsMet = false;
+        }
+        if (node.requires_cronica) {
+          const cronicaVal = parseInt(this.engine.getCronica(playerId)?.flags?.[node.requires_cronica.key] || '0');
+          if (cronicaVal < node.requires_cronica.min) conditionsMet = false;
+        }
+
+        if (conditionsMet) {
+          matchedNode = node;
+          break;
+        }
+      }
+
+      if (matchedNode) {
+        dialogue += `—${matchedNode.text}\n`;
+        
+        // Execute side effects
+        if (matchedNode.set_flag) {
+          this.engine.setMemoryFlag(playerId, matchedNode.set_flag);
+        }
+        // Could add give_item or assign_quest here later
       } else {
-        dialogue += `—Los lobos del norte están muy agresivos. Si pudieras acabar con 3 de ellos, te recompensaría.\n`;
+        dialogue += `—Saludos, ${player.name}.\n`;
+      }
+    } else {
+      // Fallback simple dialog
+      if (!hasMet) {
+        dialogue += `—Saludos, viajero. No creo haberte visto antes por aquí.\n`;
+      } else {
+        dialogue += `—Nos volvemos a encontrar, ${player.name}.\n`;
       }
     }
 
@@ -402,7 +672,7 @@ export class CommandManager {
       .filter((npc: any) => !!npc && npc.metadata && npc.metadata.merchant);
 
     if (targetName) {
-      npcs = npcs.filter((npc: any) => npc.name.toLowerCase().includes(targetName.toLowerCase()));
+      npcs = npcs.filter((npc: any) => this.matchEntityName(npc.name, targetName));
     }
     return npcs[0];
   }
@@ -442,7 +712,7 @@ export class CommandManager {
     if (!merchant) return { success: false, message: 'No hay mercaderes aquí.' };
 
     const stock = merchant.metadata.inventory || [];
-    const itemInst = stock.map((id: string) => this.engine.entities.getItem(id)).find((i: any) => i && i.name.toLowerCase().includes(itemName.toLowerCase()));
+    const itemInst = stock.map((id: string) => this.engine.entities.getItem(id)).find((i: any) => i && this.matchEntityName(i.name, itemName));
 
     if (!itemInst) return { success: false, message: `${merchant.name} no vende eso.` };
 
@@ -463,6 +733,7 @@ export class CommandManager {
     this.engine.registerItem(newItem);
     player.inventory.push(newItem.id);
 
+    this.engine.savePlayer(playerId);
     return { success: true, message: `Has comprado <magenta>${itemInst.name}</magenta> por <yellow>${price} soles</yellow>.` };
   }
 
@@ -478,7 +749,7 @@ export class CommandManager {
 
     const itemIndex = player.inventory.findIndex(id => {
       const i = this.engine.entities.getItem(id);
-      return i && i.name.toLowerCase().includes(itemName.toLowerCase());
+      return i && this.matchEntityName(i.name, itemName);
     });
 
     if (itemIndex === -1) return { success: false, message: `No tienes eso en tu inventario.` };
@@ -494,6 +765,7 @@ export class CommandManager {
     
     player.coins = (player.coins || 0) + sellPrice;
 
+    this.engine.savePlayer(playerId);
     return { success: true, message: `Has vendido <magenta>${itemInst?.name}</magenta> por <yellow>${sellPrice} soles</yellow>.` };
   }
 

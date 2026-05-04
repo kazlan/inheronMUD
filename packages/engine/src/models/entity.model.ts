@@ -5,6 +5,7 @@ export abstract class Entity {
   public name: string;
   public description: string;
   public metadata: Record<string, any> = {};
+  public activeEffects: any[] = [];
 
   constructor(name: string, description: string = '', id?: string) {
     this.id = id || uuidv4();
@@ -21,6 +22,7 @@ export abstract class Entity {
       name: this.name,
       description: this.description,
       metadata: this.metadata,
+      activeEffects: this.activeEffects,
       type: this.constructor.name,
     };
   }

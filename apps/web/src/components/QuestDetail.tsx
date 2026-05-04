@@ -1,3 +1,5 @@
+import React, { useEffect } from 'react';
+
 interface QuestDetailProps {
   quest: any;
   onClose: () => void;

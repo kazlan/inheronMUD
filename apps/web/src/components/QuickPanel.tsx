@@ -72,18 +72,21 @@ export default function QuickPanel({ onCommand, onOpenPanel, room }: QuickPanelP
       </div>
 
       <div className="panel-title">Navegación</div>
-      <div className="compass-grid">
+      <div className="compass-grid vertical-nav">
         <button className={`compass-btn ${hasExit('northwest') ? 'active-exit' : ''}`} onClick={() => onCommand('nw')}>NO</button>
         <button className={`compass-btn ${hasExit('north') ? 'active-exit' : ''}`} onClick={() => onCommand('n')}>N</button>
         <button className={`compass-btn ${hasExit('northeast') ? 'active-exit' : ''}`} onClick={() => onCommand('ne')}>NE</button>
+        <button className={`compass-btn up-btn ${hasExit('up') ? 'active-exit' : ''}`} onClick={() => onCommand('up')}>▲ Subir</button>
         
         <button className={`compass-btn ${hasExit('west') ? 'active-exit' : ''}`} onClick={() => onCommand('w')}>O</button>
         <button className="compass-btn empty"></button>
         <button className={`compass-btn ${hasExit('east') ? 'active-exit' : ''}`} onClick={() => onCommand('e')}>E</button>
+        <button className={`compass-btn down-btn ${hasExit('down') ? 'active-exit' : ''}`} onClick={() => onCommand('down')}>▼ Bajar</button>
         
         <button className={`compass-btn ${hasExit('southwest') ? 'active-exit' : ''}`} onClick={() => onCommand('sw')}>SO</button>
         <button className={`compass-btn ${hasExit('south') ? 'active-exit' : ''}`} onClick={() => onCommand('s')}>S</button>
         <button className={`compass-btn ${hasExit('southeast') ? 'active-exit' : ''}`} onClick={() => onCommand('se')}>SE</button>
+        <button className="compass-btn empty"></button>
       </div>
 
       <div className="panel-title">Paneles</div>

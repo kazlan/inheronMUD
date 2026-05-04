@@ -53,11 +53,19 @@ ws.on('message', (data) => {
   const response = JSON.parse(data);
   
   if (response.type === 'INIT') {
-    console.log(`\n${colorize('<b>' + response.message + '</b>')}`);
+    console.log(`\n${colorize('<b>' + (response.message || 'Entrando al mundo...') + '</b>')}`);
     displayRoom(response.data);
+  } else if (response.type === 'SYSTEM') {
+    console.log(`\n${colorize('<cyan>[SISTEMA] ' + response.message + '</cyan>')}`);
+  } else if (response.type === 'CHAT') {
+    const { data } = response;
+    const prefix = data.type === 'tell' ? `[Susurro de ${data.sourceName}] ` : `[${data.type.toUpperCase()}] ${data.sourceName}: `;
+    console.log(`\n${colorize('<blue>' + prefix + data.message + '</blue>')}`);
+  } else if (response.type === 'SPATIAL') {
+    console.log(`\n${colorize('<yellow>' + response.message + '</yellow>')}`);
   } else if (response.type === 'COMBAT_UPDATE') {
     if (response.combatLog) {
-      console.log('\n' + response.combatLog.map(colorize).join('\n'));
+      console.log('\n' + response.combatLog.map(l => colorize('<red>' + l + '</red>')).join('\n'));
     }
   } else if (response.type === 'RESPONSE') {
     if (response.success) {
@@ -71,13 +79,13 @@ ws.on('message', (data) => {
       } else if (response.command === 'score') {
         displayScore(response.data);
       } else if (response.command === 'kill' && response.combatLog) {
-        console.log('\n' + response.combatLog.map(colorize).join('\n'));
+        console.log('\n' + response.combatLog.map(l => colorize('<red>' + l + '</red>')).join('\n'));
       } else if (response.command === 'cronica') {
         console.log('\n--- Tu Crónica Viva ---');
         console.log(JSON.stringify(response.data, null, 2));
       }
     } else {
-      console.log(`\nError: ${response.message}`);
+      console.log(`\n${colorize('<red>Error: ' + response.message + '</red>')}`);
     }
   }
 

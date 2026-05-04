@@ -1,37 +1,75 @@
 - id: villaclara_plaza
   name: Plaza del Alba Chica
-  description: Adoquines blanqueados por el sol forman un amplio círculo en el centro del pueblo, brillando bajo el cielo. En el medio se alza la estatua de mármol de un caballero solar, cuya espada pulida refleja la luz diurna. El murmullo de voces lejanas se mezcla con el olor a especias dulces que flota en la brisa cálida.
+  description: Adoquines blanqueados por el sol forman un amplio círculo en el centro del pueblo, brillando bajo el cielo despejado. En el medio se alza la fuente del caballero solar, cuya agua cristalina refleja la luz diurna y murmura suavemente. El olor a pan recién horneado y especias dulces flota en la brisa cálida, atrayendo a los aldeanos.
+  scenery:
+    fuente: Una hermosa fuente de mármol blanco. El agua fresca mana de la espada del caballero esculpido, invitando a beber.
+    caballero: La estatua de un antiguo héroe de la luz, cuyo rostro serio parece vigilar el pueblo.
+    columpio:
+      description: "Un modesto columpio de madera atado a las ramas bajas de un roble centenario."
+      interactions:
+        action: "message"
+        verbs: ["jugar", "subirse"]
+        message: "Te sientas en el columpio y te balanceas un rato. Una sensación de nostalgia te invade, recordando tiempos más sencillos."
   exits:
     - direction: north
-      targetRoomId: villaclara_campo_norte
+      targetRoomId: villaclara_puerta_norte
     - direction: south
-      targetRoomId: villaclara_pozo
+      targetRoomId: villaclara_iglesia
     - direction: east
       targetRoomId: villaclara_panaderia
     - direction: west
       targetRoomId: villaclara_gremio
+    - direction: se
+      targetRoomId: villaclara_forja
+
+- id: villaclara_puerta_norte
+  name: Puerta Norte de Villaclara
+  description: Dos enormes portones de roble reforzado con hierro marcan el límite entre la seguridad del pueblo y la espesura salvaje. El viento silba al colarse por las rendijas de la muralla de piedra, trayendo un aroma a hierba fresca y tierra húmeda. El constante traqueteo de carros mercantes resuena contra las murallas.
+  scenery:
+    portones: Maderas gruesas y tachuelas oxidadas que han resistido incontables asedios menores.
+    muralla: Piedras grises cubiertas de enredaderas que protegen el asentamiento.
+  exits:
+    - direction: south
+      targetRoomId: villaclara_plaza
+    - direction: north
+      targetRoomId: villaclara_campo_norte
+
+- id: villaclara_iglesia
+  name: Capilla de la Luz Eterna
+  description: La suave luz dorada se filtra a través de intrincadas vidrieras de colores, pintando arcoíris sobre los bancos de roble pulido. Un coro de voces tenues entona cánticos monásticos que resuenan en la bóveda de piedra, induciendo una profunda sensación de paz. El aire huele a incienso dulce y cera de velas derretida.
+  effects:
+    - id: aura_sagrada
+      name: Aura Sagrada
+      type: heal
+      magnitude: 2
+      tickInterval: 10000
+      aoe: true
+      message: "<cyan>Un aura de devoción reconforta a los presentes.</cyan>"
+  scenery:
+    vidrieras: Cristales de colores vibrantes que representan la victoria de la Luz sobre la Oscuridad.
+    bancos: Madera oscura y desgastada por generaciones de fieles buscando consuelo.
+  exits:
+    - direction: north
+      targetRoomId: villaclara_plaza
 
 - id: villaclara_panaderia
   name: Panadería Panbendito
   description: El intenso aroma a masa madre y levadura satura esta pequeña estancia enharinada. Cuatro hornos de piedra rústica crepitan con calor de brasa, iluminando las paredes de adobe con destellos anaranjados. Sacos de grano de lino apilados dejan apenas un pasillo estrecho hacia el mostrador de roble.
+  scenery:
+    hornos: Piedras ennegrecidas por el hollín que irradian un calor reconfortante.
+    sacos: Tela de saco basta rebosante de grano dorado listo para ser molido.
   exits:
     - direction: west
       targetRoomId: villaclara_plaza
     - direction: south
-      targetRoomId: villaclara_forja
-
-- id: villaclara_pozo
-  name: El Pozo Cantante
-  description: Piedras milenarias, resbaladizas y cubiertas de espeso musgo esmeralda, delimitan el brocal de este pozo hundido. Una nota musical baja y cristalina reverbera desde las profundidades oscuras cada pocos segundos. El aire en esta depresión es notablemente más frío, oliendo a tierra húmeda y ozono.
-  exits:
-    - direction: north
-      targetRoomId: villaclara_plaza
-    - direction: east
       targetRoomId: villaclara_forja
 
 - id: villaclara_gremio
   name: Gremio de Aventureros
   description: Banderines carmesí cuelgan del alto techo de madera, meciéndose con las corrientes de aire. Taburetes gastados rodean mesas redondas donde el tintineo de jarras de metal acompaña carcajadas ahogadas. El penetrante olor a cerveza enana y cuero curtido lo impregna todo.
+  scenery:
+    banderines: Estandartes raídos que muestran el emblema de una espada cruzando un escudo.
+    mesas: Tablones de roble manchados de alcohol y marcados por dagas ociosas.
   exits:
     - direction: east
       targetRoomId: villaclara_plaza
@@ -41,6 +79,9 @@
 - id: villaclara_tablon
   name: El Tablón de Contratos
   description: Centenares de pergaminos sujetos con clavos oxidados cubren por completo esta pared de corcho. Un tenue olor a lacre y tinta seca rodea el lugar. El sonido de las discusiones en la sala principal del gremio llega aquí de forma amortiguada.
+  scenery:
+    tablon: Una gran placa de corcho y madera plagada de avisos, peticiones de rescate y recompensas por monstruos.
+    pergaminos: Hojas amarillentas llenas de garabatos apresurados y sellos de cera oficial.
   exits:
     - direction: south
       targetRoomId: villaclara_gremio
@@ -48,24 +89,39 @@
 - id: villaclara_forja
   name: Forja del Yunque Quebrado
   description: El sofocante calor de una fragua al rojo vivo golpea como una pared física. Chispas brillantes saltan en el aire seco, iluminando un taller desordenado lleno de armaduras a medio terminar. El sonido metálico de herramientas golpeando acero resuena con un ritmo casi hipnótico.
+  scenery:
+    fragua: Un foso de carbón ardiente que escupe fuego al ritmo de los fuelles gigantes.
+    armaduras: Petos de hierro y cotas de malla apoyadas torpemente en maniquíes de madera.
   exits:
     - direction: north
       targetRoomId: villaclara_panaderia
-    - direction: west
-      targetRoomId: villaclara_pozo
+    - direction: nw
+      targetRoomId: villaclara_plaza
 
 - id: villaclara_campo_norte
-  name: Campo Norte
-  description: Llanuras de hierba plateada y alta se mecen rítmicamente bajo el cielo abierto. El viento silba incesantemente al rasgar las espigas, transportando el frescor matutino. A lo lejos, una cordillera de colinas dentadas e irregulares dibuja una barrera natural en el horizonte norte.
+  name: Llanuras de Ámbar
+  area: prado_norte
+  description: Llanuras de hierba dorada y alta se mecen rítmicamente bajo el cielo abierto, acariciadas por la brisa fresca. El canto agudo de insectos invisibles zumba incesantemente entre los tallos crujientes. A lo lejos, una cordillera de colinas dentadas e irregulares dibuja una barrera natural en el horizonte norte.
+  scenery:
+    hierba: Espigas secas que crujen bajo las botas y huelen a heno tostado al sol.
+    piedra:
+      description: "Una inmensa roca de forma semiesférica incrustada parcialmente en el suelo."
+      interactions:
+        action: "message"
+        verbs: ["empujar", "push"]
+        message: "Apoyas tus manos contra la piedra y empujas con todas tus fuerzas. Tras mucho esfuerzo, consigues moverla apenas unos milímetros. Parece que oculta algo debajo, pero necesitas ser más fuerte para destaparla por completo."
   exits:
     - direction: south
-      targetRoomId: villaclara_plaza
+      targetRoomId: villaclara_puerta_norte
     - direction: north
       targetRoomId: colinas_inicio
 
 - id: colinas_inicio
   name: Colinas de los Conejos Acorazados
-  description: Montículos de tierra removida salpican esta colina escarpada y rocosa. El sonido constante de rasguños contra la piedra emana de docenas de pequeños túneles oscuros. Un olor terroso y rancio advierte de la presencia de territorio salvaje.
+  area: prado_norte
+  description: Montículos de tierra removida salpican esta colina escarpada y rocosa. El sonido constante de rasguños contra la piedra emana de docenas de pequeños túneles oscuros. Un olor terroso y rancio advierte de la presencia de vida salvaje abundante.
+  scenery:
+    tuneles: Agujeros negros y rasgados en la tierra, demasiado pequeños para un humano, pero perfectos para alimañas blindadas.
   exits:
     - direction: south
       targetRoomId: villaclara_campo_norte
@@ -74,7 +130,35 @@
 
 - id: colinas_madriguera
   name: Madriguera Principal
-  description: Una caverna subterránea excavada con sorprendente precisión geométrica. Huesos roídos y piezas de armaduras oxidadas ensucian el suelo de tierra apisonada. El aire es denso y caliente, vibrando con siseos amenazantes que resuenan en la oscuridad.
+  area: prado_norte
+  description: Una caverna subterránea excavada con sorprendente precisión geométrica. Huesos roídos y pedazos de metal abollado ensucian el suelo de tierra apisonada. El aire es denso y sofocante, vibrando con siseos amenazantes que resuenan en la oscuridad absoluta. Una extraña antorcha apagada cuelga torcida en la pared norte.
+  effects:
+    - id: oscuridad
+      name: Oscuridad Subterránea
+      type: oscuridad
+  scenery:
+    huesos: Restos blanqueados de pequeños depredadores que subestimaron a los inquilinos de esta cueva.
+    antorcha:
+      description: "Una antorcha de metal frío que parece estar unida a un mecanismo en la pared."
+      interactions:
+        action: "unlock_exit"
+        target: "north"
+        verbs: ["tirar", "pull"]
+        message: "Tiras de la antorcha con fuerza. Se escucha un sonido de engranajes y la pared de piedra se desplaza revelando una salida secreta al norte."
   exits:
     - direction: up
       targetRoomId: colinas_inicio
+    - direction: north
+      targetRoomId: colinas_tesoro
+      locked: true
+
+- id: colinas_tesoro
+  name: Reserva Secreta del General
+  area: prado_norte
+  description: Una pequeña cámara oculta cuyas paredes brillan débilmente por el musgo luminiscente. El aire aquí está quieto y frío, oliendo a humedad y a metal viejo. Un cofre de madera podrida descansa en el centro sobre un pedestal de tierra elevada.
+  scenery:
+    cofre: Un arcón destartalado que parece contener objetos robados a viajeros despistados.
+    musgo: Manchas verdes fosforescentes que emiten un resplandor fantasmal.
+  exits:
+    - direction: south
+      targetRoomId: colinas_madriguera

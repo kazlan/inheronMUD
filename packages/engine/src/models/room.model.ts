@@ -11,9 +11,12 @@ export interface Exit {
 export class Room extends Entity {
   public exits: Exit[] = [];
   public entities: string[] = []; // IDs of NPCs and Items in the room
+  public areaId?: string;
+  public scenery?: Record<string, string | any>;
 
-  constructor(name: string, description: string = '', id?: string) {
+  constructor(name: string, description: string = '', id?: string, areaId?: string) {
     super(name, description, id);
+    this.areaId = areaId;
   }
 
   addExit(exit: Exit): void {

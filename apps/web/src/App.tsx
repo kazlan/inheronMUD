@@ -115,22 +115,19 @@ function App() {
   }, [handleCommand, room]);
 
   const handlePasswordSent = useCallback(() => {
+    // We don't hide immediately anymore, we wait for INIT/score
     setIsLifting(true);
-    const timer = setTimeout(() => {
-      setShowOverlay(false);
-      setTimeout(() => commandLineRef.current?.focus(), 50);
-    }, 800);
-    return () => clearTimeout(timer);
   }, []);
 
-  const isCharacterLoaded = Object.keys(attributes).length > 0;
+  const isCharacterLoaded = !!attributes?.name;
 
   React.useEffect(() => {
-    if (!isCharacterLoaded && !isLifting) {
-      setShowOverlay(true);
+    if (isCharacterLoaded) {
+      setShowOverlay(false);
       setIsLifting(false);
+      setTimeout(() => commandLineRef.current?.focus(), 100);
     }
-  }, [isCharacterLoaded, isLifting]);
+  }, [isCharacterLoaded]);
 
   const inCombat = targets && targets.length > 0;
 

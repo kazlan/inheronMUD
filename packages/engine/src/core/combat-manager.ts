@@ -39,7 +39,7 @@ export class CombatManager {
     if (!this.active) return [];
     
     this.currentRound++;
-    const log: string[] = [`\n<gray>--- Ronda ${this.currentRound} ---</gray>`];
+    const log: string[] = [];
 
     for (const participant of this.participants) {
       if (!this.active) break;
@@ -76,17 +76,27 @@ export class CombatManager {
       // Critical Hit check (10% chance)
       const isCrit = Math.random() < 0.10;
 
-      // Base damage is 3-7
-      let baseDamage = Math.floor(Math.random() * 5) + 3;
+      // Base unarmed damage is 1d4 + 1
+      let diceCount = 1;
+      let diceSides = 4;
+      let modifier = 1;
       
-      // Add weapon damage if player has a weapon equipped
+      // Add weapon damage if participant has a weapon equipped
       let weaponName = "";
-      if (participant.isPlayer && participant.equipment && participant.equipment['weapon']) {
+      if (participant.equipment && participant.equipment['weapon']) {
         const weapon = participant.equipment['weapon'];
-        if (weapon.metadata && weapon.metadata.damage) {
-          baseDamage += weapon.metadata.damage;
+        if (weapon.metadata) {
+          if (weapon.metadata.diceCount !== undefined) diceCount = weapon.metadata.diceCount;
+          if (weapon.metadata.diceSides !== undefined) diceSides = weapon.metadata.diceSides;
+          if (weapon.metadata.modifier !== undefined) modifier = weapon.metadata.modifier;
         }
         weaponName = weapon.name;
+      }
+
+      // Roll the dice!
+      let baseDamage = modifier;
+      for (let i = 0; i < diceCount; i++) {
+        baseDamage += Math.floor(Math.random() * diceSides) + 1;
       }
 
       const damage = isCrit ? baseDamage * 2 : baseDamage;

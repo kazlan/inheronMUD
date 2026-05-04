@@ -46,13 +46,39 @@ export default function useMUD(url: string) {
       
       // Print occupants with type brackets for Viewport parser
       occupants.forEach((o: any) => {
-        const type = o.behaviorId === 'hostile_beast' ? 'MOB' : (o.type === 'npc' ? 'NPC' : 'Item');
-        addLog('text', `[${type}] ${o.name} - ${o.description || ''}`, true);
+        const rawType = (o.type || '').toLowerCase();
+        let displayType = 'Item';
+        
+        if (o.behaviorId === 'hostile_beast' || o.behaviorId === 'hostile_boss') {
+          displayType = 'MOB';
+        } else if (rawType === 'npc') {
+          displayType = 'NPC';
+        }
+        
+        let formattedName = o.name;
+        if (displayType === 'NPC') {
+          formattedName = `<green>${o.name}</green>`;
+          if (o.questIndicator) {
+            formattedName = `<yellow>${o.questIndicator}</yellow> ` + formattedName;
+          }
+        } else if (displayType === 'MOB') {
+          const diff = o.levelDiff || 0;
+          if (diff <= -3) formattedName = `<gray>${o.name}</gray>`;
+          else if (diff <= 0) formattedName = `<green>${o.name}</green>`;
+          else if (diff <= 2) formattedName = `<yellow>${o.name}</yellow>`;
+          else if (diff <= 4) formattedName = `<red>${o.name}</red>`;
+          else formattedName = `<magenta>${o.name}</magenta>`;
+        } else {
+          formattedName = `<cyan>${o.name}</cyan>`; // Items
+        }
+        
+        addLog('text', `[${displayType}] ${formattedName}`, true);
       });
       
       // Print exits in the format Viewport parses: [Exits: north south east]
       if (room.exits && room.exits.length > 0) {
         const exitList = room.exits.map((e: any) => e.direction).join(' ');
+        addLog('text', '', false);
         addLog('text', `[Exits: ${exitList}]`, true);
       }
     }
@@ -75,7 +101,29 @@ export default function useMUD(url: string) {
     switch (msg.type) {
       case 'INIT':
         addLog('system', msg.message || 'Conexión establecida.', true);
-        if (msg.data) handleData('room', msg.data.room || msg.data);
+        if (msg.data) handleData('room', msg.data);
+        // Request initial data now that we are in game
+        sendCommand('score');
+        sendCommand('cronica');
+        sendCommand('inventory');
+        break;
+      case 'SYSTEM':
+        addLog('system', msg.message, true);
+        break;
+      case 'COMBAT_UPDATE':
+        if (msg.combatLog) {
+          msg.combatLog.forEach((line: string) => addLog('combat', line, true));
+        }
+        if (msg.data) handleData('targets', msg.data);
+        break;
+      case 'CHAT':
+        const { data } = msg;
+        const chatType = data.type === 'say' ? 'room-chat' : 'global-chat';
+        const prefix = data.type === 'tell' ? `[Susurro de ${data.sourceName}] ` : `[${data.type.toUpperCase()}] ${data.sourceName}: `;
+        addLog(chatType, `${prefix}${data.message}`, true);
+        break;
+      case 'SPATIAL':
+        addLog('system', msg.message, true);
         break;
       case 'RESPONSE':
         if (msg.success) {
@@ -85,16 +133,24 @@ export default function useMUD(url: string) {
           if (msg.data) {
             if (msg.command === 'inventory' || msg.command === 'i') {
               handleData('inventory', msg.data);
-            } else if (msg.command === 'score') {
+            } else if (msg.command === 'score' || msg.command === 'puntuacion') {
               handleData('attributes', msg.data);
             } else if (msg.command === 'cronica') {
               handleData('quests', msg.data);
+            } else if (msg.command === 'skills' || msg.command === 'habilidades') {
+              handleData('skills', msg.data);
             } else if (msg.data.room || msg.command === 'look' || ['n','s','e','o','w','u','d'].includes(msg.command)) {
-              handleData('room', msg.data.room || msg.data);
+              if (msg.data.room) {
+                handleData('room', msg.data);
+              } else if (msg.data.message) {
+                addLog('text', msg.data.message, true);
+              } else if (msg.data.name && msg.data.exits) {
+                handleData('room', msg.data);
+              }
             }
           }
         } else {
-          addLog('system', `Error: ${msg.message}`, false);
+          if (msg.message) addLog('system', `Error: ${msg.message}`, false);
         }
         break;
       case 'message':
@@ -121,12 +177,6 @@ export default function useMUD(url: string) {
       socket.onopen = () => {
         console.log('[WS] Connected to ' + url);
         setState((prev: any) => ({ ...prev, isConnected: true }));
-        // Request initial data
-        setTimeout(() => {
-          socket.send(JSON.stringify({ command: 'score', args: [] }));
-          socket.send(JSON.stringify({ command: 'cronica', args: [] }));
-          socket.send(JSON.stringify({ command: 'inventory', args: [] }));
-        }, 100);
       };
 
       socket.onclose = () => {

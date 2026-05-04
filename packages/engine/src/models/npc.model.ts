@@ -5,11 +5,14 @@ export class NPC extends Entity {
   public stats: Stats;
   public roomId: string;
   public inventory: string[] = [];
+  public equipment: Record<string, string> = {};
   public behaviorId: string; // Strategy pattern ID for AI
   public level: number = 1;
   public flags: string[] = []; // wandering, patrol, cobarde, agresivo, social
   public aiState: Record<string, any> = {}; // internal state for patrol routes, etc.
   public metadata: Record<string, any> = {};
+  public enemies: string[] = [];
+  public areaId?: string;
 
   constructor(
     name: string,
@@ -38,7 +41,8 @@ export class NPC extends Entity {
       behaviorId: this.behaviorId,
       level: this.level,
       flags: this.flags,
-      metadata: this.metadata
+      metadata: this.metadata,
+      areaId: this.areaId
     };
   }
 }

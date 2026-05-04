@@ -1,0 +1,770 @@
+- id: llanuras_0_0
+  name: Borde de las Llanuras
+  description: El inicio de las vastas llanuras doradas. Hacia el sur, se puede ver
+    la entrada a los campos norteños de Villaclara.
+  exits:
+  - direction: south
+    targetRoomId: llanuras_1_0
+  - direction: east
+    targetRoomId: llanuras_0_1
+  - direction: south
+    targetRoomId: villaclara_campo_norte
+- id: llanuras_0_1
+  name: Pastos Altos
+  description: Rocas blanquecinas emergen esporádicamente entre el pasto alto, proporcionando
+    algo de sombra escasa en este mar de hierba.
+  exits:
+  - direction: south
+    targetRoomId: llanuras_1_1
+  - direction: east
+    targetRoomId: llanuras_0_2
+  - direction: west
+    targetRoomId: llanuras_0_0
+- id: llanuras_0_2
+  name: Colina de Viento Cálido
+  description: La hierba aquí crece casi hasta la cintura, ocultando lo que podría
+    acechar a nivel del suelo. El olor a heno seco inunda el aire cálido.
+  exits:
+  - direction: south
+    targetRoomId: llanuras_1_2
+  - direction: east
+    targetRoomId: llanuras_0_3
+  - direction: west
+    targetRoomId: llanuras_0_1
+- id: llanuras_0_3
+  name: Llanura Abierta
+  description: El cielo abierto y despejado domina este paisaje llano. Pequeñas madrigueras
+    salpican el suelo arcilloso.
+  exits:
+  - direction: south
+    targetRoomId: llanuras_1_3
+  - direction: east
+    targetRoomId: llanuras_0_4
+  - direction: west
+    targetRoomId: llanuras_0_2
+- id: llanuras_0_4
+  name: Pastos Altos
+  description: Una suave elevación del terreno ofrece una vista panorámica de las
+    interminables llanuras doradas. El zumbido de los insectos es constante.
+  exits:
+  - direction: south
+    targetRoomId: llanuras_1_4
+  - direction: east
+    targetRoomId: llanuras_0_5
+  - direction: west
+    targetRoomId: llanuras_0_3
+- id: llanuras_0_5
+  name: Colina de Viento Cálido
+  description: El cielo abierto y despejado domina este paisaje llano. Pequeñas madrigueras
+    salpican el suelo arcilloso.
+  exits:
+  - direction: south
+    targetRoomId: llanuras_1_5
+  - direction: east
+    targetRoomId: llanuras_0_6
+  - direction: west
+    targetRoomId: llanuras_0_4
+- id: llanuras_0_6
+  name: Tierras de Pastoreo Salvaje
+  description: La hierba aquí crece casi hasta la cintura, ocultando lo que podría
+    acechar a nivel del suelo. El olor a heno seco inunda el aire cálido.
+  exits:
+  - direction: south
+    targetRoomId: llanuras_1_6
+  - direction: east
+    targetRoomId: llanuras_0_7
+  - direction: west
+    targetRoomId: llanuras_0_5
+- id: llanuras_0_7
+  name: Tierras de Pastoreo Salvaje
+  description: Rocas blanquecinas emergen esporádicamente entre el pasto alto, proporcionando
+    algo de sombra escasa en este mar de hierba.
+  exits:
+  - direction: south
+    targetRoomId: llanuras_1_7
+  - direction: west
+    targetRoomId: llanuras_0_6
+- id: llanuras_1_0
+  name: Llanura Abierta
+  description: Una suave elevación del terreno ofrece una vista panorámica de las
+    interminables llanuras doradas. El zumbido de los insectos es constante.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_0_0
+  - direction: south
+    targetRoomId: llanuras_2_0
+  - direction: east
+    targetRoomId: llanuras_1_1
+- id: llanuras_1_1
+  name: Loma Suave
+  description: La hierba aquí crece casi hasta la cintura, ocultando lo que podría
+    acechar a nivel del suelo. El olor a heno seco inunda el aire cálido.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_0_1
+  - direction: south
+    targetRoomId: llanuras_2_1
+  - direction: east
+    targetRoomId: llanuras_1_2
+  - direction: west
+    targetRoomId: llanuras_1_0
+- id: llanuras_1_2
+  name: Loma Suave
+  description: El cielo abierto y despejado domina este paisaje llano. Pequeñas madrigueras
+    salpican el suelo arcilloso.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_0_2
+  - direction: south
+    targetRoomId: llanuras_2_2
+  - direction: east
+    targetRoomId: llanuras_1_3
+  - direction: west
+    targetRoomId: llanuras_1_1
+- id: llanuras_1_3
+  name: Tierras de Pastoreo Salvaje
+  description: Rocas blanquecinas emergen esporádicamente entre el pasto alto, proporcionando
+    algo de sombra escasa en este mar de hierba.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_0_3
+  - direction: south
+    targetRoomId: llanuras_2_3
+  - direction: east
+    targetRoomId: llanuras_1_4
+  - direction: west
+    targetRoomId: llanuras_1_2
+- id: llanuras_1_4
+  name: Llanura Abierta
+  description: La hierba aquí crece casi hasta la cintura, ocultando lo que podría
+    acechar a nivel del suelo. El olor a heno seco inunda el aire cálido.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_0_4
+  - direction: south
+    targetRoomId: llanuras_2_4
+  - direction: east
+    targetRoomId: llanuras_1_5
+  - direction: west
+    targetRoomId: llanuras_1_3
+- id: llanuras_1_5
+  name: Colina de Viento Cálido
+  description: Un vasto océano de hierba dorada se extiende hasta donde alcanza la
+    vista. El viento peina las espigas creando olas de color ámbar.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_0_5
+  - direction: south
+    targetRoomId: llanuras_2_5
+  - direction: east
+    targetRoomId: llanuras_1_6
+  - direction: west
+    targetRoomId: llanuras_1_4
+- id: llanuras_1_6
+  name: Colina de Viento Cálido
+  description: Un vasto océano de hierba dorada se extiende hasta donde alcanza la
+    vista. El viento peina las espigas creando olas de color ámbar.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_0_6
+  - direction: south
+    targetRoomId: llanuras_2_6
+  - direction: east
+    targetRoomId: llanuras_1_7
+  - direction: west
+    targetRoomId: llanuras_1_5
+- id: llanuras_1_7
+  name: Colina de Viento Cálido
+  description: Una suave elevación del terreno ofrece una vista panorámica de las
+    interminables llanuras doradas. El zumbido de los insectos es constante.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_0_7
+  - direction: south
+    targetRoomId: llanuras_2_7
+  - direction: west
+    targetRoomId: llanuras_1_6
+- id: llanuras_2_0
+  name: Llanura Abierta
+  description: La hierba aquí crece casi hasta la cintura, ocultando lo que podría
+    acechar a nivel del suelo. El olor a heno seco inunda el aire cálido.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_1_0
+  - direction: south
+    targetRoomId: llanuras_3_0
+  - direction: east
+    targetRoomId: llanuras_2_1
+- id: llanuras_2_1
+  name: Campos de Ámbar
+  description: Rocas blanquecinas emergen esporádicamente entre el pasto alto, proporcionando
+    algo de sombra escasa en este mar de hierba.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_1_1
+  - direction: south
+    targetRoomId: llanuras_3_1
+  - direction: east
+    targetRoomId: llanuras_2_2
+  - direction: west
+    targetRoomId: llanuras_2_0
+- id: llanuras_2_2
+  name: Pastos Altos
+  description: Un vasto océano de hierba dorada se extiende hasta donde alcanza la
+    vista. El viento peina las espigas creando olas de color ámbar.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_1_2
+  - direction: south
+    targetRoomId: llanuras_3_2
+  - direction: east
+    targetRoomId: llanuras_2_3
+  - direction: west
+    targetRoomId: llanuras_2_1
+- id: llanuras_2_3
+  name: Campos de Ámbar
+  description: La hierba aquí crece casi hasta la cintura, ocultando lo que podría
+    acechar a nivel del suelo. El olor a heno seco inunda el aire cálido.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_1_3
+  - direction: south
+    targetRoomId: llanuras_3_3
+  - direction: east
+    targetRoomId: llanuras_2_4
+  - direction: west
+    targetRoomId: llanuras_2_2
+- id: llanuras_2_4
+  name: Colina de Viento Cálido
+  description: Un vasto océano de hierba dorada se extiende hasta donde alcanza la
+    vista. El viento peina las espigas creando olas de color ámbar.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_1_4
+  - direction: south
+    targetRoomId: llanuras_3_4
+  - direction: east
+    targetRoomId: llanuras_2_5
+  - direction: west
+    targetRoomId: llanuras_2_3
+- id: llanuras_2_5
+  name: Tierras de Pastoreo Salvaje
+  description: Un vasto océano de hierba dorada se extiende hasta donde alcanza la
+    vista. El viento peina las espigas creando olas de color ámbar.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_1_5
+  - direction: south
+    targetRoomId: llanuras_3_5
+  - direction: east
+    targetRoomId: llanuras_2_6
+  - direction: west
+    targetRoomId: llanuras_2_4
+- id: llanuras_2_6
+  name: Colina de Viento Cálido
+  description: Una suave elevación del terreno ofrece una vista panorámica de las
+    interminables llanuras doradas. El zumbido de los insectos es constante.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_1_6
+  - direction: south
+    targetRoomId: llanuras_3_6
+  - direction: east
+    targetRoomId: llanuras_2_7
+  - direction: west
+    targetRoomId: llanuras_2_5
+- id: llanuras_2_7
+  name: Loma Suave
+  description: Una suave elevación del terreno ofrece una vista panorámica de las
+    interminables llanuras doradas. El zumbido de los insectos es constante.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_1_7
+  - direction: south
+    targetRoomId: llanuras_3_7
+  - direction: west
+    targetRoomId: llanuras_2_6
+- id: llanuras_3_0
+  name: Colina de Viento Cálido
+  description: Una suave elevación del terreno ofrece una vista panorámica de las
+    interminables llanuras doradas. El zumbido de los insectos es constante.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_2_0
+  - direction: south
+    targetRoomId: llanuras_4_0
+  - direction: east
+    targetRoomId: llanuras_3_1
+- id: llanuras_3_1
+  name: Pastos Altos
+  description: Rocas blanquecinas emergen esporádicamente entre el pasto alto, proporcionando
+    algo de sombra escasa en este mar de hierba.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_2_1
+  - direction: south
+    targetRoomId: llanuras_4_1
+  - direction: east
+    targetRoomId: llanuras_3_2
+  - direction: west
+    targetRoomId: llanuras_3_0
+- id: llanuras_3_2
+  name: Campos de Ámbar
+  description: Una suave elevación del terreno ofrece una vista panorámica de las
+    interminables llanuras doradas. El zumbido de los insectos es constante.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_2_2
+  - direction: south
+    targetRoomId: llanuras_4_2
+  - direction: east
+    targetRoomId: llanuras_3_3
+  - direction: west
+    targetRoomId: llanuras_3_1
+- id: llanuras_3_3
+  name: Tierras de Pastoreo Salvaje
+  description: Una suave elevación del terreno ofrece una vista panorámica de las
+    interminables llanuras doradas. El zumbido de los insectos es constante.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_2_3
+  - direction: south
+    targetRoomId: llanuras_4_3
+  - direction: east
+    targetRoomId: llanuras_3_4
+  - direction: west
+    targetRoomId: llanuras_3_2
+- id: llanuras_3_4
+  name: Tierras de Pastoreo Salvaje
+  description: Una suave elevación del terreno ofrece una vista panorámica de las
+    interminables llanuras doradas. El zumbido de los insectos es constante.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_2_4
+  - direction: south
+    targetRoomId: llanuras_4_4
+  - direction: east
+    targetRoomId: llanuras_3_5
+  - direction: west
+    targetRoomId: llanuras_3_3
+- id: llanuras_3_5
+  name: Tierras de Pastoreo Salvaje
+  description: La hierba aquí crece casi hasta la cintura, ocultando lo que podría
+    acechar a nivel del suelo. El olor a heno seco inunda el aire cálido.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_2_5
+  - direction: south
+    targetRoomId: llanuras_4_5
+  - direction: east
+    targetRoomId: llanuras_3_6
+  - direction: west
+    targetRoomId: llanuras_3_4
+- id: llanuras_3_6
+  name: Pastos Altos
+  description: El cielo abierto y despejado domina este paisaje llano. Pequeñas madrigueras
+    salpican el suelo arcilloso.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_2_6
+  - direction: south
+    targetRoomId: llanuras_4_6
+  - direction: east
+    targetRoomId: llanuras_3_7
+  - direction: west
+    targetRoomId: llanuras_3_5
+- id: llanuras_3_7
+  name: Llanura Abierta
+  description: Rocas blanquecinas emergen esporádicamente entre el pasto alto, proporcionando
+    algo de sombra escasa en este mar de hierba.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_2_7
+  - direction: south
+    targetRoomId: llanuras_4_7
+  - direction: west
+    targetRoomId: llanuras_3_6
+- id: llanuras_4_0
+  name: Colina de Viento Cálido
+  description: Una suave elevación del terreno ofrece una vista panorámica de las
+    interminables llanuras doradas. El zumbido de los insectos es constante.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_3_0
+  - direction: south
+    targetRoomId: llanuras_5_0
+  - direction: east
+    targetRoomId: llanuras_4_1
+- id: llanuras_4_1
+  name: Campos de Ámbar
+  description: Una suave elevación del terreno ofrece una vista panorámica de las
+    interminables llanuras doradas. El zumbido de los insectos es constante.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_3_1
+  - direction: south
+    targetRoomId: llanuras_5_1
+  - direction: east
+    targetRoomId: llanuras_4_2
+  - direction: west
+    targetRoomId: llanuras_4_0
+- id: llanuras_4_2
+  name: Loma Suave
+  description: Un vasto océano de hierba dorada se extiende hasta donde alcanza la
+    vista. El viento peina las espigas creando olas de color ámbar.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_3_2
+  - direction: south
+    targetRoomId: llanuras_5_2
+  - direction: east
+    targetRoomId: llanuras_4_3
+  - direction: west
+    targetRoomId: llanuras_4_1
+- id: llanuras_4_3
+  name: Colina de Viento Cálido
+  description: Un vasto océano de hierba dorada se extiende hasta donde alcanza la
+    vista. El viento peina las espigas creando olas de color ámbar.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_3_3
+  - direction: south
+    targetRoomId: llanuras_5_3
+  - direction: east
+    targetRoomId: llanuras_4_4
+  - direction: west
+    targetRoomId: llanuras_4_2
+- id: llanuras_4_4
+  name: Llanura Abierta
+  description: El cielo abierto y despejado domina este paisaje llano. Pequeñas madrigueras
+    salpican el suelo arcilloso.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_3_4
+  - direction: south
+    targetRoomId: llanuras_5_4
+  - direction: east
+    targetRoomId: llanuras_4_5
+  - direction: west
+    targetRoomId: llanuras_4_3
+- id: llanuras_4_5
+  name: Llanura Abierta
+  description: Una suave elevación del terreno ofrece una vista panorámica de las
+    interminables llanuras doradas. El zumbido de los insectos es constante.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_3_5
+  - direction: south
+    targetRoomId: llanuras_5_5
+  - direction: east
+    targetRoomId: llanuras_4_6
+  - direction: west
+    targetRoomId: llanuras_4_4
+- id: llanuras_4_6
+  name: Pastos Altos
+  description: Un vasto océano de hierba dorada se extiende hasta donde alcanza la
+    vista. El viento peina las espigas creando olas de color ámbar.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_3_6
+  - direction: south
+    targetRoomId: llanuras_5_6
+  - direction: east
+    targetRoomId: llanuras_4_7
+  - direction: west
+    targetRoomId: llanuras_4_5
+- id: llanuras_4_7
+  name: Campos de Ámbar
+  description: El cielo abierto y despejado domina este paisaje llano. Pequeñas madrigueras
+    salpican el suelo arcilloso.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_3_7
+  - direction: south
+    targetRoomId: llanuras_5_7
+  - direction: west
+    targetRoomId: llanuras_4_6
+- id: llanuras_5_0
+  name: Tierras de Pastoreo Salvaje
+  description: El cielo abierto y despejado domina este paisaje llano. Pequeñas madrigueras
+    salpican el suelo arcilloso.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_4_0
+  - direction: south
+    targetRoomId: llanuras_6_0
+  - direction: east
+    targetRoomId: llanuras_5_1
+- id: llanuras_5_1
+  name: Pastos Altos
+  description: La hierba aquí crece casi hasta la cintura, ocultando lo que podría
+    acechar a nivel del suelo. El olor a heno seco inunda el aire cálido.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_4_1
+  - direction: south
+    targetRoomId: llanuras_6_1
+  - direction: east
+    targetRoomId: llanuras_5_2
+  - direction: west
+    targetRoomId: llanuras_5_0
+- id: llanuras_5_2
+  name: Campos de Ámbar
+  description: La hierba aquí crece casi hasta la cintura, ocultando lo que podría
+    acechar a nivel del suelo. El olor a heno seco inunda el aire cálido.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_4_2
+  - direction: south
+    targetRoomId: llanuras_6_2
+  - direction: east
+    targetRoomId: llanuras_5_3
+  - direction: west
+    targetRoomId: llanuras_5_1
+- id: llanuras_5_3
+  name: Loma Suave
+  description: El cielo abierto y despejado domina este paisaje llano. Pequeñas madrigueras
+    salpican el suelo arcilloso.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_4_3
+  - direction: south
+    targetRoomId: llanuras_6_3
+  - direction: east
+    targetRoomId: llanuras_5_4
+  - direction: west
+    targetRoomId: llanuras_5_2
+- id: llanuras_5_4
+  name: Llanura Abierta
+  description: Rocas blanquecinas emergen esporádicamente entre el pasto alto, proporcionando
+    algo de sombra escasa en este mar de hierba.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_4_4
+  - direction: south
+    targetRoomId: llanuras_6_4
+  - direction: east
+    targetRoomId: llanuras_5_5
+  - direction: west
+    targetRoomId: llanuras_5_3
+- id: llanuras_5_5
+  name: Loma Suave
+  description: Un vasto océano de hierba dorada se extiende hasta donde alcanza la
+    vista. El viento peina las espigas creando olas de color ámbar.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_4_5
+  - direction: south
+    targetRoomId: llanuras_6_5
+  - direction: east
+    targetRoomId: llanuras_5_6
+  - direction: west
+    targetRoomId: llanuras_5_4
+- id: llanuras_5_6
+  name: Pastos Altos
+  description: La hierba aquí crece casi hasta la cintura, ocultando lo que podría
+    acechar a nivel del suelo. El olor a heno seco inunda el aire cálido.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_4_6
+  - direction: south
+    targetRoomId: llanuras_6_6
+  - direction: east
+    targetRoomId: llanuras_5_7
+  - direction: west
+    targetRoomId: llanuras_5_5
+- id: llanuras_5_7
+  name: Colina de Viento Cálido
+  description: El cielo abierto y despejado domina este paisaje llano. Pequeñas madrigueras
+    salpican el suelo arcilloso.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_4_7
+  - direction: south
+    targetRoomId: llanuras_6_7
+  - direction: west
+    targetRoomId: llanuras_5_6
+- id: llanuras_6_0
+  name: Pastos Altos
+  description: El cielo abierto y despejado domina este paisaje llano. Pequeñas madrigueras
+    salpican el suelo arcilloso.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_5_0
+  - direction: south
+    targetRoomId: llanuras_7_0
+  - direction: east
+    targetRoomId: llanuras_6_1
+- id: llanuras_6_1
+  name: Tierras de Pastoreo Salvaje
+  description: El cielo abierto y despejado domina este paisaje llano. Pequeñas madrigueras
+    salpican el suelo arcilloso.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_5_1
+  - direction: south
+    targetRoomId: llanuras_7_1
+  - direction: east
+    targetRoomId: llanuras_6_2
+  - direction: west
+    targetRoomId: llanuras_6_0
+- id: llanuras_6_2
+  name: Llanura Abierta
+  description: El cielo abierto y despejado domina este paisaje llano. Pequeñas madrigueras
+    salpican el suelo arcilloso.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_5_2
+  - direction: south
+    targetRoomId: llanuras_7_2
+  - direction: east
+    targetRoomId: llanuras_6_3
+  - direction: west
+    targetRoomId: llanuras_6_1
+- id: llanuras_6_3
+  name: Loma Suave
+  description: Una suave elevación del terreno ofrece una vista panorámica de las
+    interminables llanuras doradas. El zumbido de los insectos es constante.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_5_3
+  - direction: south
+    targetRoomId: llanuras_7_3
+  - direction: east
+    targetRoomId: llanuras_6_4
+  - direction: west
+    targetRoomId: llanuras_6_2
+- id: llanuras_6_4
+  name: Pastos Altos
+  description: El cielo abierto y despejado domina este paisaje llano. Pequeñas madrigueras
+    salpican el suelo arcilloso.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_5_4
+  - direction: south
+    targetRoomId: llanuras_7_4
+  - direction: east
+    targetRoomId: llanuras_6_5
+  - direction: west
+    targetRoomId: llanuras_6_3
+- id: llanuras_6_5
+  name: Tierras de Pastoreo Salvaje
+  description: Rocas blanquecinas emergen esporádicamente entre el pasto alto, proporcionando
+    algo de sombra escasa en este mar de hierba.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_5_5
+  - direction: south
+    targetRoomId: llanuras_7_5
+  - direction: east
+    targetRoomId: llanuras_6_6
+  - direction: west
+    targetRoomId: llanuras_6_4
+- id: llanuras_6_6
+  name: Loma Suave
+  description: La hierba aquí crece casi hasta la cintura, ocultando lo que podría
+    acechar a nivel del suelo. El olor a heno seco inunda el aire cálido.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_5_6
+  - direction: south
+    targetRoomId: llanuras_7_6
+  - direction: east
+    targetRoomId: llanuras_6_7
+  - direction: west
+    targetRoomId: llanuras_6_5
+- id: llanuras_6_7
+  name: Tierras de Pastoreo Salvaje
+  description: La hierba aquí crece casi hasta la cintura, ocultando lo que podría
+    acechar a nivel del suelo. El olor a heno seco inunda el aire cálido.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_5_7
+  - direction: south
+    targetRoomId: llanuras_7_7
+  - direction: west
+    targetRoomId: llanuras_6_6
+- id: llanuras_7_0
+  name: Colina de Viento Cálido
+  description: Rocas blanquecinas emergen esporádicamente entre el pasto alto, proporcionando
+    algo de sombra escasa en este mar de hierba.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_6_0
+  - direction: east
+    targetRoomId: llanuras_7_1
+- id: llanuras_7_1
+  name: Loma Suave
+  description: Un vasto océano de hierba dorada se extiende hasta donde alcanza la
+    vista. El viento peina las espigas creando olas de color ámbar.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_6_1
+  - direction: east
+    targetRoomId: llanuras_7_2
+  - direction: west
+    targetRoomId: llanuras_7_0
+- id: llanuras_7_2
+  name: Pastos Altos
+  description: El cielo abierto y despejado domina este paisaje llano. Pequeñas madrigueras
+    salpican el suelo arcilloso.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_6_2
+  - direction: east
+    targetRoomId: llanuras_7_3
+  - direction: west
+    targetRoomId: llanuras_7_1
+- id: llanuras_7_3
+  name: Colina de Viento Cálido
+  description: Una suave elevación del terreno ofrece una vista panorámica de las
+    interminables llanuras doradas. El zumbido de los insectos es constante.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_6_3
+  - direction: east
+    targetRoomId: llanuras_7_4
+  - direction: west
+    targetRoomId: llanuras_7_2
+- id: llanuras_7_4
+  name: Pastos Altos
+  description: Una suave elevación del terreno ofrece una vista panorámica de las
+    interminables llanuras doradas. El zumbido de los insectos es constante.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_6_4
+  - direction: east
+    targetRoomId: llanuras_7_5
+  - direction: west
+    targetRoomId: llanuras_7_3
+- id: llanuras_7_5
+  name: Pastos Altos
+  description: Rocas blanquecinas emergen esporádicamente entre el pasto alto, proporcionando
+    algo de sombra escasa en este mar de hierba.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_6_5
+  - direction: east
+    targetRoomId: llanuras_7_6
+  - direction: west
+    targetRoomId: llanuras_7_4
+- id: llanuras_7_6
+  name: Loma Suave
+  description: Un vasto océano de hierba dorada se extiende hasta donde alcanza la
+    vista. El viento peina las espigas creando olas de color ámbar.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_6_6
+  - direction: east
+    targetRoomId: llanuras_7_7
+  - direction: west
+    targetRoomId: llanuras_7_5
+- id: llanuras_7_7
+  name: Loma Suave
+  description: Un vasto océano de hierba dorada se extiende hasta donde alcanza la
+    vista. El viento peina las espigas creando olas de color ámbar.
+  exits:
+  - direction: north
+    targetRoomId: llanuras_6_7
+  - direction: west
+    targetRoomId: llanuras_7_6

@@ -1,25 +1,38 @@
 - id: item_pan_bendito
   name: Pan Bendito
-  description: Un panecillo caliente que restaura un poco de vida y calma el espíritu.
+  description: Un panecillo caliente que huele a bondad y hogar. Restaura un poco de vida y calma el espíritu ansioso.
   type: CONSUMABLE
-  roomId: villaclara_panaderia
+  value: 15
+
+- id: item_bollo_dulce
+  name: Bollo Dulce
+  description: Relleno de una mermelada rojiza deliciosa. Ideal para recuperar energía en viajes largos.
+  type: CONSUMABLE
+  value: 10
+
+- id: item_pocion_menor
+  name: Poción Menor de Curación
+  description: Un frasco de cristal grueso con un líquido rojo escarlata brillante.
+  type: CONSUMABLE
+  value: 50
 
 - id: item_espada_cobre
   name: Espada de Cobre del Gremio
-  description: Una espada básica entregada a los iniciados del gremio. Fiable, aunque poco glamurosa.
+  description: Una espada básica entregada a los iniciados del gremio. Fiable, aunque poco glamurosa y bastante roma.
   type: EQUIPMENT
   equipSlot: weapon
   value: 30
   metadata:
-    damage: 5
-    rarity: bueno
-  roomId: villaclara_plaza
+    diceCount: 1
+    diceSides: 6
+    modifier: 2
+    rarity: común
 
 - id: item_contrato_conejos
   name: 'Contrato: Plaga Acorazada'
-  description: Un pergamino oficial del gremio que ofrece una recompensa por abatir al General Pelusa.
+  description: Un pergamino oficial del gremio que ofrece una generosa recompensa por abatir al infame General Pelusa en las colinas del norte.
   type: QUEST
-  roomId: villaclara_tablon
+  value: 0
 
 - id: item_martillo_pesado
   name: Martillo de Fragua Quebrado
@@ -28,6 +41,102 @@
   equipSlot: weapon
   value: 45
   metadata:
-    damage: 8
+    diceCount: 1
+    diceSides: 8
+    modifier: 1
+    rarity: poco_común
+
+- id: item_escudo_madera
+  name: Broquel de Madera de Pino
+  description: Un escudo redondo ligero y astillado, reforzado rudimentariamente con bandas de cobre.
+  type: EQUIPMENT
+  equipSlot: offhand
+  value: 25
+  metadata:
+    rarity: común
+
+- id: item_lanza_guardia
+  name: Lanza del Alba
+  description: Arma reglamentaria de la guardia de Villaclara. Robusta y equilibrada.
+  type: EQUIPMENT
+  equipSlot: weapon
+  value: 0
+  metadata:
+    diceCount: 1
+    diceSides: 10
+    modifier: 3
+
+- id: item_piel_armadillo
+  name: Placa de Queratina
+  description: Un trozo duro como la piedra desprendido del caparazón de un conejo acorazado.
+  type: MISC
+  value: 5
+
+- id: item_colmillo_lobo
+  name: Colmillo de Lobo
+  description: Un diente largo y aserrado, manchado de sangre reseca.
+  type: MISC
+  value: 8
+
+- id: item_carne_dura
+  name: Trozo de Carne Correosa
+  description: Carne de monstruo que requeriría horas de cocción para ser comestible.
+  type: MISC
+  value: 2
+
+- id: item_varita_curacion
+  name: Varita de Ámbar Menor
+  description: Una varilla de madera de pino con una gema de ámbar en la punta. Brilla tenuemente y es cálida al tacto.
+  type: CONSUMABLE
+  value: 120
+  metadata:
+    charges: 3
+    effects:
+      - id: aura_sanacion
+        name: Aura de Sanación
+        type: heal
+        magnitude: 30
+        message: "<green>La varita emite un destello dorado y tus heridas se cierran rápidamente.</green>"
+
+- id: item_placa_general
+  name: Coraza del General Pelusa
+  description: Un peto tosco pero extremadamente resistente hecho uniendo placas de hueso y trozos de metal rapiñados.
+  type: EQUIPMENT
+  equipSlot: body
+  value: 150
+  metadata:
     rarity: raro
-  roomId: villaclara_forja
+  activeEffects:
+    - id: regeneracion_mutante
+      name: Regeneración Mutante
+      type: heal
+      magnitude: 1
+      tickInterval: 10000
+
+- id: item_linterna_minero
+  name: Linterna de Minero Enano
+  description: Una pesada linterna de bronce que emite un resplandor cálido e inagotable gracias a un cristal ígneo en su interior.
+  type: MISC
+  value: 200
+  metadata:
+    lightSource: true
+    rarity: poco_común
+
+- id: item_llave_madriguera
+  name: Llave de Hueso Tallado
+  description: Un hueso humano pulido y tallado con intrincadas muescas que encaja perfectamente en ciertas cerraduras subterráneas.
+  type: KEY
+  value: 0
+
+- id: item_espada_plata
+  name: Tizona de los Ecos
+  description: Una hoja recta y elegante forjada en plata pura. Vibra ligeramente al sostenerla, como si estuviera ansiosa por probar sangre.
+  type: EQUIPMENT
+  equipSlot: weapon
+  roomId: colinas_tesoro
+  value: 500
+  metadata:
+    diceCount: 2
+    diceSides: 6
+    modifier: 4
+    rarity: épico

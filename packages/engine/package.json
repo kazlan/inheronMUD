@@ -8,6 +8,7 @@
     "build": "tsc",
     "dev": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "test:client": "npx ts-node scripts/tester-client.ts",
     "backup": "node scripts/backup.js"
   },
   "keywords": [],
@@ -23,7 +24,9 @@
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^24.12.2",
+    "@types/ws": "^8.18.1",
     "prisma": "^6.4.1",
+    "ts-node": "^10.9.2",
     "typescript": "~6.0.3"
   }
 }

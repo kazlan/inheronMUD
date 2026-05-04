@@ -37,9 +37,15 @@ export class WorldFactory {
 
       // 1. Create and register rooms
       areaData.rooms.forEach(data => {
-        const room = new Room(data.name, data.description, data.id);
+        const room = new Room(data.name, data.description, data.id, data.area || areaName);
         if (data.exits) {
           data.exits.forEach((exit: any) => room.addExit(exit));
+        }
+        if (data.scenery) room.scenery = data.scenery;
+        if (data.effects) {
+          data.effects.forEach((eff: any) => {
+            room.activeEffects.push({ ...eff, startTime: Date.now(), id: eff.id || `eff_${Math.random()}` });
+          });
         }
         engine.registerRoom(room);
         totalRooms++;
@@ -50,6 +56,16 @@ export class WorldFactory {
         const item = new Item(data.name, data.description, data.type as ItemType, data.id);
         if (data.equipSlot) item.equipSlot = data.equipSlot;
         if (data.metadata) item.metadata = data.metadata;
+        if (data.value !== undefined) item.value = data.value;
+        if (data.effects) {
+          data.effects.forEach((eff: any) => {
+            item.activeEffects.push({ ...eff, startTime: Date.now(), id: eff.id || `eff_${Math.random()}` });
+          });
+        }
+        
+        // Register the template data to allow spawning clones (e.g. for NPC equipment)
+        engine.entities.itemTemplates.set(data.id, data);
+
         engine.registerItem(item);
         totalItems++;
 
@@ -75,6 +91,27 @@ export class WorldFactory {
         if (data.level) npc.level = data.level;
         if (data.metadata) npc.metadata = data.metadata;
         if (data.flags) npc.flags = data.flags;
+        if (data.enemies) npc.enemies = data.enemies;
+        if (data.effects) {
+          data.effects.forEach((eff: any) => {
+            npc.activeEffects.push({ ...eff, startTime: Date.now(), id: eff.id || `eff_${Math.random()}` });
+          });
+        }
+        if (data.equipment) {
+          for (const [slot, itemId] of Object.entries(data.equipment)) {
+            const template = engine.entities.itemTemplates.get(itemId as string);
+            if (template) {
+              const itemClone = new Item(template.name, template.description, template.type as ItemType);
+              if (template.equipSlot) itemClone.equipSlot = template.equipSlot;
+              if (template.metadata) itemClone.metadata = template.metadata;
+              if (template.value !== undefined) itemClone.value = template.value;
+              engine.registerItem(itemClone);
+              npc.equipment[slot] = itemClone.id;
+            } else {
+              console.warn(`[WorldFactory] Could not find item template ${itemId} for NPC ${npc.name}'s equipment!`);
+            }
+          }
+        }
         
         // Register the template data to allow spawning clones later
         engine.entities.registerNPCTemplate(data.id, data);
@@ -86,6 +123,10 @@ export class WorldFactory {
         const room = engine.getRoom(data.roomId);
         if (room) {
           room.addEntity(npc.id);
+          npc.areaId = room.areaId;
+          console.log(`[WorldFactory] Placed NPC ${npc.name} (${npc.id}) in room ${room.id}. Room now has ${room.entities.length} entities.`);
+        } else {
+          console.warn(`[WorldFactory] Could not find room ${data.roomId} to place NPC ${npc.name}!`);
         }
       });
 
@@ -120,10 +161,13 @@ export class WorldFactory {
         room.name = data.name;
         room.description = data.description;
         room.exits = data.exits || [];
+        if (data.scenery) room.scenery = data.scenery;
+        room.areaId = data.area || areaName; // Allow override
         updatedRooms++;
       } else {
-        const newRoom = new Room(data.name, data.description, data.id);
+        const newRoom = new Room(data.name, data.description, data.id, data.area || areaName);
         if (data.exits) data.exits.forEach((exit: any) => newRoom.addExit(exit));
+        if (data.scenery) newRoom.scenery = data.scenery;
         engine.registerRoom(newRoom);
         updatedRooms++;
       }
@@ -164,16 +208,21 @@ export class WorldFactory {
         npc.behaviorId = data.behaviorId;
         if (data.level) npc.level = data.level;
         if (data.metadata) npc.metadata = data.metadata;
+        if (data.enemies) npc.enemies = data.enemies;
         // Not touching npc.roomId to avoid moving them if they walked away
         updatedNpcs++;
       } else {
         const newNpc = new NPC(data.name, data.description, data.stats, data.behaviorId, data.roomId, data.id);
         if (data.level) newNpc.level = data.level;
         if (data.metadata) newNpc.metadata = data.metadata;
+        if (data.enemies) newNpc.enemies = data.enemies;
         engine.registerNPC(newNpc);
         if (data.roomId) {
           const r = engine.getRoom(data.roomId);
-          if (r) r.addEntity(newNpc.id);
+          if (r) {
+            r.addEntity(newNpc.id);
+            newNpc.areaId = r.areaId;
+          }
         }
         updatedNpcs++;
       }
@@ -191,6 +240,7 @@ export class WorldFactory {
     // 1. Watch each existing area folder
     const areas = loader.getAllAreaNames();
     const watchedAreas = new Set<string>();
+    const watchTimeouts = new Map<string, NodeJS.Timeout>();
 
     const watchAreaFolder = (areaName: string) => {
       if (watchedAreas.has(areaName)) return;
@@ -199,9 +249,13 @@ export class WorldFactory {
         console.log(`[Hot-Reload] Vigilando cambios en el área: ${areaName}...`);
         fs.watch(areaPath, (eventType, filename) => {
           if (filename && filename.endsWith('.yml')) {
-            setTimeout(() => {
+            if (watchTimeouts.has(areaName)) {
+              clearTimeout(watchTimeouts.get(areaName)!);
+            }
+            watchTimeouts.set(areaName, setTimeout(() => {
               this.reloadArea(engine, areaName);
-            }, 100);
+              watchTimeouts.delete(areaName);
+            }, 500));
           }
         });
         watchedAreas.add(areaName);

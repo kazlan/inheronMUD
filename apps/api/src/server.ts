@@ -87,10 +87,31 @@ engine.on('spatial_message', (payload: any) => {
   }
 });
 
+engine.on('force_look', (playerId: string) => {
+  const session = Array.from(activeSessions).find(s => s.playerId === playerId);
+  if (session) {
+    const res = engine.commands.look(playerId);
+    session.send({ type: 'command_result', success: true, command: 'look', data: res });
+  }
+});
+
+// Debounced saving mechanism
+const playerSaveTimeouts = new Map<string, NodeJS.Timeout>();
+engine.on('save_player', (player: Player) => {
+  if (playerSaveTimeouts.has(player.id)) {
+    clearTimeout(playerSaveTimeouts.get(player.id)!);
+  }
+  const timeoutId = setTimeout(() => {
+    Database.savePlayer(player).catch(err => console.error(`Error defer-saving player ${player.name}:`, err));
+    playerSaveTimeouts.delete(player.id);
+  }, 5000); // Debounce for 5 seconds
+  playerSaveTimeouts.set(player.id, timeoutId);
+});
+
 const start = async () => {
   try {
     // Engine ticks
-    engine.startTick(2000);
+    engine.startTick(2500);
 
     await fastify.listen({ port: 4001, host: '0.0.0.0' });
     console.log('--- InheronMUD API Live at ws://localhost:4001/ws ---');

@@ -1,0 +1,23 @@
+- id: spawner_centauro_1
+  npcId: npc_centauro_cazador
+  roomId: llanuras_3_3
+  maxCount: 2
+  respawnTime: 120
+
+- id: spawner_ciervo_1
+  npcId: npc_ciervo_dorado
+  roomId: llanuras_5_5
+  maxCount: 1
+  respawnTime: 300
+
+- id: spawner_bandido_1
+  npcId: npc_bandido_llanura
+  roomId: llanuras_2_6
+  maxCount: 3
+  respawnTime: 90
+
+- id: spawner_bandido_2
+  npcId: npc_bandido_llanura
+  roomId: llanuras_6_2
+  maxCount: 3
+  respawnTime: 90

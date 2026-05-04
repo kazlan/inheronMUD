@@ -58,7 +58,7 @@ export class Database {
         role: playerData.role || 'USER',
         account: {
           connectOrCreate: {
-            where: { username: playerData.accountId },
+            where: { id: playerData.accountId },
             create: { username: playerData.accountId, id: playerData.accountId }
           }
         }
