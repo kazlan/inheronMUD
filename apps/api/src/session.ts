@@ -294,7 +294,8 @@ export class Session {
       const moveRes = this.engine.commands.move(this.playerId, dir);
       response = { ...moveRes, command, data: moveRes.success ? this.engine.commands.look(this.playerId) : null };
     } else if (command === 'cronica') {
-      response = { success: true, data: this.engine.getCronica(this.playerId) };
+      const res = this.engine.commands.getFormattedCronica(this.playerId);
+      response = { success: true, data: res.data, message: res.message, command: 'cronica' };
     } else if (command === 'open' || command === 'abrir') {
       response = { ...this.engine.commands.open(this.playerId, args.join(' ')), command: 'open' };
     } else if (command === 'get' || command === 'coger') {
@@ -304,7 +305,8 @@ export class Session {
     } else if (command === 'inventory' || command === 'i') {
       response = { success: true, data: this.engine.commands.getInventory(this.playerId), command: 'inventory' };
     } else if (command === 'score' || command === 'puntuacion') {
-      response = { success: true, data: this.engine.commands.getScore(this.playerId), command: 'score' };
+      const res = this.engine.commands.getScore(this.playerId);
+      response = { success: true, data: res.data, message: res.message, command: 'score' };
     } else if (command === 'equip' || command === 'equipar') {
       response = { ...this.engine.commands.equip(this.playerId, args.join(' ')), command: 'equip' };
     } else if (command === 'unequip' || command === 'desequipar') {

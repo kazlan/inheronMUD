@@ -13,6 +13,7 @@
     presencia: 15
     percepcion: 10
   metadata:
+    raceId: humano_altherion
     dialogues:
       - requires_flag: quest_lobos_done
         text: "La paz ha vuelto a los campos. Gracias a ti, joven héroe."
@@ -40,6 +41,8 @@
     sabiduria: 20
     presencia: 15
     percepcion: 10
+  metadata:
+    raceId: humano_altherion
 
 - id: npc_nino_corriendo
   name: Tomasito
@@ -55,6 +58,8 @@
     sabiduria: 5
     presencia: 10
     percepcion: 8
+  metadata:
+    raceId: humano_arvell
 
 - id: npc_guardia_patrulla
   name: Guardia del Alba
@@ -65,6 +70,7 @@
   equipment:
     weapon: item_lanza_guardia
   metadata:
+    raceId: humano_altherion
     patrolPath: ['villaclara_puerta_norte', 'villaclara_plaza', 'villaclara_gremio', 'villaclara_plaza', 'villaclara_panaderia', 'villaclara_plaza']
   stats:
     fuerza: 15
@@ -82,6 +88,7 @@
   roomId: villaclara_panaderia
   flags: ['social']
   metadata:
+    raceId: humano_arvell
     merchant: true
     inventory: ['item_pan_bendito', 'item_bollo_dulce']
   stats:
@@ -95,11 +102,12 @@
 
 - id: npc_maestro_gremio
   name: Grom el Férreo
-  description: Un imponente semi-orco con cicatrices que le cruzan el rostro curtido. Su parche en el ojo izquierdo y sus brazos gruesos como troncos dejan claro que ya no ejerce de aventurero activo, sino de líder.
+  description: Un imponente Sombrío errante con cicatrices que le cruzan el rostro curtido. Su parche en el ojo izquierdo y sus brazos gruesos como troncos dejan claro que ya no ejerce de aventurero activo, sino de líder. Carga con el estigma de las Grietas de Sombral con una dignidad inquebrantable.
   behaviorId: idle
   roomId: villaclara_gremio
   flags: ['social']
   metadata:
+    raceId: sombrio
     merchant: true
     inventory: ['item_contrato_conejos', 'item_espada_cobre', 'item_pocion_menor', 'item_varita_curacion']
   stats:
@@ -113,11 +121,12 @@
 
 - id: npc_yunque_vivo
   name: Ignis el Yunque
-  description: Un enano musculoso cuyo vello facial está literalmente chamuscado por las chispas. Maneja un martillo casi tan grande como él con una destreza perturbadora.
+  description: Un Duergrin musculoso cuyo vello facial está literalmente chamuscado por las chispas. Maneja un martillo casi tan grande como él con una destreza perturbadora propia de los forjadores de Skarn.
   behaviorId: idle
   roomId: villaclara_forja
   flags: ['social']
   metadata:
+    raceId: duergrin
     merchant: true
     inventory: ['item_martillo_pesado', 'item_escudo_madera', 'item_linterna_minero']
   stats:
@@ -174,7 +183,7 @@
   behaviorId: hostile_beast
   roomId: colinas_inicio
   level: 3
-  flags: ['social']
+  flags: ['wandering']
   inventory: ['item_piel_armadillo', 'item_carne_dura']
   stats:
     fuerza: 12

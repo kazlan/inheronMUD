@@ -93,7 +93,7 @@ export class GameEngine extends EventEmitter {
             });
 
             const score = this.commands.getScore(player.id);
-            const hpMax = score?.derived.hpMax || 100;
+            const hpMax = score?.data?.derived?.hpMax || 100;
             
             // Perder un 10% de la experiencia del nivel actual
             const xpLost = Math.floor(player.experience * 0.10);
@@ -174,6 +174,18 @@ export class GameEngine extends EventEmitter {
                 const room = this.entities.getRoom(npc.roomId);
                 if (room) room.removeEntity(npc.id);
               }
+
+              // 4. Quest Progress: Increment variables based on NPC killed
+              combat.participants.filter(p => p.isPlayer).forEach(p => {
+                const cronica = this.playerCronicas.get(p.entityId);
+                if (cronica) {
+                  if (npc.id.includes('lobo')) {
+                    const current = parseInt(cronica.getVariable('lobos_muertos'));
+                    cronica.setVariable('lobos_muertos', (current + 1).toString());
+                    console.log(`[Quest:Progress] Player ${p.entityId} killed a wolf. Total: ${current + 1}`);
+                  }
+                }
+              });
             }
           }
         });

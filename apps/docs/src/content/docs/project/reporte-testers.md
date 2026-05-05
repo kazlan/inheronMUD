@@ -1,0 +1,32 @@
+---
+title: "reporte-testers"
+---
+
+- [ ] [Ambiente] [2026-05-04 21:54:29] **AlphaTester**: Efecto perceptible: Un aura de devoción reconforta a los presentes.
+- [ ] [IA] [2026-05-04 21:54:28] **AlphaTester**: Avistado NPC social: Hermano Tobías en "Capilla de la Luz Eterna".
+- [ ] [Mapa] [2026-05-04 21:54:28] **AlphaTester**: La salida "north" no se menciona claramente en la descripción de "Capilla de la Luz Eterna".
+- [ ] [Exploración] [2026-05-04 21:54:28] **AlphaTester**: Entrando en "Capilla de la Luz Eterna" (villaclara_iglesia)
+- [ ] [INFO] [2026-05-04 21:54:28] **AlphaTester**: Entrada exitosa al mundo.
+- [ ] [SISTEMA] [2026-05-04 21:08:38] Sesión de prueba cualitativa finalizada.
+- [ ] [SISTEMA] [2026-05-04 21:06:47] Sesión de prueba cualitativa finalizada.
+- [ ] [IA] [2026-05-04 20:38:52] **AlphaTester**: Comportamiento activo de NPC: Hermano Tobías conjura una suave luz curativa sobre UniqueTestSuperGamma_2026er_123, restaurando sus heridas.
+- [ ] [IA] [2026-05-04 20:38:52] **AlphaTester**: Comportamiento activo de NPC: Hermano Tobías conjura una suave luz curativa sobre UniqueTestSuperGamma_2026er_123, restaurando sus heridas.
+- [ ] [Ambiente] [2026-05-04 20:38:52] **AlphaTester**: Efecto perceptible: Hermano Tobías conjura una suave luz curativa sobre UniqueTestSuperGamma_2026er_123, restaurando sus heridas.
+- [ ] [IA] [2026-05-04 20:19:28] **GammaTester**: Interacción social de NPC: Anciano Sabio murmura algo sobre los vientos del destino.
+- [ ] [IA] [2026-05-04 20:15:25] **AlphaTester**: Interacción social de NPC: Hermano Tobías murmura algo sobre los vientos del destino.
+- [ ] [Ambiente] [2026-05-04 20:10:44] **AlphaTester**: Efecto perceptible: Un aura de devoción reconforta a los presentes.
+- [ ] [IA] [2026-05-04 20:10:31] **GammaTester**: Avistado NPC social: Anciano Sabio en "Plaza del Alba Chica".
+- [ ] [Mapa] [2026-05-04 20:10:31] **GammaTester**: La salida "west" no se menciona claramente en la descripción de "Plaza del Alba Chica".
+- [ ] [Mapa] [2026-05-04 20:10:31] **GammaTester**: La salida "east" no se menciona claramente en la descripción de "Plaza del Alba Chica".
+- [ ] [Mapa] [2026-05-04 20:10:31] **GammaTester**: La salida "south" no se menciona claramente en la descripción de "Plaza del Alba Chica".
+- [ ] [Mapa] [2026-05-04 20:10:31] **GammaTester**: La salida "north" no se menciona claramente en la descripción de "Plaza del Alba Chica".
+- [ ] [Exploración] [2026-05-04 20:10:31] **GammaTester**: Entrando en "Plaza del Alba Chica" (villaclara_plaza)
+- [ ] [Quest] [2026-05-04 20:10:31] **GammaTester**: Encontrado NPC con misión (Disponible): Anciano Sabio
+- [ ] [IA] [2026-05-04 20:10:27] **BetaTester**: Avistado NPC social: Hermano Tobías en "Capilla de la Luz Eterna".
+- [ ] [Mapa] [2026-05-04 20:10:27] **BetaTester**: La salida "north" no se menciona claramente en la descripción de "Capilla de la Luz Eterna".
+- [ ] [Exploración] [2026-05-04 20:10:27] **BetaTester**: Entrando en "Capilla de la Luz Eterna" (villaclara_iglesia)
+- [ ] [IA] [2026-05-04 20:10:23] **AlphaTester**: Avistado NPC social: Grom el Férreo en "Gremio de Aventureros".
+- [ ] [Mapa] [2026-05-04 20:10:23] **AlphaTester**: La salida "north" no se menciona claramente en la descripción de "Gremio de Aventureros".
+- [ ] [Mapa] [2026-05-04 20:10:23] **AlphaTester**: La salida "east" no se menciona claramente en la descripción de "Gremio de Aventureros".
+- [ ] [Exploración] [2026-05-04 20:10:23] **AlphaTester**: Entrando en "Gremio de Aventureros" (villaclara_gremio)
+- [ ] [INFO] [2026-05-04 20:10:23] **AlphaTester**: Entrada exitosa al mundo.

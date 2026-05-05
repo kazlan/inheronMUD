@@ -1,6 +1,7 @@
 {
   "name": "inheron-mud",
   "private": true,
+  "type": "module",
   "engines": {
     "node": ">=20.0.0",
     "pnpm": ">=8.0.0"
@@ -10,6 +11,13 @@
     "build": "pnpm -r run build",
     "test": "pnpm -r run test",
     "lint": "pnpm -r run lint",
-    "typecheck": "pnpm -r run typecheck"
+    "typecheck": "pnpm -r run typecheck",
+    "docs:api": "typedoc",
+    "docs:build": "pnpm run docs:api && node scripts/sync-docs.js",
+    "docs:dev": "pnpm --filter docs dev"
+  },
+  "devDependencies": {
+    "typedoc": "^0.28.19",
+    "typedoc-plugin-markdown": "^4.11.0"
   }
 }

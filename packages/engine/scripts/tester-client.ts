@@ -11,10 +11,17 @@ class TesterPlayer {
     private isPlaying = false;
     private currentRoom: any = null;
     private currentCombat: any = null;
+    private questState: Record<string, any> = {};
     private static reportedObservations: Set<string> = new Set();
 
     constructor(name: string) {
         this.name = name;
+        this.questState = {
+            hasQuest: false,
+            targetMob: null,
+            targetNPC: null,
+            completed: false
+        };
     }
 
     async connect() {
@@ -53,12 +60,35 @@ class TesterPlayer {
     private handleServerMessage(msg: any) {
         if (msg.message || msg.type === 'SYSTEM') {
             const text = (msg.message || '').toLowerCase();
+            
+            // Verification of Quest States
+            if (text.includes('¿te atreverías a cazar a 3 lobos hambrientos?')) {
+                this.report('Quest', 'Misión de lobos aceptada. Verificando diálogo...');
+                this.questState.hasQuest = true;
+                this.questState.targetMob = 'lobo';
+            }
+            if (text.includes('has eliminado a la plaga')) {
+                this.report('Quest', 'Misión de lobos completada y entregada con éxito.');
+                this.questState.hasQuest = false;
+                this.questState.completed = true;
+                this.questState.targetMob = null;
+            }
+
+            // Character Creation / Login
             if (text.includes('introduce tu usuario')) this.send(this.name);
             else if (text.includes('contraseña')) this.send('password123');
-            else if (text.includes('nuevo personaje')) this.send(this.name + 'Hero');
-            else if (text.includes('selecciona') || text.includes('disponibles')) this.send('1');
-            else if (text.includes('raza')) this.send('humano_arvell');
-            else if (text.includes('clase')) this.send('caballero_alba');
+            else if (text.includes('personajes disponibles')) {
+                this.send('1');
+            }
+            else if (text.includes('nombre de tu nuevo personaje') || text.includes('no tienes personajes')) {
+                this.send(this.name + 'Hero');
+            }
+            else if (text.includes('raza')) this.send('humano_altherion');
+            else if (text.includes('clase')) {
+                const classes = ['caballero_alba', 'monje_candaluz', 'clerigo_sol_quieto'];
+                const index = ['AlphaTester', 'BetaTester', 'GammaTester'].indexOf(this.name);
+                this.send(classes[index] || 'caballero_alba');
+            }
             else if (text.includes('bienvenido')) {
                 if (!this.isPlaying) {
                     this.isPlaying = true;
@@ -114,6 +144,16 @@ class TesterPlayer {
         const occupants = data.occupants || [];
         this.currentRoom = { ...room, entities: occupants };
         
+        // Quest Awareness
+        const questNPC = occupants.find((o: any) => o.questIndicator === '!' || o.questIndicator === '?');
+        if (questNPC) {
+            this.questState.targetNPC = questNPC.name.split(' ')[0].toLowerCase();
+            const type = questNPC.questIndicator === '!' ? 'Disponible' : 'Para entregar';
+            this.report('Quest', `Encontrado NPC con misión (${type}): ${questNPC.name}`);
+        } else {
+            this.questState.targetNPC = null;
+        }
+
         this.report('Exploración', `Entrando en "${room.name}" (${room.id})`);
 
         if (room.description.length < 150) {
@@ -188,7 +228,7 @@ class TesterPlayer {
 
     private async gameLoop() {
         while (this.isPlaying) {
-            const delay = 8000 + Math.random() * 7000;
+            const delay = 6000 + Math.random() * 4000;
             await new Promise(resolve => setTimeout(resolve, delay));
             if (!this.isPlaying) break;
 
@@ -196,23 +236,48 @@ class TesterPlayer {
             const roll = Math.random();
             const mobs = this.currentRoom?.entities?.filter((e: any) => e.isMob) || [];
 
-            if (mobs.length > 0 && roll < 0.8) {
+            // Quest Logic Priority
+            if (this.questState.targetNPC && roll < 0.95) {
+                // Prioritize talking to quest NPCs if seen
+                cmd = `hablar ${this.questState.targetNPC}`;
+            } else if (this.questState.hasQuest && this.questState.targetMob) {
+                // If we have a quest, look for target mobs
+                const targetMob = mobs.find((m: any) => m.name.toLowerCase().includes(this.questState.targetMob));
+                if (targetMob) {
+                    cmd = `k ${this.questState.targetMob}`;
+                } else {
+                    // Navigate towards hunting grounds
+                    const roomRoutes: Record<string, string> = {
+                        'villaclara_plaza': 'north',
+                        'villaclara_puerta_norte': 'north',
+                        'villaclara_campo_norte': 'look', // Stay here and hunt
+                        'villaclara_panaderia': 'west',
+                        'villaclara_forja': 'north',
+                        'villaclara_gremio': 'east'
+                    };
+                    cmd = roomRoutes[this.currentRoom.id] || (this.currentRoom?.exits?.[0]?.direction || 'look');
+                }
+            } else if (!this.questState.hasQuest && !this.questState.completed) {
+                // If no quest, go to the plaza to find one
+                const toPlaza: Record<string, string> = {
+                    'villaclara_panaderia': 'west',
+                    'villaclara_forja': 'north',
+                    'villaclara_gremio': 'east',
+                    'villaclara_puerta_norte': 'south',
+                    'colinas_inicio': 'south',
+                    'villaclara_campo_norte': 'south'
+                };
+                cmd = toPlaza[this.currentRoom.id] || (this.currentRoom?.exits?.[0]?.direction || 'look');
+            } else if (mobs.length > 0 && roll < 0.7) {
                 const target = mobs[0].name.split(' ')[0].toLowerCase();
                 cmd = `k ${target}`;
-            } else if (roll < 0.6 || mobs.length === 0) {
-                // If no mobs, 100% chance to move or look.
-                // If mobs, 60% chance to move anyway to explore more.
-                if (this.currentRoom?.exits?.length > 0) {
-                    const exit = this.currentRoom.exits[Math.floor(Math.random() * this.currentRoom.exits.length)];
-                    cmd = exit.direction;
-                } else {
-                    cmd = 'look';
-                }
-            } else if (roll < 0.8) {
-                cmd = 'score';
+            } else if (this.currentRoom?.exits?.length > 0) {
+                const exit = this.currentRoom.exits[Math.floor(Math.random() * this.currentRoom.exits.length)];
+                cmd = exit.direction;
             } else {
                 cmd = 'look';
             }
+
             this.send(cmd);
         }
     }
@@ -225,11 +290,14 @@ class TesterPlayer {
 
 const tester1 = new TesterPlayer('AlphaTester');
 const tester2 = new TesterPlayer('BetaTester');
+const tester3 = new TesterPlayer('GammaTester');
 
 async function main() {
     await tester1.connect();
-    await new Promise(r => setTimeout(r, 5000));
+    await new Promise(r => setTimeout(r, 4000));
     await tester2.connect();
+    await new Promise(r => setTimeout(r, 4000));
+    await tester3.connect();
 }
 
 main();
@@ -238,6 +306,7 @@ const duration = 60 * 60 * 1000;
 setTimeout(() => {
     tester1.stop();
     tester2.stop();
+    tester3.stop();
     const timestamp = new Date().toISOString().replace('T', ' ').split('.')[0];
     const finalReport = `- [ ] [SISTEMA] [${timestamp}] Sesión de prueba cualitativa finalizada.\n`;
     let current = fs.existsSync(REPORT_PATH) ? fs.readFileSync(REPORT_PATH, 'utf8') : '';
