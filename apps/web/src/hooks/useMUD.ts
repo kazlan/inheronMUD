@@ -228,6 +228,11 @@ export default function useMUD(url: string) {
     connect();
     return () => {
       if (socketRef.current) {
+        // Remove listeners to prevent state updates on unmounted component
+        socketRef.current.onopen = null;
+        socketRef.current.onclose = null;
+        socketRef.current.onerror = null;
+        socketRef.current.onmessage = null;
         socketRef.current.close();
         socketRef.current = null;
       }

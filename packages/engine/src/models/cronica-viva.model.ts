@@ -6,9 +6,18 @@ export class CronicaViva {
   public completedQuests: string[] = [];
   public activeArcs: Map<string, StoryArc> = new Map();
   public memoryFlags: Set<string> = new Set();
+  public variables: Map<string, string> = new Map();
 
   constructor(playerId: string) {
     this.playerId = playerId;
+  }
+
+  setVariable(key: string, value: string): void {
+    this.variables.set(key, value);
+  }
+
+  getVariable(key: string): string {
+    return this.variables.get(key) || '0';
   }
 
   addQuest(quest: Quest): void {
@@ -47,7 +56,8 @@ export class CronicaViva {
       activeQuests: Array.from(this.activeQuests.values()),
       completedQuests: this.completedQuests,
       activeArcs: Array.from(this.activeArcs.values()),
-      memoryFlags: Array.from(this.memoryFlags)
+      memoryFlags: Array.from(this.memoryFlags),
+      variables: Object.fromEntries(this.variables)
     };
   }
 }

@@ -126,7 +126,9 @@ export class EffectsManager {
     if (effect.type === 'heal') {
       const heal = effect.magnitude || 5;
       for (const p of playersInRoom) {
-        const { hpMax } = this.engine.commands.getScore(p.id).derived;
+        const score = this.engine.commands.getScore(p.id);
+        if (!score || !score.data) continue;
+        const { hpMax } = score.data.derived;
         if (p.hpCurrent! < hpMax) {
           p.hpCurrent = Math.min(p.hpCurrent! + heal, hpMax);
           this.engine.emit('combat_message', p.id, [`\n<green>Recuperas ${heal} PV gracias a ${effect.name}.</green>`]);

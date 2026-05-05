@@ -4,3 +4,8 @@ dist
 *.db
 *.db-journal
 .DS_Store
+logs
+.pnpm-debug.log
+apps/docs/.astro
+dist
+build

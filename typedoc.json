@@ -1,0 +1,13 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["packages/engine/src/index.ts"],
+  "tsconfig": "packages/engine/tsconfig.json",
+  "out": "apps/docs/src/content/docs/api",
+  "plugin": ["typedoc-plugin-markdown"],
+  "hideGenerator": true,
+  "name": "Inheron Engine API Reference",
+  "excludePrivate": true,
+  "excludeProtected": false,
+  "theme": "default",
+  "readme": "packages/engine/README.md"
+}

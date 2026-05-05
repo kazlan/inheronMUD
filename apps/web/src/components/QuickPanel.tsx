@@ -73,37 +73,37 @@ export default function QuickPanel({ onCommand, onOpenPanel, room }: QuickPanelP
 
       <div className="panel-title">Navegación</div>
       <div className="compass-grid vertical-nav">
-        <button className={`compass-btn ${hasExit('northwest') ? 'active-exit' : ''}`} onClick={() => onCommand('nw')}>NO</button>
-        <button className={`compass-btn ${hasExit('north') ? 'active-exit' : ''}`} onClick={() => onCommand('n')}>N</button>
-        <button className={`compass-btn ${hasExit('northeast') ? 'active-exit' : ''}`} onClick={() => onCommand('ne')}>NE</button>
-        <button className={`compass-btn up-btn ${hasExit('up') ? 'active-exit' : ''}`} onClick={() => onCommand('up')}>▲ Subir</button>
+        <button className={`compass-btn ${hasExit('northwest') ? 'active-exit' : ''}`} onMouseDown={(e) => e.preventDefault()} onClick={() => onCommand('nw')}>NO</button>
+        <button className={`compass-btn ${hasExit('north') ? 'active-exit' : ''}`} onMouseDown={(e) => e.preventDefault()} onClick={() => onCommand('n')}>N</button>
+        <button className={`compass-btn ${hasExit('northeast') ? 'active-exit' : ''}`} onMouseDown={(e) => e.preventDefault()} onClick={() => onCommand('ne')}>NE</button>
+        <button className={`compass-btn up-btn ${hasExit('up') ? 'active-exit' : ''}`} onMouseDown={(e) => e.preventDefault()} onClick={() => onCommand('up')}>▲ Subir</button>
         
-        <button className={`compass-btn ${hasExit('west') ? 'active-exit' : ''}`} onClick={() => onCommand('w')}>O</button>
+        <button className={`compass-btn ${hasExit('west') ? 'active-exit' : ''}`} onMouseDown={(e) => e.preventDefault()} onClick={() => onCommand('w')}>O</button>
         <button className="compass-btn empty"></button>
-        <button className={`compass-btn ${hasExit('east') ? 'active-exit' : ''}`} onClick={() => onCommand('e')}>E</button>
-        <button className={`compass-btn down-btn ${hasExit('down') ? 'active-exit' : ''}`} onClick={() => onCommand('down')}>▼ Bajar</button>
+        <button className={`compass-btn ${hasExit('east') ? 'active-exit' : ''}`} onMouseDown={(e) => e.preventDefault()} onClick={() => onCommand('e')}>E</button>
+        <button className={`compass-btn down-btn ${hasExit('down') ? 'active-exit' : ''}`} onMouseDown={(e) => e.preventDefault()} onClick={() => onCommand('down')}>▼ Bajar</button>
         
-        <button className={`compass-btn ${hasExit('southwest') ? 'active-exit' : ''}`} onClick={() => onCommand('sw')}>SO</button>
-        <button className={`compass-btn ${hasExit('south') ? 'active-exit' : ''}`} onClick={() => onCommand('s')}>S</button>
-        <button className={`compass-btn ${hasExit('southeast') ? 'active-exit' : ''}`} onClick={() => onCommand('se')}>SE</button>
+        <button className={`compass-btn ${hasExit('southwest') ? 'active-exit' : ''}`} onMouseDown={(e) => e.preventDefault()} onClick={() => onCommand('sw')}>SO</button>
+        <button className={`compass-btn ${hasExit('south') ? 'active-exit' : ''}`} onMouseDown={(e) => e.preventDefault()} onClick={() => onCommand('s')}>S</button>
+        <button className={`compass-btn ${hasExit('southeast') ? 'active-exit' : ''}`} onMouseDown={(e) => e.preventDefault()} onClick={() => onCommand('se')}>SE</button>
         <button className="compass-btn empty"></button>
       </div>
 
       <div className="panel-title">Paneles</div>
       <div className="quick-buttons-grid">
-        <button className="quick-btn" onClick={() => onOpenPanel('inventory')}>⬡ Inv</button>
-        <button className="quick-btn" onClick={() => onOpenPanel('equipment')}>⛊ Equipo</button>
-        <button className="quick-btn" onClick={() => onOpenPanel('quests')}>📜 Misiones</button>
+        <button className="quick-btn" onMouseDown={(e) => e.preventDefault()} onClick={() => onOpenPanel('inventory')}>⬡ Inv</button>
+        <button className="quick-btn" onMouseDown={(e) => e.preventDefault()} onClick={() => onOpenPanel('equipment')}>⛊ Equipo</button>
+        <button className="quick-btn" onMouseDown={(e) => e.preventDefault()} onClick={() => onOpenPanel('quests')}>📜 Misiones</button>
       </div>
 
       <div className="panel-title" style={{ marginTop: 'auto' }}>Acciones</div>
       <div className="quick-buttons-grid">
-        <button className="quick-btn" onClick={() => onCommand('look')}>Ver</button>
-        <button className="quick-btn" onClick={() => onCommand('score')}>Ficha</button>
-        <button className="quick-btn" onClick={() => onCommand('rest')}>Descansar</button>
-        <button className="quick-btn" onClick={() => onCommand('stand')}>Levantarse</button>
-        <button className="quick-btn" onClick={() => onCommand('help')}>Ayuda</button>
-        <button className="quick-btn" onClick={() => onCommand('cast')}>Hechizo</button>
+        <button className="quick-btn" onMouseDown={(e) => e.preventDefault()} onClick={() => onCommand('look')}>Ver</button>
+        <button className="quick-btn" onMouseDown={(e) => e.preventDefault()} onClick={() => onCommand('score')}>Ficha</button>
+        <button className="quick-btn" onMouseDown={(e) => e.preventDefault()} onClick={() => onCommand('rest')}>Descansar</button>
+        <button className="quick-btn" onMouseDown={(e) => e.preventDefault()} onClick={() => onCommand('stand')}>Levantarse</button>
+        <button className="quick-btn" onMouseDown={(e) => e.preventDefault()} onClick={() => onCommand('help')}>Ayuda</button>
+        <button className="quick-btn" onMouseDown={(e) => e.preventDefault()} onClick={() => onCommand('cast')}>Hechizo</button>
       </div>
     </div>
   );

@@ -29,7 +29,7 @@
   behaviorId: hostile_beast
   roomId: bosque_5_5
   level: 6
-  flags: ['social', 'wandering']
+  flags: ['wandering']
   stats:
     fuerza: 14
     destreza: 20

@@ -109,7 +109,8 @@ export class CommandManager {
       const isDone = this.engine.checkMemoryFlag(playerId, 'quest_lobos_done');
       if (isDone) return null;
 
-      const lobosMuertos = parseInt(this.engine.getCronica(playerId)?.flags?.['lobos_muertos'] || '0');
+      const cronica = this.engine.getCronica(playerId);
+      const lobosMuertos = parseInt(cronica?.variables?.['lobos_muertos'] || '0');
       if (lobosMuertos >= 3) return '?'; // Ready to turn in
       return '!'; // Available
     }
@@ -489,17 +490,61 @@ export class CommandManager {
     if (!player) return null;
 
     const derived = StatCalculator.calculate(player);
-    return {
+    const data = {
       name: player.name,
       class: player.classId,
       race: player.raceId,
       level: player.level,
+      experience: player.experience,
+      coins: player.coins,
       stats: player.stats,
       derived,
       gremioRank: player.metadata.gremioRank,
       skills: player.metadata.skills,
       equipment: this.getEquipment(playerId)
     };
+
+    // Formatted message for the chat
+    let message = `<yellow><b>[ FICHA DE PERSONAJE ]</b></yellow>\n`;
+    message += `Nombre: <cyan>${player.name}</cyan> (Nivel ${player.level} ${player.classId})\n`;
+    message += `Raza: ${player.raceId} | Monedas: <yellow>${player.coins} soles</yellow>\n`;
+    message += `--------------------------------------------------\n`;
+    message += `<b>Puntos de Vida:</b> <red>${player.hpCurrent}/${derived.hpMax}</red>\n`;
+    message += `<b>Energía Vital:</b> <green>${player.energyCurrent}/${derived.energyMax}</green>\n`;
+    message += `--------------------------------------------------\n`;
+    message += `<b>Atributos Base:</b>\n`;
+    message += `Fuerza: ${player.stats.fuerza} | Destreza: ${player.stats.destreza} | Const: ${player.stats.constitucion}\n`;
+    message += `Ingenio: ${player.stats.ingenio} | Sabiduría: ${player.stats.sabiduria} | Perc: ${player.stats.percepcion}\n`;
+    message += `--------------------------------------------------\n`;
+    
+    return { data, message };
+  }
+
+  getFormattedCronica(playerId: string): { data: any, message: string } {
+    const cronica = this.engine.getCronica(playerId);
+    if (!cronica) return { data: null, message: "No tienes una crónica activa." };
+
+    let message = `<magenta><b>[ TU CRÓNICA VIVA ]</b></magenta>\n`;
+    const activeQuests = cronica.activeQuests || [];
+    
+    if (activeQuests.length === 0) {
+      message += `Tu diario de aventuras está vacío. Explora el mundo para encontrar misiones.\n`;
+    } else {
+      message += `Misiones activas (${activeQuests.length}):\n`;
+      activeQuests.forEach((q: any) => {
+        const status = q.status === 'READY_TO_TURN_IN' ? '<green>[¡LISTA!]</green>' : '[EN CURSO]';
+        message += ` - ${status} <yellow>${q.title || q.id}</yellow>\n`;
+        if (q.description) message += `   <i>${q.description}</i>\n`;
+      });
+    }
+
+    message += `--------------------------------------------------\n`;
+    const flags = Object.keys(cronica.flags || {});
+    if (flags.length > 0) {
+      message += `<b>Hitos recordados:</b> ${flags.join(', ').replace(/_/g, ' ')}\n`;
+    }
+
+    return { data: cronica, message };
   }
 
   kill(playerId: string, targetName: string): { success: boolean; message: string; combatLog?: string[] } {
@@ -583,7 +628,8 @@ export class CommandManager {
           conditionsMet = false;
         }
         if (node.requires_cronica) {
-          const cronicaVal = parseInt(this.engine.getCronica(playerId)?.flags?.[node.requires_cronica.key] || '0');
+          const cronica = this.engine.getCronica(playerId);
+          const cronicaVal = parseInt(cronica?.variables?.[node.requires_cronica.key] || '0');
           if (cronicaVal < node.requires_cronica.min) conditionsMet = false;
         }
 

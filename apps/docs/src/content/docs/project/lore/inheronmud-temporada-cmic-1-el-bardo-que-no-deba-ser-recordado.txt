@@ -1,0 +1,920 @@
+﻿INHERONMUD
+TEMPORADA CÓMIC 1
+El bardo que no debía ser recordado
+
+
+Serie de 10 capítulos, cada uno pensado como cómic de 8 páginas.
+Protagonista: Aren, bardo forastero planar.
+Eje emocional: Aren busca un lugar en Inheron.
+Eje épico: Villaclara está siendo usada como laboratorio de la Cámara del Mediodía Inmóvil, que altera nombres, recuerdos y registros para imponer una verdad perfecta.
+Eje jugable: cada capítulo introduce zonas, NPCs, facciones, tutoriales y sistemas de InheronMUD.
+
+
+1. ARCO GENERAL DE LA SERIE
+
+
+Aren llega a Villaclara durante la Feria de Cosecha Clara. Parece otro forastero planar más, pero su nombre aparece en tinta blanca, el Pozo Cantante responde a su música y varias personas olvidadas empiezan a reaparecer en la memoria del pueblo.
+
+
+La villa, aparentemente tranquila, esconde una red de misterios: la gota del Cáliz de Mediodía bajo el pozo, una mazmorra móvil bajo Panbendito, contratos falsos en el tablón del Gremio, rutas prohibidas hacia Verdanza Caída y un agente infiltrado, Varo Nomenclaro, que trabaja para la Cámara.
+
+
+Aren no es “el elegido” en el sentido clásico. Su poder no consiste en salvar el mundo a golpe de espada luminosa, sino en algo más incómodo para los villanos: hacer que las historias vuelvan a ser escuchadas.
+
+
+La temporada termina cuando Villaclara entera debe decidir si acepta una versión perfecta de su historia, limpia de dolor, dudas y nombres difíciles, o si conserva su memoria completa, con migas, barro, errores y cucharas robadas.
+
+
+2. REPARTO PRINCIPAL
+
+
+Aren
+Bardo forastero planar. Pelo oscuro rizado, capa azul y púrpura con bordados dorados, laúd ornamentado, cristal azul en el pecho. Tiene una skill resonante aún sin clasificar: Crónica Viva.
+
+
+Bimba Cascabel
+Niña mensajera. Rápida, cotilla profesional, capaz de ver letras doradas flotando sobre objetos tocados por la Cámara.
+
+
+Doña Marga Panbendito
+Panadera. Pragmática, cálida, peligrosamente sabia. Su panadería se asienta sobre una mazmorra móvil.
+
+
+Pex
+Slime semidomesticado, ladrón de cucharas y generador de incidentes. Más importante de lo que parece. Muchísimo más pringoso también.
+
+
+Silo Brincacepa
+Alcalde de Villaclara. Bigote, sello perdido, buenas intenciones y terror administrativo.
+
+
+Joro del Segundo Gallo
+Posadero. Protege forasteros planares. Sabe más de lo que cuenta, y lo que cuenta suele incluir dragones innecesarios.
+
+
+Sera Mimbrel
+Forastera planar veterana. Representante local de la Hermandad de la Segunda Página. Práctica, irónica, protectora.
+
+
+Fennel Liriochico
+Aprendiz de bardo. Dramático, entusiasta y decidido a convertir cualquier caída en prólogo legendario.
+
+
+Hermana Lúa Candela
+Clériga del Sol Quieto. Oye nombres en campanas y pozos. Valiente incluso cuando tiene miedo.
+
+
+Varo Nomenclaro
+Escriba itinerante. Educado, impecable, peligroso. Agente menor de la Cámara del Mediodía Inmóvil.
+
+
+3. ESTRUCTURA DE TEMPORADA
+
+
+Capítulo 1: El bardo llega a Villaclara
+Función: llegada, tono, misterio del nombre.
+
+
+Capítulo 2: El contrato de las cucharas imposibles
+Función: quest cómica con hebra épica.
+
+
+Capítulo 3: La niña que veía letras doradas
+Función: Bimba y rastros de la Cámara.
+
+
+Capítulo 4: La Posada de los que cayeron del cielo
+Función: forasteros planares y Sera.
+
+
+Capítulo 5: La mazmorra que olía a pan
+Función: primer dungeon, Masa Madre, Otilia.
+
+
+Capítulo 6: El mapa que no llevaba a ninguna parte
+Función: ruta hacia Verdanza.
+
+
+Capítulo 7: El alcalde, el sello y el día que no ocurrió
+Función: burocracia mágica y memoria rota.
+
+
+Capítulo 8: La torre vieja de la Pradera de los Cascabeles
+Función: origen de llegadas planares.
+
+
+Capítulo 9: Mediodía Inmóvil
+Función: ataque directo de la Cámara.
+
+
+Capítulo 10: La canción que Villaclara recordó
+Función: resolución y gancho a Verdanza.
+
+
+4. CAPÍTULO 1 — EL BARDO LLEGA A VILLACLARA
+
+
+Resumen
+Aren cae desde una grieta planar en la Pradera de los Cascabeles. Bimba lo encuentra y lo lleva a Villaclara durante la Feria de Cosecha Clara. Su registro aparece en tinta blanca. Conoce Panbendito, Pex, la Posada del Segundo Gallo, el Pozo Cantante y finalmente a Varo Nomenclaro, que intenta alterar su nombre. Aren toca una canción que impide que su identidad desaparezca.
+
+
+Storyboard
+Página 1: Aren cae desde un portal azul sobre un campo de flores campana. Ve Villaclara al fondo. Bimba aparece corriendo.
+Diálogo sugerido:
+Aren: “¿Dónde… estoy?”
+Bimba: “En Villaclara. Y si no estás muerto, eso ya cuenta como buen comienzo.”
+Aren: “¿Siempre recibís así a los viajeros?”
+Bimba: “Solo a los que caen del cielo sin cita previa.”
+
+
+Página 2: Bimba arrastra a Aren por la feria. Silo intenta registrarlo. El nombre de Aren brilla en tinta blanca.
+Diálogo sugerido:
+Silo: “Nombre, oficio y monstruos personales, por favor.”
+Aren: “Aren. Bardo. Y… creo que ninguno.”
+Bimba: “Eso dicen todos antes del primer slime.”
+Silo: “Tinta blanca otra vez… Esto no va en el formulario.”
+
+
+Página 3: Doña Marga alimenta a Aren. Pex roba cucharas. Primer encargo local.
+Diálogo sugerido:
+Doña Marga: “Come. Ningún héroe piensa bien con el estómago haciendo percusión.”
+Aren: “No sé si soy héroe.”
+Doña Marga: “Eso se arregla con pan y problemas.”
+Bimba: “¡Pex! ¡Devuelve esas cucharas!”
+
+
+Página 4: Persecución cómica de Pex y conejos acorazados. Aren usa música para detener el caos.
+Diálogo sugerido:
+Bimba: “¡Conejos acorazados!”
+Aren: “¿Por qué llevan cascos?”
+Bimba: “Porque nadie les explicó que eran conejos.”
+Aren: “Entonces… ¿les canto?”
+Bimba: “Si funciona, fingiré que era el plan.”
+
+
+Página 5: Joro, Sera y Fennel conocen a Aren. Se habla de forasteros planares.
+Diálogo sugerido:
+Joro: “Aquí no preguntamos de qué mundo vienes hasta la segunda jarra.”
+Sera: “Esa cara de confusión planar la conozco.”
+Aren: “¿Hay más como yo?”
+Sera: “Más de los que admite el ayuntamiento.”
+Fennel: “¡Un bardo nuevo! ¿Sabes tocar algo heroico?”
+Aren: “Sé tocar algo honesto.”
+Fennel: “Bueno, podemos trabajar con eso.”
+
+
+Página 6: Hermana Lúa lleva a Aren al pozo. El agua canta su nombre.
+Diálogo sugerido:
+Hermana Lúa: “Canta cuando alguien intenta olvidar… o ser olvidado.”
+Aren: “El pozo conoce mi nombre.”
+Hermana Lúa: “Quizá Villaclara también.”
+Aren: “Entonces este mundo me estaba esperando.”
+Hermana Lúa: “O pidiendo ayuda con mucha educación.”
+
+
+Página 7: Varo Nomenclaro aparece. Intenta ordenar el registro. El nombre de Aren se duplica y empieza a borrarse.
+Diálogo sugerido:
+Varo: “La memoria del reino requiere orden.”
+Bimba: “Las letras se están moviendo.”
+Aren: “Ese es mi nombre.”
+Varo: “Solo si permanece escrito.”
+Silo: “¡Nadie borra nada sin el sello municipal! Aunque… he perdido el sello.”
+
+
+Página 8: Aren toca en la plaza. Su nombre queda protegido. Villaclara lo acepta. Varo observa desde lejos.
+Diálogo sugerido:
+Aren: “Me quedaré en Villaclara.”
+Bimba: “Temporalmente, ¿no?”
+Aren: “Temporalmente suena menos aterrador.”
+Doña Marga: “Eso dijo el último que compró pan a crédito.”
+Cartela final: “Toda gran leyenda empieza con pan, campanas y un nombre que se niega a desaparecer.”
+
+
+5. CAPÍTULO 2 — EL CONTRATO DE LAS CUCHARAS IMPOSIBLES
+
+
+Resumen
+Aren acepta su primer contrato oficial de rango Cobre: recuperar cucharas robadas por Pex. La misión parece absurda, pero las cucharas forman un mapa hacia el Sótano de Masa Viva, una mazmorra móvil bajo Panbendito. Doña Marga confiesa que la panadería a veces baja un piso sin avisar.
+
+
+Storyboard
+Página 1: Aren busca una misión seria en el tablón, pero solo encuentra encargos ridículos.
+Diálogo sugerido:
+Aren: “¿‘Escoltar nabo sospechoso’?”
+Bimba: “Alta mortalidad emocional.”
+Fennel: “¡Mira esta! ‘Recuperar cucharas desaparecidas’. Dramática, íntima, metálica.”
+Aren: “¿Esto cuenta como aventura?”
+Sera: “En Villaclara, sí. En el gremio, depende del informe.”
+
+
+Página 2: Rusk “Tres Contratos” aparece como abogado itinerante y complica todo.
+Diálogo sugerido:
+Rusk: “Todo contrato requiere cláusula de gelatina, cláusula de mordisco y cláusula de eventualidad subterránea.”
+Aren: “Solo voy a buscar cucharas.”
+Rusk: “Eso dijeron en la Crisis del Pudin Demoníaco.”
+Bimba: “No preguntes.”
+
+
+Página 3: Doña Marga enseña que las cucharas robadas son especiales, marcadas con runas de cocina.
+Diálogo sugerido:
+Doña Marga: “No son cucharas. Son cucharas.”
+Aren: “Eso no aclara nada.”
+Doña Marga: “A veces la verdad necesita horno lento.”
+Pex: “Blorp.”
+Bimba: “Dice que no fue él. Está sentado encima de tres pruebas.”
+
+
+Página 4: Persiguen a Pex por la Calle del Pan Caliente. Slimes pequeños se suman al caos.
+Diálogo sugerido:
+Bimba: “¡Cierra el paso!”
+Aren: “¡Soy bardo, no portero!”
+Fennel: “¡Usa una balada de contención!”
+Aren: “¡Eso no existe!”
+Fennel: “¡Invéntala con actitud!”
+
+
+Página 5: Pex coloca las cucharas en círculo. Se abre una trampilla imposible bajo el horno.
+Diálogo sugerido:
+Doña Marga: “Mala señal.”
+Aren: “¿La trampilla?”
+Doña Marga: “Que haya decidido abrirse antes del segundo desayuno.”
+Bimba: “Pex no robaba. Estaba construyendo una llave.”
+Pex: “Blorp.”
+Doña Marga: “No pongas esa cara. Sigues castigado.”
+
+
+Página 6: El grupo entra en una mazmorra cálida, con pan flotante, levadura luminosa y pasillos que respiran.
+Diálogo sugerido:
+Aren: “Esto huele increíble.”
+Sera: “No comas la pared.”
+Fennel: “¿Quién comería una pared?”
+Bimba: “Turistas. Dos veces.”
+
+
+Página 7: Descubren una masa viva que reclama cucharas para remover recuerdos.
+Diálogo sugerido:
+Masa Madre: “Hambre de nombre. Hambre de horno. Hambre de ayer.”
+Aren: “Está hablando.”
+Doña Marga: “Y con mala métrica.”
+Bimba: “Mira, letras doradas en la masa.”
+Sera: “La Cámara ha tocado esto.”
+
+
+Página 8: Aren calma la Masa con música. Doña Marga recupera cucharas, pero una queda marcada con el nombre de Otilia.
+Diálogo sugerido:
+Aren: “¿Quién es Otilia?”
+Doña Marga: “No lo sé.”
+Hermana Lúa: “Yo la oí en la campana.”
+Bimba: “Entonces alguien la borró.”
+Cartela: “En Villaclara, hasta una cuchara podía señalar una tumba sin nombre.”
+
+
+6. CAPÍTULO 3 — LA NIÑA QUE VEÍA LETRAS DORADAS
+
+
+Resumen
+Bimba empieza a ver letras doradas flotando en objetos tocados por la Cámara. Al principio lo esconde para no parecer más rara de lo necesario, pero Aren la ayuda a seguir las pistas. Encuentran objetos cotidianos con nombres parcialmente borrados: una taza, un bastón, un recibo de pan y una campanilla.
+
+
+Storyboard
+Página 1: Bimba reparte mensajes por Villaclara y ve letras doradas flotando sobre objetos.
+Diálogo sugerido:
+Bimba: “No mires las letras. No mires las letras. No… vale, son muchas letras.”
+Tendera: “¿Todo bien, Bimba?”
+Bimba: “Sí. Solo estoy optimizando información con angustia.”
+
+
+Página 2: Bimba confiesa que ve rastros mágicos.
+Diálogo sugerido:
+Bimba: “Veo letras donde no debería haber letras.”
+Aren: “Yo caí del cielo y canto a pozos. Estamos en buen nivel de rareza.”
+Bimba: “¿No te parece peligroso?”
+Aren: “Sí. Por eso no deberías seguirlo sola.”
+Bimba: “Eso no significa que vengas.”
+Aren: “Lo sé. Significa que ya estoy viniendo.”
+
+
+Página 3: Mirta muestra un mapa prohibido de Verdanza. Algunas rutas se reescriben solas.
+Diálogo sugerido:
+Mirta: “Este mapa no existe oficialmente.”
+Aren: “Lo estoy viendo.”
+Mirta: “Oficialmente, ese es tu problema.”
+Bimba: “Las letras dicen ‘no recordar la ruta’.”
+Mirta: “Qué mala educación cartográfica.”
+
+
+Página 4: Las ancianas del lavadero recuerdan a una mujer llamada Otilia, pero discrepan en detalles.
+Diálogo sugerido:
+Tía Bruna: “Otilia era alta.”
+Tía Mela: “Era bajita.”
+Tía Nera: “Era puntual, que es más importante.”
+Bimba: “¿Y dónde vive?”
+Las tres: “...”
+Aren: “Ese silencio acaba de hacer ruido.”
+
+
+Página 5: Hermana Lúa revisa campanas. Una suena sin moverse.
+Diálogo sugerido:
+Hermana Lúa: “Cuando un nombre se borra mal, la campana protesta.”
+Aren: “¿Y si se borra bien?”
+Hermana Lúa: “Entonces todos sonríen y nadie sabe por qué falta una silla.”
+
+
+Página 6: Silo intenta ayudar, pero sus documentos están duplicados.
+Diálogo sugerido:
+Silo: “Aquí dice que Otilia pagó impuestos.”
+Bimba: “¿Y aquí?”
+Silo: “Aquí dice que nunca nació.”
+Aren: “Eso parece contradictorio.”
+Silo: “Administrativamente, es una catástrofe con sombrero.”
+
+
+Página 7: Varo se ofrece a aclarar documentos.
+Diálogo sugerido:
+Varo: “Los recuerdos rurales tienden al desorden.”
+Bimba: “Y los escribas raros tienden a aparecer cuando nadie los llama.”
+Varo: “Qué niña tan observadora.”
+Aren: “Qué frase tan amenazadora.”
+
+
+Página 8: Bimba decide investigar. Aren la reconoce como parte esencial del equipo.
+Diálogo sugerido:
+Bimba: “Si nadie ve las letras, tengo que mirarlas yo.”
+Aren: “Y si pesan demasiado, las miramos juntos.”
+Bimba: “No soy tu escudera.”
+Aren: “No. Eres mi guía.”
+Cartela: “Bimba Cascabel no espía. Bimba Cascabel encuentra lo que otros prefieren no ver.”
+
+
+7. CAPÍTULO 4 — LA POSADA DE LOS QUE CAYERON DEL CIELO
+
+
+Resumen
+Aren pasa una noche en la habitación 3B de la Posada del Segundo Gallo. Allí descubre diarios de otros forasteros: una estudiante, un repartidor, una anciana que solo salió a comprar pan. Sera le explica que algunos se adaptan, otros desaparecen y otros son reclamados por correcciones de la Cámara.
+
+
+Storyboard
+Página 1: Atardecer cálido en la Posada del Segundo Gallo. Joro prepara cena. Fennel canta fatal.
+Diálogo sugerido:
+Joro: “Habitación 3B. Cama firme, ventana bonita y baja probabilidad de portal.”
+Aren: “¿Baja?”
+Joro: “Nunca prometo milagros que no pueda freír.”
+
+
+Página 2: Aren encuentra marcas en la pared: nombres de otros forasteros.
+Diálogo sugerido:
+Aren: “Estos nombres…”
+Sera: “Llegaron antes que tú.”
+Aren: “¿Dónde están?”
+Sera: “Algunos siguieron. Algunos volvieron. Algunos… fueron corregidos.”
+
+
+Página 3: Flashback de 4954: joven con ropa extraña en la Pradera de los Cascabeles.
+Diálogo sugerido:
+Diario: “El cielo tiene demasiadas lunas para ser martes.”
+Aren: “Eso suena demasiado familiar.”
+Sera: “La confusión planar tiene frases recurrentes.”
+
+
+Página 4: Cena común con Joro, Sera, Fennel, Bimba y Aren.
+Diálogo sugerido:
+Fennel: “¿En tu mundo había bardos?”
+Aren: “Había músicos.”
+Fennel: “¿Sin stats?”
+Aren: “Sin stats visibles.”
+Fennel: “Qué mundo tan cruel.”
+
+
+Página 5: Sera revela que llegó hace 15 años y soñaba con Villaclara antes de verla.
+Diálogo sugerido:
+Sera: “El primer día preguntas dónde estás.”
+Aren: “¿Y el segundo?”
+Sera: “Cuánto cuesta el pan.”
+Aren: “¿Y el tercero?”
+Sera: “A quién puedes llamar hogar sin mentirte.”
+
+
+Página 6: Sera intenta identificar la skill de Aren. El cristal azul reacciona.
+Diálogo sugerido:
+Sera: “No eres solo bardo.”
+Aren: “Eso no suena tranquilizador.”
+Sera: “Tu música no encanta. Recuerda.”
+Bimba: “Eso sí suena tranquilizador.”
+Sera: “No necesariamente.”
+
+
+Página 7: Encuentran una nota bajo la cama: “No dejéis que os conviertan en versión limpia”.
+Diálogo sugerido:
+Aren: “¿Versión limpia?”
+Sera: “La Cámara no mata primero. Edita.”
+Bimba: “Eso es peor.”
+Joro: “Depende. He oído canciones de Fennel.”
+
+
+Página 8: El grupo decide proteger a los forasteros y a los nombres borrados.
+Diálogo sugerido:
+Aren: “No sé si puedo salvar a nadie.”
+Sera: “Empieza por no dejar que te reescriban.”
+Bimba: “Y por desayunar. Doña Marga se pone peligrosa.”
+Cartela: “La Posada del Segundo Gallo no era refugio por sus paredes, sino por las historias que se negaba a entregar.”
+
+
+8. CAPÍTULO 5 — LA MAZMORRA QUE OLÍA A PAN
+
+
+Resumen
+La panadería se hunde un nivel durante la noche. Aren, Bimba, Doña Marga y Fennel entran al Sótano de Masa Viva. Allí descubren hornos imposibles, hadas de harina y una puerta sellada con una inscripción aureana. La Cámara busca una gota de memoria cocida en el pan de Alba Serena.
+
+
+Storyboard
+Página 1: Panbendito aparece un metro más baja que ayer.
+Diálogo sugerido:
+Doña Marga: “Mal.”
+Aren: “¿Por la grieta del suelo?”
+Doña Marga: “Por la grieta del suelo antes del café.”
+Bimba: “La panadería se movió.”
+Doña Marga: “Otra vez.”
+
+
+Página 2: Fennel insiste en acompañarlos al dungeon.
+Diálogo sugerido:
+Fennel: “¡Mi primer dungeon!”
+Doña Marga: “Mi sótano no es escenario.”
+Fennel: “Todo es escenario si alguien grita con convicción.”
+Aren: “No le des ideas al sótano.”
+
+
+Página 3: Hadas de harina atacan con polvo y estornudos mágicos.
+Diálogo sugerido:
+Bimba: “¡Hadas de harina!”
+Fennel: “¡Son adorables!”
+Doña Marga: “No respires ternura. Se pega.”
+Aren: “¿Cómo se combate esto?”
+Doña Marga: “Con tamiz y respeto.”
+
+
+Página 4: Un horno muestra escenas de Villaclara antigua.
+Diálogo sugerido:
+Aren: “Veo la feria… pero hay alguien más.”
+Bimba: “Otilia.”
+Fennel: “¿Quién?”
+Bimba: “Exacto.”
+
+
+Página 5: La Masa Madre habla con más claridad.
+Diálogo sugerido:
+Masa Madre: “Pan recuerda. Pueblo olvida. Cámara amasa.”
+Doña Marga: “No uses mi vocabulario contra mí.”
+Aren: “Quiere avisarnos.”
+Doña Marga: “Entonces que aprenda sintaxis.”
+
+
+Página 6: Encuentran una puerta aureana.
+Diálogo sugerido:
+Fennel: “Eso es precioso.”
+Bimba: “Eso es raro.”
+Doña Marga: “Eso es receta antigua.”
+Aren: “¿Del Imperio Aureano?”
+Doña Marga: “De antes de que los nobles arruinaran el pan con heráldica.”
+
+
+Página 7: Un sello blanco de la Cámara intenta cerrar la puerta. Aren canta para abrirla.
+Diálogo sugerido:
+Voz de Varo: “El desorden será corregido.”
+Aren: “No somos desorden.”
+Bimba: “Bueno, un poco sí.”
+Aren: “No ayuda.”
+Bimba: “Pero es verdad.”
+
+
+Página 8: Obtienen una miga dorada con memoria de Otilia.
+Diálogo sugerido:
+Doña Marga: “Si la memoria cabe en una miga, cabe en un pan.”
+Aren: “¿Y eso la traerá de vuelta?”
+Doña Marga: “No prometo milagros. Prometo masa madre.”
+Cartela: “En Panbendito, hasta el desayuno podía declarar la guerra a una conspiración.”
+
+
+9. CAPÍTULO 6 — EL MAPA QUE NO LLEVABA A NINGUNA PARTE
+
+
+Resumen
+Mirta de La Cesta Serena muestra el mapa prohibido hacia Verdanza Caída. El mapa cambia según quién lo mire. Aren, Bimba y Sera siguen una ruta parcial por el Arroyo Brillacepa. Encuentran reflejos que responden antes que ellos y un aviso: “La Cámara no empezó en Villaclara”.
+
+
+Storyboard
+Página 1: Mirta cierra la tienda y muestra el mapa prohibido.
+Diálogo sugerido:
+Mirta: “Este mapa no existe.”
+Aren: “Vuelvo a insistir: lo estoy viendo.”
+Mirta: “Y yo vuelvo a insistir: oficialmente, eres muy terco.”
+Sera: “Verdanza Caída.”
+Bimba: “Eso suena a sitio donde no se merienda bien.”
+
+
+Página 2: El mapa muestra rutas distintas para cada personaje.
+Diálogo sugerido:
+Bimba: “A mí me enseña el arroyo.”
+Aren: “A mí, una torre rota.”
+Sera: “A mí me enseña mi primer día aquí.”
+Mirta: “A mí me enseña deudas. Por eso no lo miro mucho.”
+
+
+Página 3: Siguen el Arroyo Brillacepa. Slimes dorados brillan al amanecer.
+Diálogo sugerido:
+Bimba: “Slimes dorados.”
+Aren: “¿Peligrosos?”
+Sera: “Caros. Eso suele bastar.”
+Bimba: “Pex dice que son primos con dinero.”
+Aren: “¿Pex dijo eso?”
+Bimba: “Blorp tiene matices.”
+
+
+Página 4: Sus reflejos en el agua hacen movimientos antes que ellos.
+Diálogo sugerido:
+Aren: “Mi reflejo acaba de suspirar antes que yo.”
+Sera: “No lo imites.”
+Bimba: “¿Por qué?”
+Sera: “Porque quizá él cree que tú eres el reflejo.”
+
+
+Página 5: Encuentran una piedra antigua con símbolo del Cáliz.
+Diálogo sugerido:
+Aren: “Esto estaba en la puerta de Panbendito.”
+Sera: “Aureano.”
+Bimba: “¿Imperio antiguo?”
+Sera: “Imperio antiguo con manía de dejar problemas modernos.”
+
+
+Página 6: El agua escribe: “No empezó en Villaclara”.
+Diálogo sugerido:
+Bimba: “Eso no tranquiliza.”
+Aren: “Nada escrito por agua mágica suele tranquilizar.”
+Sera: “La Cámara está siguiendo una ruta vieja.”
+Bimba: “¿Y nosotros?”
+Sera: “Llegamos tarde, pero con mejor compañía.”
+
+
+Página 7: Sombras de agua intentan robar sus voces.
+Diálogo sugerido:
+Reflejo de Aren: “Dame tu canción.”
+Aren: “Aprende la tuya.”
+Bimba: “¡Eso ha sonado heroico!”
+Aren: “Me he asustado con estilo.”
+
+
+Página 8: Regresan a Villaclara con un trozo real de la ruta.
+Diálogo sugerido:
+Mirta: “Eso no estaba antes.”
+Sera: “Ahora existe un poco más.”
+Aren: “¿Podemos hacer que una ruta recuerde?”
+Mirta: “Con suficiente terquedad, hasta un mapa confiesa.”
+Cartela: “Verdanza Caída esperaba al otro lado del reflejo.”
+
+
+10. CAPÍTULO 7 — EL ALCALDE, EL SELLO Y EL DÍA QUE NO OCURRIÓ
+
+
+Resumen
+Silo descubre que hay un día completo que no aparece en los registros municipales. La villa lo recuerda a medias: hubo campanas, pan, lluvia dorada y alguien llorando en la plaza. Varo ofrece una corrección oficial. Aren y Bimba deben reconstruir el día perdido antes de que el Concejo acepte la versión falsa.
+
+
+Storyboard
+Página 1: Silo entra en pánico: falta un día en los libros.
+Diálogo sugerido:
+Silo: “¡Ha desaparecido un día entero!”
+Aren: “¿Cómo se pierde un día?”
+Bimba: “En el ayuntamiento se pierde de todo.”
+Silo: “¡Eso es injusto! Solo hemos perdido tres sellos, dos actas y la dignidad del martes.”
+
+
+Página 2: Vecinos discuten recuerdos contradictorios.
+Diálogo sugerido:
+Vecino 1: “Ese día llovió.”
+Vecina 2: “Hizo sol.”
+Doña Marga: “Hubo pan. Eso sí lo recuerdo.”
+Joro: “Yo conté una historia magnífica.”
+Sera: “Eso no reduce mucho el calendario.”
+
+
+Página 3: Varo trae un acta perfecta.
+Diálogo sugerido:
+Varo: “He preparado una reconstrucción limpia.”
+Silo: “Qué eficiencia tan inquietante.”
+Aren: “¿Y si no fue limpio?”
+Varo: “La historia rara vez agradece las manchas.”
+Doña Marga: “El pan bueno siempre tiene harina fuera del cuenco.”
+
+
+Página 4: Bimba ve letras doradas sobre bancos, faroles y campanas.
+Diálogo sugerido:
+Bimba: “Aquí alguien lloró.”
+Aren: “¿Quién?”
+Bimba: “Las letras no dicen quién. Solo dicen ‘no debía’.”
+Aren: “Eso es peor que un nombre.”
+Bimba: “Sí. Es un hueco con mala leche.”
+
+
+Página 5: Las Tías del Mantel Blanco recuerdan una canción antigua.
+Diálogo sugerido:
+Tía Bruna: “La cantaba Otilia.”
+Tía Mela: “No, la cantaba su hermana.”
+Tía Nera: “No tenía hermana.”
+Aren: “¿Seguro?”
+Las tres: “No.”
+
+
+Página 6: El sello perdido de Silo aparece dentro de una campana. Tiene tinta blanca.
+Diálogo sugerido:
+Silo: “Mi sello.”
+Bimba: “Está manchado.”
+Silo: “Los sellos no se manchan solos.”
+Aren: “Los agentes de la Cámara tampoco se delatan solos.”
+Silo: “Como alcalde, odio que eso tenga sentido.”
+
+
+Página 7: Varo presiona al Concejo para aprobar el acta falsa.
+Diálogo sugerido:
+Varo: “Sin documento, no hay verdad.”
+Silo: “Sin pueblo, no hay documento que valga.”
+Varo: “Qué postura tan sentimental.”
+Doña Marga: “Y aun así pesa más que tu pluma.”
+
+
+Página 8: Aren canta la canción de Otilia. La villa recuerda una escena: alguien fue borrado en plena feria.
+Diálogo sugerido:
+Aren: “No puedo traer todo el día.”
+Hermana Lúa: “Pero has traído una sombra.”
+Bimba: “Y las sombras señalan dónde hubo alguien.”
+Silo: “Registro provisional: día pendiente de verdad.”
+Cartela: “Por primera vez, el ayuntamiento archivó una duda. Fue un acto revolucionario.”
+
+
+11. CAPÍTULO 8 — LA TORRE VIEJA DE LA PRADERA DE LOS CASCABELES
+
+
+Resumen
+Aren, Bimba, Sera y Hermana Lúa investigan los restos de una torre vieja en la Pradera de los Cascabeles. Allí descubren un mecanismo aureano alterado por la Cámara. No trae héroes: atrae personas con historias útiles. Aren empieza a preguntarse si su llegada fue accidente o selección.
+
+
+Storyboard
+Página 1: Aren vuelve al campo donde cayó.
+Diálogo sugerido:
+Aren: “Aquí empezó todo.”
+Bimba: “Aquí te estrellaste.”
+Aren: “Gracias por el matiz.”
+Sera: “Los lugares recuerdan mejor cuando alguien vuelve con miedo.”
+
+
+Página 2: Las flores campana suenan al paso de Aren.
+Diálogo sugerido:
+Hermana Lúa: “Las campanas pequeñas responden a tu cristal.”
+Aren: “¿Eso es bueno?”
+Bimba: “En Villaclara, ‘responde’ suele ir antes de ‘corre’.”
+
+
+Página 3: Encuentran una torre semienterrada con símbolos aureanos y solares.
+Diálogo sugerido:
+Sera: “No era una torre de vigilancia.”
+Hermana Lúa: “Era un faro.”
+Aren: “¿Para barcos?”
+Sera: “Para mundos.”
+
+
+Página 4: El mecanismo muestra siluetas de personas de otros mundos.
+Diálogo sugerido:
+Aren: “Nos llamaba.”
+Bimba: “¿A todos?”
+Sera: “A quienes tenían historias útiles.”
+Aren: “Eso suena menos a destino y más a reclutamiento.”
+
+
+Página 5: Aren ve una imagen de sí mismo cayendo, pero en el eco hay una sombra observando.
+Diálogo sugerido:
+Aren: “No estaba solo.”
+Hermana Lúa: “Nunca lo estuviste.”
+Bimba: “Eso puede ser bonito o terrorífico.”
+Sera: “Hoy toca terrorífico.”
+
+
+Página 6: Pequeños constructos antiguos atacan, creyendo que los intrusos son editores.
+Diálogo sugerido:
+Constructo: “Corrección detectada.”
+Bimba: “¡No somos correctores!”
+Aren: “Nunca pensé que gritaría eso en combate.”
+Sera: “Bienvenido a Altherion.”
+
+
+Página 7: Aren calma el mecanismo con música. Ve nombres de otros forasteros.
+Diálogo sugerido:
+Aren: “No fui el primero.”
+Sera: “No.”
+Aren: “¿Seré el último?”
+Sera: “Depende de qué hagamos con esto.”
+Bimba: “Romperlo suena tentador.”
+Hermana Lúa: “Entenderlo primero suena menos explosivo.”
+
+
+Página 8: El mecanismo muestra el símbolo de la Cámara junto al Cáliz de Mediodía.
+Diálogo sugerido:
+Aren: “La Cámara usa tecnología antigua.”
+Sera: “Y fe moderna.”
+Hermana Lúa: “Eso es una mezcla venenosa.”
+Bimba: “Pues habrá que echarle pan.”
+Cartela: “La torre no trajo a Aren por accidente. Lo llamó porque alguien había empezado a borrar canciones.”
+
+
+12. CAPÍTULO 9 — MEDIODÍA INMÓVIL
+
+
+Resumen
+Durante un mediodía extraño, el sol queda fijo sobre Villaclara. Nadie proyecta sombra. Los nombres empiezan a cambiar en carteles, documentos y memorias. Varo revela su objetivo: hacer de Villaclara un pueblo perfecto, sin contradicciones, sin forasteros incómodos, sin Otilia, sin Aren.
+
+
+Storyboard
+Página 1: La villa queda bañada en luz blanca. Las campanas no suenan.
+Diálogo sugerido:
+Bimba: “El sol no se mueve.”
+Aren: “¿Eso pasa aquí?”
+Bimba: “Solo cuando algo va fatal y quiere presumir.”
+Hermana Lúa: “No hay sombras.”
+Sera: “Entonces nadie puede esconderse. Ni siquiera ellos.”
+
+
+Página 2: Carteles se reescriben. Panbendito pasa a llamarse “Panadería Autorizada Nº 4”.
+Diálogo sugerido:
+Doña Marga: “¿Autorizada número qué?”
+Aren: “Lo están cambiando todo.”
+Doña Marga: “Mi horno tiene más personalidad que ese cartel.”
+Pex: “Blorp.”
+Bimba: “Pex dice que incluso él se siente ofendido.”
+
+
+Página 3: Vecinos olvidan pequeños detalles. Fennel olvida una canción.
+Diálogo sugerido:
+Fennel: “Yo… sabía tocar algo.”
+Aren: “Mírame. Respira.”
+Fennel: “¿Era importante?”
+Aren: “Sí.”
+Fennel: “Entonces me niego a olvidarlo del todo.”
+
+
+Página 4: Varo aparece con pluma blanca y sello solar invertido.
+Diálogo sugerido:
+Varo: “Villaclara será ordenada.”
+Silo: “¡Villaclara ya está ordenada!”
+Bimba: “Has perdido el sello otra vez.”
+Silo: “¡Ordenada emocionalmente!”
+Varo: “La memoria popular es barro.”
+Doña Marga: “Y del barro salen hornos.”
+
+
+Página 5: Visión simbólica de escribas sin rostro en una sala blanca.
+Diálogo sugerido:
+Varo: “No destruimos. Purificamos.”
+Sera: “Borráis a quien no encaja.”
+Varo: “Quien no encaja rompe el relato.”
+Aren: “Entonces el relato era demasiado pequeño.”
+
+
+Página 6: El nombre de Aren empieza a desaparecer de su cristal.
+Diálogo sugerido:
+Bimba: “¡Aren!”
+Aren: “¿Quién…?”
+Hermana Lúa: “No escuches el silencio.”
+Sera: “Recuerda la primera pregunta.”
+Aren: “¿Dónde estoy?”
+Bimba: “En Villaclara. Y no estás solo.”
+
+
+Página 7: Todos cantan fragmentos: panadera, alcalde, posadero, Bimba, Fennel, Lúa.
+Diálogo sugerido:
+Doña Marga: “Aren comió pan de mi horno.”
+Silo: “Aren fue registrado, aunque el registro hizo teatro.”
+Joro: “Aren durmió bajo mi techo.”
+Fennel: “Aren tocó mejor que yo, tragedia que acepto.”
+Bimba: “Aren es mi problema logístico favorito.”
+
+
+Página 8: La luz blanca se agrieta. Varo escapa, pero deja una advertencia.
+Diálogo sugerido:
+Varo: “Una villa no detendrá el Canon.”
+Aren: “Una canción tampoco parece gran cosa hasta que todos la cantan.”
+Varo: “Nos veremos en Verdanza.”
+Bimba: “Odio cuando los malos dejan itinerario.”
+Cartela: “El mediodía volvió a moverse. Pero la Cámara ya sabía el nombre de Aren.”
+
+
+13. CAPÍTULO 10 — LA CANCIÓN QUE VILLACLARA RECORDÓ
+
+
+Resumen
+Tras el ataque de Varo, Villaclara organiza una feria improvisada para reafirmar nombres, historias y vínculos. Aren, Bimba y compañía reconstruyen la memoria de Otilia con pan, campanas, canciones y registros incompletos. El Pozo Cantante revela que una de las siete gotas del Cáliz está bajo la villa. La temporada cierra con Aren aceptando su papel: no como héroe elegido, sino como cronista vivo.
+
+
+Storyboard
+Página 1: Villaclara despierta cansada pero intacta.
+Diálogo sugerido:
+Silo: “Como alcalde, declaro que ayer fue… complicado.”
+Bimba: “¿Eso cabe en un acta?”
+Silo: “Con letra pequeña y valentía.”
+Doña Marga: “Primero desayuno. Luego reconstruimos la verdad.”
+
+
+Página 2: Vecinos escriben nombres en cintas, panes, campanas y tablones.
+Diálogo sugerido:
+Joro: “Nombre completo, apodo y deuda de taberna.”
+Vecino: “¿La deuda también?”
+Joro: “La memoria debe ser honesta.”
+Sera: “Esto es hermoso.”
+Bimba: “Y administrativamente caótico.”
+Silo: “Lo llamaremos festival.”
+
+
+Página 3: Las pistas reunidas forman un retrato parcial de Otilia.
+Diálogo sugerido:
+Hermana Lúa: “Otilia cuidó la campana.”
+Doña Marga: “Compraba pan de centeno.”
+Tía Bruna: “Reía fuerte.”
+Tía Mela: “Andaba rápido.”
+Tía Nera: “Y me debía una disculpa.”
+Aren: “Entonces existió.”
+Sera: “Eso basta para empezar.”
+
+
+Página 4: Doña Marga hornea pan con la miga dorada.
+Diálogo sugerido:
+Doña Marga: “No resucita. No corrige. No simplifica.”
+Aren: “¿Entonces qué hace?”
+Doña Marga: “Recuerda con hambre.”
+Pex: “Blorp.”
+Bimba: “Pex pregunta si recordar se puede mojar en sopa.”
+
+
+Página 5: El pan se comparte junto al pozo. El agua muestra la gota del Cáliz bajo Villaclara.
+Diálogo sugerido:
+Hermana Lúa: “La gota está aquí.”
+Aren: “Bajo el pozo.”
+Sera: “Por eso la Cámara eligió Villaclara.”
+Bimba: “¿Y nosotros pensábamos que era por el pan?”
+Doña Marga: “También por el pan.”
+
+
+Página 6: El sistema de Inheron reconoce la skill de Aren.
+Diálogo sugerido:
+Sistema: “Skill resonante identificada: Crónica Viva.”
+Aren: “¿Ahora sí me clasificas?”
+Bimba: “Tardón, pero dramático.”
+Sera: “Una skill que protege memorias.”
+Fennel: “¡Eso es injustamente poético!”
+
+
+Página 7: El mapa hacia Verdanza se completa parcialmente. Aren sabe que debe ir.
+Diálogo sugerido:
+Aren: “Varo dijo Verdanza.”
+Sera: “Y Varo no improvisa.”
+Bimba: “Yo voy.”
+Aren: “No.”
+Bimba: “No era pregunta.”
+Doña Marga: “Lleva pan.”
+Joro: “Y vuelve con una historia que no necesite dragones añadidos.”
+
+
+Página 8: Villaclara al atardecer. Aren, Bimba, Sera y quizá Fennel parten por el camino.
+Diálogo sugerido:
+Silo: “Queda oficialmente registrado: expedición de investigación, no aventura suicida.”
+Bimba: “Eso depende de Fennel.”
+Fennel: “¡La llamaré Balada de los que fueron prudentemente hacia el peligro!”
+Aren: “Me gustaba más cuando solo buscaba cucharas.”
+Hermana Lúa: “Toda canción empieza pequeña.”
+Cartela final: “Villaclara recordó. Ahora tocaba descubrir quién le había enseñado a olvidar.”
+Texto final: “Continuará en Verdanza Caída…”
+
+
+14. REGLAS DE DIÁLOGO PARA PRÓXIMOS CAPÍTULOS
+
+
+Más diálogo que el capítulo 1, pero sin llenar cada página como si el cómic hubiera sido poseído por un contrato de términos y condiciones.
+
+
+Reglas:
+1. Cada página debe tener entre 3 y 8 bocadillos como máximo.
+2. Cada bocadillo debe ser corto.
+3. Bimba remata con observaciones rápidas.
+4. Doña Marga habla como si cocinar y salvar el mundo fueran oficios vecinos.
+5. Silo convierte el caos en burocracia nerviosa.
+6. Sera explica lo justo, nunca sermonea.
+7. Fennel dramatiza todo.
+8. Varo habla con cortesía peligrosa.
+9. Aren debe sonar humano: confundido, valiente a ratos, irónico cuando se asusta.
+
+
+Ejemplo de dinámica ideal:
+Aren: “Esto no parece una misión de rango Cobre.”
+Bimba: “Claro que sí. Todavía no ha explotado nada caro.”
+Sera: “Esa no es una medida oficial.”
+Silo: “Podría serlo si encontramos el formulario.”
+Doña Marga: “Mientras discutís, el pan está recordando mejor que vosotros.”
+
+
+Ese es el oro de Villaclara: aventura, cariño, caos administrativo y una amenaza capaz de borrar un nombre con una pluma limpia.

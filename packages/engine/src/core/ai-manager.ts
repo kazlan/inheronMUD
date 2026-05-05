@@ -62,8 +62,8 @@ export class AIManager {
       let healedAnyone = false;
       for (const p of playersInRoom) {
         const score = this.engine.commands.getScore(p.id);
-        if (!score) continue;
-        const { hpMax } = score.derived;
+        if (!score || !score.data) continue;
+        const { hpMax } = score.data.derived;
         if (p.hpCurrent! < hpMax) {
           const amount = Math.floor(hpMax * 0.2) + 10;
           p.hpCurrent = Math.min(p.hpCurrent! + amount, hpMax);
@@ -117,7 +117,16 @@ export class AIManager {
         const msg = npc.metadata.ambientMessages[Math.floor(Math.random() * npc.metadata.ambientMessages.length)];
         this.engine.emit('spatial_message', { roomId: npc.roomId, message: `<gray>${msg}</gray>` });
       } else {
-        this.engine.emit('spatial_message', { roomId: npc.roomId, message: `<gray>${npc.name} murmura algo ininteligible.</gray>` });
+        const genericMessages = [
+          "te observa con curiosidad.",
+          "está concentrado en sus quehaceres.",
+          "parece estar sumido en sus pensamientos.",
+          "ajusta su equipo con calma.",
+          "murmura algo sobre los vientos del destino.",
+          "te dedica un breve asentimiento."
+        ];
+        const msg = genericMessages[Math.floor(Math.random() * genericMessages.length)];
+        this.engine.emit('spatial_message', { roomId: npc.roomId, message: `<gray>${npc.name} ${msg}</gray>` });
       }
     }
   }

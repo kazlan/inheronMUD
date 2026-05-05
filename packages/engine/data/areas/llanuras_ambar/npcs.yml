@@ -4,7 +4,7 @@
   behaviorId: hostile_beast
   roomId: llanuras_3_3
   level: 5
-  flags: ['social', 'wandering', 'agresivo']
+  flags: ['wandering', 'agresivo']
   stats:
     fuerza: 15
     destreza: 18
@@ -45,11 +45,11 @@
 
 - id: npc_bandido_llanura
   name: Bandido de las Llanuras
-  description: Un renegado oculto en la hierba alta, esperando a incautos viajeros.
+  description: Un renegado Humano de Arvell oculto en la hierba alta, esperando a incautos viajeros. Su rostro curtido por el sol de las llanuras no muestra arrepentimiento.
   behaviorId: hostile_beast
   roomId: llanuras_2_6
   level: 3
-  flags: ['social', 'agresivo']
+  flags: ['agresivo']
   stats:
     fuerza: 12
     destreza: 14
@@ -58,3 +58,5 @@
     sabiduria: 6
     presencia: 8
     percepcion: 12
+  metadata:
+    raceId: humano_arvell

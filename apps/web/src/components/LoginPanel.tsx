@@ -12,8 +12,8 @@ type FlowState = 'ACCOUNT' | 'INTERACTIVE' | 'LOADING';
 export default function LoginPanel({ isConnected, onCommand, logs, onPasswordSent }: LoginPanelProps) {
   const [step, setStep] = useState<FlowState>('ACCOUNT');
   const [error, setError] = useState<string | null>(null);
-  const [username, setUsername] = useState(localStorage.getItem('mud_user') || '');
-  const [password, setPassword] = useState(localStorage.getItem('mud_pass') || '');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [genericInput, setGenericInput] = useState('');
 
   // Get the last system/message logs to show to the user during interactive steps
@@ -91,10 +91,12 @@ export default function LoginPanel({ isConnected, onCommand, logs, onPasswordSen
             <label>Usuario</label>
             <input
               type="text"
+              name="username"
               className="login-input"
               value={username}
               onChange={e => setUsername(e.target.value)}
               placeholder="Nombre de cuenta"
+              autoComplete="username"
               autoFocus
             />
           </div>
@@ -102,15 +104,27 @@ export default function LoginPanel({ isConnected, onCommand, logs, onPasswordSen
             <label>Contraseña</label>
             <input
               type="password"
+              name="password"
               className="login-input"
               value={password}
               onChange={e => setPassword(e.target.value)}
               placeholder="••••••••"
+              autoComplete="current-password"
             />
           </div>
-          <button type="submit" className="btn-primary" disabled={!isConnected} style={{ width: '100%', marginTop: '0.5rem' }}>
-            CONECTAR
-          </button>
+          <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+            <button 
+              type="button" 
+              className="quick-btn" 
+              style={{ flex: 1 }}
+              onClick={() => { setUsername(''); setPassword(''); }}
+            >
+              Limpiar
+            </button>
+            <button type="submit" className="btn-primary" disabled={!isConnected} style={{ flex: 2 }}>
+              CONECTAR
+            </button>
+          </div>
         </form>
       )}
 

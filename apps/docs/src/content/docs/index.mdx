@@ -1,0 +1,36 @@
+---
+title: InheronMUD - Códice del Mundo
+description: Documentación oficial del motor, lore y mecánicas de InheronMUD.
+template: splash
+hero:
+  tagline: Bienvenido al archivo central de Inheron. Aquí encontrarás todo lo necesario para entender el motor, explorar el lore y dominar las mecánicas del juego.
+  image:
+    file: ../../assets/houston.webp
+  actions:
+    - text: Explorar Manuales
+      link: /project/inheron-engine/guia-yaml/
+      icon: right-arrow
+      variant: primary
+    - text: Referencia de la API
+      link: /api/globals/
+      icon: external
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Secciones Principales
+
+<CardGrid stagger>
+	<Card title="Motor de Juego" icon="setting">
+		Documentación técnica del `Inheron Engine`. Clases, interfaces y sistemas de simulación.
+	</Card>
+	<Card title="Lore y Mundo" icon="open-book">
+		Historia, geografía y leyendas de Inheron. Desde Villaclara hasta las tierras baldías.
+	</Card>
+	<Card title="Mecánicas de Juego" icon="puzzle">
+		Guías detalladas sobre combate, habilidades, inventario y progresión.
+	</Card>
+	<Card title="Guía para Creadores" icon="pencil">
+		Aprende a crear áreas, NPCs y misiones utilizando el sistema YAML.
+	</Card>
+</CardGrid>
