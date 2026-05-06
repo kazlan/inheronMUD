@@ -73,62 +73,79 @@ export default function WorldMapOverlay({ isOpen, onClose, areaMap, visitedRooms
             overflow: 'auto', 
             background: 'rgba(0,0,0,0.4)', 
             borderRadius: '8px', 
-            padding: '3rem',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
+            padding: '1rem',
+            position: 'relative'
           }}>
-             <div className="map-grid-full" style={{
-               display: 'grid',
-               gridTemplateColumns: `repeat(${width}, 40px)`,
-               gridTemplateRows: `repeat(${height}, 40px)`,
-               gap: '8px',
-               position: 'relative'
-             }}>
-               {Array.from({ length: width * height }).map((_, i) => {
-                 const x = minX + (i % width);
-                 const y = minY + Math.floor(i / width);
-                 const room = rooms.find(r => r.x === x && r.y === y);
-                 const isVisited = room ? visitedRooms.includes(room.id) : false;
-                 const isCurrent = room?.id === currentRoomId;
+             <svg 
+               width={width * 80 + 200} 
+               height={height * 80 + 200} 
+               viewBox={`${minX * 80 - 100} ${minY * 80 - 100} ${width * 80 + 200} ${height * 80 + 200}`}
+               style={{ cursor: 'grab' }}
+             >
+                {/* Lines first */}
+                {rooms.map(room => {
+                  const isVisited = visitedRooms.includes(room.id);
+                  if (!isVisited) return null;
+                  return (room.exits || []).map((exit: any, idx: number) => {
+                    const target = areaMap[exit.targetRoomId];
+                    if (!target || !visitedRooms.includes(target.id)) return null;
+                    return (
+                      <line 
+                        key={`${room.id}-${idx}`}
+                        x1={room.x * 80} y1={room.y * 80}
+                        x2={target.x * 80} y2={target.y * 80}
+                        stroke="rgba(201, 168, 76, 0.3)"
+                        strokeWidth="2"
+                      />
+                    );
+                  });
+                })}
 
-                 if (!isVisited) return <div key={i} className="map-empty-cell" style={{ width: 40, height: 40, background: 'rgba(255,255,255,0.02)', borderRadius: '2px' }} />;
+                {/* Nodes */}
+                {rooms.map(room => {
+                  const isVisited = visitedRooms.includes(room.id);
+                  const isCurrent = room.id === currentRoomId;
+                  if (!isVisited) return null;
 
-                 return (
-                   <motion.div 
-                     key={i}
-                     className={`map-node ${isCurrent ? 'current' : ''} ${room?.isShop ? 'shop' : ''}`}
-                     whileHover={{ scale: 1.1, zIndex: 10 }}
-                     style={{
-                       width: 40,
-                       height: 40,
-                       background: isCurrent ? 'var(--gold)' : (room?.isShop ? 'var(--arcane-purple)' : 'rgba(201, 168, 76, 0.4)'),
-                       border: '1px solid var(--gold-dim)',
-                       borderRadius: '4px',
-                       display: 'flex',
-                       alignItems: 'center',
-                       justifyContent: 'center',
-                       cursor: 'help',
-                       boxShadow: isCurrent ? '0 0 15px var(--gold-glow)' : 'none',
-                       position: 'relative'
-                     }}
-                     title={room?.name}
-                   >
-                     {isCurrent && <div className="player-pulse" style={{ width: 10, height: 10, background: '#fff', borderRadius: '50%', animation: 'pulse 1.5s infinite' }} />}
-                     <div className="node-label" style={{ 
-                       position: 'absolute', 
-                       bottom: '-18px', 
-                       fontSize: '0.6rem', 
-                       whiteSpace: 'nowrap', 
-                       color: isCurrent ? 'var(--gold)' : 'var(--text-muted)',
-                       fontWeight: isCurrent ? 'bold' : 'normal'
-                     }}>
-                       {room?.name.split(' ').slice(0, 2).join(' ')}
-                     </div>
-                   </motion.div>
-                 );
-               })}
-             </div>
+                  let color = 'rgba(201, 168, 76, 0.4)';
+                  if (isCurrent) color = 'var(--gold)';
+                  else if (room.isShop) color = 'var(--arcane-purple)';
+
+                  return (
+                    <g key={room.id} style={{ cursor: 'pointer' }}>
+                      <rect 
+                        x={room.x * 80 - 15} 
+                        y={room.y * 80 - 15} 
+                        width="30" 
+                        height="30" 
+                        fill={color}
+                        stroke={isCurrent ? '#fff' : 'rgba(255,255,255,0.2)'}
+                        strokeWidth={isCurrent ? 2 : 1}
+                        rx="4"
+                      />
+                      <text 
+                        x={room.x * 80} 
+                        y={room.y * 80 + 30} 
+                        fill={isCurrent ? 'var(--gold)' : 'var(--text-muted)'}
+                        fontSize="10"
+                        textAnchor="middle"
+                        style={{ fontWeight: isCurrent ? 'bold' : 'normal', textShadow: '0 0 4px rgba(0,0,0,0.8)' }}
+                      >
+                        {room.name.split(' ').slice(0, 2).join(' ')}
+                      </text>
+                      {isCurrent && (
+                        <circle 
+                          cx={room.x * 80} cy={room.y * 80} r="4" 
+                          fill="#fff"
+                        >
+                          <animate attributeName="r" values="4;8;4" dur="2s" repeatCount="indefinite" />
+                          <animate attributeName="opacity" values="1;0;1" dur="2s" repeatCount="indefinite" />
+                        </circle>
+                      )}
+                    </g>
+                  );
+                })}
+             </svg>
           </div>
 
           <div className="map-footer" style={{ marginTop: '1.5rem', display: 'flex', gap: '2rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}>

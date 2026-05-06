@@ -26,6 +26,7 @@ const Play: React.FC = () => {
   const [showOverlay, setShowOverlay] = useState(true);
   const [isLifting, setIsLifting] = useState(false);
   const [selectedEntity, setSelectedEntity] = useState<ContextEntity | null>(null);
+  const [hasEntered, setHasEntered] = useState(false);
   const commandLineRef = useRef<CommandLineHandle>(null);
   const hotbarRef = useRef<HotbarHandle>(null);
 
@@ -119,6 +120,18 @@ const Play: React.FC = () => {
     }
   }, [isCharacterLoaded]);
 
+  React.useEffect(() => {
+    if (isCharacterLoaded && room && !hasEntered) {
+      setTimeout(() => setHasEntered(true), 500);
+    }
+  }, [isCharacterLoaded, room, hasEntered]);
+
+  React.useEffect(() => {
+    if (!isCharacterLoaded) {
+      setHasEntered(false);
+    }
+  }, [isCharacterLoaded]);
+
   const inCombat = targets && targets.length > 0;
 
   return (
@@ -181,9 +194,9 @@ const Play: React.FC = () => {
           onOpenPanel={setActivePanel} 
           room={room} 
           inCombat={inCombat} 
-          pulse={pulse}
           areaMap={areaMap}
           visitedRooms={visitedRooms}
+          isLoaded={hasEntered}
         />
       </div>
 

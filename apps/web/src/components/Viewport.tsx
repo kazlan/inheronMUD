@@ -24,6 +24,7 @@ const COLOR_MAP: Record<string, string> = {
 };
 
 function parseMudColors(text: string): string {
+  if (!text) return '';
   let parsed = text;
   for (const [color, hex] of Object.entries(COLOR_MAP)) {
     const openRe = new RegExp(`<${color}>`, 'gi');
@@ -55,6 +56,7 @@ const EXITS_RE = /\[\s*Exits:\s+([^\]]+)\]/i;
 const DIRECTIONS = new Set(['north','south','east','west','up','down','northeast','northwest','southeast','southwest','ne','nw','se','sw']);
 
 function parseExits(text: string): string[] | null {
+  if (!text) return null;
   // Strip ANSI/HTML first
   const clean = text.replace(/<[^>]+>/g, '').replace(/\x1b\[[0-9;]*m/g, '').trim();
   const m = EXITS_RE.exec(clean);
@@ -107,6 +109,7 @@ function extractColor(html: string): string | undefined {
 }
 
 function parseEntity(rawText: string): ContextEntity | null {
+  if (!rawText) return null;
   const html = ansiUp.ansi_to_html(rawText);
   const clean = html.replace(/<[^>]+>/g, '').replace(/\x1b\[[0-9;]*m/g, '');
   const m = ENTITY_RE.exec(clean);
@@ -150,7 +153,7 @@ function LogLine({
   npcs?: any[];
 }) {
   // 1. Exits line?
-  if (onCommand) {
+  if (onCommand && log.text) {
     const exits = parseExits(log.text);
     if (exits) return <ExitsLine exits={exits} onCommand={onCommand} />;
   }

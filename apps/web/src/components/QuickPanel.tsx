@@ -1,4 +1,5 @@
 import React from 'react';
+import Minimap from './Minimap';
 
 interface QuickPanelProps {
   onCommand: (cmd: string) => void;
@@ -8,43 +9,13 @@ interface QuickPanelProps {
   pulse?: any[];
   areaMap?: Record<string, any>;
   visitedRooms?: string[];
+  isLoaded?: boolean;
 }
 
-export default function QuickPanel({ onCommand, onOpenPanel, room, inCombat, pulse, areaMap = {}, visitedRooms = [] }: QuickPanelProps) {
+export default function QuickPanel({ onCommand, onOpenPanel, room, inCombat, pulse, areaMap = {}, visitedRooms = [], isLoaded = false }: QuickPanelProps) {
   const currentRoom = room?.room || room;
   const availableExits = currentRoom?.exits || [];
   const hasExit = (dir: string) => availableExits.some((e: any) => (e.direction || e).toLowerCase() === dir);
-
-  // Minimap 9x9 grid (Radius 4)
-  const currentCoord = areaMap[currentRoom?.id] || { x: 0, y: 0 };
-  
-  const mapCells = [];
-  for (let dy = -4; dy <= 4; dy++) {
-    for (let dx = -4; dx <= 4; dx++) {
-      const targetX = currentCoord.x + dx;
-      const targetY = currentCoord.y + dy;
-      
-      // Find room at these coordinates
-      const roomAtCoord = Object.values(areaMap).find(r => r.x === targetX && r.y === targetY);
-      const isVisited = roomAtCoord ? visitedRooms.includes(roomAtCoord.id) : false;
-      const isCurrent = roomAtCoord?.id === currentRoom?.id;
-      
-      let className = 'minimap-cell';
-      if (isCurrent) className += ' active';
-      else if (isVisited) {
-        className += ' visited';
-        if (roomAtCoord?.isShop) className += ' shop';
-      }
-
-      mapCells.push({ 
-        x: dx, 
-        y: dy, 
-        room: isVisited ? roomAtCoord : null,
-        className,
-        isCurrent
-      });
-    }
-  }
 
   return (
     <div className="glass-panel" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -65,32 +36,32 @@ export default function QuickPanel({ onCommand, onOpenPanel, room, inCombat, pul
         </button>
       </div>
 
-      <div className="minimap-container" style={{ padding: '0.5rem', background: 'rgba(0,0,0,0.3)', borderRadius: '4px', marginBottom: '1rem', position: 'relative' }}>
-        <div className="minimap-grid" style={{ 
-          display: 'grid',
-          gridTemplateColumns: 'repeat(9, 1fr)', 
-          width: '100%', 
-          maxWidth: '220px', 
-          margin: '0 auto', 
-          aspectRatio: '1',
-          gap: '1px'
-        }}>
-          {mapCells.map((cell, idx) => (
-            <div 
-              key={idx} 
-              className={cell.className}
-              title={cell.room?.name}
-              style={{ 
-                aspectRatio: '1',
-                background: cell.isCurrent ? 'var(--gold)' : (cell.room?.isShop ? 'var(--arcane-purple)' : (cell.room ? 'rgba(201, 168, 76, 0.3)' : 'rgba(255,255,255,0.03)')),
-                border: cell.room ? '1px solid rgba(201, 168, 76, 0.2)' : 'none',
-                borderRadius: '1px',
-                position: 'relative'
-              }}
-            >
-              {cell.isCurrent && <div className="player-dot" />}
-            </div>
-          ))}
+      <div className="minimap-container" style={{ padding: '0.5rem', background: 'rgba(0,0,0,0.1)', borderRadius: '4px', marginBottom: '1rem', position: 'relative' }}>
+        <Minimap 
+          areaMap={areaMap} 
+          currentRoomId={currentRoom?.id} 
+          visitedRooms={visitedRooms} 
+        />
+        <div 
+          className="map-loading-overlay"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: '#050505',
+            zIndex: 10,
+            borderRadius: '4px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '0.7rem',
+            color: 'var(--gold-dim)',
+            transition: 'opacity 1.5s ease',
+            opacity: isLoaded ? 0 : 1,
+            pointerEvents: isLoaded ? 'none' : 'auto',
+            border: '1px solid rgba(201, 168, 76, 0.1)'
+          }}
+        >
+          Sincronizando...
         </div>
       </div>
 

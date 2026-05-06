@@ -8,6 +8,7 @@ export interface RoomCoord {
   areaId: string;
   isShop: boolean;
   name: string;
+  exits: { direction: string; targetRoomId: string }[];
 }
 
 export class MapManager {
@@ -58,7 +59,8 @@ export class MapManager {
         y,
         areaId,
         isShop,
-        name: room.name
+        name: room.name,
+        exits: room.exits.map(e => ({ direction: e.direction, targetRoomId: e.targetRoomId }))
       };
 
       // Process exits

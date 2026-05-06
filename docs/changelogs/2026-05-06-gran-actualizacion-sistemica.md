@@ -6,8 +6,9 @@
 Se ha implementado una de las mecánicas más solicitadas: la navegación visual y la persistencia de exploración.
 - **MapManager**: Nuevo motor de grafos que realiza un recorrido BFS (Breadth-First Search) de las áreas para generar coordenadas 2D relativas.
 - **Persistencia de Visitas**: Los jugadores ahora guardan las salas que han explorado en la base de datos SQLite (`visitedRooms`).
-- **Minimapa 9x9**: Integrado en el `QuickPanel`, muestra la posición actual, habitaciones adyacentes, tipos de sala (tiendas, templos) y "Niebla de Guerra" (fog of war).
-- **WorldMapOverlay**: Un mapa de área completo a pantalla completa con leyenda, coordenadas y soporte para navegación táctica.
+- **Mapa de Nodos y Enlaces (Estilo Mudlet)**: El minimapa y el mapa mundial han pasado de una cuadrícula rígida a una representación SVG de nodos y líneas, reflejando fielmente las conexiones entre salas.
+- **WorldMapOverlay**: Un mapa de área completo a pantalla completa con leyenda, coordenadas, soporte para navegación táctica y visualización de conexiones.
+- **Entrada Dinámica al Mundo**: El panel de mapa ahora cuenta con un "Velo de Sincronización" (black overlay) que se retira con un fundido (fade-out) cinematográfico al entrar al juego.
 
 ## 2. Refactorización del Monitor de Combate y Pulso
 Se ha rediseñado la experiencia de combate para que sea puramente táctica y visual.
@@ -34,6 +35,7 @@ Mejoras significativas en la interacción con el mundo.
 ## 5. Infraestructura y Admin
 - **Administración**: Finalización del comando `refresh` para restaurar estados y herramientas de teletransporte mejoradas.
 - **Prisma/SQLite**: Actualización del esquema para soportar el historial de exploración.
+- **Corrección de Errores Críticos**: Resueltos fallos de `ReferenceError` y `TypeError` en el Viewport causados por ráfagas de datos iniciales incompletos durante el login.
 - **GitHub**: Sincronización completa de la rama de desarrollo con todos los cambios integrados.
 
 ---
