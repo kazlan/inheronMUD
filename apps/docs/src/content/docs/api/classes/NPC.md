@@ -10,7 +10,7 @@ title: "Class: NPC"
 
 # Class: NPC
 
-Defined in: [packages/engine/src/models/npc.model.ts:4](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/npc.model.ts#L4)
+Defined in: [packages/engine/src/models/npc.model.ts:4](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/npc.model.ts#L4)
 
 ## Extends
 
@@ -22,7 +22,7 @@ Defined in: [packages/engine/src/models/npc.model.ts:4](https://github.com/kazla
 
 > **new NPC**(`name`, `description`, `stats`, `behaviorId`, `roomId`, `id?`): `NPC`
 
-Defined in: [packages/engine/src/models/npc.model.ts:17](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/npc.model.ts#L17)
+Defined in: [packages/engine/src/models/npc.model.ts:17](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/npc.model.ts#L17)
 
 #### Parameters
 
@@ -64,7 +64,7 @@ Defined in: [packages/engine/src/models/npc.model.ts:17](https://github.com/kazl
 
 > **activeEffects**: `any`[] = `[]`
 
-Defined in: [packages/engine/src/models/entity.model.ts:8](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/entity.model.ts#L8)
+Defined in: [packages/engine/src/models/entity.model.ts:8](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/entity.model.ts#L8)
 
 #### Inherited from
 
@@ -76,7 +76,7 @@ Defined in: [packages/engine/src/models/entity.model.ts:8](https://github.com/ka
 
 > **aiState**: `Record`\<`string`, `any`\> = `{}`
 
-Defined in: [packages/engine/src/models/npc.model.ts:12](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/npc.model.ts#L12)
+Defined in: [packages/engine/src/models/npc.model.ts:12](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/npc.model.ts#L12)
 
 ***
 
@@ -84,7 +84,7 @@ Defined in: [packages/engine/src/models/npc.model.ts:12](https://github.com/kazl
 
 > `optional` **areaId?**: `string`
 
-Defined in: [packages/engine/src/models/npc.model.ts:15](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/npc.model.ts#L15)
+Defined in: [packages/engine/src/models/npc.model.ts:15](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/npc.model.ts#L15)
 
 ***
 
@@ -92,7 +92,7 @@ Defined in: [packages/engine/src/models/npc.model.ts:15](https://github.com/kazl
 
 > **behaviorId**: `string`
 
-Defined in: [packages/engine/src/models/npc.model.ts:9](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/npc.model.ts#L9)
+Defined in: [packages/engine/src/models/npc.model.ts:9](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/npc.model.ts#L9)
 
 ***
 
@@ -100,7 +100,7 @@ Defined in: [packages/engine/src/models/npc.model.ts:9](https://github.com/kazla
 
 > **description**: `string`
 
-Defined in: [packages/engine/src/models/entity.model.ts:6](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/entity.model.ts#L6)
+Defined in: [packages/engine/src/models/entity.model.ts:6](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/entity.model.ts#L6)
 
 #### Inherited from
 
@@ -112,7 +112,7 @@ Defined in: [packages/engine/src/models/entity.model.ts:6](https://github.com/ka
 
 > **enemies**: `string`[] = `[]`
 
-Defined in: [packages/engine/src/models/npc.model.ts:14](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/npc.model.ts#L14)
+Defined in: [packages/engine/src/models/npc.model.ts:14](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/npc.model.ts#L14)
 
 ***
 
@@ -120,7 +120,7 @@ Defined in: [packages/engine/src/models/npc.model.ts:14](https://github.com/kazl
 
 > **equipment**: `Record`\<`string`, `string`\> = `{}`
 
-Defined in: [packages/engine/src/models/npc.model.ts:8](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/npc.model.ts#L8)
+Defined in: [packages/engine/src/models/npc.model.ts:8](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/npc.model.ts#L8)
 
 ***
 
@@ -128,7 +128,7 @@ Defined in: [packages/engine/src/models/npc.model.ts:8](https://github.com/kazla
 
 > **flags**: `string`[] = `[]`
 
-Defined in: [packages/engine/src/models/npc.model.ts:11](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/npc.model.ts#L11)
+Defined in: [packages/engine/src/models/npc.model.ts:11](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/npc.model.ts#L11)
 
 ***
 
@@ -136,7 +136,7 @@ Defined in: [packages/engine/src/models/npc.model.ts:11](https://github.com/kazl
 
 > `readonly` **id**: `string`
 
-Defined in: [packages/engine/src/models/entity.model.ts:4](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/entity.model.ts#L4)
+Defined in: [packages/engine/src/models/entity.model.ts:4](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/entity.model.ts#L4)
 
 #### Inherited from
 
@@ -148,7 +148,7 @@ Defined in: [packages/engine/src/models/entity.model.ts:4](https://github.com/ka
 
 > **inventory**: `string`[] = `[]`
 
-Defined in: [packages/engine/src/models/npc.model.ts:7](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/npc.model.ts#L7)
+Defined in: [packages/engine/src/models/npc.model.ts:7](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/npc.model.ts#L7)
 
 ***
 
@@ -156,7 +156,7 @@ Defined in: [packages/engine/src/models/npc.model.ts:7](https://github.com/kazla
 
 > **level**: `number` = `1`
 
-Defined in: [packages/engine/src/models/npc.model.ts:10](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/npc.model.ts#L10)
+Defined in: [packages/engine/src/models/npc.model.ts:10](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/npc.model.ts#L10)
 
 ***
 
@@ -164,7 +164,7 @@ Defined in: [packages/engine/src/models/npc.model.ts:10](https://github.com/kazl
 
 > **metadata**: `Record`\<`string`, `any`\> = `{}`
 
-Defined in: [packages/engine/src/models/npc.model.ts:13](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/npc.model.ts#L13)
+Defined in: [packages/engine/src/models/npc.model.ts:13](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/npc.model.ts#L13)
 
 #### Overrides
 
@@ -176,7 +176,7 @@ Defined in: [packages/engine/src/models/npc.model.ts:13](https://github.com/kazl
 
 > **name**: `string`
 
-Defined in: [packages/engine/src/models/entity.model.ts:5](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/entity.model.ts#L5)
+Defined in: [packages/engine/src/models/entity.model.ts:5](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/entity.model.ts#L5)
 
 #### Inherited from
 
@@ -188,7 +188,7 @@ Defined in: [packages/engine/src/models/entity.model.ts:5](https://github.com/ka
 
 > **roomId**: `string`
 
-Defined in: [packages/engine/src/models/npc.model.ts:6](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/npc.model.ts#L6)
+Defined in: [packages/engine/src/models/npc.model.ts:6](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/npc.model.ts#L6)
 
 ***
 
@@ -196,7 +196,7 @@ Defined in: [packages/engine/src/models/npc.model.ts:6](https://github.com/kazla
 
 > **stats**: [`Stats`](../interfaces/Stats.md)
 
-Defined in: [packages/engine/src/models/npc.model.ts:5](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/npc.model.ts#L5)
+Defined in: [packages/engine/src/models/npc.model.ts:5](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/npc.model.ts#L5)
 
 ## Methods
 
@@ -204,7 +204,7 @@ Defined in: [packages/engine/src/models/npc.model.ts:5](https://github.com/kazla
 
 > **getXpReward**(): `number`
 
-Defined in: [packages/engine/src/models/npc.model.ts:31](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/npc.model.ts#L31)
+Defined in: [packages/engine/src/models/npc.model.ts:31](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/npc.model.ts#L31)
 
 #### Returns
 
@@ -216,7 +216,7 @@ Defined in: [packages/engine/src/models/npc.model.ts:31](https://github.com/kazl
 
 > **toJSON**(): `object`
 
-Defined in: [packages/engine/src/models/npc.model.ts:35](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/npc.model.ts#L35)
+Defined in: [packages/engine/src/models/npc.model.ts:35](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/npc.model.ts#L35)
 
 Serializes the entity to a plain object.
 

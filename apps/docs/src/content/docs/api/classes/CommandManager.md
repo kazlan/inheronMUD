@@ -10,7 +10,7 @@ title: "Class: CommandManager"
 
 # Class: CommandManager
 
-Defined in: [packages/engine/src/core/command-manager.ts:5](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/command-manager.ts#L5)
+Defined in: [packages/engine/src/core/command-manager.ts:5](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/command-manager.ts#L5)
 
 ## Constructors
 
@@ -18,7 +18,7 @@ Defined in: [packages/engine/src/core/command-manager.ts:5](https://github.com/k
 
 > **new CommandManager**(`engine`): `CommandManager`
 
-Defined in: [packages/engine/src/core/command-manager.ts:6](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/command-manager.ts#L6)
+Defined in: [packages/engine/src/core/command-manager.ts:6](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/command-manager.ts#L6)
 
 #### Parameters
 
@@ -32,11 +32,49 @@ Defined in: [packages/engine/src/core/command-manager.ts:6](https://github.com/k
 
 ## Methods
 
+### admin()
+
+> **admin**(`playerId`, `cmd`, `args`): `object`
+
+Defined in: [packages/engine/src/core/command-manager.ts:8](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/command-manager.ts#L8)
+
+#### Parameters
+
+##### playerId
+
+`string`
+
+##### cmd
+
+`string`
+
+##### args
+
+`string`[]
+
+#### Returns
+
+`object`
+
+##### data?
+
+> `optional` **data?**: `any`
+
+##### message
+
+> **message**: `string`
+
+##### success
+
+> **success**: `boolean`
+
+***
+
 ### buy()
 
 > **buy**(`playerId`, `itemName`, `targetName?`): `object`
 
-Defined in: [packages/engine/src/core/command-manager.ts:751](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/command-manager.ts#L751)
+Defined in: [packages/engine/src/core/command-manager.ts:775](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/command-manager.ts#L775)
 
 #### Parameters
 
@@ -70,7 +108,7 @@ Defined in: [packages/engine/src/core/command-manager.ts:751](https://github.com
 
 > **cast**(`playerId`, `skillName`, `targetName?`): `object`
 
-Defined in: [packages/engine/src/core/command-manager.ts:841](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/command-manager.ts#L841)
+Defined in: [packages/engine/src/core/command-manager.ts:865](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/command-manager.ts#L865)
 
 #### Parameters
 
@@ -108,7 +146,7 @@ Defined in: [packages/engine/src/core/command-manager.ts:841](https://github.com
 
 > **drop**(`playerId`, `itemName`): `object`
 
-Defined in: [packages/engine/src/core/command-manager.ts:378](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/command-manager.ts#L378)
+Defined in: [packages/engine/src/core/command-manager.ts:402](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/command-manager.ts#L402)
 
 #### Parameters
 
@@ -138,7 +176,7 @@ Defined in: [packages/engine/src/core/command-manager.ts:378](https://github.com
 
 > **equip**(`playerId`, `itemName`): `object`
 
-Defined in: [packages/engine/src/core/command-manager.ts:424](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/command-manager.ts#L424)
+Defined in: [packages/engine/src/core/command-manager.ts:448](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/command-manager.ts#L448)
 
 #### Parameters
 
@@ -172,7 +210,7 @@ Defined in: [packages/engine/src/core/command-manager.ts:424](https://github.com
 
 > **flee**(`playerId`): `object`
 
-Defined in: [packages/engine/src/core/command-manager.ts:665](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/command-manager.ts#L665)
+Defined in: [packages/engine/src/core/command-manager.ts:689](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/command-manager.ts#L689)
 
 #### Parameters
 
@@ -202,7 +240,7 @@ Defined in: [packages/engine/src/core/command-manager.ts:665](https://github.com
 
 > **get**(`playerId`, `itemName`): `object`
 
-Defined in: [packages/engine/src/core/command-manager.ts:352](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/command-manager.ts#L352)
+Defined in: [packages/engine/src/core/command-manager.ts:376](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/command-manager.ts#L376)
 
 #### Parameters
 
@@ -232,7 +270,7 @@ Defined in: [packages/engine/src/core/command-manager.ts:352](https://github.com
 
 > **getEquipment**(`playerId`): `any`
 
-Defined in: [packages/engine/src/core/command-manager.ts:412](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/command-manager.ts#L412)
+Defined in: [packages/engine/src/core/command-manager.ts:436](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/command-manager.ts#L436)
 
 #### Parameters
 
@@ -250,7 +288,7 @@ Defined in: [packages/engine/src/core/command-manager.ts:412](https://github.com
 
 > **getFormattedCronica**(`playerId`): `object`
 
-Defined in: [packages/engine/src/core/command-manager.ts:523](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/command-manager.ts#L523)
+Defined in: [packages/engine/src/core/command-manager.ts:547](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/command-manager.ts#L547)
 
 #### Parameters
 
@@ -276,7 +314,7 @@ Defined in: [packages/engine/src/core/command-manager.ts:523](https://github.com
 
 > **getInventory**(`playerId`): `any`[]
 
-Defined in: [packages/engine/src/core/command-manager.ts:403](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/command-manager.ts#L403)
+Defined in: [packages/engine/src/core/command-manager.ts:427](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/command-manager.ts#L427)
 
 #### Parameters
 
@@ -294,7 +332,7 @@ Defined in: [packages/engine/src/core/command-manager.ts:403](https://github.com
 
 > **getScore**(`playerId`): `any`
 
-Defined in: [packages/engine/src/core/command-manager.ts:488](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/command-manager.ts#L488)
+Defined in: [packages/engine/src/core/command-manager.ts:512](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/command-manager.ts#L512)
 
 #### Parameters
 
@@ -312,7 +350,7 @@ Defined in: [packages/engine/src/core/command-manager.ts:488](https://github.com
 
 > **getSkills**(`playerId`): `object`
 
-Defined in: [packages/engine/src/core/command-manager.ts:821](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/command-manager.ts#L821)
+Defined in: [packages/engine/src/core/command-manager.ts:845](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/command-manager.ts#L845)
 
 #### Parameters
 
@@ -342,7 +380,7 @@ Defined in: [packages/engine/src/core/command-manager.ts:821](https://github.com
 
 > **heal**(`playerId`): `object`
 
-Defined in: [packages/engine/src/core/command-manager.ts:696](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/command-manager.ts#L696)
+Defined in: [packages/engine/src/core/command-manager.ts:720](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/command-manager.ts#L720)
 
 #### Parameters
 
@@ -368,7 +406,7 @@ Defined in: [packages/engine/src/core/command-manager.ts:696](https://github.com
 
 > **interact**(`playerId`, `targetName`, `verb?`): `object`
 
-Defined in: [packages/engine/src/core/command-manager.ts:234](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/command-manager.ts#L234)
+Defined in: [packages/engine/src/core/command-manager.ts:258](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/command-manager.ts#L258)
 
 #### Parameters
 
@@ -410,7 +448,7 @@ Defined in: [packages/engine/src/core/command-manager.ts:234](https://github.com
 
 > **kill**(`playerId`, `targetName`): `object`
 
-Defined in: [packages/engine/src/core/command-manager.ts:550](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/command-manager.ts#L550)
+Defined in: [packages/engine/src/core/command-manager.ts:574](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/command-manager.ts#L574)
 
 #### Parameters
 
@@ -444,7 +482,7 @@ Defined in: [packages/engine/src/core/command-manager.ts:550](https://github.com
 
 > **list**(`playerId`, `targetName?`): `object`
 
-Defined in: [packages/engine/src/core/command-manager.ts:727](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/command-manager.ts#L727)
+Defined in: [packages/engine/src/core/command-manager.ts:751](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/command-manager.ts#L751)
 
 #### Parameters
 
@@ -478,7 +516,7 @@ Defined in: [packages/engine/src/core/command-manager.ts:727](https://github.com
 
 > **look**(`playerId`, `targetName?`): `any`
 
-Defined in: [packages/engine/src/core/command-manager.ts:18](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/command-manager.ts#L18)
+Defined in: [packages/engine/src/core/command-manager.ts:42](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/command-manager.ts#L42)
 
 #### Parameters
 
@@ -500,7 +538,7 @@ Defined in: [packages/engine/src/core/command-manager.ts:18](https://github.com/
 
 > **move**(`playerId`, `direction`): `object`
 
-Defined in: [packages/engine/src/core/command-manager.ts:120](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/command-manager.ts#L120)
+Defined in: [packages/engine/src/core/command-manager.ts:144](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/command-manager.ts#L144)
 
 #### Parameters
 
@@ -534,7 +572,7 @@ Defined in: [packages/engine/src/core/command-manager.ts:120](https://github.com
 
 > **open**(`playerId`, `direction`): `object`
 
-Defined in: [packages/engine/src/core/command-manager.ts:182](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/command-manager.ts#L182)
+Defined in: [packages/engine/src/core/command-manager.ts:206](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/command-manager.ts#L206)
 
 #### Parameters
 
@@ -564,7 +602,7 @@ Defined in: [packages/engine/src/core/command-manager.ts:182](https://github.com
 
 > **sell**(`playerId`, `itemName`, `targetName?`): `object`
 
-Defined in: [packages/engine/src/core/command-manager.ts:787](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/command-manager.ts#L787)
+Defined in: [packages/engine/src/core/command-manager.ts:811](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/command-manager.ts#L811)
 
 #### Parameters
 
@@ -598,7 +636,7 @@ Defined in: [packages/engine/src/core/command-manager.ts:787](https://github.com
 
 > **talk**(`playerId`, `targetName`): `object`
 
-Defined in: [packages/engine/src/core/command-manager.ts:591](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/command-manager.ts#L591)
+Defined in: [packages/engine/src/core/command-manager.ts:615](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/command-manager.ts#L615)
 
 #### Parameters
 
@@ -632,7 +670,7 @@ Defined in: [packages/engine/src/core/command-manager.ts:591](https://github.com
 
 > **unequip**(`playerId`, `slotOrName`): `object`
 
-Defined in: [packages/engine/src/core/command-manager.ts:458](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/command-manager.ts#L458)
+Defined in: [packages/engine/src/core/command-manager.ts:482](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/command-manager.ts#L482)
 
 #### Parameters
 

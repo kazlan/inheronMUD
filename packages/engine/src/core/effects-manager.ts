@@ -48,6 +48,15 @@ export class EffectsManager {
                 this.engine.emit('combat_message', entity.id, [`\n${effect.expireMessage}`]);
               }
             }
+            if (effect.echoEffect) {
+              const echo = { ...effect.echoEffect, startTime: now, id: effect.echoEffect.id || `eff_${now}_${Math.random()}` };
+              remainingNativeEffects.push(echo);
+              if (effect.echoMessage && (entity as any).roomId) {
+                if (this.engine.entities.getPlayer(entity.id)) {
+                  this.engine.emit('combat_message', entity.id, [`\n<magenta>${effect.echoMessage}</magenta>`]);
+                }
+              }
+            }
           }
         }
 
@@ -141,6 +150,17 @@ export class EffectsManager {
         p.hpCurrent = Math.max((p.hpCurrent || 0) - damage, 0);
         this.engine.emit('combat_message', p.id, [`\n<red>Sufres ${damage} de daño por ${effect.name}.</red>`]);
         this.engine.savePlayer(p.id);
+      }
+    }
+  }
+
+  public extendEffects(entityId: string, durationMs: number, filter?: (eff: any) => boolean): void {
+    const entity = this.engine.entities.getPlayer(entityId) || this.engine.entities.getNPC(entityId);
+    if (!entity || !entity.activeEffects) return;
+
+    for (const effect of entity.activeEffects) {
+      if (effect.duration && (!filter || filter(effect))) {
+        effect.duration += durationMs;
       }
     }
   }

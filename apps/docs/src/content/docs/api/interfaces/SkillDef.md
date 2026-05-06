@@ -10,7 +10,7 @@ title: "Interface: SkillDef"
 
 # Interface: SkillDef
 
-Defined in: [packages/engine/src/core/skill-manager.ts:9](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/skill-manager.ts#L9)
+Defined in: [packages/engine/src/core/skill-manager.ts:9](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/skill-manager.ts#L9)
 
 ## Properties
 
@@ -18,7 +18,7 @@ Defined in: [packages/engine/src/core/skill-manager.ts:9](https://github.com/kaz
 
 > **cooldown**: `number`
 
-Defined in: [packages/engine/src/core/skill-manager.ts:14](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/skill-manager.ts#L14)
+Defined in: [packages/engine/src/core/skill-manager.ts:14](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/skill-manager.ts#L14)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/engine/src/core/skill-manager.ts:14](https://github.com/ka
 
 > **description**: `string`
 
-Defined in: [packages/engine/src/core/skill-manager.ts:12](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/skill-manager.ts#L12)
+Defined in: [packages/engine/src/core/skill-manager.ts:12](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/skill-manager.ts#L12)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [packages/engine/src/core/skill-manager.ts:12](https://github.com/ka
 
 > `optional` **effects?**: `any`[]
 
-Defined in: [packages/engine/src/core/skill-manager.ts:16](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/skill-manager.ts#L16)
+Defined in: [packages/engine/src/core/skill-manager.ts:16](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/skill-manager.ts#L16)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [packages/engine/src/core/skill-manager.ts:16](https://github.com/ka
 
 > **energyCost**: `number`
 
-Defined in: [packages/engine/src/core/skill-manager.ts:13](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/skill-manager.ts#L13)
+Defined in: [packages/engine/src/core/skill-manager.ts:13](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/skill-manager.ts#L13)
 
 ***
 
@@ -50,7 +50,7 @@ Defined in: [packages/engine/src/core/skill-manager.ts:13](https://github.com/ka
 
 > **execute**: (`engine`, `casterId`, `targetId?`) => [`SkillResult`](SkillResult.md)
 
-Defined in: [packages/engine/src/core/skill-manager.ts:17](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/skill-manager.ts#L17)
+Defined in: [packages/engine/src/core/skill-manager.ts:17](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/skill-manager.ts#L17)
 
 #### Parameters
 
@@ -76,7 +76,7 @@ Defined in: [packages/engine/src/core/skill-manager.ts:17](https://github.com/ka
 
 > **id**: `string`
 
-Defined in: [packages/engine/src/core/skill-manager.ts:10](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/skill-manager.ts#L10)
+Defined in: [packages/engine/src/core/skill-manager.ts:10](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/skill-manager.ts#L10)
 
 ***
 
@@ -84,7 +84,7 @@ Defined in: [packages/engine/src/core/skill-manager.ts:10](https://github.com/ka
 
 > **name**: `string`
 
-Defined in: [packages/engine/src/core/skill-manager.ts:11](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/skill-manager.ts#L11)
+Defined in: [packages/engine/src/core/skill-manager.ts:11](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/skill-manager.ts#L11)
 
 ***
 
@@ -92,4 +92,4 @@ Defined in: [packages/engine/src/core/skill-manager.ts:11](https://github.com/ka
 
 > **type**: `"damage"` \| `"heal"` \| `"buff"` \| `"utility"`
 
-Defined in: [packages/engine/src/core/skill-manager.ts:15](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/skill-manager.ts#L15)
+Defined in: [packages/engine/src/core/skill-manager.ts:15](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/skill-manager.ts#L15)

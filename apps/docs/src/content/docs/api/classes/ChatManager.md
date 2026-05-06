@@ -10,7 +10,7 @@ title: "Class: ChatManager"
 
 # Class: ChatManager
 
-Defined in: [packages/engine/src/core/chat-manager.ts:4](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/chat-manager.ts#L4)
+Defined in: [packages/engine/src/core/chat-manager.ts:4](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/chat-manager.ts#L4)
 
 ## Constructors
 
@@ -18,7 +18,7 @@ Defined in: [packages/engine/src/core/chat-manager.ts:4](https://github.com/kazl
 
 > **new ChatManager**(`engine`): `ChatManager`
 
-Defined in: [packages/engine/src/core/chat-manager.ts:7](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/chat-manager.ts#L7)
+Defined in: [packages/engine/src/core/chat-manager.ts:7](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/chat-manager.ts#L7)
 
 #### Parameters
 
@@ -36,7 +36,7 @@ Defined in: [packages/engine/src/core/chat-manager.ts:7](https://github.com/kazl
 
 > **channelMessage**(`playerId`, `channelName`, `message`): `Promise`\<`any`\>
 
-Defined in: [packages/engine/src/core/chat-manager.ts:156](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/chat-manager.ts#L156)
+Defined in: [packages/engine/src/core/chat-manager.ts:156](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/chat-manager.ts#L156)
 
 #### Parameters
 
@@ -62,7 +62,7 @@ Defined in: [packages/engine/src/core/chat-manager.ts:156](https://github.com/ka
 
 > **processAdminCommand**(`playerId`, `args`): `Promise`\<`any`\>
 
-Defined in: [packages/engine/src/core/chat-manager.ts:89](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/chat-manager.ts#L89)
+Defined in: [packages/engine/src/core/chat-manager.ts:89](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/chat-manager.ts#L89)
 
 #### Parameters
 
@@ -84,7 +84,7 @@ Defined in: [packages/engine/src/core/chat-manager.ts:89](https://github.com/kaz
 
 > **say**(`playerId`, `message`): `any`
 
-Defined in: [packages/engine/src/core/chat-manager.ts:11](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/chat-manager.ts#L11)
+Defined in: [packages/engine/src/core/chat-manager.ts:11](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/chat-manager.ts#L11)
 
 #### Parameters
 
@@ -106,7 +106,7 @@ Defined in: [packages/engine/src/core/chat-manager.ts:11](https://github.com/kaz
 
 > **tell**(`playerId`, `targetName`, `message`): `any`
 
-Defined in: [packages/engine/src/core/chat-manager.ts:39](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/chat-manager.ts#L39)
+Defined in: [packages/engine/src/core/chat-manager.ts:39](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/chat-manager.ts#L39)
 
 #### Parameters
 
@@ -132,7 +132,7 @@ Defined in: [packages/engine/src/core/chat-manager.ts:39](https://github.com/kaz
 
 > **yell**(`playerId`, `message`): `any`
 
-Defined in: [packages/engine/src/core/chat-manager.ts:74](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/chat-manager.ts#L74)
+Defined in: [packages/engine/src/core/chat-manager.ts:74](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/chat-manager.ts#L74)
 
 #### Parameters
 

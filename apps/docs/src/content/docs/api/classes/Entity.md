@@ -10,7 +10,7 @@ title: "Abstract Class: Entity"
 
 # Abstract Class: Entity
 
-Defined in: [packages/engine/src/models/entity.model.ts:3](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/entity.model.ts#L3)
+Defined in: [packages/engine/src/models/entity.model.ts:3](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/entity.model.ts#L3)
 
 ## Extended by
 
@@ -25,7 +25,7 @@ Defined in: [packages/engine/src/models/entity.model.ts:3](https://github.com/ka
 
 > **new Entity**(`name`, `description?`, `id?`): `Entity`
 
-Defined in: [packages/engine/src/models/entity.model.ts:10](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/entity.model.ts#L10)
+Defined in: [packages/engine/src/models/entity.model.ts:10](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/entity.model.ts#L10)
 
 #### Parameters
 
@@ -51,7 +51,7 @@ Defined in: [packages/engine/src/models/entity.model.ts:10](https://github.com/k
 
 > **activeEffects**: `any`[] = `[]`
 
-Defined in: [packages/engine/src/models/entity.model.ts:8](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/entity.model.ts#L8)
+Defined in: [packages/engine/src/models/entity.model.ts:8](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/entity.model.ts#L8)
 
 ***
 
@@ -59,7 +59,7 @@ Defined in: [packages/engine/src/models/entity.model.ts:8](https://github.com/ka
 
 > **description**: `string`
 
-Defined in: [packages/engine/src/models/entity.model.ts:6](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/entity.model.ts#L6)
+Defined in: [packages/engine/src/models/entity.model.ts:6](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/entity.model.ts#L6)
 
 ***
 
@@ -67,7 +67,7 @@ Defined in: [packages/engine/src/models/entity.model.ts:6](https://github.com/ka
 
 > `readonly` **id**: `string`
 
-Defined in: [packages/engine/src/models/entity.model.ts:4](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/entity.model.ts#L4)
+Defined in: [packages/engine/src/models/entity.model.ts:4](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/entity.model.ts#L4)
 
 ***
 
@@ -75,7 +75,7 @@ Defined in: [packages/engine/src/models/entity.model.ts:4](https://github.com/ka
 
 > **metadata**: `Record`\<`string`, `any`\> = `{}`
 
-Defined in: [packages/engine/src/models/entity.model.ts:7](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/entity.model.ts#L7)
+Defined in: [packages/engine/src/models/entity.model.ts:7](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/entity.model.ts#L7)
 
 ***
 
@@ -83,7 +83,7 @@ Defined in: [packages/engine/src/models/entity.model.ts:7](https://github.com/ka
 
 > **name**: `string`
 
-Defined in: [packages/engine/src/models/entity.model.ts:5](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/entity.model.ts#L5)
+Defined in: [packages/engine/src/models/entity.model.ts:5](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/entity.model.ts#L5)
 
 ## Methods
 
@@ -91,7 +91,7 @@ Defined in: [packages/engine/src/models/entity.model.ts:5](https://github.com/ka
 
 > **toJSON**(): `object`
 
-Defined in: [packages/engine/src/models/entity.model.ts:19](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/entity.model.ts#L19)
+Defined in: [packages/engine/src/models/entity.model.ts:19](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/entity.model.ts#L19)
 
 Serializes the entity to a plain object.
 

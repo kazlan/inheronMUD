@@ -19,6 +19,7 @@ export default function useMUD(url: string) {
     targets: [],
     room: null,
     isConnected: false,
+    pulse: [],
   });
 
   const socketRef = useRef<WebSocket | null>(null);
@@ -92,6 +93,7 @@ export default function useMUD(url: string) {
         case 'effects': return { ...prev, effects: data };
         case 'targets': return { ...prev, targets: data };
         case 'room': return { ...prev, room: data };
+        case 'pulse': return { ...prev, pulse: data };
         default: return prev;
       }
     });
@@ -102,10 +104,6 @@ export default function useMUD(url: string) {
       case 'INIT':
         addLog('system', msg.message || 'Conexión establecida.', true);
         if (msg.data) handleData('room', msg.data);
-        // Request initial data now that we are in game
-        sendCommand('score');
-        sendCommand('cronica');
-        sendCommand('inventory');
         break;
       case 'SYSTEM':
         addLog('system', msg.message, true);
@@ -115,6 +113,7 @@ export default function useMUD(url: string) {
           msg.combatLog.forEach((line: string) => addLog('combat', line, true));
         }
         if (msg.data) handleData('targets', msg.data);
+        if (msg.pulse) handleData('pulse', msg.pulse);
         break;
       case 'CHAT':
         const { data } = msg;
@@ -188,7 +187,8 @@ export default function useMUD(url: string) {
           equipment: {},
           quests: [],
           effects: [],
-          targets: []
+          targets: [],
+          pulse: []
         }));
         addLog('system', 'Desconectado del servidor.');
       };

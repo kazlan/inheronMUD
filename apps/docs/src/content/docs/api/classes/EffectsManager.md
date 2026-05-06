@@ -10,7 +10,7 @@ title: "Class: EffectsManager"
 
 # Class: EffectsManager
 
-Defined in: [packages/engine/src/core/effects-manager.ts:4](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/effects-manager.ts#L4)
+Defined in: [packages/engine/src/core/effects-manager.ts:4](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/effects-manager.ts#L4)
 
 ## Constructors
 
@@ -18,7 +18,7 @@ Defined in: [packages/engine/src/core/effects-manager.ts:4](https://github.com/k
 
 > **new EffectsManager**(`engine`): `EffectsManager`
 
-Defined in: [packages/engine/src/core/effects-manager.ts:5](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/effects-manager.ts#L5)
+Defined in: [packages/engine/src/core/effects-manager.ts:5](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/effects-manager.ts#L5)
 
 #### Parameters
 
@@ -36,7 +36,7 @@ Defined in: [packages/engine/src/core/effects-manager.ts:5](https://github.com/k
 
 > **tick**(`now`): `void`
 
-Defined in: [packages/engine/src/core/effects-manager.ts:7](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/effects-manager.ts#L7)
+Defined in: [packages/engine/src/core/effects-manager.ts:7](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/effects-manager.ts#L7)
 
 #### Parameters
 

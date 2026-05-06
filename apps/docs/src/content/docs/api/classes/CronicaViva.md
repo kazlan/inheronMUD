@@ -10,7 +10,7 @@ title: "Class: CronicaViva"
 
 # Class: CronicaViva
 
-Defined in: [packages/engine/src/models/cronica-viva.model.ts:3](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/cronica-viva.model.ts#L3)
+Defined in: [packages/engine/src/models/cronica-viva.model.ts:3](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/cronica-viva.model.ts#L3)
 
 ## Constructors
 
@@ -18,7 +18,7 @@ Defined in: [packages/engine/src/models/cronica-viva.model.ts:3](https://github.
 
 > **new CronicaViva**(`playerId`): `CronicaViva`
 
-Defined in: [packages/engine/src/models/cronica-viva.model.ts:11](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/cronica-viva.model.ts#L11)
+Defined in: [packages/engine/src/models/cronica-viva.model.ts:11](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/cronica-viva.model.ts#L11)
 
 #### Parameters
 
@@ -36,7 +36,7 @@ Defined in: [packages/engine/src/models/cronica-viva.model.ts:11](https://github
 
 > **activeArcs**: `Map`\<`string`, [`StoryArc`](../interfaces/StoryArc.md)\>
 
-Defined in: [packages/engine/src/models/cronica-viva.model.ts:7](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/cronica-viva.model.ts#L7)
+Defined in: [packages/engine/src/models/cronica-viva.model.ts:7](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/cronica-viva.model.ts#L7)
 
 ***
 
@@ -44,7 +44,7 @@ Defined in: [packages/engine/src/models/cronica-viva.model.ts:7](https://github.
 
 > **activeQuests**: `Map`\<`string`, [`Quest`](../interfaces/Quest.md)\>
 
-Defined in: [packages/engine/src/models/cronica-viva.model.ts:5](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/cronica-viva.model.ts#L5)
+Defined in: [packages/engine/src/models/cronica-viva.model.ts:5](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/cronica-viva.model.ts#L5)
 
 ***
 
@@ -52,7 +52,7 @@ Defined in: [packages/engine/src/models/cronica-viva.model.ts:5](https://github.
 
 > **completedQuests**: `string`[] = `[]`
 
-Defined in: [packages/engine/src/models/cronica-viva.model.ts:6](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/cronica-viva.model.ts#L6)
+Defined in: [packages/engine/src/models/cronica-viva.model.ts:6](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/cronica-viva.model.ts#L6)
 
 ***
 
@@ -60,7 +60,7 @@ Defined in: [packages/engine/src/models/cronica-viva.model.ts:6](https://github.
 
 > **memoryFlags**: `Set`\<`string`\>
 
-Defined in: [packages/engine/src/models/cronica-viva.model.ts:8](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/cronica-viva.model.ts#L8)
+Defined in: [packages/engine/src/models/cronica-viva.model.ts:8](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/cronica-viva.model.ts#L8)
 
 ***
 
@@ -68,7 +68,7 @@ Defined in: [packages/engine/src/models/cronica-viva.model.ts:8](https://github.
 
 > **playerId**: `string`
 
-Defined in: [packages/engine/src/models/cronica-viva.model.ts:4](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/cronica-viva.model.ts#L4)
+Defined in: [packages/engine/src/models/cronica-viva.model.ts:4](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/cronica-viva.model.ts#L4)
 
 ***
 
@@ -76,7 +76,7 @@ Defined in: [packages/engine/src/models/cronica-viva.model.ts:4](https://github.
 
 > **variables**: `Map`\<`string`, `string`\>
 
-Defined in: [packages/engine/src/models/cronica-viva.model.ts:9](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/cronica-viva.model.ts#L9)
+Defined in: [packages/engine/src/models/cronica-viva.model.ts:9](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/cronica-viva.model.ts#L9)
 
 ## Methods
 
@@ -84,7 +84,7 @@ Defined in: [packages/engine/src/models/cronica-viva.model.ts:9](https://github.
 
 > **addQuest**(`quest`): `void`
 
-Defined in: [packages/engine/src/models/cronica-viva.model.ts:23](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/cronica-viva.model.ts#L23)
+Defined in: [packages/engine/src/models/cronica-viva.model.ts:23](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/cronica-viva.model.ts#L23)
 
 #### Parameters
 
@@ -102,7 +102,7 @@ Defined in: [packages/engine/src/models/cronica-viva.model.ts:23](https://github
 
 > **completeQuest**(`questId`): `void`
 
-Defined in: [packages/engine/src/models/cronica-viva.model.ts:27](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/cronica-viva.model.ts#L27)
+Defined in: [packages/engine/src/models/cronica-viva.model.ts:27](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/cronica-viva.model.ts#L27)
 
 #### Parameters
 
@@ -120,7 +120,7 @@ Defined in: [packages/engine/src/models/cronica-viva.model.ts:27](https://github
 
 > **getVariable**(`key`): `string`
 
-Defined in: [packages/engine/src/models/cronica-viva.model.ts:19](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/cronica-viva.model.ts#L19)
+Defined in: [packages/engine/src/models/cronica-viva.model.ts:19](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/cronica-viva.model.ts#L19)
 
 #### Parameters
 
@@ -138,7 +138,7 @@ Defined in: [packages/engine/src/models/cronica-viva.model.ts:19](https://github
 
 > **hasFlag**(`flag`): `boolean`
 
-Defined in: [packages/engine/src/models/cronica-viva.model.ts:41](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/cronica-viva.model.ts#L41)
+Defined in: [packages/engine/src/models/cronica-viva.model.ts:41](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/cronica-viva.model.ts#L41)
 
 #### Parameters
 
@@ -156,7 +156,7 @@ Defined in: [packages/engine/src/models/cronica-viva.model.ts:41](https://github
 
 > **removeFlag**(`flag`): `void`
 
-Defined in: [packages/engine/src/models/cronica-viva.model.ts:49](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/cronica-viva.model.ts#L49)
+Defined in: [packages/engine/src/models/cronica-viva.model.ts:49](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/cronica-viva.model.ts#L49)
 
 #### Parameters
 
@@ -174,7 +174,7 @@ Defined in: [packages/engine/src/models/cronica-viva.model.ts:49](https://github
 
 > **setFlag**(`flag`): `void`
 
-Defined in: [packages/engine/src/models/cronica-viva.model.ts:45](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/cronica-viva.model.ts#L45)
+Defined in: [packages/engine/src/models/cronica-viva.model.ts:45](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/cronica-viva.model.ts#L45)
 
 #### Parameters
 
@@ -192,7 +192,7 @@ Defined in: [packages/engine/src/models/cronica-viva.model.ts:45](https://github
 
 > **setVariable**(`key`, `value`): `void`
 
-Defined in: [packages/engine/src/models/cronica-viva.model.ts:15](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/cronica-viva.model.ts#L15)
+Defined in: [packages/engine/src/models/cronica-viva.model.ts:15](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/cronica-viva.model.ts#L15)
 
 #### Parameters
 
@@ -214,7 +214,7 @@ Defined in: [packages/engine/src/models/cronica-viva.model.ts:15](https://github
 
 > **toJSON**(): `object`
 
-Defined in: [packages/engine/src/models/cronica-viva.model.ts:53](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/cronica-viva.model.ts#L53)
+Defined in: [packages/engine/src/models/cronica-viva.model.ts:53](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/cronica-viva.model.ts#L53)
 
 #### Returns
 

@@ -51,24 +51,13 @@ export default function CharacterSheet({ attributes }: CharacterSheetProps) {
         <div className="stat-bar-bg"><div className="stat-bar-fill hp" style={{ width: `${Math.min(100, (health.current / health.max) * 100)}%` }}></div></div>
       </div>
       <div className="stat-bar-container">
-        <div className="stat-bar-header"><span>✦ Energía</span><span>{energy.current} / {energy.max}</span></div>
+        <div className="stat-bar-header"><span>{attributes.class === 'bardo_cronica_viva' ? '🎵 Voz' : '✦ Energía'}</span><span>{energy.current} / {energy.max}</span></div>
         <div className="stat-bar-bg"><div className="stat-bar-fill mp" style={{ width: `${Math.min(100, (energy.current / energy.max) * 100)}%` }}></div></div>
       </div>
 
       <div className="stat-bar-container" style={{ marginBottom: '1.2rem' }}>
         <div className="stat-bar-header" style={{ fontSize: '0.65rem' }}><span>✧ Experiencia</span><span>{experience?.current || 0}%</span></div>
         <div className="stat-bar-bg" style={{ height: '6px' }}><div className="stat-bar-fill sp" style={{ width: `${experience?.current || 0}%` }}></div></div>
-      </div>
-
-      <div className="stats-section">
-        <div className="attributes-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(60px, 1fr))' }}>
-          {stats.map(s => (
-            <div key={s.name} className="attribute-item compact" title={s.full}>
-              <span className="attribute-name" style={{ color: s.color }}>{s.name}</span>
-              <span className="attribute-val">{s.val}</span>
-            </div>
-          ))}
-        </div>
       </div>
 
       {attributes.reputation && Object.keys(attributes.reputation).length > 0 && (
@@ -80,6 +69,22 @@ export default function CharacterSheet({ attributes }: CharacterSheetProps) {
               <span style={{ color: 'var(--blue-bright)' }}>{value}</span>
             </div>
           ))}
+        </div>
+      )}
+
+      {attributes.bardState && (
+        <div className="bard-section glass-panel" style={{ marginTop: '0.5rem', border: '1px solid var(--magenta)', background: 'rgba(255, 0, 255, 0.05)' }}>
+          <div style={{ fontSize: '0.65rem', textTransform: 'uppercase', color: 'var(--magenta)', marginBottom: '0.4rem', letterSpacing: '0.1em', display: 'flex', justifyContent: 'space-between' }}>
+            <span>Crónica Viva</span>
+            {attributes.bardState.freeSustainAvailable && <span style={{ color: 'var(--green-bright)' }}>★ Sostener</span>}
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', marginBottom: '4px' }}>
+            <span style={{ color: 'var(--text-main)' }}>Aplausos: <span style={{ color: 'var(--yellow)' }}>{attributes.bardState.aplauso || 0}</span></span>
+            <span style={{ color: 'var(--text-main)' }}>Estrofa: <span style={{ color: 'var(--cyan)' }}>{attributes.bardState.estrofa || 0} / 3</span></span>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem' }}>
+            <span style={{ color: 'var(--text-main)' }}>Trama Máxima: <span style={{ color: 'var(--cyan)' }}>{attributes.bardState.tramaMax || 1}</span></span>
+          </div>
         </div>
       )}
     </div>

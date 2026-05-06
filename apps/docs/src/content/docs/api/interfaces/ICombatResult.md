@@ -10,7 +10,7 @@ title: "Interface: ICombatResult"
 
 # Interface: ICombatResult
 
-Defined in: [packages/engine/src/interfaces/combat.interface.ts:23](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/combat.interface.ts#L23)
+Defined in: [packages/engine/src/interfaces/combat.interface.ts:23](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/combat.interface.ts#L23)
 
 ## Properties
 
@@ -18,7 +18,7 @@ Defined in: [packages/engine/src/interfaces/combat.interface.ts:23](https://gith
 
 > `optional` **damage?**: `number`
 
-Defined in: [packages/engine/src/interfaces/combat.interface.ts:25](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/combat.interface.ts#L25)
+Defined in: [packages/engine/src/interfaces/combat.interface.ts:25](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/combat.interface.ts#L25)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/engine/src/interfaces/combat.interface.ts:25](https://gith
 
 > `optional` **effectApplied?**: `string`
 
-Defined in: [packages/engine/src/interfaces/combat.interface.ts:26](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/combat.interface.ts#L26)
+Defined in: [packages/engine/src/interfaces/combat.interface.ts:26](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/combat.interface.ts#L26)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [packages/engine/src/interfaces/combat.interface.ts:26](https://gith
 
 > **log**: `string`
 
-Defined in: [packages/engine/src/interfaces/combat.interface.ts:27](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/combat.interface.ts#L27)
+Defined in: [packages/engine/src/interfaces/combat.interface.ts:27](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/combat.interface.ts#L27)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [packages/engine/src/interfaces/combat.interface.ts:27](https://gith
 
 > `optional` **resourceChanges?**: `Record`\<`string`, `number`\>
 
-Defined in: [packages/engine/src/interfaces/combat.interface.ts:28](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/combat.interface.ts#L28)
+Defined in: [packages/engine/src/interfaces/combat.interface.ts:28](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/combat.interface.ts#L28)
 
 ***
 
@@ -50,4 +50,4 @@ Defined in: [packages/engine/src/interfaces/combat.interface.ts:28](https://gith
 
 > **success**: `boolean`
 
-Defined in: [packages/engine/src/interfaces/combat.interface.ts:24](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/combat.interface.ts#L24)
+Defined in: [packages/engine/src/interfaces/combat.interface.ts:24](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/combat.interface.ts#L24)

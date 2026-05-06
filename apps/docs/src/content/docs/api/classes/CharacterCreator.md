@@ -10,7 +10,7 @@ title: "Class: CharacterCreator"
 
 # Class: CharacterCreator
 
-Defined in: [packages/engine/src/core/character-creator.ts:16](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/character-creator.ts#L16)
+Defined in: [packages/engine/src/core/character-creator.ts:16](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/character-creator.ts#L16)
 
 ## Constructors
 
@@ -28,7 +28,7 @@ Defined in: [packages/engine/src/core/character-creator.ts:16](https://github.co
 
 > `static` **create**(`data`): [`Player`](Player.md)
 
-Defined in: [packages/engine/src/core/character-creator.ts:20](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/character-creator.ts#L20)
+Defined in: [packages/engine/src/core/character-creator.ts:20](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/character-creator.ts#L20)
 
 #### Parameters
 

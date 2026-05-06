@@ -16,6 +16,9 @@ import { SkillManager } from './skill-manager';
 import { ChatManager } from './chat-manager';
 import { AIManager } from './ai-manager';
 import { EffectsManager } from './effects-manager';
+import { AdminManager } from './admin-manager';
+import { ReactiveSkillService } from './reactive-skill.service';
+import { NotableActionBuffer } from './notable-action-buffer';
 
 export class GameEngine extends EventEmitter {
   public eventLog: EventLog;
@@ -28,6 +31,9 @@ export class GameEngine extends EventEmitter {
   public chat: ChatManager;
   public ai: AIManager;
   public effects: EffectsManager;
+  public admin: AdminManager;
+  public reactiveSkills: ReactiveSkillService;
+  public notableActions: NotableActionBuffer;
 
   public classesData: any[] = [];
   public racesData: any[] = [];
@@ -44,6 +50,9 @@ export class GameEngine extends EventEmitter {
     this.respawnManager = new RespawnManager(this);
     this.ai = new AIManager(this);
     this.effects = new EffectsManager(this);
+    this.admin = new AdminManager(this);
+    this.reactiveSkills = new ReactiveSkillService(this);
+    this.notableActions = new NotableActionBuffer(this);
     console.log('Inheron Game Engine initialized.');
   }
 
@@ -65,7 +74,10 @@ export class GameEngine extends EventEmitter {
         continue;
       }
 
+      const armoniaLogs = this.evaluateArmonias(combat);
       const log = combat.processRound();
+      if (armoniaLogs.length > 0) log.unshift(...armoniaLogs);
+
       if (log.length > 0) {
         // Find players in this combat to broadcast the log
         const players = combat.participants.filter(p => p.isPlayer);
@@ -190,8 +202,7 @@ export class GameEngine extends EventEmitter {
           }
         });
 
-        // Award rewards to surviving players
-        const survivingPlayers = combat.participants.filter(p => p.isPlayer && p.hpCurrent > 0);
+         const survivingPlayers = combat.participants.filter(p => p.isPlayer && p.hpCurrent > 0);
         if (survivingPlayers.length > 0) {
            const coinsPerPlayer = Math.floor(totalCoins / survivingPlayers.length);
            
@@ -227,6 +238,31 @@ export class GameEngine extends EventEmitter {
              }
            });
         }
+
+        // Handle Dead Players
+        const deadPlayers = combat.participants.filter(p => p.isPlayer && p.hpCurrent <= 0);
+        deadPlayers.forEach(p => {
+            const player = this.getPlayer(p.entityId);
+            if (player) {
+                const derived = this.commands.getScore(player.id).derived;
+                // Respawn with full HP (or a fraction)
+                player.hpCurrent = derived.hpMax;
+                
+                // Move them to plaza
+                const oldRoom = this.getRoom(player.roomId);
+                if (oldRoom) oldRoom.removeEntity(player.id);
+                
+                player.roomId = 'villaclara_plaza';
+                const spawnRoom = this.getRoom(player.roomId);
+                if (spawnRoom) spawnRoom.addEntity(player.id);
+
+                this.emit('combat_message', player.id, ['\n<red>Has caído en combate. Los Guardianes de la Luz te han llevado de vuelta a la Plaza.</red>']);
+                this.emit('force_look', player.id);
+                
+                // Save state so inventory changes aren't lost
+                Database.savePlayer(player).catch(err => console.error('Error saving player post-combat death:', err));
+            }
+        });
         this.endCombat(combatId);
       }
     }
@@ -346,7 +382,22 @@ export class GameEngine extends EventEmitter {
       }
     }
 
-    const combat = new CombatManager(participants);
+    const combat = new CombatManager(participants, (actorId, type, mag) => {
+      if (type === 'armonia_ridiculo_evade') {
+         const bard = this.entities.getPlayer(actorId);
+         if (bard && bard.bardState) {
+            bard.bardState.estrofa = Math.min(5, (bard.bardState.estrofa || 0) + 1);
+            if (mag === 1) { // Critical failure
+               bard.bardState.aplauso = Math.min(4, (bard.bardState.aplauso || 0) + 1);
+               this.emit('combat_message', bard.id, ['\n<magenta>¡El patético fallo del enemigo te otorga +1 Aplauso y +1 Estrofa!</magenta>']);
+            } else {
+               this.emit('combat_message', bard.id, ['\n<yellow>El enemigo falla gracias a tu Armonía. Ganas +1 Estrofa.</yellow>']);
+            }
+         }
+      } else {
+         this.notableActions.recordAction(actorId, type as any, mag);
+      }
+    });
     this.activeCombats.set(combat.id, combat);
 
     this.eventLog.log({
@@ -405,6 +456,18 @@ export class GameEngine extends EventEmitter {
     }
   }
 
+  setVariable(playerId: string, key: string, value: string): void {
+    const cronica = this.playerCronicas.get(playerId);
+    if (cronica) {
+      cronica.setVariable(key, value);
+      this.eventLog.log({
+        type: 'VARIABLE_SET',
+        actorId: playerId,
+        data: { key, value }
+      });
+    }
+  }
+
   getCronica(playerId: string): any {
     const cronica = this.playerCronicas.get(playerId);
     return cronica ? cronica.toJSON() : null;
@@ -445,5 +508,49 @@ export class GameEngine extends EventEmitter {
         }
       });
     }
+  }
+
+  evaluateArmonias(combat: any): string[] {
+    const logs: string[] = [];
+    if (!combat || !combat.participants) return logs;
+    const bards = combat.participants.filter((p: any) => p.isPlayer && this.entities.getPlayer(p.entityId)?.classId === 'bardo_cronica_viva');
+    if (bards.length === 0) return logs;
+
+    for (const bardP of bards) {
+      const player = this.entities.getPlayer(bardP.entityId);
+      if (!player || !player.activeEffects) continue;
+
+      const activeEffectIds = new Set(player.activeEffects.map(e => e.sourceSkillId));
+
+      // 1. Armonía de Vanguardia (Himno de la Primera Chapa + Paso de Liria)
+      if (activeEffectIds.has('bardo_himno_primera_chapa') && activeEffectIds.has('bardo_paso_liria')) {
+        if (!(bardP as any)._armoniaVanguardiaActive) {
+          (bardP as any)._armoniaVanguardiaActive = true;
+          logs.push(`🎶 <magenta>Armonía de Vanguardia:</magenta> el grupo encuentra el paso común guiados por ${player.name}.`);
+        }
+      } else {
+        (bardP as any)._armoniaVanguardiaActive = false;
+      }
+
+      // 2. Check enemies for Armonía de Ridículo
+      for (const p of combat.participants) {
+        if (p.isPlayer) continue;
+        const npc = this.entities.getNPC(p.entityId);
+        if (npc && npc.activeEffects) {
+          const npcEffectIds = new Set(npc.activeEffects.map(e => e.sourceSkillId));
+          if (npcEffectIds.has('bardo_copla_pegadiza') && npcEffectIds.has('bardo_sincopa_burlona')) {
+            if (!(p as any)._armoniaRidiculoActive) {
+              (p as any)._armoniaRidiculoActive = true;
+              (p as any)._bardEntityId = bardP.entityId;
+              logs.push(`🎭 <magenta>Armonía de Ridículo:</magenta> ${npc.name} empieza a perder contra su propio ritmo.`);
+            }
+          } else {
+             (p as any)._armoniaRidiculoActive = false;
+          }
+        }
+      }
+    }
+
+    return logs;
   }
 }

@@ -10,7 +10,7 @@ title: "Class: EntityManager"
 
 # Class: EntityManager
 
-Defined in: [packages/engine/src/core/entity-manager.ts:7](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/entity-manager.ts#L7)
+Defined in: [packages/engine/src/core/entity-manager.ts:7](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/entity-manager.ts#L7)
 
 ## Constructors
 
@@ -28,7 +28,7 @@ Defined in: [packages/engine/src/core/entity-manager.ts:7](https://github.com/ka
 
 > **items**: `Map`\<`string`, [`Item`](Item.md)\>
 
-Defined in: [packages/engine/src/core/entity-manager.ts:13](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/entity-manager.ts#L13)
+Defined in: [packages/engine/src/core/entity-manager.ts:13](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/entity-manager.ts#L13)
 
 ***
 
@@ -36,7 +36,7 @@ Defined in: [packages/engine/src/core/entity-manager.ts:13](https://github.com/k
 
 > **itemTemplates**: `Map`\<`string`, `any`\>
 
-Defined in: [packages/engine/src/core/entity-manager.ts:12](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/entity-manager.ts#L12)
+Defined in: [packages/engine/src/core/entity-manager.ts:12](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/entity-manager.ts#L12)
 
 ***
 
@@ -44,7 +44,7 @@ Defined in: [packages/engine/src/core/entity-manager.ts:12](https://github.com/k
 
 > **npcs**: `Map`\<`string`, [`NPC`](NPC.md)\>
 
-Defined in: [packages/engine/src/core/entity-manager.ts:10](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/entity-manager.ts#L10)
+Defined in: [packages/engine/src/core/entity-manager.ts:10](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/entity-manager.ts#L10)
 
 ***
 
@@ -52,7 +52,7 @@ Defined in: [packages/engine/src/core/entity-manager.ts:10](https://github.com/k
 
 > **npcTemplates**: `Map`\<`string`, `any`\>
 
-Defined in: [packages/engine/src/core/entity-manager.ts:11](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/entity-manager.ts#L11)
+Defined in: [packages/engine/src/core/entity-manager.ts:11](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/entity-manager.ts#L11)
 
 ***
 
@@ -60,7 +60,7 @@ Defined in: [packages/engine/src/core/entity-manager.ts:11](https://github.com/k
 
 > **players**: `Map`\<`string`, [`Player`](Player.md)\>
 
-Defined in: [packages/engine/src/core/entity-manager.ts:8](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/entity-manager.ts#L8)
+Defined in: [packages/engine/src/core/entity-manager.ts:8](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/entity-manager.ts#L8)
 
 ***
 
@@ -68,7 +68,7 @@ Defined in: [packages/engine/src/core/entity-manager.ts:8](https://github.com/ka
 
 > **rooms**: `Map`\<`string`, [`Room`](Room.md)\>
 
-Defined in: [packages/engine/src/core/entity-manager.ts:9](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/entity-manager.ts#L9)
+Defined in: [packages/engine/src/core/entity-manager.ts:9](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/entity-manager.ts#L9)
 
 ***
 
@@ -76,7 +76,7 @@ Defined in: [packages/engine/src/core/entity-manager.ts:9](https://github.com/ka
 
 > **spawners**: `Map`\<`string`, [`Spawner`](Spawner.md)\>
 
-Defined in: [packages/engine/src/core/entity-manager.ts:14](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/entity-manager.ts#L14)
+Defined in: [packages/engine/src/core/entity-manager.ts:14](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/entity-manager.ts#L14)
 
 ## Methods
 
@@ -84,7 +84,7 @@ Defined in: [packages/engine/src/core/entity-manager.ts:14](https://github.com/k
 
 > **applyEffect**(`entityId`, `effect`): `void`
 
-Defined in: [packages/engine/src/core/entity-manager.ts:64](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/entity-manager.ts#L64)
+Defined in: [packages/engine/src/core/entity-manager.ts:64](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/entity-manager.ts#L64)
 
 #### Parameters
 
@@ -106,7 +106,7 @@ Defined in: [packages/engine/src/core/entity-manager.ts:64](https://github.com/k
 
 > **getItem**(`id`): [`Item`](Item.md) \| `undefined`
 
-Defined in: [packages/engine/src/core/entity-manager.ts:52](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/entity-manager.ts#L52)
+Defined in: [packages/engine/src/core/entity-manager.ts:52](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/entity-manager.ts#L52)
 
 #### Parameters
 
@@ -124,7 +124,7 @@ Defined in: [packages/engine/src/core/entity-manager.ts:52](https://github.com/k
 
 > **getNPC**(`id`): [`NPC`](NPC.md) \| `undefined`
 
-Defined in: [packages/engine/src/core/entity-manager.ts:48](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/entity-manager.ts#L48)
+Defined in: [packages/engine/src/core/entity-manager.ts:48](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/entity-manager.ts#L48)
 
 #### Parameters
 
@@ -142,7 +142,7 @@ Defined in: [packages/engine/src/core/entity-manager.ts:48](https://github.com/k
 
 > **getNPCsInRoom**(`roomId`): [`NPC`](NPC.md)[]
 
-Defined in: [packages/engine/src/core/entity-manager.ts:76](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/entity-manager.ts#L76)
+Defined in: [packages/engine/src/core/entity-manager.ts:76](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/entity-manager.ts#L76)
 
 #### Parameters
 
@@ -160,7 +160,7 @@ Defined in: [packages/engine/src/core/entity-manager.ts:76](https://github.com/k
 
 > **getPlayer**(`id`): [`Player`](Player.md) \| `undefined`
 
-Defined in: [packages/engine/src/core/entity-manager.ts:44](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/entity-manager.ts#L44)
+Defined in: [packages/engine/src/core/entity-manager.ts:44](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/entity-manager.ts#L44)
 
 #### Parameters
 
@@ -178,7 +178,7 @@ Defined in: [packages/engine/src/core/entity-manager.ts:44](https://github.com/k
 
 > **getPlayers**(): [`Player`](Player.md)[]
 
-Defined in: [packages/engine/src/core/entity-manager.ts:72](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/entity-manager.ts#L72)
+Defined in: [packages/engine/src/core/entity-manager.ts:72](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/entity-manager.ts#L72)
 
 #### Returns
 
@@ -190,7 +190,7 @@ Defined in: [packages/engine/src/core/entity-manager.ts:72](https://github.com/k
 
 > **getRoom**(`id`): [`Room`](Room.md) \| `undefined`
 
-Defined in: [packages/engine/src/core/entity-manager.ts:40](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/entity-manager.ts#L40)
+Defined in: [packages/engine/src/core/entity-manager.ts:40](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/entity-manager.ts#L40)
 
 #### Parameters
 
@@ -208,7 +208,7 @@ Defined in: [packages/engine/src/core/entity-manager.ts:40](https://github.com/k
 
 > **getSpawner**(`id`): [`Spawner`](Spawner.md) \| `undefined`
 
-Defined in: [packages/engine/src/core/entity-manager.ts:56](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/entity-manager.ts#L56)
+Defined in: [packages/engine/src/core/entity-manager.ts:56](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/entity-manager.ts#L56)
 
 #### Parameters
 
@@ -222,11 +222,55 @@ Defined in: [packages/engine/src/core/entity-manager.ts:56](https://github.com/k
 
 ***
 
+### moveNPC()
+
+> **moveNPC**(`npcId`, `targetRoomId`): `void`
+
+Defined in: [packages/engine/src/core/entity-manager.ts:96](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/entity-manager.ts#L96)
+
+#### Parameters
+
+##### npcId
+
+`string`
+
+##### targetRoomId
+
+`string`
+
+#### Returns
+
+`void`
+
+***
+
+### movePlayer()
+
+> **movePlayer**(`playerId`, `targetRoomId`): `void`
+
+Defined in: [packages/engine/src/core/entity-manager.ts:84](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/entity-manager.ts#L84)
+
+#### Parameters
+
+##### playerId
+
+`string`
+
+##### targetRoomId
+
+`string`
+
+#### Returns
+
+`void`
+
+***
+
 ### registerItem()
 
 > **registerItem**(`item`): `void`
 
-Defined in: [packages/engine/src/core/entity-manager.ts:32](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/entity-manager.ts#L32)
+Defined in: [packages/engine/src/core/entity-manager.ts:32](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/entity-manager.ts#L32)
 
 #### Parameters
 
@@ -244,7 +288,7 @@ Defined in: [packages/engine/src/core/entity-manager.ts:32](https://github.com/k
 
 > **registerNPC**(`npc`): `void`
 
-Defined in: [packages/engine/src/core/entity-manager.ts:24](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/entity-manager.ts#L24)
+Defined in: [packages/engine/src/core/entity-manager.ts:24](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/entity-manager.ts#L24)
 
 #### Parameters
 
@@ -262,7 +306,7 @@ Defined in: [packages/engine/src/core/entity-manager.ts:24](https://github.com/k
 
 > **registerNPCTemplate**(`id`, `data`): `void`
 
-Defined in: [packages/engine/src/core/entity-manager.ts:28](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/entity-manager.ts#L28)
+Defined in: [packages/engine/src/core/entity-manager.ts:28](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/entity-manager.ts#L28)
 
 #### Parameters
 
@@ -284,7 +328,7 @@ Defined in: [packages/engine/src/core/entity-manager.ts:28](https://github.com/k
 
 > **registerPlayer**(`player`): `void`
 
-Defined in: [packages/engine/src/core/entity-manager.ts:20](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/entity-manager.ts#L20)
+Defined in: [packages/engine/src/core/entity-manager.ts:20](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/entity-manager.ts#L20)
 
 #### Parameters
 
@@ -302,7 +346,7 @@ Defined in: [packages/engine/src/core/entity-manager.ts:20](https://github.com/k
 
 > **registerRoom**(`room`): `void`
 
-Defined in: [packages/engine/src/core/entity-manager.ts:16](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/entity-manager.ts#L16)
+Defined in: [packages/engine/src/core/entity-manager.ts:16](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/entity-manager.ts#L16)
 
 #### Parameters
 
@@ -320,7 +364,7 @@ Defined in: [packages/engine/src/core/entity-manager.ts:16](https://github.com/k
 
 > **registerSpawner**(`spawner`): `void`
 
-Defined in: [packages/engine/src/core/entity-manager.ts:36](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/entity-manager.ts#L36)
+Defined in: [packages/engine/src/core/entity-manager.ts:36](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/entity-manager.ts#L36)
 
 #### Parameters
 
@@ -338,7 +382,7 @@ Defined in: [packages/engine/src/core/entity-manager.ts:36](https://github.com/k
 
 > **removeItem**(`id`): `void`
 
-Defined in: [packages/engine/src/core/entity-manager.ts:80](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/entity-manager.ts#L80)
+Defined in: [packages/engine/src/core/entity-manager.ts:80](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/entity-manager.ts#L80)
 
 #### Parameters
 
@@ -356,7 +400,7 @@ Defined in: [packages/engine/src/core/entity-manager.ts:80](https://github.com/k
 
 > **removeNPC**(`id`): `void`
 
-Defined in: [packages/engine/src/core/entity-manager.ts:60](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/entity-manager.ts#L60)
+Defined in: [packages/engine/src/core/entity-manager.ts:60](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/entity-manager.ts#L60)
 
 #### Parameters
 

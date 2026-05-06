@@ -1,3 +1,11 @@
+- [ ] [SISTEMA] [2026-05-06 12:41:45] Sesión de prueba cualitativa finalizada.
+- [ ] [IA] [2026-05-06 11:43:25] **AlphaTester**: Interacción social de NPC: Hermano Tobías murmura algo sobre los vientos del destino.
+- [ ] [Ambiente] [2026-05-06 11:42:25] **AlphaTester**: Efecto perceptible: Un aura de devoción reconforta a los presentes.
+- [ ] [IA] [2026-05-06 11:42:20] **AlphaTester**: Interacción social de NPC: Hermano Tobías saluda amablemente a AlphaTesterHero.
+- [ ] [Mapa] [2026-05-06 11:41:45] **AlphaTester**: La salida "down" no se menciona claramente en la descripción de "Colinas de los Conejos Acorazados".
+- [ ] [Mapa] [2026-05-06 11:41:45] **AlphaTester**: La salida "south" no se menciona claramente en la descripción de "Colinas de los Conejos Acorazados".
+- [ ] [Exploración] [2026-05-06 11:41:45] **AlphaTester**: Entrando en "Colinas de los Conejos Acorazados" (colinas_inicio)
+- [ ] [INFO] [2026-05-06 11:41:45] **AlphaTester**: Entrada exitosa al mundo.
 - [ ] [Ambiente] [2026-05-04 21:54:29] **AlphaTester**: Efecto perceptible: Un aura de devoción reconforta a los presentes.
 - [ ] [IA] [2026-05-04 21:54:28] **AlphaTester**: Avistado NPC social: Hermano Tobías en "Capilla de la Luz Eterna".
 - [ ] [Mapa] [2026-05-04 21:54:28] **AlphaTester**: La salida "north" no se menciona claramente en la descripción de "Capilla de la Luz Eterna".

@@ -10,7 +10,7 @@ title: "Interface: Class"
 
 # Interface: Class
 
-Defined in: [packages/engine/src/data/classes.ts:3](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/data/classes.ts#L3)
+Defined in: [packages/engine/src/data/classes.ts:3](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/data/classes.ts#L3)
 
 ## Properties
 
@@ -18,7 +18,7 @@ Defined in: [packages/engine/src/data/classes.ts:3](https://github.com/kazlan/in
 
 > **description**: `string`
 
-Defined in: [packages/engine/src/data/classes.ts:6](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/data/classes.ts#L6)
+Defined in: [packages/engine/src/data/classes.ts:6](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/data/classes.ts#L6)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/engine/src/data/classes.ts:6](https://github.com/kazlan/in
 
 > **id**: `string`
 
-Defined in: [packages/engine/src/data/classes.ts:4](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/data/classes.ts#L4)
+Defined in: [packages/engine/src/data/classes.ts:4](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/data/classes.ts#L4)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [packages/engine/src/data/classes.ts:4](https://github.com/kazlan/in
 
 > **name**: `string`
 
-Defined in: [packages/engine/src/data/classes.ts:5](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/data/classes.ts#L5)
+Defined in: [packages/engine/src/data/classes.ts:5](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/data/classes.ts#L5)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [packages/engine/src/data/classes.ts:5](https://github.com/kazlan/in
 
 > **primaryStats**: keyof [`Stats`](Stats.md)[]
 
-Defined in: [packages/engine/src/data/classes.ts:7](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/data/classes.ts#L7)
+Defined in: [packages/engine/src/data/classes.ts:7](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/data/classes.ts#L7)
 
 ***
 
@@ -50,7 +50,7 @@ Defined in: [packages/engine/src/data/classes.ts:7](https://github.com/kazlan/in
 
 > **startingSkills**: `string`[]
 
-Defined in: [packages/engine/src/data/classes.ts:9](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/data/classes.ts#L9)
+Defined in: [packages/engine/src/data/classes.ts:9](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/data/classes.ts#L9)
 
 ***
 
@@ -58,4 +58,4 @@ Defined in: [packages/engine/src/data/classes.ts:9](https://github.com/kazlan/in
 
 > **statBonuses**: `Partial`\<[`Stats`](Stats.md)\>
 
-Defined in: [packages/engine/src/data/classes.ts:8](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/data/classes.ts#L8)
+Defined in: [packages/engine/src/data/classes.ts:8](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/data/classes.ts#L8)

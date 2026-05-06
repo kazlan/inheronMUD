@@ -30,3 +30,22 @@
   skills:
     - level: 1
       skillId: curacion_radiante
+
+- id: bardo_cronica_viva
+  name: Bardo de Crónica Viva
+  description: Cantor de la historia, manipulador del compás y la Trama. Utiliza la Voz, la Estrofa y el Aplauso para inspirar y controlar.
+  baseStats:
+    presencia: 3
+    ingenio: 2
+    percepcion: 1
+    destreza: 1
+    sabiduria: 1
+  skills:
+    - level: 1
+      skillId: bardo_nota_cortante
+    - level: 1
+      skillId: bardo_paso_liria
+    - level: 1
+      skillId: bardo_copla_pegadiza
+    - level: 1
+      skillId: bardo_sostener_compas

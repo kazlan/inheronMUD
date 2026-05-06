@@ -10,7 +10,7 @@ title: "Interface: IEventLog"
 
 # Interface: IEventLog
 
-Defined in: [packages/engine/src/interfaces/event.interface.ts:16](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/event.interface.ts#L16)
+Defined in: [packages/engine/src/interfaces/event.interface.ts:16](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/event.interface.ts#L16)
 
 ## Methods
 
@@ -18,7 +18,7 @@ Defined in: [packages/engine/src/interfaces/event.interface.ts:16](https://githu
 
 > **getEvents**(`filter?`): [`IEvent`](IEvent.md)[]
 
-Defined in: [packages/engine/src/interfaces/event.interface.ts:18](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/event.interface.ts#L18)
+Defined in: [packages/engine/src/interfaces/event.interface.ts:18](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/event.interface.ts#L18)
 
 #### Parameters
 
@@ -36,7 +36,7 @@ Defined in: [packages/engine/src/interfaces/event.interface.ts:18](https://githu
 
 > **log**(`event`): [`IEvent`](IEvent.md)
 
-Defined in: [packages/engine/src/interfaces/event.interface.ts:17](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/event.interface.ts#L17)
+Defined in: [packages/engine/src/interfaces/event.interface.ts:17](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/event.interface.ts#L17)
 
 #### Parameters
 

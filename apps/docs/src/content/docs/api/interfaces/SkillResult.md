@@ -10,7 +10,7 @@ title: "Interface: SkillResult"
 
 # Interface: SkillResult
 
-Defined in: [packages/engine/src/core/skill-manager.ts:3](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/skill-manager.ts#L3)
+Defined in: [packages/engine/src/core/skill-manager.ts:3](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/skill-manager.ts#L3)
 
 ## Properties
 
@@ -18,7 +18,7 @@ Defined in: [packages/engine/src/core/skill-manager.ts:3](https://github.com/kaz
 
 > `optional` **combatLog?**: `string`[]
 
-Defined in: [packages/engine/src/core/skill-manager.ts:6](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/skill-manager.ts#L6)
+Defined in: [packages/engine/src/core/skill-manager.ts:6](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/skill-manager.ts#L6)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/engine/src/core/skill-manager.ts:6](https://github.com/kaz
 
 > **message**: `string`
 
-Defined in: [packages/engine/src/core/skill-manager.ts:5](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/skill-manager.ts#L5)
+Defined in: [packages/engine/src/core/skill-manager.ts:5](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/skill-manager.ts#L5)
 
 ***
 
@@ -34,4 +34,4 @@ Defined in: [packages/engine/src/core/skill-manager.ts:5](https://github.com/kaz
 
 > **success**: `boolean`
 
-Defined in: [packages/engine/src/core/skill-manager.ts:4](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/skill-manager.ts#L4)
+Defined in: [packages/engine/src/core/skill-manager.ts:4](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/skill-manager.ts#L4)

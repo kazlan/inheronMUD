@@ -10,7 +10,7 @@ title: "Class: StatCalculator"
 
 # Class: StatCalculator
 
-Defined in: [packages/engine/src/core/stat-calculator.ts:12](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/stat-calculator.ts#L12)
+Defined in: [packages/engine/src/core/stat-calculator.ts:12](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/stat-calculator.ts#L12)
 
 ## Constructors
 
@@ -28,7 +28,7 @@ Defined in: [packages/engine/src/core/stat-calculator.ts:12](https://github.com/
 
 > `static` **calculate**(`player`): [`DerivedStats`](../interfaces/DerivedStats.md)
 
-Defined in: [packages/engine/src/core/stat-calculator.ts:13](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/stat-calculator.ts#L13)
+Defined in: [packages/engine/src/core/stat-calculator.ts:13](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/stat-calculator.ts#L13)
 
 #### Parameters
 

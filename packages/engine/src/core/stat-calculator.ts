@@ -16,8 +16,11 @@ export class StatCalculator {
     // HP: Base 50 + (Constitución * 10) + (Nivel * 5)
     const hpMax = 50 + (stats.constitucion * 10) + (level * 5);
 
-    // Energía: Base 20 + (Ingenio * 5) + (Nivel * 2)
-    const energyMax = 20 + (stats.ingenio * 5) + (level * 2);
+    // Energía o Recurso de Clase
+    let energyMax = 20 + (stats.ingenio * 5) + (level * 2);
+    if (player.classId === 'bardo_cronica_viva') {
+      energyMax = 100 + (stats.presencia * 5); // Voz Máxima
+    }
 
     // Iniciativa: Destreza + Percepción
     const iniciativa = stats.destreza + stats.percepcion;

@@ -10,7 +10,7 @@ title: "Interface: ICombatAction"
 
 # Interface: ICombatAction
 
-Defined in: [packages/engine/src/interfaces/combat.interface.ts:10](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/combat.interface.ts#L10)
+Defined in: [packages/engine/src/interfaces/combat.interface.ts:10](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/combat.interface.ts#L10)
 
 ## Properties
 
@@ -18,7 +18,7 @@ Defined in: [packages/engine/src/interfaces/combat.interface.ts:10](https://gith
 
 > **actorId**: `string`
 
-Defined in: [packages/engine/src/interfaces/combat.interface.ts:14](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/combat.interface.ts#L14)
+Defined in: [packages/engine/src/interfaces/combat.interface.ts:14](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/combat.interface.ts#L14)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/engine/src/interfaces/combat.interface.ts:14](https://gith
 
 > **cost**: `object`
 
-Defined in: [packages/engine/src/interfaces/combat.interface.ts:16](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/combat.interface.ts#L16)
+Defined in: [packages/engine/src/interfaces/combat.interface.ts:16](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/combat.interface.ts#L16)
 
 #### energy?
 
@@ -50,7 +50,7 @@ Defined in: [packages/engine/src/interfaces/combat.interface.ts:16](https://gith
 
 > **execute**: (`engine`, `combat`) => [`ICombatResult`](ICombatResult.md)
 
-Defined in: [packages/engine/src/interfaces/combat.interface.ts:20](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/combat.interface.ts#L20)
+Defined in: [packages/engine/src/interfaces/combat.interface.ts:20](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/combat.interface.ts#L20)
 
 #### Parameters
 
@@ -72,7 +72,7 @@ Defined in: [packages/engine/src/interfaces/combat.interface.ts:20](https://gith
 
 > **id**: `string`
 
-Defined in: [packages/engine/src/interfaces/combat.interface.ts:11](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/combat.interface.ts#L11)
+Defined in: [packages/engine/src/interfaces/combat.interface.ts:11](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/combat.interface.ts#L11)
 
 ***
 
@@ -80,7 +80,7 @@ Defined in: [packages/engine/src/interfaces/combat.interface.ts:11](https://gith
 
 > **name**: `string`
 
-Defined in: [packages/engine/src/interfaces/combat.interface.ts:12](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/combat.interface.ts#L12)
+Defined in: [packages/engine/src/interfaces/combat.interface.ts:12](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/combat.interface.ts#L12)
 
 ***
 
@@ -88,7 +88,7 @@ Defined in: [packages/engine/src/interfaces/combat.interface.ts:12](https://gith
 
 > `optional` **targetId?**: `string`
 
-Defined in: [packages/engine/src/interfaces/combat.interface.ts:15](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/combat.interface.ts#L15)
+Defined in: [packages/engine/src/interfaces/combat.interface.ts:15](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/combat.interface.ts#L15)
 
 ***
 
@@ -96,4 +96,4 @@ Defined in: [packages/engine/src/interfaces/combat.interface.ts:15](https://gith
 
 > **type**: [`ActionType`](../enumerations/ActionType.md)
 
-Defined in: [packages/engine/src/interfaces/combat.interface.ts:13](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/combat.interface.ts#L13)
+Defined in: [packages/engine/src/interfaces/combat.interface.ts:13](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/combat.interface.ts#L13)

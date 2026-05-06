@@ -10,6 +10,16 @@ export interface Stats {
   percepcion: number;
 }
 
+export interface BardState {
+  estrofa?: number;
+  aplauso?: number;
+  tramaMax?: number;
+  lastFamilyUsed?: string;
+  repeatedFamilyCount?: number;
+  freeSustainAvailable?: boolean;
+  specialization?: string;
+}
+
 export class Player extends Entity {
   public accountId: string;
   public level: number = 1;
@@ -20,6 +30,7 @@ export class Player extends Entity {
   public equipment: Record<string, string> = {}; // equipSlot -> itemId
   public classId: string;
   public raceId: string;
+  public bardState?: BardState;
   public hpCurrent?: number;
   public energyCurrent?: number;
   public hpMax?: number;
@@ -58,6 +69,7 @@ export class Player extends Entity {
       equipment: this.equipment,
       classId: this.classId,
       raceId: this.raceId,
+      bardState: this.bardState,
       coins: this.coins,
       role: this.role
     };

@@ -10,7 +10,7 @@ title: "Class: CombatManager"
 
 # Class: CombatManager
 
-Defined in: [packages/engine/src/core/combat-manager.ts:22](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/combat-manager.ts#L22)
+Defined in: [packages/engine/src/core/combat-manager.ts:22](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/combat-manager.ts#L22)
 
 ## Constructors
 
@@ -18,7 +18,7 @@ Defined in: [packages/engine/src/core/combat-manager.ts:22](https://github.com/k
 
 > **new CombatManager**(`participants`): `CombatManager`
 
-Defined in: [packages/engine/src/core/combat-manager.ts:28](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/combat-manager.ts#L28)
+Defined in: [packages/engine/src/core/combat-manager.ts:28](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/combat-manager.ts#L28)
 
 #### Parameters
 
@@ -36,7 +36,7 @@ Defined in: [packages/engine/src/core/combat-manager.ts:28](https://github.com/k
 
 > **active**: `boolean` = `true`
 
-Defined in: [packages/engine/src/core/combat-manager.ts:26](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/combat-manager.ts#L26)
+Defined in: [packages/engine/src/core/combat-manager.ts:26](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/combat-manager.ts#L26)
 
 ***
 
@@ -44,7 +44,7 @@ Defined in: [packages/engine/src/core/combat-manager.ts:26](https://github.com/k
 
 > **currentRound**: `number` = `0`
 
-Defined in: [packages/engine/src/core/combat-manager.ts:25](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/combat-manager.ts#L25)
+Defined in: [packages/engine/src/core/combat-manager.ts:25](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/combat-manager.ts#L25)
 
 ***
 
@@ -52,7 +52,7 @@ Defined in: [packages/engine/src/core/combat-manager.ts:25](https://github.com/k
 
 > `readonly` **id**: `string`
 
-Defined in: [packages/engine/src/core/combat-manager.ts:23](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/combat-manager.ts#L23)
+Defined in: [packages/engine/src/core/combat-manager.ts:23](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/combat-manager.ts#L23)
 
 ***
 
@@ -60,7 +60,7 @@ Defined in: [packages/engine/src/core/combat-manager.ts:23](https://github.com/k
 
 > **participants**: [`CombatParticipant`](../interfaces/CombatParticipant.md)[] = `[]`
 
-Defined in: [packages/engine/src/core/combat-manager.ts:24](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/combat-manager.ts#L24)
+Defined in: [packages/engine/src/core/combat-manager.ts:24](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/combat-manager.ts#L24)
 
 ## Methods
 
@@ -68,7 +68,7 @@ Defined in: [packages/engine/src/core/combat-manager.ts:24](https://github.com/k
 
 > **getParticipantTurnOrder**(): [`CombatParticipant`](../interfaces/CombatParticipant.md)[]
 
-Defined in: [packages/engine/src/core/combat-manager.ts:147](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/combat-manager.ts#L147)
+Defined in: [packages/engine/src/core/combat-manager.ts:147](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/combat-manager.ts#L147)
 
 #### Returns
 
@@ -80,7 +80,7 @@ Defined in: [packages/engine/src/core/combat-manager.ts:147](https://github.com/
 
 > **processRound**(): `string`[]
 
-Defined in: [packages/engine/src/core/combat-manager.ts:38](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/combat-manager.ts#L38)
+Defined in: [packages/engine/src/core/combat-manager.ts:38](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/combat-manager.ts#L38)
 
 #### Returns
 
@@ -92,7 +92,7 @@ Defined in: [packages/engine/src/core/combat-manager.ts:38](https://github.com/k
 
 > **removeParticipant**(`entityId`): `void`
 
-Defined in: [packages/engine/src/core/combat-manager.ts:151](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/combat-manager.ts#L151)
+Defined in: [packages/engine/src/core/combat-manager.ts:151](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/combat-manager.ts#L151)
 
 #### Parameters
 

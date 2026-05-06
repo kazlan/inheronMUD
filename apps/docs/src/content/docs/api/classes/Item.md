@@ -10,7 +10,7 @@ title: "Class: Item"
 
 # Class: Item
 
-Defined in: [packages/engine/src/models/item.model.ts:11](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/item.model.ts#L11)
+Defined in: [packages/engine/src/models/item.model.ts:11](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/item.model.ts#L11)
 
 ## Extends
 
@@ -22,7 +22,7 @@ Defined in: [packages/engine/src/models/item.model.ts:11](https://github.com/kaz
 
 > **new Item**(`name`, `description`, `type`, `id?`): `Item`
 
-Defined in: [packages/engine/src/models/item.model.ts:19](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/item.model.ts#L19)
+Defined in: [packages/engine/src/models/item.model.ts:19](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/item.model.ts#L19)
 
 #### Parameters
 
@@ -56,7 +56,7 @@ Defined in: [packages/engine/src/models/item.model.ts:19](https://github.com/kaz
 
 > **activeEffects**: `any`[] = `[]`
 
-Defined in: [packages/engine/src/models/entity.model.ts:8](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/entity.model.ts#L8)
+Defined in: [packages/engine/src/models/entity.model.ts:8](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/entity.model.ts#L8)
 
 #### Inherited from
 
@@ -68,7 +68,7 @@ Defined in: [packages/engine/src/models/entity.model.ts:8](https://github.com/ka
 
 > **description**: `string`
 
-Defined in: [packages/engine/src/models/entity.model.ts:6](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/entity.model.ts#L6)
+Defined in: [packages/engine/src/models/entity.model.ts:6](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/entity.model.ts#L6)
 
 #### Inherited from
 
@@ -80,7 +80,7 @@ Defined in: [packages/engine/src/models/entity.model.ts:6](https://github.com/ka
 
 > `optional` **equipSlot?**: `string`
 
-Defined in: [packages/engine/src/models/item.model.ts:15](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/item.model.ts#L15)
+Defined in: [packages/engine/src/models/item.model.ts:15](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/item.model.ts#L15)
 
 ***
 
@@ -88,7 +88,7 @@ Defined in: [packages/engine/src/models/item.model.ts:15](https://github.com/kaz
 
 > `readonly` **id**: `string`
 
-Defined in: [packages/engine/src/models/entity.model.ts:4](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/entity.model.ts#L4)
+Defined in: [packages/engine/src/models/entity.model.ts:4](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/entity.model.ts#L4)
 
 #### Inherited from
 
@@ -100,7 +100,7 @@ Defined in: [packages/engine/src/models/entity.model.ts:4](https://github.com/ka
 
 > **metadata**: `Record`\<`string`, `any`\> = `{}`
 
-Defined in: [packages/engine/src/models/item.model.ts:17](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/item.model.ts#L17)
+Defined in: [packages/engine/src/models/item.model.ts:17](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/item.model.ts#L17)
 
 #### Overrides
 
@@ -112,7 +112,7 @@ Defined in: [packages/engine/src/models/item.model.ts:17](https://github.com/kaz
 
 > **name**: `string`
 
-Defined in: [packages/engine/src/models/entity.model.ts:5](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/entity.model.ts#L5)
+Defined in: [packages/engine/src/models/entity.model.ts:5](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/entity.model.ts#L5)
 
 #### Inherited from
 
@@ -124,7 +124,7 @@ Defined in: [packages/engine/src/models/entity.model.ts:5](https://github.com/ka
 
 > `optional` **roomId?**: `string`
 
-Defined in: [packages/engine/src/models/item.model.ts:16](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/item.model.ts#L16)
+Defined in: [packages/engine/src/models/item.model.ts:16](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/item.model.ts#L16)
 
 ***
 
@@ -132,7 +132,7 @@ Defined in: [packages/engine/src/models/item.model.ts:16](https://github.com/kaz
 
 > **type**: [`ItemType`](../enumerations/ItemType.md)
 
-Defined in: [packages/engine/src/models/item.model.ts:12](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/item.model.ts#L12)
+Defined in: [packages/engine/src/models/item.model.ts:12](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/item.model.ts#L12)
 
 ***
 
@@ -140,7 +140,7 @@ Defined in: [packages/engine/src/models/item.model.ts:12](https://github.com/kaz
 
 > **value**: `number` = `0`
 
-Defined in: [packages/engine/src/models/item.model.ts:14](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/item.model.ts#L14)
+Defined in: [packages/engine/src/models/item.model.ts:14](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/item.model.ts#L14)
 
 ***
 
@@ -148,7 +148,7 @@ Defined in: [packages/engine/src/models/item.model.ts:14](https://github.com/kaz
 
 > **weight**: `number` = `0`
 
-Defined in: [packages/engine/src/models/item.model.ts:13](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/item.model.ts#L13)
+Defined in: [packages/engine/src/models/item.model.ts:13](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/item.model.ts#L13)
 
 ## Methods
 
@@ -156,7 +156,7 @@ Defined in: [packages/engine/src/models/item.model.ts:13](https://github.com/kaz
 
 > **toJSON**(): `object`
 
-Defined in: [packages/engine/src/models/item.model.ts:29](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/item.model.ts#L29)
+Defined in: [packages/engine/src/models/item.model.ts:29](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/item.model.ts#L29)
 
 Serializes the entity to a plain object.
 

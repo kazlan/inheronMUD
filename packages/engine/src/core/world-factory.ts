@@ -164,6 +164,70 @@ export class WorldFactory {
     console.log(`World populated from YAML: ${totalRooms} rooms, ${totalNpcs} NPCs, ${totalItems} items, and spawners.`);
   }
 
+  static createItem(engine: GameEngine, templateId: string): Item | null {
+    const data = engine.entities.itemTemplates.get(templateId);
+    if (!data) return null;
+
+    const item = new Item(data.name, data.description, data.type as any, `${data.id}_${Date.now()}`);
+    if (data.equipSlot) item.equipSlot = data.equipSlot;
+    if (data.metadata) item.metadata = data.metadata;
+    if (data.value !== undefined) item.value = data.value;
+    if (data.effects) {
+      data.effects.forEach((eff: any) => {
+        item.activeEffects.push({ ...eff, startTime: Date.now(), id: eff.id || `eff_${Math.random()}` });
+      });
+    }
+    
+    engine.registerItem(item);
+    return item;
+  }
+
+  static createNPC(engine: GameEngine, templateId: string, roomId: string): NPC | null {
+    const data = engine.entities.npcTemplates.get(templateId);
+    if (!data) return null;
+
+    const npc = new NPC(
+      data.name,
+      data.description,
+      data.stats,
+      data.behaviorId,
+      roomId,
+      `${data.id}_${Date.now()}`
+    );
+    if (data.level) npc.level = data.level;
+    if (data.metadata) npc.metadata = data.metadata;
+    if (data.flags) npc.flags = data.flags;
+    if (data.enemies) npc.enemies = data.enemies;
+    if (data.effects) {
+      data.effects.forEach((eff: any) => {
+        npc.activeEffects.push({ ...eff, startTime: Date.now(), id: eff.id || `eff_${Math.random()}` });
+      });
+    }
+
+    if (data.inventory) {
+      data.inventory.forEach((itemId: string) => {
+        const item = this.createItem(engine, itemId);
+        if (item) npc.inventory.push(item.id);
+      });
+    }
+
+    if (data.equipment) {
+      for (const [slot, itemId] of Object.entries(data.equipment)) {
+        const item = this.createItem(engine, itemId as string);
+        if (item) npc.equipment[slot] = item.id;
+      }
+    }
+
+    engine.registerNPC(npc);
+    const room = engine.getRoom(roomId);
+    if (room) {
+      room.addEntity(npc.id);
+      npc.areaId = room.areaId;
+    }
+    
+    return npc;
+  }
+
   static reloadArea(engine: GameEngine, areaName: string): void {
     const loader = new DataLoader();
     const areaData = loader.loadArea(areaName);
@@ -297,5 +361,39 @@ export class WorldFactory {
         }
       }
     });
+
+    // 3. Watch system data (skills, classes, races)
+    const systemDir = path.join(loader.getAreaPath(''), '../system');
+    if (fs.existsSync(systemDir)) {
+      console.log(`[Hot-Reload] Vigilando cambios en el sistema (/data/system)...`);
+      fs.watch(systemDir, (eventType, filename) => {
+        if (filename && filename.endsWith('.yml')) {
+          if (watchTimeouts.has('system')) {
+            clearTimeout(watchTimeouts.get('system')!);
+          }
+          watchTimeouts.set('system', setTimeout(() => {
+            console.log(`[Hot-Reload] Archivo de sistema modificado: ${filename}. Validando sintaxis...`);
+            const sysData = loader.loadSystem();
+            
+            if (sysData.skills && sysData.skills.length > 0) {
+              engine.skills.loadFromData(sysData.skills);
+              console.log(`[Hot-Reload] Habilidades recargadas con éxito: ${sysData.skills.length}`);
+            } else {
+              console.warn(`[Hot-Reload] Recarga abortada para skills.yml: El archivo está vacío o tiene errores de sintaxis.`);
+            }
+            
+            if (sysData.classes && sysData.classes.length > 0) {
+              engine.classesData = sysData.classes;
+            }
+            
+            if (sysData.races && sysData.races.length > 0) {
+              engine.racesData = sysData.races;
+            }
+            
+            watchTimeouts.delete('system');
+          }, 500));
+        }
+      });
+    }
   }
 }

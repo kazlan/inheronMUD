@@ -44,10 +44,29 @@ const activeSessions = new Set<Session>();
 engine.on('combat_message', (playerId: string, log: string[]) => {
   for (const session of activeSessions) {
     if (session.playerId === playerId) {
+      const pulse = engine.reactiveSkills.getRecommendations(playerId, 6);
       session.send({
         type: 'COMBAT_UPDATE',
-        combatLog: log
+        combatLog: log,
+        pulse
       });
+      // Send dynamic attributes update (e.g. HP, Energy, BardState)
+      session.send({
+        type: 'data',
+        group: 'attributes',
+        data: engine.commands.getScore(playerId).data
+      });
+      break;
+    }
+  }
+});
+
+engine.on('save_player', (player: any) => {
+  for (const session of activeSessions) {
+    if (session.playerId === player.id) {
+      session.send({ type: 'data', group: 'attributes', data: engine.commands.getScore(player.id).data });
+      session.send({ type: 'data', group: 'inventory', data: engine.commands.getInventory(player.id) });
+      session.send({ type: 'data', group: 'equipment', data: engine.commands.getEquipment(player.id) });
       break;
     }
   }

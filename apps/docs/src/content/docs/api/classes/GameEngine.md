@@ -10,7 +10,7 @@ title: "Class: GameEngine"
 
 # Class: GameEngine
 
-Defined in: [packages/engine/src/core/game-engine.ts:20](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L20)
+Defined in: [packages/engine/src/core/game-engine.ts:21](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L21)
 
 ## Extends
 
@@ -22,7 +22,7 @@ Defined in: [packages/engine/src/core/game-engine.ts:20](https://github.com/kazl
 
 > **new GameEngine**(): `GameEngine`
 
-Defined in: [packages/engine/src/core/game-engine.ts:37](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L37)
+Defined in: [packages/engine/src/core/game-engine.ts:39](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L39)
 
 #### Returns
 
@@ -34,11 +34,19 @@ Defined in: [packages/engine/src/core/game-engine.ts:37](https://github.com/kazl
 
 ## Properties
 
+### admin
+
+> **admin**: [`AdminManager`](AdminManager.md)
+
+Defined in: [packages/engine/src/core/game-engine.ts:32](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L32)
+
+***
+
 ### ai
 
 > **ai**: [`AIManager`](AIManager.md)
 
-Defined in: [packages/engine/src/core/game-engine.ts:29](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L29)
+Defined in: [packages/engine/src/core/game-engine.ts:30](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L30)
 
 ***
 
@@ -46,7 +54,7 @@ Defined in: [packages/engine/src/core/game-engine.ts:29](https://github.com/kazl
 
 > **chat**: [`ChatManager`](ChatManager.md)
 
-Defined in: [packages/engine/src/core/game-engine.ts:28](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L28)
+Defined in: [packages/engine/src/core/game-engine.ts:29](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L29)
 
 ***
 
@@ -54,7 +62,7 @@ Defined in: [packages/engine/src/core/game-engine.ts:28](https://github.com/kazl
 
 > **classesData**: `any`[] = `[]`
 
-Defined in: [packages/engine/src/core/game-engine.ts:32](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L32)
+Defined in: [packages/engine/src/core/game-engine.ts:34](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L34)
 
 ***
 
@@ -62,7 +70,7 @@ Defined in: [packages/engine/src/core/game-engine.ts:32](https://github.com/kazl
 
 > **commands**: [`CommandManager`](CommandManager.md)
 
-Defined in: [packages/engine/src/core/game-engine.ts:23](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L23)
+Defined in: [packages/engine/src/core/game-engine.ts:24](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L24)
 
 ***
 
@@ -70,7 +78,7 @@ Defined in: [packages/engine/src/core/game-engine.ts:23](https://github.com/kazl
 
 > **effects**: [`EffectsManager`](EffectsManager.md)
 
-Defined in: [packages/engine/src/core/game-engine.ts:30](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L30)
+Defined in: [packages/engine/src/core/game-engine.ts:31](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L31)
 
 ***
 
@@ -78,7 +86,7 @@ Defined in: [packages/engine/src/core/game-engine.ts:30](https://github.com/kazl
 
 > **entities**: [`EntityManager`](EntityManager.md)
 
-Defined in: [packages/engine/src/core/game-engine.ts:22](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L22)
+Defined in: [packages/engine/src/core/game-engine.ts:23](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L23)
 
 ***
 
@@ -86,7 +94,7 @@ Defined in: [packages/engine/src/core/game-engine.ts:22](https://github.com/kazl
 
 > **eventLog**: [`EventLog`](EventLog.md)
 
-Defined in: [packages/engine/src/core/game-engine.ts:21](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L21)
+Defined in: [packages/engine/src/core/game-engine.ts:22](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L22)
 
 ***
 
@@ -94,7 +102,7 @@ Defined in: [packages/engine/src/core/game-engine.ts:21](https://github.com/kazl
 
 > **racesData**: `any`[] = `[]`
 
-Defined in: [packages/engine/src/core/game-engine.ts:33](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L33)
+Defined in: [packages/engine/src/core/game-engine.ts:35](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L35)
 
 ***
 
@@ -102,7 +110,7 @@ Defined in: [packages/engine/src/core/game-engine.ts:33](https://github.com/kazl
 
 > **respawnManager**: [`RespawnManager`](RespawnManager.md)
 
-Defined in: [packages/engine/src/core/game-engine.ts:27](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L27)
+Defined in: [packages/engine/src/core/game-engine.ts:28](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L28)
 
 ***
 
@@ -110,7 +118,7 @@ Defined in: [packages/engine/src/core/game-engine.ts:27](https://github.com/kazl
 
 > **skills**: [`SkillManager`](SkillManager.md)
 
-Defined in: [packages/engine/src/core/game-engine.ts:26](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L26)
+Defined in: [packages/engine/src/core/game-engine.ts:27](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L27)
 
 ***
 
@@ -305,7 +313,7 @@ v0.1.26
 
 > **assignQuest**(`playerId`, `quest`): `void`
 
-Defined in: [packages/engine/src/core/game-engine.ts:379](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L379)
+Defined in: [packages/engine/src/core/game-engine.ts:382](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L382)
 
 #### Parameters
 
@@ -327,7 +335,7 @@ Defined in: [packages/engine/src/core/game-engine.ts:379](https://github.com/kaz
 
 > **checkMemoryFlag**(`playerId`, `flag`): `boolean`
 
-Defined in: [packages/engine/src/core/game-engine.ts:391](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L391)
+Defined in: [packages/engine/src/core/game-engine.ts:394](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L394)
 
 #### Parameters
 
@@ -349,7 +357,7 @@ Defined in: [packages/engine/src/core/game-engine.ts:391](https://github.com/kaz
 
 > **drop**(`playerId`, `itemName`): `object`
 
-Defined in: [packages/engine/src/core/game-engine.ts:287](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L287)
+Defined in: [packages/engine/src/core/game-engine.ts:290](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L290)
 
 #### Parameters
 
@@ -453,7 +461,7 @@ v0.1.26
 
 > **endCombat**(`combatId`): `void`
 
-Defined in: [packages/engine/src/core/game-engine.ts:364](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L364)
+Defined in: [packages/engine/src/core/game-engine.ts:367](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L367)
 
 #### Parameters
 
@@ -508,7 +516,7 @@ v6.0.0
 
 > **executeCommand**(`playerId`, `command`, `args`): `void`
 
-Defined in: [packages/engine/src/core/game-engine.ts:418](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L418)
+Defined in: [packages/engine/src/core/game-engine.ts:433](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L433)
 
 Core execution loop for processing ticks or commands
 
@@ -536,7 +544,7 @@ Core execution loop for processing ticks or commands
 
 > **get**(`playerId`, `itemName`): `object`
 
-Defined in: [packages/engine/src/core/game-engine.ts:283](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L283)
+Defined in: [packages/engine/src/core/game-engine.ts:286](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L286)
 
 #### Parameters
 
@@ -566,7 +574,7 @@ Defined in: [packages/engine/src/core/game-engine.ts:283](https://github.com/kaz
 
 > **getActiveCombat**(`combatId`): [`CombatManager`](CombatManager.md) \| `undefined`
 
-Defined in: [packages/engine/src/core/game-engine.ts:360](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L360)
+Defined in: [packages/engine/src/core/game-engine.ts:363](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L363)
 
 #### Parameters
 
@@ -584,7 +592,7 @@ Defined in: [packages/engine/src/core/game-engine.ts:360](https://github.com/kaz
 
 > **getCombatByPlayerId**(`playerId`): [`CombatManager`](CombatManager.md) \| `undefined`
 
-Defined in: [packages/engine/src/core/game-engine.ts:369](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L369)
+Defined in: [packages/engine/src/core/game-engine.ts:372](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L372)
 
 #### Parameters
 
@@ -602,7 +610,7 @@ Defined in: [packages/engine/src/core/game-engine.ts:369](https://github.com/kaz
 
 > **getCronica**(`playerId`): `any`
 
-Defined in: [packages/engine/src/core/game-engine.ts:408](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L408)
+Defined in: [packages/engine/src/core/game-engine.ts:423](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L423)
 
 #### Parameters
 
@@ -620,7 +628,7 @@ Defined in: [packages/engine/src/core/game-engine.ts:408](https://github.com/kaz
 
 > **getEventLog**(): [`EventLog`](EventLog.md)
 
-Defined in: [packages/engine/src/core/game-engine.ts:270](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L270)
+Defined in: [packages/engine/src/core/game-engine.ts:273](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L273)
 
 #### Returns
 
@@ -632,7 +640,7 @@ Defined in: [packages/engine/src/core/game-engine.ts:270](https://github.com/kaz
 
 > **getInventory**(`playerId`): `any`[]
 
-Defined in: [packages/engine/src/core/game-engine.ts:291](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L291)
+Defined in: [packages/engine/src/core/game-engine.ts:294](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L294)
 
 #### Parameters
 
@@ -673,7 +681,7 @@ v1.0.0
 
 > **getPlayer**(`id`): [`Player`](Player.md) \| `undefined`
 
-Defined in: [packages/engine/src/core/game-engine.ts:259](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L259)
+Defined in: [packages/engine/src/core/game-engine.ts:262](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L262)
 
 #### Parameters
 
@@ -691,7 +699,7 @@ Defined in: [packages/engine/src/core/game-engine.ts:259](https://github.com/kaz
 
 > **getRoom**(`id`): [`Room`](Room.md) \| `undefined`
 
-Defined in: [packages/engine/src/core/game-engine.ts:255](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L255)
+Defined in: [packages/engine/src/core/game-engine.ts:258](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L258)
 
 #### Parameters
 
@@ -709,7 +717,7 @@ Defined in: [packages/engine/src/core/game-engine.ts:255](https://github.com/kaz
 
 > **getScore**(`playerId`): `any`
 
-Defined in: [packages/engine/src/core/game-engine.ts:295](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L295)
+Defined in: [packages/engine/src/core/game-engine.ts:298](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L298)
 
 #### Parameters
 
@@ -727,7 +735,7 @@ Defined in: [packages/engine/src/core/game-engine.ts:295](https://github.com/kaz
 
 > **initiateCombat**(`playerIds`, `enemyIds`): `string`
 
-Defined in: [packages/engine/src/core/game-engine.ts:299](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L299)
+Defined in: [packages/engine/src/core/game-engine.ts:302](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L302)
 
 #### Parameters
 
@@ -835,7 +843,7 @@ v0.1.26
 
 > **look**(`playerId`, `targetName?`): `any`
 
-Defined in: [packages/engine/src/core/game-engine.ts:275](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L275)
+Defined in: [packages/engine/src/core/game-engine.ts:278](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L278)
 
 #### Parameters
 
@@ -857,7 +865,7 @@ Defined in: [packages/engine/src/core/game-engine.ts:275](https://github.com/kaz
 
 > **move**(`playerId`, `direction`): `object`
 
-Defined in: [packages/engine/src/core/game-engine.ts:279](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L279)
+Defined in: [packages/engine/src/core/game-engine.ts:282](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L282)
 
 #### Parameters
 
@@ -1225,7 +1233,7 @@ v9.4.0
 
 > **registerItem**(`item`): `void`
 
-Defined in: [packages/engine/src/core/game-engine.ts:251](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L251)
+Defined in: [packages/engine/src/core/game-engine.ts:254](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L254)
 
 #### Parameters
 
@@ -1243,7 +1251,7 @@ Defined in: [packages/engine/src/core/game-engine.ts:251](https://github.com/kaz
 
 > **registerNPC**(`npc`): `void`
 
-Defined in: [packages/engine/src/core/game-engine.ts:247](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L247)
+Defined in: [packages/engine/src/core/game-engine.ts:250](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L250)
 
 #### Parameters
 
@@ -1261,7 +1269,7 @@ Defined in: [packages/engine/src/core/game-engine.ts:247](https://github.com/kaz
 
 > **registerPlayer**(`player`): `void`
 
-Defined in: [packages/engine/src/core/game-engine.ts:240](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L240)
+Defined in: [packages/engine/src/core/game-engine.ts:243](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L243)
 
 #### Parameters
 
@@ -1279,7 +1287,7 @@ Defined in: [packages/engine/src/core/game-engine.ts:240](https://github.com/kaz
 
 > **registerRoom**(`room`): `void`
 
-Defined in: [packages/engine/src/core/game-engine.ts:236](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L236)
+Defined in: [packages/engine/src/core/game-engine.ts:239](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L239)
 
 #### Parameters
 
@@ -1447,7 +1455,7 @@ v0.1.26
 
 > **savePlayer**(`id`): `void`
 
-Defined in: [packages/engine/src/core/game-engine.ts:263](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L263)
+Defined in: [packages/engine/src/core/game-engine.ts:266](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L266)
 
 #### Parameters
 
@@ -1498,7 +1506,7 @@ v0.3.5
 
 > **setMemoryFlag**(`playerId`, `flag`): `void`
 
-Defined in: [packages/engine/src/core/game-engine.ts:396](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L396)
+Defined in: [packages/engine/src/core/game-engine.ts:399](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L399)
 
 #### Parameters
 
@@ -1516,11 +1524,37 @@ Defined in: [packages/engine/src/core/game-engine.ts:396](https://github.com/kaz
 
 ***
 
+### setVariable()
+
+> **setVariable**(`playerId`, `key`, `value`): `void`
+
+Defined in: [packages/engine/src/core/game-engine.ts:411](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L411)
+
+#### Parameters
+
+##### playerId
+
+`string`
+
+##### key
+
+`string`
+
+##### value
+
+`string`
+
+#### Returns
+
+`void`
+
+***
+
 ### startTick()
 
 > **startTick**(`ms?`): `void`
 
-Defined in: [packages/engine/src/core/game-engine.ts:50](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/game-engine.ts#L50)
+Defined in: [packages/engine/src/core/game-engine.ts:53](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/game-engine.ts#L53)
 
 #### Parameters
 

@@ -10,7 +10,7 @@ title: "Enumeration: QuestStatus"
 
 # Enumeration: QuestStatus
 
-Defined in: [packages/engine/src/interfaces/quest.interface.ts:1](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/quest.interface.ts#L1)
+Defined in: [packages/engine/src/interfaces/quest.interface.ts:1](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/quest.interface.ts#L1)
 
 ## Enumeration Members
 
@@ -18,7 +18,7 @@ Defined in: [packages/engine/src/interfaces/quest.interface.ts:1](https://github
 
 > **ACTIVE**: `"ACTIVE"`
 
-Defined in: [packages/engine/src/interfaces/quest.interface.ts:4](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/quest.interface.ts#L4)
+Defined in: [packages/engine/src/interfaces/quest.interface.ts:4](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/quest.interface.ts#L4)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/engine/src/interfaces/quest.interface.ts:4](https://github
 
 > **AVAILABLE**: `"AVAILABLE"`
 
-Defined in: [packages/engine/src/interfaces/quest.interface.ts:3](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/quest.interface.ts#L3)
+Defined in: [packages/engine/src/interfaces/quest.interface.ts:3](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/quest.interface.ts#L3)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [packages/engine/src/interfaces/quest.interface.ts:3](https://github
 
 > **COMPLETED**: `"COMPLETED"`
 
-Defined in: [packages/engine/src/interfaces/quest.interface.ts:6](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/quest.interface.ts#L6)
+Defined in: [packages/engine/src/interfaces/quest.interface.ts:6](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/quest.interface.ts#L6)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [packages/engine/src/interfaces/quest.interface.ts:6](https://github
 
 > **FAILED**: `"FAILED"`
 
-Defined in: [packages/engine/src/interfaces/quest.interface.ts:7](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/quest.interface.ts#L7)
+Defined in: [packages/engine/src/interfaces/quest.interface.ts:7](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/quest.interface.ts#L7)
 
 ***
 
@@ -50,7 +50,7 @@ Defined in: [packages/engine/src/interfaces/quest.interface.ts:7](https://github
 
 > **LOCKED**: `"LOCKED"`
 
-Defined in: [packages/engine/src/interfaces/quest.interface.ts:2](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/quest.interface.ts#L2)
+Defined in: [packages/engine/src/interfaces/quest.interface.ts:2](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/quest.interface.ts#L2)
 
 ***
 
@@ -58,4 +58,4 @@ Defined in: [packages/engine/src/interfaces/quest.interface.ts:2](https://github
 
 > **READY\_TO\_TURN\_IN**: `"READY_TO_TURN_IN"`
 
-Defined in: [packages/engine/src/interfaces/quest.interface.ts:5](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/quest.interface.ts#L5)
+Defined in: [packages/engine/src/interfaces/quest.interface.ts:5](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/quest.interface.ts#L5)

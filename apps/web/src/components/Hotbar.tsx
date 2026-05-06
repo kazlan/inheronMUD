@@ -7,6 +7,8 @@ interface HotbarSlot {
 
 interface HotbarProps {
   onCommand: (cmd: string) => void;
+  inCombat?: boolean;
+  pulse?: any[];
 }
 
 export interface HotbarHandle {
@@ -14,7 +16,14 @@ export interface HotbarHandle {
   clearSlot: (num: number) => void;
 }
 
-const Hotbar = forwardRef<HotbarHandle, HotbarProps>(({ onCommand }, ref) => {
+const familyColors: Record<string, string> = {
+  'Danza': 'var(--green-bright)',
+  'Copla': 'var(--yellow)',
+  'Nota': 'var(--red)',
+  'Épica': 'var(--cyan)'
+};
+
+const Hotbar = forwardRef<HotbarHandle, HotbarProps>(({ onCommand, inCombat, pulse }, ref) => {
   const [slots, setSlots] = useState<(HotbarSlot | null)[]>(new Array(10).fill(null));
 
   useEffect(() => {
@@ -61,6 +70,32 @@ const Hotbar = forwardRef<HotbarHandle, HotbarProps>(({ onCommand }, ref) => {
       onCommand(slot.command);
     }
   };
+
+  if (inCombat) {
+    const renderPulse = pulse || [];
+    return (
+      <div className="hotbar-container pulse-bar" style={{ borderColor: 'var(--red)', boxShadow: '0 0 10px rgba(255,0,0,0.2)' }}>
+        <div style={{ position: 'absolute', top: '-10px', left: '10px', background: 'var(--bg-panel)', padding: '0 5px', fontSize: '0.65rem', color: 'var(--red)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+          Pulso de Combate
+        </div>
+        {renderPulse.map((skill, i) => {
+          const color = skill.family ? familyColors[skill.family] || 'var(--gold)' : 'var(--text-main)';
+          return (
+            <div 
+              key={i} 
+              className="hotbar-slot occupied pulse-slot"
+              onClick={() => onCommand(`pulse ${i + 1}`)}
+              style={{ borderColor: color }}
+              title={`${skill.name} [${skill.energyCost} EN]\nFamilia: ${skill.family || 'Ninguna'}\n${skill.description}`}
+            >
+              <span className="slot-number" style={{ color }}>{i + 1}</span>
+              <div className="slot-cmd-label" style={{ color: 'var(--text-bright)' }}>{skill.name}</div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
 
   return (
     <div className="hotbar-container">

@@ -10,7 +10,7 @@ title: "Enumeration: ItemType"
 
 # Enumeration: ItemType
 
-Defined in: [packages/engine/src/models/item.model.ts:3](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/item.model.ts#L3)
+Defined in: [packages/engine/src/models/item.model.ts:3](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/item.model.ts#L3)
 
 ## Enumeration Members
 
@@ -18,7 +18,7 @@ Defined in: [packages/engine/src/models/item.model.ts:3](https://github.com/kazl
 
 > **CONSUMABLE**: `"CONSUMABLE"`
 
-Defined in: [packages/engine/src/models/item.model.ts:5](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/item.model.ts#L5)
+Defined in: [packages/engine/src/models/item.model.ts:5](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/item.model.ts#L5)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/engine/src/models/item.model.ts:5](https://github.com/kazl
 
 > **CURRENCY**: `"CURRENCY"`
 
-Defined in: [packages/engine/src/models/item.model.ts:7](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/item.model.ts#L7)
+Defined in: [packages/engine/src/models/item.model.ts:7](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/item.model.ts#L7)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [packages/engine/src/models/item.model.ts:7](https://github.com/kazl
 
 > **EQUIPMENT**: `"EQUIPMENT"`
 
-Defined in: [packages/engine/src/models/item.model.ts:4](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/item.model.ts#L4)
+Defined in: [packages/engine/src/models/item.model.ts:4](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/item.model.ts#L4)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [packages/engine/src/models/item.model.ts:4](https://github.com/kazl
 
 > **QUEST**: `"QUEST"`
 
-Defined in: [packages/engine/src/models/item.model.ts:6](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/item.model.ts#L6)
+Defined in: [packages/engine/src/models/item.model.ts:6](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/item.model.ts#L6)
 
 ***
 
@@ -50,4 +50,4 @@ Defined in: [packages/engine/src/models/item.model.ts:6](https://github.com/kazl
 
 > **TRASH**: `"TRASH"`
 
-Defined in: [packages/engine/src/models/item.model.ts:8](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/item.model.ts#L8)
+Defined in: [packages/engine/src/models/item.model.ts:8](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/item.model.ts#L8)

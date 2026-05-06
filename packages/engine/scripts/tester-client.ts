@@ -85,7 +85,7 @@ class TesterPlayer {
             }
             else if (text.includes('raza')) this.send('humano_altherion');
             else if (text.includes('clase')) {
-                const classes = ['caballero_alba', 'monje_candaluz', 'clerigo_sol_quieto'];
+                const classes = ['caballero_alba', 'bardo_cronica_viva', 'clerigo_sol_quieto'];
                 const index = ['AlphaTester', 'BetaTester', 'GammaTester'].indexOf(this.name);
                 this.send(classes[index] || 'caballero_alba');
             }
@@ -119,6 +119,10 @@ class TesterPlayer {
         }
 
         if (msg.type === 'command_result' && (msg.command === 'kill' || msg.command === 'k') && msg.success) {
+            this.currentCombat = { startTime: Date.now() };
+        }
+        
+        if (msg.type === 'COMBAT_STARTED') {
             this.currentCombat = { startTime: Date.now() };
         }
     }
@@ -270,7 +274,16 @@ class TesterPlayer {
                 cmd = toPlaza[this.currentRoom.id] || (this.currentRoom?.exits?.[0]?.direction || 'look');
             } else if (mobs.length > 0 && roll < 0.7) {
                 const target = mobs[0].name.split(' ')[0].toLowerCase();
-                cmd = `k ${target}`;
+                if (this.currentCombat) {
+                    if (roll < 0.1) cmd = 'pulso';
+                    else if (roll < 0.25) cmd = `cast bardo_nota_cortante ${target}`;
+                    else if (roll < 0.4) cmd = `cast bardo_copla_pegadiza ${target}`;
+                    else if (roll < 0.45) cmd = `cast bardo_sostener_compas`;
+                    else if (roll < 0.5) cmd = `cast bardo_himno_victoria`;
+                    else cmd = `k ${target}`;
+                } else {
+                    cmd = `k ${target}`;
+                }
             } else if (this.currentRoom?.exits?.length > 0) {
                 const exit = this.currentRoom.exits[Math.floor(Math.random() * this.currentRoom.exits.length)];
                 cmd = exit.direction;
@@ -290,14 +303,11 @@ class TesterPlayer {
 
 const tester1 = new TesterPlayer('AlphaTester');
 const tester2 = new TesterPlayer('BetaTester');
-const tester3 = new TesterPlayer('GammaTester');
 
 async function main() {
     await tester1.connect();
     await new Promise(r => setTimeout(r, 4000));
     await tester2.connect();
-    await new Promise(r => setTimeout(r, 4000));
-    await tester3.connect();
 }
 
 main();
@@ -306,7 +316,6 @@ const duration = 60 * 60 * 1000;
 setTimeout(() => {
     tester1.stop();
     tester2.stop();
-    tester3.stop();
     const timestamp = new Date().toISOString().replace('T', ' ').split('.')[0];
     const finalReport = `- [ ] [SISTEMA] [${timestamp}] Sesión de prueba cualitativa finalizada.\n`;
     let current = fs.existsSync(REPORT_PATH) ? fs.readFileSync(REPORT_PATH, 'utf8') : '';

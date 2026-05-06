@@ -5,6 +5,30 @@ import { StatCalculator } from './stat-calculator';
 export class CommandManager {
   constructor(private engine: GameEngine) {}
 
+  admin(playerId: string, cmd: string, args: string[]): { success: boolean; message: string; data?: any } {
+    // For now, no permission check (simple demo)
+    switch (cmd) {
+      case 'goto':
+        return this.engine.admin.goto(playerId, args[0]);
+      case 'summon':
+        return this.engine.admin.summon(playerId, args[0]);
+      case 'set-flag':
+        return this.engine.admin.setFlag(playerId, args[0], args[1]);
+      case 'give':
+        return this.engine.admin.giveItem(playerId, args[0]);
+      case 'spawn':
+        return this.engine.admin.spawn(playerId, args[0]);
+      case 'player':
+        const playerData = this.engine.admin.debugPlayer(args[0] || playerId);
+        return { success: true, message: `Datos de debug de ${args[0] || playerId} enviados a la consola.`, data: playerData };
+      case 'room':
+        const roomData = this.engine.admin.inspectRoom(playerId);
+        return { success: true, message: `Inspección de sala enviada a la consola.`, data: roomData };
+      default:
+        return { success: false, message: `Subcomando admin "${cmd}" no reconocido.` };
+    }
+  }
+
   private matchEntityName(entityName: string, query: string): boolean {
     if (!query) return false;
     const nameLower = entityName.toLowerCase();
@@ -349,6 +373,53 @@ export class CommandManager {
     return { success: false, message: `No ves nada con lo que interactuar llamado "${targetName}".` };
   }
 
+  getPulso(playerId: string, option?: string): { success: boolean; message: string; data?: any; combatLog?: string[] } {
+    const recommendations = this.engine.reactiveSkills.getRecommendations(playerId, 6);
+    if (recommendations.length === 0) {
+      return { success: true, message: "El pulso del combate está en calma." };
+    }
+
+    let index = 0;
+    if (option && option !== 'list') {
+       index = parseInt(option) - 1;
+       if (isNaN(index) || index < 0 || index >= recommendations.length) {
+         return { success: false, message: "Opción de pulso inválida." };
+       }
+    } else if (option === 'list') {
+        let msg = `<magenta><b>[ PULSO DE COMBATE ]</b></magenta>\nAcciones sugeridas:\n`;
+        recommendations.forEach((rec, idx) => {
+           msg += ` ${idx + 1}. <yellow>${rec.name}</yellow> - <i>${rec.reason}</i>\n`;
+        });
+        return { success: true, message: msg, data: recommendations };
+    } else {
+        // Default to list if not in combat to avoid accidental casts?
+        // Wait, if no option, default to index 0.
+        index = 0;
+    }
+
+    const rec = recommendations[index];
+    
+    // Find target
+    let targetName = '';
+    const combat = this.engine.getCombatByPlayerId(playerId);
+    if (combat) {
+        const enemy = combat.participants.find(p => !p.isPlayer && p.hpCurrent > 0);
+        if (enemy) {
+            const npc = this.engine.entities.getNPC(enemy.entityId);
+            if (npc) targetName = npc.name.split(' ')[0]; // use first word
+        }
+    } else if (!option) {
+       // If not in combat and no option passed, just list
+       let msg = `<magenta><b>[ PULSO DE COMBATE ]</b></magenta>\nAcciones sugeridas:\n`;
+       recommendations.forEach((rec, idx) => {
+          msg += ` ${idx + 1}. <yellow>${rec.name}</yellow> - <i>${rec.reason}</i>\n`;
+       });
+       return { success: true, message: msg, data: recommendations };
+    }
+
+    return this.cast(playerId, rec.skillId, targetName);
+  }
+
   get(playerId: string, itemName: string): { success: boolean; message: string } {
     const player = this.engine.entities.getPlayer(playerId);
     if (!player) return { success: false, message: 'Jugador no encontrado.' };
@@ -425,6 +496,22 @@ export class CommandManager {
     const player = this.engine.entities.getPlayer(playerId);
     if (!player) return { success: false, message: 'Jugador no encontrado.' };
 
+    if (!itemName || itemName.trim() === '') {
+      const eq = this.getEquipment(playerId);
+      let msg = `<cyan><b>[ TU EQUIPAMIENTO ]</b></cyan>\n`;
+      let hasEquip = false;
+      for (const [slot, item] of Object.entries(eq)) {
+        if (item) {
+          msg += `<b>[${slot.padEnd(8)}]</b> ${(item as any).name}\n`;
+          hasEquip = true;
+        }
+      }
+      if (!hasEquip) {
+        msg += `No tienes nada equipado.\n`;
+      }
+      return { success: true, message: msg, data: eq };
+    }
+
     const itemIndex = player.inventory.findIndex(id => {
       const item = this.engine.entities.getItem(id);
       return item && this.matchEntityName(item.name, itemName);
@@ -489,11 +576,19 @@ export class CommandManager {
     const player = this.engine.entities.getPlayer(playerId);
     if (!player) return null;
 
+    const classData = this.engine.classesData.find((c:any) => c.id === player.classId);
+    const className = classData ? classData.name : player.classId;
+
+    const raceData = this.engine.racesData.find((r:any) => r.id === player.raceId);
+    const raceName = raceData ? raceData.name : player.raceId;
+
     const derived = StatCalculator.calculate(player);
     const data = {
       name: player.name,
       class: player.classId,
+      className,
       race: player.raceId,
+      raceName,
       level: player.level,
       experience: player.experience,
       coins: player.coins,
@@ -501,21 +596,34 @@ export class CommandManager {
       derived,
       gremioRank: player.metadata.gremioRank,
       skills: player.metadata.skills,
-      equipment: this.getEquipment(playerId)
+      promptSettings: player.metadata.promptSettings,
+      equipment: this.getEquipment(playerId),
+      bardState: player.bardState
     };
 
     // Formatted message for the chat
     let message = `<yellow><b>[ FICHA DE PERSONAJE ]</b></yellow>\n`;
-    message += `Nombre: <cyan>${player.name}</cyan> (Nivel ${player.level} ${player.classId})\n`;
-    message += `Raza: ${player.raceId} | Monedas: <yellow>${player.coins} soles</yellow>\n`;
+    message += `Nombre: <cyan>${player.name}</cyan> (Nivel ${player.level} ${className})\n`;
+    message += `Raza: ${raceName} | Monedas: <yellow>${player.coins} soles</yellow>\n`;
     message += `--------------------------------------------------\n`;
     message += `<b>Puntos de Vida:</b> <red>${player.hpCurrent}/${derived.hpMax}</red>\n`;
-    message += `<b>Energía Vital:</b> <green>${player.energyCurrent}/${derived.energyMax}</green>\n`;
+    const energyLabel = player.classId === 'bardo_cronica_viva' ? 'Voz' : 'Energía Vital';
+    message += `<b>${energyLabel}:</b> <green>${player.energyCurrent}/${derived.energyMax}</green>\n`;
     message += `--------------------------------------------------\n`;
     message += `<b>Atributos Base:</b>\n`;
     message += `Fuerza: ${player.stats.fuerza} | Destreza: ${player.stats.destreza} | Const: ${player.stats.constitucion}\n`;
     message += `Ingenio: ${player.stats.ingenio} | Sabiduría: ${player.stats.sabiduria} | Perc: ${player.stats.percepcion}\n`;
     message += `--------------------------------------------------\n`;
+    
+    if (player.bardState) {
+      message += `<magenta><b>[ ESTADO DE BARDO ]</b></magenta>\n`;
+      message += `Aplausos: <yellow>${player.bardState.aplauso || 0}</yellow>\n`;
+      message += `Estrofa: ${player.bardState.estrofa || 0}/3 | Trama Máx: ${player.bardState.tramaMax || 1}\n`;
+      if (player.bardState.freeSustainAvailable) {
+        message += `<green>* ¡Sostener Compás gratuito disponible!</green>\n`;
+      }
+      message += `--------------------------------------------------\n`;
+    }
     
     return { data, message };
   }
@@ -818,7 +926,7 @@ export class CommandManager {
 
   // --- Skills Commands ---
 
-  getSkills(playerId: string): { success: boolean; message: string; data?: any } {
+  getSkills(playerId: string, query?: string): { success: boolean; message: string; data?: any } {
     const player = this.engine.entities.getPlayer(playerId);
     if (!player) return { success: false, message: 'Jugador no encontrado.' };
 
@@ -827,11 +935,50 @@ export class CommandManager {
       return { success: true, message: 'Aún no conoces ninguna habilidad.' };
     }
 
+    if (query && query.trim() !== '') {
+      const qLower = query.toLowerCase().trim();
+      let foundDef = null;
+      for (const id of playerSkills) {
+        const def = this.engine.skills.getSkill(id);
+        if (def && (def.name.toLowerCase().startsWith(qLower) || def.id.toLowerCase().startsWith(qLower))) {
+          foundDef = def;
+          break;
+        }
+      }
+
+      if (!foundDef) {
+        return { success: false, message: `No conoces ninguna habilidad que coincida con "${query}".` };
+      }
+
+      let exhaustiveMsg = `<magenta><b>=== ${foundDef.name.toUpperCase()} ===</b></magenta>\n`;
+      if (foundDef.family) exhaustiveMsg += `<i>Familia: ${foundDef.family}</i>\n`;
+      exhaustiveMsg += `<b>Tipo:</b> ${foundDef.type === 'damage' ? 'Ofensiva' : foundDef.type === 'heal' ? 'Curación' : 'Utilidad'}\n`;
+      exhaustiveMsg += `<b>Coste de Energía:</b> <yellow>${foundDef.energyCost} EN</yellow>\n`;
+      exhaustiveMsg += `\n<white>${foundDef.description}</white>\n`;
+      
+      if (foundDef.effects && foundDef.effects.length > 0) {
+        exhaustiveMsg += `\n<b>Efectos mecánicos:</b>\n`;
+        foundDef.effects.forEach((eff: any) => {
+          if (eff.type === 'damage') {
+            const dice = (eff.diceCount && eff.diceSides) ? `${eff.diceCount}d${eff.diceSides}` : '';
+            const mod = eff.modifier ? `+${eff.modifier}` : '';
+            exhaustiveMsg += ` - Inflige <red>${dice}${mod} daño</red>.\n`;
+          } else if (eff.type === 'heal') {
+            const dice = (eff.diceCount && eff.diceSides) ? `${eff.diceCount}d${eff.diceSides}` : '';
+            const mod = eff.modifier ? `+${eff.modifier}` : '';
+            exhaustiveMsg += ` - Sana <green>${dice}${mod} HP</green>.\n`;
+          }
+        });
+      }
+
+      return { success: true, message: exhaustiveMsg };
+    }
+
     let msg = `<b>Tus habilidades:</b>\n`;
     playerSkills.forEach((skillId: string) => {
       const skillDef = this.engine.skills.getSkill(skillId);
       if (skillDef) {
-        msg += ` - <cyan>${skillDef.name}</cyan> [${skillDef.energyCost} EN]: ${skillDef.description}\n`;
+        msg += ` - <cyan>${skillDef.name}</cyan> [${skillDef.energyCost} EN]: <i>${skillDef.description.split('.')[0]}</i>.\n`;
       }
     });
 
@@ -843,11 +990,218 @@ export class CommandManager {
     if (!player) return { success: false, message: 'Jugador no encontrado.' };
 
     const playerSkills = player.metadata.skills || [];
-    const skillDef = this.engine.skills.getSkill(skillName);
+    let resolvedSkillDef = null;
 
-    if (!skillDef) return { success: false, message: `No existe la habilidad "${skillName}".` };
-    if (!playerSkills.includes(skillDef.id)) return { success: false, message: `No conoces la habilidad "${skillDef.name}".` };
+    for (const id of playerSkills) {
+      const def = this.engine.skills.getSkill(id);
+      if (def) {
+        const nameLower = def.name.toLowerCase();
+        const idLower = def.id.toLowerCase();
+        const qLower = skillName.toLowerCase();
+        
+        if (nameLower === qLower || idLower === qLower || nameLower.startsWith(qLower) || idLower.startsWith(qLower)) {
+          resolvedSkillDef = def;
+          break;
+        }
+      }
+    }
 
-    return this.engine.skills.getSkill(skillDef.id)!.execute(this.engine, playerId, targetName);
+    if (!resolvedSkillDef) return { success: false, message: `No conoces ninguna habilidad que coincida con "${skillName}".` };
+
+    return this.engine.skills.getSkill(resolvedSkillDef.id)!.execute(this.engine, playerId, targetName);
+  }
+
+  prompt(playerId: string, args: string[]): { success: boolean; message: string } {
+    const player = this.engine.entities.getPlayer(playerId);
+    if (!player) return { success: false, message: 'Jugador no encontrado.' };
+
+    if (!player.metadata.promptSettings) {
+      player.metadata.promptSettings = { hp: true, resource: true, trama: true, aplauso: true, emoji: true };
+    }
+
+    if (args.length === 0) {
+      const p = player.metadata.promptSettings;
+      let msg = `<cyan><b>Configuración de tu Prompt:</b></cyan>\n`;
+      msg += `  hp       : ${p.hp ? '<green>ON</green>' : '<red>OFF</red>'}\n`;
+      msg += `  voz/en   : ${p.resource ? '<green>ON</green>' : '<red>OFF</red>'}\n`;
+      msg += `  trama    : ${p.trama ? '<green>ON</green>' : '<red>OFF</red>'}\n`;
+      msg += `  aplauso  : ${p.aplauso ? '<green>ON</green>' : '<red>OFF</red>'}\n`;
+      msg += `  emoji    : ${p.emoji ? '<green>ON</green>' : '<red>OFF</red>'}\n`;
+      msg += `\nUso: <yellow>prompt [opción] [on|off]</yellow>\nEjemplo: prompt emoji off`;
+      return { success: true, message: msg };
+    }
+
+    const option = args[0].toLowerCase();
+    const value = args[1]?.toLowerCase();
+
+    if (!['hp', 'voz', 'en', 'trama', 'aplauso', 'emoji'].includes(option)) {
+      return { success: false, message: `Opción inválida. Opciones válidas: hp, voz/en, trama, aplauso, emoji.` };
+    }
+
+    if (value !== 'on' && value !== 'off') {
+      return { success: false, message: `Debes especificar 'on' o 'off'. Ejemplo: prompt ${option} off` };
+    }
+
+    const isOn = value === 'on';
+    if (option === 'voz' || option === 'en') {
+      player.metadata.promptSettings.resource = isOn;
+    } else {
+      player.metadata.promptSettings[option] = isOn;
+    }
+
+    this.engine.emit('save_player', player);
+
+    return { success: true, message: `Opción de prompt '${option}' configurada a <yellow>${value.toUpperCase()}</yellow>.` };
+  }
+
+  help(playerId: string, topic?: string): { success: boolean; message: string } {
+    const player = this.engine.entities.getPlayer(playerId);
+    if (!player) return { success: false, message: 'Jugador no encontrado.' };
+
+    if (!topic || topic.trim() === '') {
+      let msg = `<cyan><b>[ AYUDA: COMANDOS DISPONIBLES ]</b></cyan>\n`;
+      msg += `<b>look / l / mirar</b>   : Observa tu entorno o un objetivo.\n`;
+      msg += `<b>move / mover</b>       : Desplázate (n, s, e, o, up, down).\n`;
+      msg += `<b>get / coger</b>        : Recoge un objeto del suelo.\n`;
+      msg += `<b>drop / soltar</b>      : Suelta un objeto de tu inventario.\n`;
+      msg += `<b>equip / equipo</b>     : Muestra tu equipo o equipa un objeto.\n`;
+      msg += `<b>unequip / desequipar</b> : Desequipa un objeto.\n`;
+      msg += `<b>inventory / i</b>      : Muestra tu inventario.\n`;
+      msg += `<b>score / puntuacion</b>   : Muestra tu ficha de personaje.\n`;
+      msg += `<b>skills / habilidades</b> : Lista o muestra información de habilidades.\n`;
+      msg += `<b>cast / lanzar / c</b>    : Usa una habilidad en combate.\n`;
+      msg += `<b>pulso</b>              : Muestra sugerencias de combate.\n`;
+      msg += `<b>kill / matar / k</b>     : Inicia un combate.\n`;
+      msg += `<b>flee / huir</b>        : Intenta escapar de un combate.\n`;
+      msg += `<b>say / decir</b>        : Habla con los que están en la sala.\n`;
+      msg += `<b>tell / susurrar</b>    : Habla por privado con alguien.\n`;
+      msg += `<b>prompt</b>             : Configura la barra de estado.\n`;
+      msg += `<b>help / ayuda <item></b>: Muestra ayuda o detalles de un objeto.\n`;
+      return { success: true, message: msg };
+    }
+
+    // Check commands first
+    const cmdTopic = topic.toLowerCase().trim();
+    const commandHelp: Record<string, string> = {
+      'look': 'Uso: look [objetivo]\nSinónimo: l, mirar\nTe permite observar tu entorno, un objeto, o a una persona para obtener más detalles.',
+      'mirar': 'Uso: mirar [objetivo]\nSinónimo: look, l\nTe permite observar tu entorno, un objeto, o a una persona para obtener más detalles.',
+      'l': 'Uso: l [objetivo]\nSinónimo: look, mirar\nTe permite observar tu entorno, un objeto, o a una persona para obtener más detalles.',
+      'move': 'Uso: move <dirección>\nSinónimo: mover, n, s, e, o, up, down\nTe desplazas hacia una salida abierta de la sala actual.',
+      'mover': 'Uso: mover <dirección>\nSinónimo: move, n, s, e, o, up, down\nTe desplazas hacia una salida abierta de la sala actual.',
+      'get': 'Uso: get <objeto>\nSinónimo: coger\nRecoges un objeto de la sala y lo guardas en tu inventario.',
+      'coger': 'Uso: coger <objeto>\nSinónimo: get\nRecoges un objeto de la sala y lo guardas en tu inventario.',
+      'drop': 'Uso: drop <objeto>\nSinónimo: soltar\nSueltas un objeto de tu inventario para dejarlo en la sala.',
+      'soltar': 'Uso: soltar <objeto>\nSinónimo: drop\nSueltas un objeto de tu inventario para dejarlo en la sala.',
+      'equip': 'Uso: equip [objeto]\nSinónimo: equipo, equipar\nSi no indicas nada, muestra tu equipamiento actual. Si indicas un objeto, lo equipa si es posible.',
+      'equipo': 'Uso: equipo [objeto]\nSinónimo: equip, equipar\nSi no indicas nada, muestra tu equipamiento actual. Si indicas un objeto, lo equipa si es posible.',
+      'equipar': 'Uso: equipar <objeto>\nSinónimo: equip, equipo\nTe equipas un objeto de tu inventario.',
+      'unequip': 'Uso: unequip <objeto|ranura>\nSinónimo: desequipar\nDesequipa un objeto que lleves puesto (ej: unequip arma).',
+      'desequipar': 'Uso: desequipar <objeto|ranura>\nSinónimo: unequip\nDesequipa un objeto que lleves puesto (ej: desequipar arma).',
+      'inventory': 'Uso: inventory\nSinónimo: inventario, i\nMuestra los objetos que llevas en la bolsa.',
+      'inventario': 'Uso: inventario\nSinónimo: inventory, i\nMuestra los objetos que llevas en la bolsa.',
+      'i': 'Uso: i\nSinónimo: inventory, inventario\nMuestra los objetos que llevas en la bolsa.',
+      'score': 'Uso: score\nSinónimo: puntuacion\nMuestra tus estadísticas principales, salud, recursos y atributos.',
+      'puntuacion': 'Uso: puntuacion\nSinónimo: score\nMuestra tus estadísticas principales, salud, recursos y atributos.',
+      'skills': 'Uso: skills\nSinónimo: habilidades\nMuestra las habilidades que conoces.',
+      'habilidades': 'Uso: habilidades\nSinónimo: skills\nMuestra las habilidades que conoces.',
+      'cast': 'Uso: cast <habilidad> [objetivo]\nSinónimo: lanzar, c\nEjecuta una habilidad o hechizo.',
+      'lanzar': 'Uso: lanzar <habilidad> [objetivo]\nSinónimo: cast, c\nEjecuta una habilidad o hechizo.',
+      'c': 'Uso: c <habilidad> [objetivo]\nSinónimo: cast, lanzar\nEjecuta una habilidad o hechizo.',
+      'pulso': 'Uso: pulso [opción]\nMuestra sugerencias de combate tácticas y te permite ejecutarlas rápidamente.',
+      'kill': 'Uso: kill <objetivo>\nSinónimo: matar, k\nInicias un combate contra la criatura o jugador indicado.',
+      'matar': 'Uso: matar <objetivo>\nSinónimo: kill, k\nInicias un combate contra la criatura o jugador indicado.',
+      'k': 'Uso: k <objetivo>\nSinónimo: kill, matar\nInicias un combate contra la criatura o jugador indicado.',
+      'flee': 'Uso: flee\nSinónimo: huir\nIntentas escapar de un combate activo.',
+      'huir': 'Uso: huir\nSinónimo: flee\nIntentas escapar de un combate activo.',
+      'say': 'Uso: say <mensaje>\nSinónimo: decir\nHablas en voz alta. Todo el que esté en la sala te escuchará.',
+      'decir': 'Uso: decir <mensaje>\nSinónimo: say\nHablas en voz alta. Todo el que esté en la sala te escuchará.',
+      'tell': 'Uso: tell <jugador> <mensaje>\nSinónimo: susurrar\nEnvías un mensaje privado a otro jugador.',
+      'susurrar': 'Uso: susurrar <jugador> <mensaje>\nSinónimo: tell\nEnvías un mensaje privado a otro jugador.',
+      'prompt': 'Uso: prompt [opción] [on|off]\nConfigura qué elementos visuales quieres ver en tu línea de estado.',
+      'help': 'Uso: help [comando|habilidad|objeto]\nSinónimo: ayuda\nMuestra información útil sobre el juego.',
+      'ayuda': 'Uso: ayuda [comando|habilidad|objeto]\nSinónimo: help\nMuestra información útil sobre el juego.'
+    };
+
+    if (commandHelp[cmdTopic]) {
+      let msg = `<cyan><b>[ AYUDA DEL COMANDO: ${cmdTopic.toUpperCase()} ]</b></cyan>\n`;
+      msg += commandHelp[cmdTopic];
+      return { success: true, message: msg };
+    }
+
+    // Check Skills
+    let resolvedSkillDef = null;
+    const knownSkills = player.metadata?.skills || [];
+    
+    // Exact match or partial match for skills
+    for (const skillId of knownSkills) {
+      const def = this.engine.skills.getSkillDef(skillId);
+      if (def) {
+        const nameLower = def.name.toLowerCase();
+        const idLower = def.id.toLowerCase();
+        if (nameLower === cmdTopic || idLower === cmdTopic || nameLower.startsWith(cmdTopic)) {
+          resolvedSkillDef = def;
+          break;
+        }
+      }
+    }
+
+    if (resolvedSkillDef) {
+      let msg = `<cyan><b>[ INFO DE HABILIDAD: ${resolvedSkillDef.name} ]</b></cyan>\n`;
+      msg += `Descripción: ${resolvedSkillDef.description}\n`;
+      if (resolvedSkillDef.energyCost) msg += `Coste de Energía/Voz: <yellow>${resolvedSkillDef.energyCost}</yellow>\n`;
+      msg += `Tipo: ${resolvedSkillDef.isReactive ? 'Recreativa/Táctica' : 'Activa'}\n`;
+      // Check for bard specific tags
+      if (resolvedSkillDef.metadata?.family) {
+        msg += `Familia (Armonía): <magenta>${resolvedSkillDef.metadata.family}</magenta>\n`;
+      }
+      return { success: true, message: msg };
+    }
+
+    // Attempt to inspect an item (either in inventory or in room)
+    const room = this.engine.entities.getRoom(player.roomId);
+    let targetItem = null;
+
+    // Check inventory
+    for (const id of player.inventory) {
+      const item = this.engine.entities.getItem(id);
+      if (item && this.matchEntityName(item.name, topic)) {
+        targetItem = item;
+        break;
+      }
+    }
+
+    // Check room if not found in inventory
+    if (!targetItem && room) {
+      for (const id of room.entities) {
+        const item = this.engine.entities.getItem(id);
+        if (item && this.matchEntityName(item.name, topic)) {
+          targetItem = item;
+          break;
+        }
+      }
+    }
+
+    if (targetItem) {
+      let msg = `<cyan><b>[ INFO DEL OBJETO: ${targetItem.name} ]</b></cyan>\n`;
+      msg += `Descripción: ${targetItem.description}\n`;
+      msg += `Tipo: <yellow>${targetItem.type}</yellow>\n`;
+      if (targetItem.value) msg += `Valor: <green>${targetItem.value} monedas</green>\n`;
+      if (targetItem.equipSlot) msg += `Ranura de Equipo: <b>${targetItem.equipSlot}</b>\n`;
+      
+      if (targetItem.metadata) {
+        if (targetItem.metadata.diceCount && targetItem.metadata.diceSides) {
+          msg += `Daño de Arma: <b>${targetItem.metadata.diceCount}d${targetItem.metadata.diceSides} + ${targetItem.metadata.modifier || 0}</b>\n`;
+        }
+        if (targetItem.metadata.charges !== undefined) {
+          msg += `Cargas restantes: <b>${targetItem.metadata.charges}</b>\n`;
+        }
+        if (targetItem.metadata.effects) {
+          msg += `<i>Posee efectos especiales al usarse/equiparse.</i>\n`;
+        }
+      }
+      return { success: true, message: msg };
+    }
+
+    return { success: false, message: `No se encontró ayuda sobre "${topic}". (Si es un objeto, asegúrate de llevarlo encima o que esté en la sala).` };
   }
 }

@@ -33,3 +33,72 @@
       diceCount: 3
       diceSides: 6
       modifier: 7
+
+- id: bardo_nota_cortante
+  name: Nota Cortante
+  description: Un acorde disonante y afilado que ataca la mente del enemigo.
+  energyCost: 15
+  cooldown: 0
+  type: damage
+  family: nota
+  effects:
+    - type: damage
+      diceCount: 1
+      diceSides: 6
+      modifier: 2
+
+- id: bardo_paso_liria
+  name: Paso de Liria
+  description: Un paso de danza ágil que aumenta tu iniciativa y evasión.
+  energyCost: 10
+  cooldown: 1
+  type: buff
+  family: danza
+  effects:
+    - type: buff
+      modifier: 2
+
+- id: bardo_copla_pegadiza
+  name: Copla Pegadiza
+  description: Una tonada molesta que distrae al enemigo y reduce su precisión.
+  energyCost: 20
+  cooldown: 2
+  type: damage
+  family: copla
+  effects:
+    - type: damage
+      diceCount: 1
+      diceSides: 4
+      modifier: 0
+
+- id: bardo_sostener_compas
+  name: Sostener Compás
+  description: Una respiración profunda para mantener el ritmo, extendiendo los efectos de tus canciones.
+  energyCost: 5
+  cooldown: 3
+  type: utility
+  effects: []
+
+- id: bardo_himno_primera_chapa
+  name: Himno de la Primera Chapa
+  description: Un himno marcial que fortalece y protege al grupo.
+  energyCost: 15
+  cooldown: 2
+  type: buff
+  family: epica
+  effects:
+    - type: buff
+      modifier: 1
+      duration: 30000
+
+- id: bardo_sincopa_burlona
+  name: Síncopa Burlona
+  description: Un ritmo engañoso que hace tropezar al adversario.
+  energyCost: 15
+  cooldown: 2
+  type: debuff
+  family: copla
+  effects:
+    - type: debuff
+      modifier: -1
+      duration: 20000

@@ -199,6 +199,23 @@ export class Session {
        });
     }
 
+    if (this.creationData.classId === 'bardo_cronica_viva') {
+      newPlayer.bardState = {
+        estrofa: 0,
+        aplauso: 0,
+        tramaMax: 1
+      };
+    }
+
+    // Set default prompt settings
+    newPlayer.metadata.promptSettings = {
+      hp: true,
+      resource: true,
+      trama: true,
+      aplauso: true,
+      emoji: true
+    };
+
     await Database.savePlayer(newPlayer);
     this.sendSystemMessage("¡Personaje creado exitosamente! Entrando al mundo...");
     await this.loginCharacter(newPlayer.id);
@@ -227,7 +244,15 @@ export class Session {
       player.coins = dbData.coins;
       player.inventory = dbData.inventory;
       player.equipment = dbData.equipment;
-      player.metadata = dbData.metadata;
+      player.metadata = dbData.metadata || { skills: [] };
+      if (!player.metadata.promptSettings) {
+        player.metadata.promptSettings = { hp: true, resource: true, trama: true, aplauso: true, emoji: true };
+      }
+      if (dbData.bardState) player.bardState = dbData.bardState;
+      // Also init bardState if it's missing but class is bardo
+      if (!player.bardState && player.classId === 'bardo_cronica_viva') {
+        player.bardState = { estrofa: 0, aplauso: 0, tramaMax: 1 };
+      }
       
       this.engine.registerPlayer(player);
     }
@@ -241,6 +266,12 @@ export class Session {
       message: `¡Bienvenido de nuevo, ${player.name}!`,
       data: initialState
     });
+
+    // Send silent initial data sync
+    this.send({ type: 'data', group: 'attributes', data: this.engine.commands.getScore(this.playerId).data });
+    this.send({ type: 'data', group: 'inventory', data: this.engine.commands.getInventory(this.playerId) });
+    this.send({ type: 'data', group: 'equipment', data: this.engine.commands.getEquipment(this.playerId) });
+    this.send({ type: 'data', group: 'quests', data: this.engine.commands.getFormattedCronica(this.playerId).data });
 
     this.engine.emit('spatial_message', {
       roomId: player.roomId,
@@ -269,11 +300,12 @@ export class Session {
 
     const VALID_COMMANDS = [
       'look', 'mirar', 'l', 'move', 'mover', 'cronica', 'open', 'abrir', 'get', 'coger',
-      'drop', 'soltar', 'inventory', 'inventario', 'i', 'score', 'puntuacion', 'equip', 'equipar',
+      'drop', 'soltar', 'inventory', 'inventario', 'i', 'score', 'puntuacion', 'equip', 'equipo', 'equipar',
+      'help', 'ayuda',
       'unequip', 'desequipar', 'kill', 'matar', 'k', 'flee', 'huir', 'heal', 'curar', 'talk', 'hablar',
       'list', 'listar', 'tienda', 'buy', 'comprar', 'sell', 'vender', 'skills', 'habilidades',
-      'cast', 'lanzar', 'use', 'usar', 'interact', 'interactuar', 'tirar', 'say', 'decir',
-      'tell', 'susurrar', 'yell', 'gritar', 'channel', 'chat', 'c'
+      'cast', 'c', 'lanzar', 'use', 'usar', 'interact', 'interactuar', 'tirar', 'say', 'decir',
+      'tell', 'susurrar', 'yell', 'gritar', 'channel', 'chat', 'pulso', 'prompt'
     ];
 
     let resolvedCommand = command;
@@ -303,11 +335,14 @@ export class Session {
     } else if (command === 'drop' || command === 'soltar') {
       response = this.engine.commands.drop(this.playerId, args.join(' '));
     } else if (command === 'inventory' || command === 'i') {
-      response = { success: true, data: this.engine.commands.getInventory(this.playerId), command: 'inventory' };
+      const invData = this.engine.commands.getInventory(this.playerId);
+      const items = invData.map(i => `<cyan>${i.name}</cyan>`).join(', ');
+      const message = items ? `<b>Tu inventario:</b> ${items}` : `<b>Tu inventario está vacío.</b>`;
+      response = { success: true, data: invData, message, command: 'inventory' };
     } else if (command === 'score' || command === 'puntuacion') {
       const res = this.engine.commands.getScore(this.playerId);
       response = { success: true, data: res.data, message: res.message, command: 'score' };
-    } else if (command === 'equip' || command === 'equipar') {
+    } else if (command === 'equip' || command === 'equipar' || command === 'equipo') {
       response = { ...this.engine.commands.equip(this.playerId, args.join(' ')), command: 'equip' };
     } else if (command === 'unequip' || command === 'desequipar') {
       response = { ...this.engine.commands.unequip(this.playerId, args.join(' ')), command: 'unequip' };
@@ -330,8 +365,8 @@ export class Session {
     } else if (command === 'sell' || command === 'vender') {
       response = { ...this.engine.commands.sell(this.playerId, args.join(' ')), command: 'sell' };
     } else if (command === 'skills' || command === 'habilidades') {
-      response = { ...this.engine.commands.getSkills(this.playerId), command: 'skills' };
-    } else if (command === 'cast' || command === 'lanzar') {
+      response = { ...this.engine.commands.getSkills(this.playerId, args.join(' ')), command: 'skills' };
+    } else if (command === 'cast' || command === 'c' || command === 'lanzar') {
       const skillName = args[0];
       const targetName = args.slice(1).join(' ');
       response = { ...this.engine.commands.cast(this.playerId, skillName, targetName), command: 'cast' };
@@ -345,8 +380,18 @@ export class Session {
       response = this.engine.chat.yell(this.playerId, args.join(' '));
     } else if (command === 'channel') {
       response = await this.engine.chat.processAdminCommand(this.playerId, args);
-    } else if (command === 'chat' || command === 'c') {
+    } else if (command === 'chat') {
       response = await this.engine.chat.channelMessage(this.playerId, args[0], args.slice(1).join(' '));
+    } else if (command === 'pulso') {
+      response = { ...this.engine.commands.getPulso(this.playerId), command: 'pulso' };
+    } else if (command === 'prompt') {
+      response = { ...this.engine.commands.prompt(this.playerId, args), command: 'prompt' };
+      // Sync attributes back to client so CommandLine updates immediately
+      if (response.success) {
+        this.send({ type: 'data', group: 'attributes', data: this.engine.commands.getScore(this.playerId).data });
+      }
+    } else if (command === 'help' || command === 'ayuda') {
+      response = { ...this.engine.commands.help(this.playerId, args.join(' ')), command: 'help' };
     } else {
       // Intentar interacción contextual (ej. "empujar piedra")
       const targetStr = args.join(' ');

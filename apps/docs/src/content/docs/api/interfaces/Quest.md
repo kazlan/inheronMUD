@@ -10,7 +10,7 @@ title: "Interface: Quest"
 
 # Interface: Quest
 
-Defined in: [packages/engine/src/interfaces/quest.interface.ts:20](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/quest.interface.ts#L20)
+Defined in: [packages/engine/src/interfaces/quest.interface.ts:20](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/quest.interface.ts#L20)
 
 ## Properties
 
@@ -18,7 +18,7 @@ Defined in: [packages/engine/src/interfaces/quest.interface.ts:20](https://githu
 
 > `optional` **consequences?**: `object`
 
-Defined in: [packages/engine/src/interfaces/quest.interface.ts:32](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/quest.interface.ts#L32)
+Defined in: [packages/engine/src/interfaces/quest.interface.ts:32](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/quest.interface.ts#L32)
 
 #### flagsToAdd?
 
@@ -34,7 +34,7 @@ Defined in: [packages/engine/src/interfaces/quest.interface.ts:32](https://githu
 
 > **description**: `string`
 
-Defined in: [packages/engine/src/interfaces/quest.interface.ts:23](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/quest.interface.ts#L23)
+Defined in: [packages/engine/src/interfaces/quest.interface.ts:23](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/quest.interface.ts#L23)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [packages/engine/src/interfaces/quest.interface.ts:23](https://githu
 
 > **id**: `string`
 
-Defined in: [packages/engine/src/interfaces/quest.interface.ts:21](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/quest.interface.ts#L21)
+Defined in: [packages/engine/src/interfaces/quest.interface.ts:21](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/quest.interface.ts#L21)
 
 ***
 
@@ -50,7 +50,7 @@ Defined in: [packages/engine/src/interfaces/quest.interface.ts:21](https://githu
 
 > **objectives**: [`QuestObjective`](QuestObjective.md)[]
 
-Defined in: [packages/engine/src/interfaces/quest.interface.ts:25](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/quest.interface.ts#L25)
+Defined in: [packages/engine/src/interfaces/quest.interface.ts:25](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/quest.interface.ts#L25)
 
 ***
 
@@ -58,7 +58,7 @@ Defined in: [packages/engine/src/interfaces/quest.interface.ts:25](https://githu
 
 > **rewards**: `object`
 
-Defined in: [packages/engine/src/interfaces/quest.interface.ts:26](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/quest.interface.ts#L26)
+Defined in: [packages/engine/src/interfaces/quest.interface.ts:26](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/quest.interface.ts#L26)
 
 #### currency?
 
@@ -82,7 +82,7 @@ Defined in: [packages/engine/src/interfaces/quest.interface.ts:26](https://githu
 
 > **status**: [`QuestStatus`](../enumerations/QuestStatus.md)
 
-Defined in: [packages/engine/src/interfaces/quest.interface.ts:24](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/quest.interface.ts#L24)
+Defined in: [packages/engine/src/interfaces/quest.interface.ts:24](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/quest.interface.ts#L24)
 
 ***
 
@@ -90,4 +90,4 @@ Defined in: [packages/engine/src/interfaces/quest.interface.ts:24](https://githu
 
 > **title**: `string`
 
-Defined in: [packages/engine/src/interfaces/quest.interface.ts:22](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/quest.interface.ts#L22)
+Defined in: [packages/engine/src/interfaces/quest.interface.ts:22](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/quest.interface.ts#L22)

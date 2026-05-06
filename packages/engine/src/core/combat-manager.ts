@@ -25,7 +25,10 @@ export class CombatManager {
   public currentRound: number = 0;
   public active: boolean = true;
 
-  constructor(participants: CombatParticipant[]) {
+  constructor(
+    participants: CombatParticipant[],
+    private onAction?: (actorId: string, actionType: string, magnitude: number) => void
+  ) {
     this.id = uuidv4();
     this.participants = this.sortParticipants(participants);
   }
@@ -61,7 +64,12 @@ export class CombatManager {
       }
 
       // Evasion check (15% chance baseline)
-      const evadeChance = 0.15;
+      let evadeChance = 0.15;
+      if (targetEntity.isPlayer) {
+         const hasVanguardia = this.participants.some(p => p.isPlayer && (p as any)._armoniaVanguardiaActive);
+         if (hasVanguardia) evadeChance += 0.10;
+      }
+
       const isEvaded = Math.random() < evadeChance;
 
       if (isEvaded) {
@@ -70,6 +78,14 @@ export class CombatManager {
         } else {
           log.push(`¡<blue>${targetEntity.name}</blue> desvía (parry) el golpe de ${participant.name} en el último segundo!`);
         }
+
+        if ((participant as any)._armoniaRidiculoActive && (participant as any)._bardEntityId) {
+           log.push(`🎭 El fallo de ${participant.name} resuena con la síncopa. Su ritmo se quiebra.`);
+           if (this.onAction) {
+             this.onAction((participant as any)._bardEntityId, 'armonia_ridiculo_evade', Math.random() < 0.2 ? 1 : 0);
+           }
+        }
+
         continue;
       }
 
@@ -117,12 +133,18 @@ export class CombatManager {
 
       if (isCrit) {
         log.push(`<b>¡GOLPE CRÍTICO!</b> ${attackDesc}, infligiendo <red><b>${damage} de daño brutal</b></red>.`);
+        if (participant.isPlayer && this.onAction) {
+          this.onAction(participant.entityId, 'critical_hit', damage);
+        }
       } else {
         log.push(`${attackDesc} por <red>${damage} de daño</red>.`);
       }
 
       if (targetEntity.hpCurrent <= 0) {
         log.push(`<b>¡${targetEntity.name} se desploma sin vida!</b>`);
+        if (participant.isPlayer && this.onAction) {
+          this.onAction(participant.entityId, 'killing_blow', damage);
+        }
       }
     }
 

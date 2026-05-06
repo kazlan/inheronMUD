@@ -10,7 +10,7 @@ title: "Interface: DerivedStats"
 
 # Interface: DerivedStats
 
-Defined in: [packages/engine/src/core/stat-calculator.ts:3](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/stat-calculator.ts#L3)
+Defined in: [packages/engine/src/core/stat-calculator.ts:3](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/stat-calculator.ts#L3)
 
 ## Properties
 
@@ -18,7 +18,7 @@ Defined in: [packages/engine/src/core/stat-calculator.ts:3](https://github.com/k
 
 > **energyCurrent**: `number`
 
-Defined in: [packages/engine/src/core/stat-calculator.ts:7](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/stat-calculator.ts#L7)
+Defined in: [packages/engine/src/core/stat-calculator.ts:7](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/stat-calculator.ts#L7)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/engine/src/core/stat-calculator.ts:7](https://github.com/k
 
 > **energyMax**: `number`
 
-Defined in: [packages/engine/src/core/stat-calculator.ts:6](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/stat-calculator.ts#L6)
+Defined in: [packages/engine/src/core/stat-calculator.ts:6](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/stat-calculator.ts#L6)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [packages/engine/src/core/stat-calculator.ts:6](https://github.com/k
 
 > **evasion**: `number`
 
-Defined in: [packages/engine/src/core/stat-calculator.ts:9](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/stat-calculator.ts#L9)
+Defined in: [packages/engine/src/core/stat-calculator.ts:9](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/stat-calculator.ts#L9)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [packages/engine/src/core/stat-calculator.ts:9](https://github.com/k
 
 > **hpCurrent**: `number`
 
-Defined in: [packages/engine/src/core/stat-calculator.ts:5](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/stat-calculator.ts#L5)
+Defined in: [packages/engine/src/core/stat-calculator.ts:5](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/stat-calculator.ts#L5)
 
 ***
 
@@ -50,7 +50,7 @@ Defined in: [packages/engine/src/core/stat-calculator.ts:5](https://github.com/k
 
 > **hpMax**: `number`
 
-Defined in: [packages/engine/src/core/stat-calculator.ts:4](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/stat-calculator.ts#L4)
+Defined in: [packages/engine/src/core/stat-calculator.ts:4](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/stat-calculator.ts#L4)
 
 ***
 
@@ -58,4 +58,4 @@ Defined in: [packages/engine/src/core/stat-calculator.ts:4](https://github.com/k
 
 > **iniciativa**: `number`
 
-Defined in: [packages/engine/src/core/stat-calculator.ts:8](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/stat-calculator.ts#L8)
+Defined in: [packages/engine/src/core/stat-calculator.ts:8](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/stat-calculator.ts#L8)

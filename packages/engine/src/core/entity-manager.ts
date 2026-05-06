@@ -80,4 +80,28 @@ export class EntityManager {
   removeItem(id: string): void {
     this.items.delete(id);
   }
+
+  movePlayer(playerId: string, targetRoomId: string): void {
+    const player = this.players.get(playerId);
+    if (!player) return;
+
+    const oldRoom = this.rooms.get(player.roomId);
+    if (oldRoom) oldRoom.removeEntity(playerId);
+
+    player.roomId = targetRoomId;
+    const newRoom = this.rooms.get(targetRoomId);
+    if (newRoom) newRoom.addEntity(playerId);
+  }
+
+  moveNPC(npcId: string, targetRoomId: string): void {
+    const npc = this.npcs.get(npcId);
+    if (!npc) return;
+
+    const oldRoom = this.rooms.get(npc.roomId);
+    if (oldRoom) oldRoom.removeEntity(npcId);
+
+    npc.roomId = targetRoomId;
+    const newRoom = this.rooms.get(targetRoomId);
+    if (newRoom) newRoom.addEntity(npcId);
+  }
 }

@@ -10,7 +10,7 @@ title: "Class: EventLog"
 
 # Class: EventLog
 
-Defined in: [packages/engine/src/core/event-log.ts:4](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/event-log.ts#L4)
+Defined in: [packages/engine/src/core/event-log.ts:4](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/event-log.ts#L4)
 
 ## Implements
 
@@ -32,7 +32,7 @@ Defined in: [packages/engine/src/core/event-log.ts:4](https://github.com/kazlan/
 
 > **clear**(): `void`
 
-Defined in: [packages/engine/src/core/event-log.ts:34](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/event-log.ts#L34)
+Defined in: [packages/engine/src/core/event-log.ts:34](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/event-log.ts#L34)
 
 #### Returns
 
@@ -44,7 +44,7 @@ Defined in: [packages/engine/src/core/event-log.ts:34](https://github.com/kazlan
 
 > **getEvents**(`filter?`): [`IEvent`](../interfaces/IEvent.md)[]
 
-Defined in: [packages/engine/src/core/event-log.ts:21](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/event-log.ts#L21)
+Defined in: [packages/engine/src/core/event-log.ts:21](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/event-log.ts#L21)
 
 #### Parameters
 
@@ -66,7 +66,7 @@ Defined in: [packages/engine/src/core/event-log.ts:21](https://github.com/kazlan
 
 > **log**(`eventData`): [`IEvent`](../interfaces/IEvent.md)
 
-Defined in: [packages/engine/src/core/event-log.ts:7](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/event-log.ts#L7)
+Defined in: [packages/engine/src/core/event-log.ts:7](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/event-log.ts#L7)
 
 #### Parameters
 

@@ -16,6 +16,7 @@ title: "Inheron Engine API Reference"
 
 ## Classes
 
+- [AdminManager](classes/AdminManager.md)
 - [AIManager](classes/AIManager.md)
 - [CharacterCreator](classes/CharacterCreator.md)
 - [ChatManager](classes/ChatManager.md)
@@ -63,7 +64,13 @@ title: "Inheron Engine API Reference"
 ## Variables
 
 - [CLASSES](variables/CLASSES.md)
+- [ExitSchema](variables/ExitSchema.md)
 - [INITIAL\_ITEMS](variables/INITIAL_ITEMS.md)
 - [INITIAL\_NPCS](variables/INITIAL_NPCS.md)
 - [INITIAL\_ROOMS](variables/INITIAL_ROOMS.md)
+- [ItemSchema](variables/ItemSchema.md)
+- [NPCSchema](variables/NPCSchema.md)
 - [RACES](variables/RACES.md)
+- [RoomSchema](variables/RoomSchema.md)
+- [SpawnerSchema](variables/SpawnerSchema.md)
+- [StatsSchema](variables/StatsSchema.md)

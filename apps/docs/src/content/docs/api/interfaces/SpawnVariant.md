@@ -10,7 +10,7 @@ title: "Interface: SpawnVariant"
 
 # Interface: SpawnVariant
 
-Defined in: [packages/engine/src/models/spawner.model.ts:1](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/spawner.model.ts#L1)
+Defined in: [packages/engine/src/models/spawner.model.ts:1](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/spawner.model.ts#L1)
 
 ## Properties
 
@@ -18,7 +18,7 @@ Defined in: [packages/engine/src/models/spawner.model.ts:1](https://github.com/k
 
 > **chance**: `number`
 
-Defined in: [packages/engine/src/models/spawner.model.ts:3](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/spawner.model.ts#L3)
+Defined in: [packages/engine/src/models/spawner.model.ts:3](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/spawner.model.ts#L3)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/engine/src/models/spawner.model.ts:3](https://github.com/k
 
 > **npcId**: `string`
 
-Defined in: [packages/engine/src/models/spawner.model.ts:2](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/spawner.model.ts#L2)
+Defined in: [packages/engine/src/models/spawner.model.ts:2](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/spawner.model.ts#L2)
 
 ***
 
@@ -34,4 +34,4 @@ Defined in: [packages/engine/src/models/spawner.model.ts:2](https://github.com/k
 
 > `optional` **unique?**: `boolean`
 
-Defined in: [packages/engine/src/models/spawner.model.ts:4](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/spawner.model.ts#L4)
+Defined in: [packages/engine/src/models/spawner.model.ts:4](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/spawner.model.ts#L4)

@@ -14,10 +14,14 @@
     "typecheck": "pnpm -r run typecheck",
     "docs:api": "typedoc",
     "docs:build": "pnpm run docs:api && node scripts/sync-docs.js",
+    "docs:validate": "tsx scripts/validate-world.ts",
     "docs:dev": "pnpm --filter docs dev"
   },
   "devDependencies": {
+    "js-yaml": "^4.1.1",
+    "tsx": "^4.21.0",
     "typedoc": "^0.28.19",
-    "typedoc-plugin-markdown": "^4.11.0"
+    "typedoc-plugin-markdown": "^4.11.0",
+    "zod": "^4.4.3"
   }
 }

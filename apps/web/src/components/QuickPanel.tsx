@@ -8,11 +8,65 @@ interface QuickPanelProps {
     title: string;
     exits: string[];
   };
+  inCombat?: boolean;
+  pulse?: any[];
 }
 
-export default function QuickPanel({ onCommand, onOpenPanel, room }: QuickPanelProps) {
+export default function QuickPanel({ onCommand, onOpenPanel, room, inCombat, pulse }: QuickPanelProps) {
   const availableExits = room?.exits || [];
   const hasExit = (dir: string) => availableExits.includes(dir);
+
+  // If in combat, render the Pulse Bar instead
+  if (inCombat && pulse && pulse.length > 0) {
+    return (
+      <div className="glass-panel" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div className="panel-title flex justify-between items-center w-full">
+          <span><span style={{ color: 'var(--magenta)' }}>[</span> PULSO DE COMBATE <span style={{ color: 'var(--magenta)' }}>]</span></span>
+        </div>
+        <p style={{ fontSize: '0.8rem', color: '#aaa', marginBottom: '1rem' }}>
+          Atajos: <span style={{ color: '#fff' }}>pulso 1</span>, <span style={{ color: '#fff' }}>pulso 2</span>... o <span style={{ color: '#fff' }}>pulso</span>
+        </p>
+        <div className="quick-buttons-grid" style={{ gridTemplateColumns: '1fr', gap: '0.5rem', flex: 1, overflowY: 'auto' }}>
+          {pulse.map((p, idx) => {
+            let borderColor = 'var(--ui-border)';
+            if (p.family === 'nota') borderColor = '#e74c3c'; // red
+            else if (p.family === 'copla') borderColor = '#3498db'; // blue
+            else if (p.family === 'danza') borderColor = '#2ecc71'; // green
+            else if (p.family === 'himno') borderColor = '#f1c40f'; // yellow
+            else if (p.family) borderColor = 'var(--magenta)'; // fallback
+
+            return (
+              <button
+                key={idx}
+                className="quick-btn"
+                style={{ 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  alignItems: 'flex-start',
+                  borderColor,
+                  padding: '0.5rem',
+                  height: 'auto',
+                  borderWidth: '2px',
+                  borderLeftWidth: '6px'
+                }}
+                onClick={() => onCommand(`pulso ${idx + 1}`)}
+                onMouseDown={(e) => e.preventDefault()}
+                title={p.reason}
+              >
+                <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', marginBottom: '0.2rem' }}>
+                  <span style={{ fontWeight: 'bold', color: 'white' }}>{p.name}</span>
+                  <span style={{ color: '#888', fontSize: '0.75rem', fontWeight: 'bold' }}>{idx + 1}</span>
+                </div>
+                <span style={{ fontSize: '0.75rem', color: '#ccc', fontStyle: 'italic', textAlign: 'left' }}>
+                  {p.reason}
+                </span>
+              </button>
+            )
+          })}
+        </div>
+      </div>
+    );
+  }
 
   // Minimap 9x9 grid
   // Center is index 40 (row 4, col 4)
@@ -103,7 +157,7 @@ export default function QuickPanel({ onCommand, onOpenPanel, room }: QuickPanelP
         <button className="quick-btn" onMouseDown={(e) => e.preventDefault()} onClick={() => onCommand('rest')}>Descansar</button>
         <button className="quick-btn" onMouseDown={(e) => e.preventDefault()} onClick={() => onCommand('stand')}>Levantarse</button>
         <button className="quick-btn" onMouseDown={(e) => e.preventDefault()} onClick={() => onCommand('help')}>Ayuda</button>
-        <button className="quick-btn" onMouseDown={(e) => e.preventDefault()} onClick={() => onCommand('cast')}>Hechizo</button>
+        <button className="quick-btn" style={{ borderColor: 'var(--magenta)', color: 'var(--magenta)' }} onMouseDown={(e) => e.preventDefault()} onClick={() => onCommand('pulso')}>Pulso</button>
       </div>
     </div>
   );

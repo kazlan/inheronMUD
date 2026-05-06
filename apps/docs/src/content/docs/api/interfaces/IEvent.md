@@ -10,7 +10,7 @@ title: "Interface: IEvent"
 
 # Interface: IEvent
 
-Defined in: [packages/engine/src/interfaces/event.interface.ts:1](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/event.interface.ts#L1)
+Defined in: [packages/engine/src/interfaces/event.interface.ts:1](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/event.interface.ts#L1)
 
 ## Properties
 
@@ -18,7 +18,7 @@ Defined in: [packages/engine/src/interfaces/event.interface.ts:1](https://github
 
 > `optional` **actorId?**: `string`
 
-Defined in: [packages/engine/src/interfaces/event.interface.ts:5](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/event.interface.ts#L5)
+Defined in: [packages/engine/src/interfaces/event.interface.ts:5](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/event.interface.ts#L5)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/engine/src/interfaces/event.interface.ts:5](https://github
 
 > **data**: `Record`\<`string`, `any`\>
 
-Defined in: [packages/engine/src/interfaces/event.interface.ts:8](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/event.interface.ts#L8)
+Defined in: [packages/engine/src/interfaces/event.interface.ts:8](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/event.interface.ts#L8)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [packages/engine/src/interfaces/event.interface.ts:8](https://github
 
 > **id**: `string`
 
-Defined in: [packages/engine/src/interfaces/event.interface.ts:2](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/event.interface.ts#L2)
+Defined in: [packages/engine/src/interfaces/event.interface.ts:2](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/event.interface.ts#L2)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [packages/engine/src/interfaces/event.interface.ts:2](https://github
 
 > `optional` **metadata?**: `object`
 
-Defined in: [packages/engine/src/interfaces/event.interface.ts:9](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/event.interface.ts#L9)
+Defined in: [packages/engine/src/interfaces/event.interface.ts:9](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/event.interface.ts#L9)
 
 #### command\_id?
 
@@ -62,7 +62,7 @@ Defined in: [packages/engine/src/interfaces/event.interface.ts:9](https://github
 
 > `optional` **roomId?**: `string`
 
-Defined in: [packages/engine/src/interfaces/event.interface.ts:7](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/event.interface.ts#L7)
+Defined in: [packages/engine/src/interfaces/event.interface.ts:7](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/event.interface.ts#L7)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [packages/engine/src/interfaces/event.interface.ts:7](https://github
 
 > `optional` **targetId?**: `string`
 
-Defined in: [packages/engine/src/interfaces/event.interface.ts:6](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/event.interface.ts#L6)
+Defined in: [packages/engine/src/interfaces/event.interface.ts:6](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/event.interface.ts#L6)
 
 ***
 
@@ -78,7 +78,7 @@ Defined in: [packages/engine/src/interfaces/event.interface.ts:6](https://github
 
 > **timestamp**: `number`
 
-Defined in: [packages/engine/src/interfaces/event.interface.ts:3](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/event.interface.ts#L3)
+Defined in: [packages/engine/src/interfaces/event.interface.ts:3](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/event.interface.ts#L3)
 
 ***
 
@@ -86,4 +86,4 @@ Defined in: [packages/engine/src/interfaces/event.interface.ts:3](https://github
 
 > **type**: `string`
 
-Defined in: [packages/engine/src/interfaces/event.interface.ts:4](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/interfaces/event.interface.ts#L4)
+Defined in: [packages/engine/src/interfaces/event.interface.ts:4](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/interfaces/event.interface.ts#L4)

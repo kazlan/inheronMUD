@@ -10,7 +10,7 @@ title: "Class: Player"
 
 # Class: Player
 
-Defined in: [packages/engine/src/models/player.model.ts:13](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/player.model.ts#L13)
+Defined in: [packages/engine/src/models/player.model.ts:13](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/player.model.ts#L13)
 
 ## Extends
 
@@ -22,7 +22,7 @@ Defined in: [packages/engine/src/models/player.model.ts:13](https://github.com/k
 
 > **new Player**(`accountId`, `name`, `stats`, `classId`, `raceId`, `roomId`, `id?`): `Player`
 
-Defined in: [packages/engine/src/models/player.model.ts:30](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/player.model.ts#L30)
+Defined in: [packages/engine/src/models/player.model.ts:30](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/player.model.ts#L30)
 
 #### Parameters
 
@@ -68,7 +68,7 @@ Defined in: [packages/engine/src/models/player.model.ts:30](https://github.com/k
 
 > **accountId**: `string`
 
-Defined in: [packages/engine/src/models/player.model.ts:14](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/player.model.ts#L14)
+Defined in: [packages/engine/src/models/player.model.ts:14](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/player.model.ts#L14)
 
 ***
 
@@ -76,7 +76,7 @@ Defined in: [packages/engine/src/models/player.model.ts:14](https://github.com/k
 
 > **activeEffects**: `any`[] = `[]`
 
-Defined in: [packages/engine/src/models/entity.model.ts:8](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/entity.model.ts#L8)
+Defined in: [packages/engine/src/models/entity.model.ts:8](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/entity.model.ts#L8)
 
 #### Inherited from
 
@@ -88,7 +88,7 @@ Defined in: [packages/engine/src/models/entity.model.ts:8](https://github.com/ka
 
 > **classId**: `string`
 
-Defined in: [packages/engine/src/models/player.model.ts:21](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/player.model.ts#L21)
+Defined in: [packages/engine/src/models/player.model.ts:21](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/player.model.ts#L21)
 
 ***
 
@@ -96,7 +96,7 @@ Defined in: [packages/engine/src/models/player.model.ts:21](https://github.com/k
 
 > **coins**: `number` = `0`
 
-Defined in: [packages/engine/src/models/player.model.ts:28](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/player.model.ts#L28)
+Defined in: [packages/engine/src/models/player.model.ts:28](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/player.model.ts#L28)
 
 ***
 
@@ -104,7 +104,7 @@ Defined in: [packages/engine/src/models/player.model.ts:28](https://github.com/k
 
 > **description**: `string`
 
-Defined in: [packages/engine/src/models/entity.model.ts:6](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/entity.model.ts#L6)
+Defined in: [packages/engine/src/models/entity.model.ts:6](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/entity.model.ts#L6)
 
 #### Inherited from
 
@@ -116,7 +116,7 @@ Defined in: [packages/engine/src/models/entity.model.ts:6](https://github.com/ka
 
 > `optional` **energyCurrent?**: `number`
 
-Defined in: [packages/engine/src/models/player.model.ts:24](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/player.model.ts#L24)
+Defined in: [packages/engine/src/models/player.model.ts:24](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/player.model.ts#L24)
 
 ***
 
@@ -124,7 +124,7 @@ Defined in: [packages/engine/src/models/player.model.ts:24](https://github.com/k
 
 > `optional` **energyMax?**: `number`
 
-Defined in: [packages/engine/src/models/player.model.ts:26](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/player.model.ts#L26)
+Defined in: [packages/engine/src/models/player.model.ts:26](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/player.model.ts#L26)
 
 ***
 
@@ -132,7 +132,7 @@ Defined in: [packages/engine/src/models/player.model.ts:26](https://github.com/k
 
 > **equipment**: `Record`\<`string`, `string`\> = `{}`
 
-Defined in: [packages/engine/src/models/player.model.ts:20](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/player.model.ts#L20)
+Defined in: [packages/engine/src/models/player.model.ts:20](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/player.model.ts#L20)
 
 ***
 
@@ -140,7 +140,7 @@ Defined in: [packages/engine/src/models/player.model.ts:20](https://github.com/k
 
 > **experience**: `number` = `0`
 
-Defined in: [packages/engine/src/models/player.model.ts:16](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/player.model.ts#L16)
+Defined in: [packages/engine/src/models/player.model.ts:16](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/player.model.ts#L16)
 
 ***
 
@@ -148,7 +148,7 @@ Defined in: [packages/engine/src/models/player.model.ts:16](https://github.com/k
 
 > `optional` **hpCurrent?**: `number`
 
-Defined in: [packages/engine/src/models/player.model.ts:23](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/player.model.ts#L23)
+Defined in: [packages/engine/src/models/player.model.ts:23](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/player.model.ts#L23)
 
 ***
 
@@ -156,7 +156,7 @@ Defined in: [packages/engine/src/models/player.model.ts:23](https://github.com/k
 
 > `optional` **hpMax?**: `number`
 
-Defined in: [packages/engine/src/models/player.model.ts:25](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/player.model.ts#L25)
+Defined in: [packages/engine/src/models/player.model.ts:25](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/player.model.ts#L25)
 
 ***
 
@@ -164,7 +164,7 @@ Defined in: [packages/engine/src/models/player.model.ts:25](https://github.com/k
 
 > `readonly` **id**: `string`
 
-Defined in: [packages/engine/src/models/entity.model.ts:4](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/entity.model.ts#L4)
+Defined in: [packages/engine/src/models/entity.model.ts:4](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/entity.model.ts#L4)
 
 #### Inherited from
 
@@ -176,7 +176,7 @@ Defined in: [packages/engine/src/models/entity.model.ts:4](https://github.com/ka
 
 > **inventory**: `string`[] = `[]`
 
-Defined in: [packages/engine/src/models/player.model.ts:19](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/player.model.ts#L19)
+Defined in: [packages/engine/src/models/player.model.ts:19](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/player.model.ts#L19)
 
 ***
 
@@ -184,7 +184,7 @@ Defined in: [packages/engine/src/models/player.model.ts:19](https://github.com/k
 
 > **level**: `number` = `1`
 
-Defined in: [packages/engine/src/models/player.model.ts:15](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/player.model.ts#L15)
+Defined in: [packages/engine/src/models/player.model.ts:15](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/player.model.ts#L15)
 
 ***
 
@@ -192,7 +192,7 @@ Defined in: [packages/engine/src/models/player.model.ts:15](https://github.com/k
 
 > **metadata**: `Record`\<`string`, `any`\> = `{}`
 
-Defined in: [packages/engine/src/models/entity.model.ts:7](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/entity.model.ts#L7)
+Defined in: [packages/engine/src/models/entity.model.ts:7](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/entity.model.ts#L7)
 
 #### Inherited from
 
@@ -204,7 +204,7 @@ Defined in: [packages/engine/src/models/entity.model.ts:7](https://github.com/ka
 
 > **name**: `string`
 
-Defined in: [packages/engine/src/models/entity.model.ts:5](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/entity.model.ts#L5)
+Defined in: [packages/engine/src/models/entity.model.ts:5](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/entity.model.ts#L5)
 
 #### Inherited from
 
@@ -216,7 +216,7 @@ Defined in: [packages/engine/src/models/entity.model.ts:5](https://github.com/ka
 
 > **raceId**: `string`
 
-Defined in: [packages/engine/src/models/player.model.ts:22](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/player.model.ts#L22)
+Defined in: [packages/engine/src/models/player.model.ts:22](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/player.model.ts#L22)
 
 ***
 
@@ -224,7 +224,7 @@ Defined in: [packages/engine/src/models/player.model.ts:22](https://github.com/k
 
 > **role**: `string` = `'USER'`
 
-Defined in: [packages/engine/src/models/player.model.ts:27](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/player.model.ts#L27)
+Defined in: [packages/engine/src/models/player.model.ts:27](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/player.model.ts#L27)
 
 ***
 
@@ -232,7 +232,7 @@ Defined in: [packages/engine/src/models/player.model.ts:27](https://github.com/k
 
 > **roomId**: `string`
 
-Defined in: [packages/engine/src/models/player.model.ts:18](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/player.model.ts#L18)
+Defined in: [packages/engine/src/models/player.model.ts:18](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/player.model.ts#L18)
 
 ***
 
@@ -240,7 +240,7 @@ Defined in: [packages/engine/src/models/player.model.ts:18](https://github.com/k
 
 > **stats**: [`Stats`](../interfaces/Stats.md)
 
-Defined in: [packages/engine/src/models/player.model.ts:17](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/player.model.ts#L17)
+Defined in: [packages/engine/src/models/player.model.ts:17](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/player.model.ts#L17)
 
 ## Methods
 
@@ -248,7 +248,7 @@ Defined in: [packages/engine/src/models/player.model.ts:17](https://github.com/k
 
 > **addExperience**(`amount`): `string`[]
 
-Defined in: [packages/engine/src/models/player.model.ts:70](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/player.model.ts#L70)
+Defined in: [packages/engine/src/models/player.model.ts:70](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/player.model.ts#L70)
 
 #### Parameters
 
@@ -266,7 +266,7 @@ Defined in: [packages/engine/src/models/player.model.ts:70](https://github.com/k
 
 > **getXpToNextLevel**(): `number`
 
-Defined in: [packages/engine/src/models/player.model.ts:66](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/player.model.ts#L66)
+Defined in: [packages/engine/src/models/player.model.ts:66](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/player.model.ts#L66)
 
 #### Returns
 
@@ -278,7 +278,7 @@ Defined in: [packages/engine/src/models/player.model.ts:66](https://github.com/k
 
 > **toJSON**(): `object`
 
-Defined in: [packages/engine/src/models/player.model.ts:47](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/player.model.ts#L47)
+Defined in: [packages/engine/src/models/player.model.ts:47](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/player.model.ts#L47)
 
 Serializes the entity to a plain object.
 

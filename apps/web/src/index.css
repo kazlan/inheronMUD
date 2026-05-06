@@ -44,7 +44,19 @@
   --stat-presencia: #f472b6;
   --stat-percepcion: #2dd4bf;
 
-  /* Typography */
+  /* Hub / Promotional Styles */
+  --hub-bg: #0c0e14;
+  --hub-parchment: #f4e8d1;
+  --hub-gold: #c5a059;
+  --hub-gold-bright: #f0d7a3;
+  --hub-green: #2d4a3e;
+  --hub-purple: #4a2d4a;
+  --hub-ink: #1a1a1a;
+  --hub-white-ink: #e0f2fe;
+  --hub-white-ink-glow: rgba(224, 242, 254, 0.5);
+
+  --font-title: 'Cinzel', serif;
+  --font-body: 'Lora', serif;
   --font-ui: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
   --font-mono: 'Fira Code', ui-monospace, SFMono-Regular, monospace;
 
@@ -64,16 +76,102 @@
 body {
   font-family: var(--font-ui);
   background-color: var(--bg-color);
-  background-image:
+  color: var(--text-main);
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/* Base Hub Layout Classes */
+.hub-container {
+  min-height: 100vh;
+  background-color: var(--hub-bg);
+  color: var(--text-bright);
+  font-family: var(--font-ui);
+}
+
+.hub-hero {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(197, 160, 89, 0.1) 0%, transparent 70%),
     url('/ui/inheronmud_login_character_creation_background.png');
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
-  color: var(--text-main);
-  min-height: 100vh;
-  overflow: hidden;
-  display: flex;
 }
+
+.hub-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(5, 8, 15, 0.4) 0%, rgba(5, 8, 15, 0.9) 100%);
+  z-index: 1;
+}
+
+.hub-section {
+  padding: 100px 0;
+  position: relative;
+}
+
+.ornate-title {
+  font-family: var(--font-title);
+  font-size: 2.5rem;
+  color: var(--hub-gold);
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ornate-title::after {
+  content: '';
+  width: 150px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--hub-gold), transparent);
+}
+
+.parchment-card {
+  background: var(--hub-parchment);
+  color: var(--hub-ink);
+  padding: 2rem;
+  border-radius: 2px;
+  box-shadow: 
+    0 10px 30px rgba(0,0,0,0.5),
+    inset 0 0 60px rgba(197, 160, 89, 0.1);
+  border: 1px solid #dcd0b9;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.parchment-card:hover {
+  transform: translateY(-5px);
+}
+
+.parchment-card::before {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border: 1px solid rgba(197, 160, 89, 0.3);
+  pointer-events: none;
+}
+
+.hub-nav a {
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+.hub-nav a:hover {
+  color: var(--hub-gold-bright);
+  text-shadow: 0 0 8px rgba(240, 215, 163, 0.5);
+}
+
 
 /* Dark overlay so text is readable over background */
 body::before {
@@ -86,6 +184,10 @@ body::before {
 }
 
 #root {
+  width: 100%;
+}
+
+.play-root-layout {
   position: relative;
   z-index: 1;
   width: 100%;
@@ -98,7 +200,7 @@ body::before {
 }
 
 @media (max-width: 1024px) {
-  #root {
+  .play-root-layout {
     grid-template-columns: 240px 1fr;
   }
   .right-panel {
@@ -107,7 +209,7 @@ body::before {
 }
 
 @media (max-width: 768px) {
-  #root {
+  .play-root-layout {
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr auto;
   }
@@ -115,6 +217,7 @@ body::before {
     display: none !important;
   }
 }
+
 
 /* ==============================
    GLASS PANEL — Fantasy Style

@@ -10,7 +10,7 @@ title: "Interface: Exit"
 
 # Interface: Exit
 
-Defined in: [packages/engine/src/models/room.model.ts:3](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/room.model.ts#L3)
+Defined in: [packages/engine/src/models/room.model.ts:3](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/room.model.ts#L3)
 
 ## Properties
 
@@ -18,7 +18,7 @@ Defined in: [packages/engine/src/models/room.model.ts:3](https://github.com/kazl
 
 > `optional` **description?**: `string`
 
-Defined in: [packages/engine/src/models/room.model.ts:6](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/room.model.ts#L6)
+Defined in: [packages/engine/src/models/room.model.ts:6](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/room.model.ts#L6)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/engine/src/models/room.model.ts:6](https://github.com/kazl
 
 > **direction**: `string`
 
-Defined in: [packages/engine/src/models/room.model.ts:4](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/room.model.ts#L4)
+Defined in: [packages/engine/src/models/room.model.ts:4](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/room.model.ts#L4)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [packages/engine/src/models/room.model.ts:4](https://github.com/kazl
 
 > `optional` **hidden?**: `boolean`
 
-Defined in: [packages/engine/src/models/room.model.ts:7](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/room.model.ts#L7)
+Defined in: [packages/engine/src/models/room.model.ts:7](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/room.model.ts#L7)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [packages/engine/src/models/room.model.ts:7](https://github.com/kazl
 
 > `optional` **locked?**: `boolean`
 
-Defined in: [packages/engine/src/models/room.model.ts:8](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/room.model.ts#L8)
+Defined in: [packages/engine/src/models/room.model.ts:8](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/room.model.ts#L8)
 
 ***
 
@@ -50,4 +50,4 @@ Defined in: [packages/engine/src/models/room.model.ts:8](https://github.com/kazl
 
 > **targetRoomId**: `string`
 
-Defined in: [packages/engine/src/models/room.model.ts:5](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/room.model.ts#L5)
+Defined in: [packages/engine/src/models/room.model.ts:5](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/room.model.ts#L5)

@@ -10,7 +10,7 @@ title: "Interface: CharacterCreationData"
 
 # Interface: CharacterCreationData
 
-Defined in: [packages/engine/src/core/character-creator.ts:6](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/character-creator.ts#L6)
+Defined in: [packages/engine/src/core/character-creator.ts:6](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/character-creator.ts#L6)
 
 ## Properties
 
@@ -18,7 +18,7 @@ Defined in: [packages/engine/src/core/character-creator.ts:6](https://github.com
 
 > **accountId**: `string`
 
-Defined in: [packages/engine/src/core/character-creator.ts:7](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/character-creator.ts#L7)
+Defined in: [packages/engine/src/core/character-creator.ts:7](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/character-creator.ts#L7)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [packages/engine/src/core/character-creator.ts:7](https://github.com
 
 > **classId**: `string`
 
-Defined in: [packages/engine/src/core/character-creator.ts:10](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/character-creator.ts#L10)
+Defined in: [packages/engine/src/core/character-creator.ts:10](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/character-creator.ts#L10)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [packages/engine/src/core/character-creator.ts:10](https://github.co
 
 > **distributedPoints**: `Partial`\<[`Stats`](Stats.md)\>
 
-Defined in: [packages/engine/src/core/character-creator.ts:11](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/character-creator.ts#L11)
+Defined in: [packages/engine/src/core/character-creator.ts:11](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/character-creator.ts#L11)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [packages/engine/src/core/character-creator.ts:11](https://github.co
 
 > `optional` **id?**: `string`
 
-Defined in: [packages/engine/src/core/character-creator.ts:13](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/character-creator.ts#L13)
+Defined in: [packages/engine/src/core/character-creator.ts:13](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/character-creator.ts#L13)
 
 ***
 
@@ -50,7 +50,7 @@ Defined in: [packages/engine/src/core/character-creator.ts:13](https://github.co
 
 > **name**: `string`
 
-Defined in: [packages/engine/src/core/character-creator.ts:8](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/character-creator.ts#L8)
+Defined in: [packages/engine/src/core/character-creator.ts:8](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/character-creator.ts#L8)
 
 ***
 
@@ -58,7 +58,7 @@ Defined in: [packages/engine/src/core/character-creator.ts:8](https://github.com
 
 > **raceId**: `string`
 
-Defined in: [packages/engine/src/core/character-creator.ts:9](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/character-creator.ts#L9)
+Defined in: [packages/engine/src/core/character-creator.ts:9](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/character-creator.ts#L9)
 
 ***
 
@@ -66,4 +66,4 @@ Defined in: [packages/engine/src/core/character-creator.ts:9](https://github.com
 
 > **startingRoomId**: `string`
 
-Defined in: [packages/engine/src/core/character-creator.ts:12](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/character-creator.ts#L12)
+Defined in: [packages/engine/src/core/character-creator.ts:12](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/character-creator.ts#L12)

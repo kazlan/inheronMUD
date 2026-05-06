@@ -10,7 +10,7 @@ title: "Class: RespawnManager"
 
 # Class: RespawnManager
 
-Defined in: [packages/engine/src/core/respawn-manager.ts:5](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/respawn-manager.ts#L5)
+Defined in: [packages/engine/src/core/respawn-manager.ts:5](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/respawn-manager.ts#L5)
 
 ## Constructors
 
@@ -18,7 +18,7 @@ Defined in: [packages/engine/src/core/respawn-manager.ts:5](https://github.com/k
 
 > **new RespawnManager**(`engine`): `RespawnManager`
 
-Defined in: [packages/engine/src/core/respawn-manager.ts:6](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/respawn-manager.ts#L6)
+Defined in: [packages/engine/src/core/respawn-manager.ts:6](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/respawn-manager.ts#L6)
 
 #### Parameters
 
@@ -36,7 +36,7 @@ Defined in: [packages/engine/src/core/respawn-manager.ts:6](https://github.com/k
 
 > **tick**(`now`): `void`
 
-Defined in: [packages/engine/src/core/respawn-manager.ts:8](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/core/respawn-manager.ts#L8)
+Defined in: [packages/engine/src/core/respawn-manager.ts:8](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/core/respawn-manager.ts#L8)
 
 #### Parameters
 

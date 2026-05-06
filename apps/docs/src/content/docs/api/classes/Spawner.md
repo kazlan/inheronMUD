@@ -10,7 +10,7 @@ title: "Class: Spawner"
 
 # Class: Spawner
 
-Defined in: [packages/engine/src/models/spawner.model.ts:7](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/spawner.model.ts#L7)
+Defined in: [packages/engine/src/models/spawner.model.ts:7](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/spawner.model.ts#L7)
 
 ## Constructors
 
@@ -18,7 +18,7 @@ Defined in: [packages/engine/src/models/spawner.model.ts:7](https://github.com/k
 
 > **new Spawner**(`id`, `roomId`, `maxActive`, `intervalMs`, `variants`): `Spawner`
 
-Defined in: [packages/engine/src/models/spawner.model.ts:17](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/spawner.model.ts#L17)
+Defined in: [packages/engine/src/models/spawner.model.ts:17](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/spawner.model.ts#L17)
 
 #### Parameters
 
@@ -52,7 +52,7 @@ Defined in: [packages/engine/src/models/spawner.model.ts:17](https://github.com/
 
 > **activeInstances**: `string`[] = `[]`
 
-Defined in: [packages/engine/src/models/spawner.model.ts:15](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/spawner.model.ts#L15)
+Defined in: [packages/engine/src/models/spawner.model.ts:15](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/spawner.model.ts#L15)
 
 ***
 
@@ -60,7 +60,7 @@ Defined in: [packages/engine/src/models/spawner.model.ts:15](https://github.com/
 
 > **id**: `string`
 
-Defined in: [packages/engine/src/models/spawner.model.ts:8](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/spawner.model.ts#L8)
+Defined in: [packages/engine/src/models/spawner.model.ts:8](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/spawner.model.ts#L8)
 
 ***
 
@@ -68,7 +68,7 @@ Defined in: [packages/engine/src/models/spawner.model.ts:8](https://github.com/k
 
 > **intervalMs**: `number`
 
-Defined in: [packages/engine/src/models/spawner.model.ts:11](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/spawner.model.ts#L11)
+Defined in: [packages/engine/src/models/spawner.model.ts:11](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/spawner.model.ts#L11)
 
 ***
 
@@ -76,7 +76,7 @@ Defined in: [packages/engine/src/models/spawner.model.ts:11](https://github.com/
 
 > **lastSpawnTime**: `number` = `0`
 
-Defined in: [packages/engine/src/models/spawner.model.ts:14](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/spawner.model.ts#L14)
+Defined in: [packages/engine/src/models/spawner.model.ts:14](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/spawner.model.ts#L14)
 
 ***
 
@@ -84,7 +84,7 @@ Defined in: [packages/engine/src/models/spawner.model.ts:14](https://github.com/
 
 > **maxActive**: `number`
 
-Defined in: [packages/engine/src/models/spawner.model.ts:10](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/spawner.model.ts#L10)
+Defined in: [packages/engine/src/models/spawner.model.ts:10](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/spawner.model.ts#L10)
 
 ***
 
@@ -92,7 +92,7 @@ Defined in: [packages/engine/src/models/spawner.model.ts:10](https://github.com/
 
 > **roomId**: `string`
 
-Defined in: [packages/engine/src/models/spawner.model.ts:9](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/spawner.model.ts#L9)
+Defined in: [packages/engine/src/models/spawner.model.ts:9](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/spawner.model.ts#L9)
 
 ***
 
@@ -100,4 +100,4 @@ Defined in: [packages/engine/src/models/spawner.model.ts:9](https://github.com/k
 
 > **variants**: [`SpawnVariant`](../interfaces/SpawnVariant.md)[]
 
-Defined in: [packages/engine/src/models/spawner.model.ts:12](https://github.com/kazlan/inheronMUD/blob/b4ba89392ddf52eaadf67d11005cd76e812fc43d/packages/engine/src/models/spawner.model.ts#L12)
+Defined in: [packages/engine/src/models/spawner.model.ts:12](https://github.com/kazlan/inheronMUD/blob/31983555c8e67c86b685f8ad89d9667b7c7ad6ff/packages/engine/src/models/spawner.model.ts#L12)

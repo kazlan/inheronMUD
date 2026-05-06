@@ -12,6 +12,8 @@ export * from './core/chat-manager';
 export * from './core/effects-manager';
 export * from './core/respawn-manager';
 export * from './core/skill-manager';
+export * from './core/admin-manager';
+export * from './data/schemas';
 
 // Models
 export * from './models/entity.model';
