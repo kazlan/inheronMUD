@@ -19,6 +19,7 @@ import { EffectsManager } from './effects-manager';
 import { AdminManager } from './admin-manager';
 import { ReactiveSkillService } from './reactive-skill.service';
 import { NotableActionBuffer } from './notable-action-buffer';
+import { MapManager } from './map-manager';
 
 export class GameEngine extends EventEmitter {
   public eventLog: EventLog;
@@ -34,12 +35,15 @@ export class GameEngine extends EventEmitter {
   public admin: AdminManager;
   public reactiveSkills: ReactiveSkillService;
   public notableActions: NotableActionBuffer;
+  public map: MapManager;
 
   public classesData: any[] = [];
   public racesData: any[] = [];
   public helpData: Record<string, string> = {};
 
   private tickInterval: NodeJS.Timeout | null = null;
+  public lastTickTime: number = 0;
+  public tickMs: number = 2000;
 
   constructor() {
     super();
@@ -54,17 +58,20 @@ export class GameEngine extends EventEmitter {
     this.admin = new AdminManager(this);
     this.reactiveSkills = new ReactiveSkillService(this);
     this.notableActions = new NotableActionBuffer(this);
+    this.map = new MapManager(this);
     console.log('Inheron Game Engine initialized.');
   }
 
   startTick(ms: number = 2000): void {
+    this.tickMs = ms;
     if (this.tickInterval) clearInterval(this.tickInterval);
     this.tickInterval = setInterval(() => this.processTick(), ms);
     console.log(`[Engine] Tick de combate iniciado (${ms}ms)`);
   }
 
   private processTick(): void {
-    const now = Date.now();
+    this.lastTickTime = Date.now();
+    const now = this.lastTickTime;
     this.respawnManager.tick(now);
     this.ai.tick(now);
     this.effects.tick(now);
@@ -78,11 +85,13 @@ export class GameEngine extends EventEmitter {
 
       const armoniaLogs = this.evaluateArmonias(combat);
       
-      // Sincronizar HP de NPCs desde sus entidades (por si hubo regeneración o efectos externos)
+      // Sincronizar participantes con sus entidades (por si hubo cambios externos)
       combat.participants.forEach(p => {
-        if (!p.isPlayer) {
-          const npc = this.entities.getNPC(p.entityId);
-          if (npc) p.hpCurrent = npc.hpCurrent ?? p.hpCurrent;
+        const entity = p.isPlayer ? this.getPlayer(p.entityId) : this.entities.getNPC(p.entityId);
+        if (entity && (p.isPlayer || p.hpCurrent > 0)) {
+          p.hpCurrent = entity.hpCurrent ?? p.hpCurrent;
+          p.activeEffects = entity.activeEffects;
+          p.level = entity.level;
         }
       });
 
@@ -201,11 +210,13 @@ export class GameEngine extends EventEmitter {
                 }
               }
 
-              // 3. Remover de la sala
+              // 3. Remover de la sala y del registro global
               if (npc.roomId) {
                 const room = this.entities.getRoom(npc.roomId);
                 if (room) room.removeEntity(npc.id);
               }
+              this.entities.removeNPC(npc.id); // <--- CRITICAL FIX: Kill the zombie NPC
+              console.log(`[Combat:Cleanup] NPC ${npc.name} (${npc.id}) completely removed from engine.`);
 
               // 4. Quest Progress: Increment variables based on NPC killed
               combat.participants.filter(p => p.isPlayer).forEach(p => {
@@ -353,6 +364,25 @@ export class GameEngine extends EventEmitter {
   }
 
   initiateCombat(playerIds: string[], enemyIds: string[]): string {
+    // Check if any player or enemy is already in an active combat
+    const existingCombat = Array.from(this.activeCombats.values()).find(c => 
+      c.active && c.participants.some(p => playerIds.includes(p.entityId) || enemyIds.includes(p.entityId))
+    );
+
+    if (existingCombat) {
+      // If found, and we want to add more participants, we should handle that.
+      // For now, let's just return the existing combat ID.
+      // (Advanced: add playerIds that are not yet in the combat)
+      for (const pid of playerIds) {
+        if (!existingCombat.participants.some(p => p.entityId === pid)) {
+          // Logic to add participant to existing combat... 
+          // (Requires CombatManager.addParticipant which doesn't exist yet, 
+          // or just return and let the system handle joining logic elsewhere)
+        }
+      }
+      return existingCombat.id;
+    }
+
     const participants: CombatParticipant[] = [];
 
     // Add players
@@ -369,8 +399,11 @@ export class GameEngine extends EventEmitter {
           hpCurrent: derived.hpCurrent,
           energyMax: derived.energyMax,
           energyCurrent: derived.energyCurrent,
+          isInvulnerable: p.isInvulnerable,
           resources: {},
-          equipment: this.commands.getEquipment(p.id)
+          equipment: this.commands.getEquipment(p.id),
+          level: p.level,
+          activeEffects: p.activeEffects
         });
       }
     }
@@ -405,7 +438,9 @@ export class GameEngine extends EventEmitter {
               if (item) eq[slot] = item;
             }
             return eq;
-          })()
+          })(),
+          level: npc.level,
+          activeEffects: npc.activeEffects
         });
       }
     }
@@ -433,6 +468,9 @@ export class GameEngine extends EventEmitter {
       data: { combatId: combat.id, participants: participants.map(p => p.name) }
     });
 
+    // Forzar actualización inmediata de la UI para los jugadores involucrados
+    playerIds.forEach(id => this.emit('combat_message', id, []));
+
     return combat.id;
   }
 
@@ -455,6 +493,7 @@ export class GameEngine extends EventEmitter {
     const onlinePlayers = this.entities.getPlayers().filter(p => p.isOnline);
     
     for (const player of onlinePlayers) {
+      if ((player.hpCurrent || 0) <= 0) continue; // <--- Dead men don't regenerate
       const derived = StatCalculator.calculate(player);
       const inCombat = !!this.getCombatByPlayerId(player.id);
       
@@ -630,5 +669,27 @@ export class GameEngine extends EventEmitter {
     }
 
     return logs;
+  }
+
+  updateEntityHP(entityId: string, newHP: number): void {
+    const player = this.entities.getPlayer(entityId);
+    const npc = this.entities.getNPC(entityId);
+    const entity = player || npc;
+    
+    if (entity) {
+      entity.hpCurrent = newHP;
+      
+      // Sync to combat if participant
+      for (const combat of this.activeCombats.values()) {
+        const participant = combat.participants.find(p => p.entityId === entityId);
+        if (participant) {
+          participant.hpCurrent = newHP;
+        }
+      }
+
+      if (player) {
+        this.savePlayer(player.id);
+      }
+    }
   }
 }

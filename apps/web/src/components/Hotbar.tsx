@@ -9,6 +9,7 @@ interface HotbarProps {
   onCommand: (cmd: string) => void;
   inCombat?: boolean;
   pulse?: any[];
+  effects?: any[];
 }
 
 export interface HotbarHandle {
@@ -23,7 +24,7 @@ const familyColors: Record<string, string> = {
   'Épica': 'var(--cyan)'
 };
 
-const Hotbar = forwardRef<HotbarHandle, HotbarProps>(({ onCommand, inCombat, pulse }, ref) => {
+const Hotbar = forwardRef<HotbarHandle, HotbarProps>(({ onCommand, inCombat, pulse, effects }, ref) => {
   const [slots, setSlots] = useState<(HotbarSlot | null)[]>(new Array(10).fill(null));
 
   useEffect(() => {
@@ -71,49 +72,45 @@ const Hotbar = forwardRef<HotbarHandle, HotbarProps>(({ onCommand, inCombat, pul
     }
   };
 
-  if (inCombat) {
-    const renderPulse = pulse || [];
-    return (
-      <div className="hotbar-container pulse-bar" style={{ borderColor: 'var(--red)', boxShadow: '0 0 10px rgba(255,0,0,0.2)' }}>
-        <div style={{ position: 'absolute', top: '-10px', left: '10px', background: 'var(--bg-panel)', padding: '0 5px', fontSize: '0.65rem', color: 'var(--red)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-          Pulso de Combate
-        </div>
-        {renderPulse.map((skill, i) => {
-          const color = skill.family ? familyColors[skill.family] || 'var(--gold)' : 'var(--text-main)';
-          return (
-            <div 
-              key={i} 
-              className="hotbar-slot occupied pulse-slot"
-              onClick={() => onCommand(`pulse ${i + 1}`)}
-              style={{ borderColor: color }}
-              title={`${skill.name} [${skill.energyCost} EN]\nFamilia: ${skill.family || 'Ninguna'}\n${skill.description}`}
-            >
-              <span className="slot-number" style={{ color }}>{i + 1}</span>
-              <div className="slot-cmd-label" style={{ color: 'var(--text-bright)' }}>{skill.name}</div>
-            </div>
-          );
-        })}
-      </div>
-    );
-  }
-
   return (
     <div className="hotbar-container">
-      {slots.map((slot, i) => (
-        <div 
-          key={i} 
-          className={`hotbar-slot ${slot ? 'occupied' : 'empty'}`}
-          onClick={() => handleSlotClick(i)}
-          title={slot ? `Command: ${slot.command}` : `Slot ${i+1} (Empty)`}
-        >
-          <span className="slot-number">{i + 1}</span>
-          {slot ? (
-            <div className="slot-cmd-label">{slot.label}</div>
-          ) : (
-            <div className="slot-plus">.</div>
-          )}
+      {/* Active Effects Bar */}
+      {effects && effects.length > 0 && (
+        <div className="active-effects-display">
+          {effects.map((effect, idx) => (
+            <div key={`${effect.id}-${idx}`} className="effect-indicator" title={`${effect.name}: ${Math.ceil(effect.remaining/1000)}s`}>
+              <div className="effect-name">{effect.name}</div>
+              <div className="effect-progress-bg">
+                <div 
+                  className="effect-progress-fill" 
+                  style={{ 
+                    width: `${Math.max(0, Math.min(100, (effect.remaining / effect.duration) * 100))}%`,
+                    backgroundColor: effect.type === 'buff' ? 'var(--cyan)' : (effect.type === 'debuff' ? 'var(--red)' : 'var(--yellow)')
+                  }} 
+                />
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
+      )}
+
+      <div className="hotbar-slots">
+        {slots.map((slot, i) => (
+          <div 
+            key={i} 
+            className={`hotbar-slot ${slot ? 'occupied' : 'empty'}`}
+            onClick={() => handleSlotClick(i)}
+            title={slot ? `Command: ${slot.command}` : `Slot ${i+1} (Empty)`}
+          >
+            <span className="slot-number">{i + 1}</span>
+            {slot ? (
+              <div className="slot-cmd-label">{slot.label}</div>
+            ) : (
+              <div className="slot-plus">.</div>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 });

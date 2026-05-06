@@ -8,18 +8,20 @@ import QuickPanel from '../components/QuickPanel';
 import Inventory from '../components/Inventory';
 import QuestLog from '../components/QuestLog';
 import SlideInPanel from '../components/SlideInPanel';
+import WorldMapOverlay from '../components/WorldMapOverlay';
 import ConnectionOverlay from '../components/ConnectionOverlay';
 import ContextPanel from '../components/ContextPanel';
 import Hotbar from '../components/Hotbar';
 import CombatPanel from '../components/CombatPanel';
+import PulsePanel from '../components/PulsePanel';
 import type { HotbarHandle } from '../components/Hotbar';
 import type { ContextEntity } from '../components/ContextPanel';
 import useMUD from '../hooks/useMUD';
 
-type PanelType = 'none' | 'inventory' | 'equipment' | 'quests' | 'character';
+type PanelType = 'none' | 'inventory' | 'equipment' | 'quests' | 'character' | 'map';
 
 const Play: React.FC = () => {
-  const { logs, attributes, quests, inventory, equipment, effects, targets, pulse, room, isConnected, sendCommand, addLog } = useMUD(`ws://${window.location.hostname}:4001/ws`);
+  const { logs, attributes, quests, inventory, equipment, effects, targets, pulse, room, isConnected, areaMap, visitedRooms, sendCommand, addLog, tickData } = useMUD(`ws://${window.location.hostname}:4001/ws`);
   const [activePanel, setActivePanel] = useState<PanelType>('none');
   const [showOverlay, setShowOverlay] = useState(true);
   const [isLifting, setIsLifting] = useState(false);
@@ -83,7 +85,26 @@ const Play: React.FC = () => {
     }
     (enriched as any)._roomId = room?.id;
     setSelectedEntity(enriched);
-    handleCommand(`look ${entity.keyword}`);
+
+    // Default command logic
+    let defaultCmd = `look ${entity.keyword}`;
+    if (entity.type === 'npc') {
+      const isMob = (enriched as any).liveData?.isMob || entity.raw?.toLowerCase().includes('[mob]');
+      if (!isMob) {
+        const isVendor = (enriched as any).liveData?.behaviors?.shop || 
+                        (enriched as any).liveData?.behaviors?.vendor ||
+                        entity.name.toLowerCase().includes('vendedor') ||
+                        entity.name.toLowerCase().includes('mercader');
+        
+        defaultCmd = isVendor ? `list ${entity.keyword}` : `talk ${entity.keyword}`;
+      } else {
+        defaultCmd = `kill ${entity.keyword}`; // Default for mobs could be kill? Or stay as look.
+        // Let's keep it as look for mobs to be safe, or just use what the user asked.
+        // User only mentioned NPCs vs Vendors.
+      }
+    }
+
+    handleCommand(defaultCmd);
     setTimeout(() => commandLineRef.current?.focus(), 50);
   }, [handleCommand, room]);
 
@@ -113,9 +134,14 @@ const Play: React.FC = () => {
       )}
 
       <div className="left-panel">
-        <CharacterSheet attributes={attributes} />
+        {isCharacterLoaded && (
+          <CharacterSheet 
+            attributes={attributes} 
+            effects={attributes.activeEffects?.filter((e: any) => (e.duration || 0) >= 60000)} 
+          />
+        )}
         {inCombat ? (
-          <CombatPanel targets={targets} effects={effects} onCommand={handleCommand} />
+          <CombatPanel targets={targets} effects={attributes.activeEffects} onCommand={handleCommand} />
         ) : (
           <ContextPanel
             entity={selectedEntity}
@@ -126,13 +152,39 @@ const Play: React.FC = () => {
       </div>
 
       <div className="center-panel glass-panel" style={{ padding: 0 }}>
-        <Viewport logs={logs} onEntityClick={handleEntityClick} onCommand={handleCommand} />
-        <Hotbar ref={hotbarRef} onCommand={handleCommand} inCombat={inCombat} pulse={pulse} />
+        <Viewport 
+          logs={logs} 
+          onEntityClick={handleEntityClick} 
+          onCommand={handleCommand} 
+          npcs={room?.npcs}
+        />
+        <Hotbar 
+          ref={hotbarRef} 
+          onCommand={handleCommand} 
+          inCombat={inCombat} 
+          pulse={pulse} 
+          effects={attributes.activeEffects?.filter((e: any) => (e.duration || 0) < 60000)} 
+        />
+        <PulsePanel 
+          options={pulse} 
+          onOptionClick={(idx) => handleCommand(`pulso ${idx}`)} 
+          inCombat={inCombat} 
+          activeEffects={attributes.activeEffects}
+          targets={targets}
+        />
         <CommandLine ref={commandLineRef} onCommand={handleCommand} attributes={attributes} />
       </div>
 
       <div className="right-panel">
-        <QuickPanel onCommand={handleCommand} onOpenPanel={setActivePanel} room={room} inCombat={inCombat} pulse={pulse} />
+        <QuickPanel 
+          onCommand={handleCommand} 
+          onOpenPanel={setActivePanel} 
+          room={room} 
+          inCombat={inCombat} 
+          pulse={pulse}
+          areaMap={areaMap}
+          visitedRooms={visitedRooms}
+        />
       </div>
 
       <SlideInPanel title="⬡ Inventario" isOpen={activePanel === 'inventory'} onClose={() => setActivePanel('none')}>
@@ -141,6 +193,15 @@ const Play: React.FC = () => {
       <SlideInPanel title="⛊ Equipo" isOpen={activePanel === 'equipment'} onClose={() => setActivePanel('none')}>
         <Equipment equipment={equipment} onCommand={handleCommand} />
       </SlideInPanel>
+
+      <WorldMapOverlay 
+        isOpen={activePanel === 'map'} 
+        onClose={() => setActivePanel('none')} 
+        areaMap={areaMap} 
+        visitedRooms={visitedRooms} 
+        currentRoomId={room?.room?.id || room?.id}
+      />
+
       <SlideInPanel title="📜 Diario de Misiones" isOpen={activePanel === 'quests'} onClose={() => setActivePanel('none')}>
         <QuestLog quests={quests} onCommand={handleCommand} />
       </SlideInPanel>

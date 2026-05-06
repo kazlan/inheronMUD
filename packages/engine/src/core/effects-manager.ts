@@ -49,7 +49,12 @@ export class EffectsManager {
               }
             }
             if (effect.echoEffect) {
-              const echo = { ...effect.echoEffect, startTime: now, id: effect.echoEffect.id || `eff_${now}_${Math.random()}` };
+              const echo = { 
+                ...effect.echoEffect, 
+                startTime: now, 
+                id: effect.echoEffect.id || `eff_${now}_${Math.random()}`,
+                isEcho: true 
+              };
               remainingNativeEffects.push(echo);
               if (effect.echoMessage && (entity as any).roomId) {
                 if (this.engine.entities.getPlayer(entity.id)) {
@@ -90,7 +95,8 @@ export class EffectsManager {
 
     if (effect.type === 'damage') {
       const damage = effect.magnitude || 5;
-      entity.hpCurrent = Math.max((entity.hpCurrent || 0) - damage, 0);
+      const newHP = Math.max((entity.hpCurrent || 0) - damage, 0);
+      this.engine.updateEntityHP(entity.id, newHP);
       
       const rId = entity.roomId;
       if (this.engine.entities.getPlayer(entity.id)) {
@@ -111,11 +117,13 @@ export class EffectsManager {
         }
       }
     } else if (effect.type === 'heal') {
+      if ((entity.hpCurrent || 0) <= 0) return; // Cant heal the dead
       const heal = effect.magnitude || 5;
       const isPlayer = !!this.engine.entities.getPlayer(entity.id);
       const derived = StatCalculator.calculate(entity);
       const maxHp = derived.hpMax;
-      entity.hpCurrent = Math.min((entity.hpCurrent || 0) + heal, maxHp);
+      const newHP = Math.min((entity.hpCurrent || 0) + heal, maxHp);
+      this.engine.updateEntityHP(entity.id, newHP);
 
       if (isPlayer) {
         this.engine.emit('combat_message', entity.id, [`\n<green>Recuperas ${heal} PV por ${effect.name}.</green>`]);
@@ -140,7 +148,8 @@ export class EffectsManager {
         if (!score || !score.data) continue;
         const { hpMax } = score.data.derived;
         if (p.hpCurrent! < hpMax) {
-          p.hpCurrent = Math.min(p.hpCurrent! + heal, hpMax);
+          const newHP = Math.min(p.hpCurrent! + heal, hpMax);
+          this.engine.updateEntityHP(p.id, newHP);
           this.engine.emit('combat_message', p.id, [`\n<green>Recuperas ${heal} PV gracias a ${effect.name}.</green>`]);
           this.engine.savePlayer(p.id);
         }
@@ -148,7 +157,8 @@ export class EffectsManager {
     } else if (effect.type === 'damage') {
       const damage = effect.magnitude || 5;
       for (const p of playersInRoom) {
-        p.hpCurrent = Math.max((p.hpCurrent || 0) - damage, 0);
+        const newHP = Math.max((p.hpCurrent || 0) - damage, 0);
+        this.engine.updateEntityHP(p.id, newHP);
         this.engine.emit('combat_message', p.id, [`\n<red>Sufres ${damage} de daño por ${effect.name}.</red>`]);
         this.engine.savePlayer(p.id);
       }

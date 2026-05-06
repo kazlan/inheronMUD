@@ -18,6 +18,9 @@ export class EntityManager {
   }
 
   registerPlayer(player: Player): void {
+    if (!player.visitedRooms.includes(player.roomId)) {
+      player.visitedRooms.push(player.roomId);
+    }
     this.players.set(player.id, player);
   }
 

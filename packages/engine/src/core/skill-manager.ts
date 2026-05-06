@@ -159,11 +159,17 @@ export class SkillManager {
           
           if (combat) {
             const combatTarget = combat.participants.find(p => p.entityId === targetEntityId);
-            if (combatTarget) combatTarget.hpCurrent -= amount;
+            if (combatTarget) {
+              combatTarget.hpCurrent -= amount;
+              // Sync back to entity via engine helper to ensure consistency
+              engine.updateEntityHP(targetEntityId, combatTarget.hpCurrent);
+            }
           } else {
-            // Unreachable if combat initiated above, but just in case
             const npcTarget = engine.entities.getNPC(targetEntityId);
-            if (npcTarget) (npcTarget as any).hpCurrent -= amount;
+            if (npcTarget) {
+              const newHP = Math.max((npcTarget.hpCurrent || 0) - amount, 0);
+              engine.updateEntityHP(targetEntityId, newHP);
+            }
           }
           combatLog.push(`<cyan>${caster.name}</cyan> utiliza <yellow>${skill.name}</yellow> sobre <red>${targetEntityName}</red> por ${amount} de daño.`);
           
@@ -178,6 +184,8 @@ export class SkillManager {
             const combatTarget = combat.participants.find(p => p.entityId === targetEntityId);
             if (combatTarget) {
               combatTarget.hpCurrent = Math.min((combatTarget.hpCurrent || 0) + finalAmount, combatTarget.hpMax || 100);
+              // Sync back to entity via engine helper
+              engine.updateEntityHP(targetEntityId, combatTarget.hpCurrent);
             }
           }
           

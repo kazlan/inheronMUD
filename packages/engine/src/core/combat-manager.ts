@@ -10,8 +10,11 @@ export interface CombatParticipant {
   energyCurrent: number;
   energyMax: number;
   resources: Record<string, number>;
+  isInvulnerable?: boolean;
   equipment?: Record<string, any>;
   flags?: string[];
+  level?: number;
+  activeEffects?: any[];
 }
 
 export interface CombatRound {
@@ -117,7 +120,11 @@ export class CombatManager {
 
       const damage = isCrit ? baseDamage * 2 : baseDamage;
       
-      targetEntity.hpCurrent -= damage;
+      if (!targetEntity.isInvulnerable) {
+        targetEntity.hpCurrent -= damage;
+      } else {
+        log.push(`¡El ataque sobre <yellow>${targetEntity.name}</yellow> rebota en un escudo divino!`);
+      }
       
       // Flavor text generator
       let attackDesc = "";

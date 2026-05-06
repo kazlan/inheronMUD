@@ -13,6 +13,7 @@ export class AIManager {
     const npcs = Array.from(this.engine.entities.npcs.values());
     
     for (const npc of npcs) {
+      if ((npc.hpCurrent ?? 0) <= 0) continue; // Ignore dead NPCs
       if (!npc.flags || npc.flags.length === 0) continue;
       
       // Handle healer outside of combat
@@ -66,8 +67,7 @@ export class AIManager {
         const { hpMax } = score.data.derived;
         if (p.hpCurrent! < hpMax) {
           const amount = Math.floor(hpMax * 0.2) + 10;
-          p.hpCurrent = Math.min(p.hpCurrent! + amount, hpMax);
-          this.engine.savePlayer(p.id);
+          this.engine.updateEntityHP(p.id, Math.min(p.hpCurrent! + amount, hpMax));
           healedAnyone = true;
           this.engine.emit('spatial_message', {
             roomId: npc.roomId,

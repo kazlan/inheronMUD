@@ -140,16 +140,81 @@ export default function LoginPanel({ isConnected, onCommand, logs, onPasswordSen
             marginBottom: '1.5rem',
             textAlign: 'left'
           }}>
-            {systemLogs.map((log, i) => (
-              <p key={i} style={{ 
-                color: i === systemLogs.length - 1 ? 'var(--text-bright)' : 'var(--text-muted)', 
-                fontSize: '0.8rem',
-                marginBottom: '0.4rem',
-                whiteSpace: 'pre-wrap'
-              }}>
-                {log.text}
-              </p>
-            ))}
+            {systemLogs.map((log, i) => {
+              const isLast = i === systemLogs.length - 1;
+              const text = log.text;
+              
+              // Helper to make options clickable
+              const renderContent = () => {
+                // If it's the character selection step
+                if (text.includes('Personajes disponibles')) {
+                  const lines = text.split('\n');
+                  return lines.map((line, li) => {
+                    // Match "1. <color>Name</color> (Nivel X)"
+                    const match = line.match(/^(\d+)\.\s+<(\w+)>(.*?)<\/\w+>/);
+                    if (match) {
+                      const num = match[1];
+                      const color = match[2];
+                      const name = match[3];
+                      return (
+                        <div key={li} className="login-option-row">
+                          <span 
+                            className="clickable-option"
+                            onClick={() => onCommand(num)}
+                            style={{ color: `var(--${color}, ${color})`, cursor: 'pointer' }}
+                          >
+                            {num}. <b>{name}</b> {line.split(name)[1]}
+                          </span>
+                        </div>
+                      );
+                    }
+                    return <p key={li} dangerouslySetInnerHTML={{ __html: line.replace(/<(\w+)>(.*?)<\/\w+>/g, '<span style="color:var(--$1, $1)">$2</span>') }} />;
+                  });
+                }
+                
+                // Generic comma separated options (for races/classes)
+                if (text.includes('(') && text.includes(')')) {
+                  const parts = text.split(/[()]/);
+                  if (parts.length >= 2) {
+                    const options = parts[1].split(',').map(o => o.trim());
+                    if (options.length > 1) {
+                      return (
+                        <p>
+                          <span dangerouslySetInnerHTML={{ __html: parts[0].replace(/<(\w+)>(.*?)<\/\w+>/g, '<span style="color:var(--$1, $1)">$2</span>') }} />
+                          (
+                          {options.map((opt, oi) => (
+                            <React.Fragment key={oi}>
+                              <span 
+                                className="clickable-option" 
+                                onClick={() => onCommand(opt)}
+                                style={{ cursor: 'pointer', color: 'var(--gold)', fontWeight: 'bold', textDecoration: 'underline' }}
+                              >
+                                {opt}
+                              </span>
+                              {oi < options.length - 1 ? ', ' : ''}
+                            </React.Fragment>
+                          ))}
+                          )
+                          {parts.slice(2).join('')}
+                        </p>
+                      );
+                    }
+                  }
+                }
+
+                return <p dangerouslySetInnerHTML={{ __html: text.replace(/\n/g, '<br/>').replace(/<(\w+)>(.*?)<\/\w+>/g, '<span style="color:var(--$1, $1)">$2</span>') }} />;
+              };
+
+              return (
+                <div key={i} style={{ 
+                  color: isLast ? 'var(--text-bright)' : 'var(--text-muted)', 
+                  fontSize: '0.8rem',
+                  marginBottom: '0.4rem'
+                }}>
+                  {renderContent()}
+                </div>
+              );
+            })}
           </div>
 
           {step === 'INTERACTIVE' ? (

@@ -22,11 +22,39 @@ export default function CombatPanel({ targets, effects, onCommand }: CombatPanel
           <div key={target.uuid || idx} className="target-card" style={{ background: 'rgba(0,0,0,0.3)', padding: '0.6rem', borderRadius: '4px', border: '1px solid var(--hp-glow)', marginBottom: '0.4rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
               <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-bright)' }}>{target.name}</span>
-              <span style={{ fontSize: '0.75rem', color: 'var(--hp-color)' }}>Nivel {target.level || '?'}</span>
+              <span style={{ fontSize: '0.75rem', color: 'var(--hp-color)', fontWeight: 'bold' }}>Nivel {target.level || '?'}</span>
             </div>
-            {target.health && (
-              <div className="stat-bar-bg" style={{ height: '6px' }}>
-                <div className="stat-bar-fill hp" style={{ width: `${(target.health.current / target.health.max) * 100}%` }}></div>
+            
+            <div className="stat-bar-bg" style={{ height: '8px', marginBottom: '6px', background: 'rgba(255,255,255,0.05)' }}>
+              <div 
+                className="stat-bar-fill hp shadow-pulse" 
+                style={{ 
+                  width: `${Math.max(0, Math.min(100, (target.hpCurrent / target.hpMax) * 100))}%`,
+                  transition: 'width 0.4s ease-out'
+                }}
+              ></div>
+            </div>
+
+            {target.activeEffects && target.activeEffects.length > 0 && (
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginTop: '4px' }}>
+                {target.activeEffects.map((eff: any, eIdx: number) => (
+                  <div 
+                    key={eIdx} 
+                    className="mini-effect-tag"
+                    style={{ 
+                      fontSize: '0.55rem', 
+                      padding: '1px 4px', 
+                      background: eff.type === 'debuff' ? 'rgba(255, 50, 50, 0.2)' : 'rgba(50, 255, 50, 0.2)',
+                      border: `1px solid ${eff.type === 'debuff' ? 'rgba(255, 50, 50, 0.5)' : 'rgba(50, 255, 50, 0.5)'}`,
+                      borderRadius: '2px',
+                      color: '#fff',
+                      textTransform: 'uppercase'
+                    }}
+                    title={eff.name}
+                  >
+                    {eff.name.substring(0, 3)}
+                  </div>
+                ))}
               </div>
             )}
           </div>

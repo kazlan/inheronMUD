@@ -161,7 +161,8 @@ export class AdminManager {
       name: player.name,
       roomId: player.roomId,
       level: player.level,
-      hp: `${player.hpCurrent}/${player.stats.constitucion * 10}`, // simplified
+      hp: `${player.hpCurrent}/${player.stats.constitucion * 10}`, 
+      invul: player.isInvulnerable,
       stats: player.stats,
       flags: cronica?.memoryFlags || [],
       variables: cronica?.variables || {},
@@ -196,6 +197,56 @@ export class AdminManager {
       players_active: players,
       npcs_active: npcs,
       scenery_keys: Object.keys(room.scenery || {})
+    };
+  }
+
+  /**
+   * Sets a player's level and recalculates stats.
+   */
+  setLevel(adminId: string, level: number, targetId?: string): { success: boolean; message: string } {
+    const targetIdToUse = targetId || adminId;
+    const player = this.engine.entities.getPlayer(targetIdToUse);
+    if (!player) return { success: false, message: 'Jugador no encontrado.' };
+
+    const oldLevel = player.level;
+    player.level = level;
+    player.experience = 0; // Reset XP to start of level
+
+    // Recalculate stats
+    const derived = StatCalculator.calculate(player);
+    player.hpCurrent = derived.hpMax;
+    player.energyCurrent = derived.energyMax;
+
+    this.engine.savePlayer(targetIdToUse);
+
+    const targetName = targetId ? player.name : 'ti mismo';
+    return { 
+      success: true, 
+      message: `Has cambiado el nivel de ${targetName} de ${oldLevel} a ${level}. Stats recalculados.` 
+    };
+  }
+
+  /**
+   * Sets a player as invulnerable.
+   */
+  invul(adminId: string, on: boolean, targetId?: string): { success: boolean; message: string } {
+    const targetIdToUse = targetId || adminId;
+    const player = this.engine.entities.getPlayer(targetIdToUse);
+    if (!player) return { success: false, message: 'Jugador no encontrado.' };
+
+    player.isInvulnerable = on;
+    
+    // Also update active combat if player is in one
+    const combat = this.engine.getCombatByPlayerId(targetIdToUse);
+    if (combat) {
+      const participant = combat.participants.find(p => p.entityId === targetIdToUse);
+      if (participant) participant.isInvulnerable = on;
+    }
+
+    const targetName = targetId ? player.name : 'ti mismo';
+    return { 
+      success: true, 
+      message: `Invulnerabilidad ${on ? 'ACTIVADA' : 'DESACTIVADA'} para ${targetName}.` 
     };
   }
 }

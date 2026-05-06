@@ -19,6 +19,23 @@ const CommandLine = forwardRef<CommandLineHandle, CommandLineProps>(({ onCommand
     focus: () => inputRef.current?.focus(),
   }));
 
+  React.useEffect(() => {
+    const handleGlobalClick = (e: MouseEvent) => {
+      // If clicking something that is not an input, button or link, refocus
+      const target = e.target as HTMLElement;
+      if (['INPUT', 'TEXTAREA', 'BUTTON', 'A'].includes(target.tagName)) return;
+      
+      // Special case: if it's inside a scrollable panel, maybe we don't want to refocus?
+      // But for MUD, refocusing is usually preferred.
+      inputRef.current?.focus();
+    };
+
+    window.addEventListener('click', handleGlobalClick);
+    inputRef.current?.focus(); // Initial focus
+
+    return () => window.removeEventListener('click', handleGlobalClick);
+  }, []);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;

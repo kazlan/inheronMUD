@@ -50,14 +50,18 @@ engine.on('combat_message', (playerId: string, log: string[]) => {
         id: p.entityId,
         name: p.name,
         hpCurrent: p.hpCurrent,
-        hpMax: p.hpMax
+        hpMax: p.hpMax,
+        level: p.level,
+        activeEffects: p.activeEffects
       })) : [];
 
       session.send({
         type: 'COMBAT_UPDATE',
         combatLog: log,
         data: targets,
-        pulse
+        pulse,
+        tickMs: engine.tickMs,
+        lastTickTime: engine.lastTickTime
       });
       // Send dynamic attributes update (e.g. HP, Energy, BardState)
       session.send({

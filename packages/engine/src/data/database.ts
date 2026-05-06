@@ -39,6 +39,7 @@ export class Database {
         metadata: JSON.stringify(playerData.metadata || {}),
         inventory: JSON.stringify(playerData.inventory),
         equipment: JSON.stringify(playerData.equipment || {}),
+        visitedRooms: JSON.stringify(playerData.visitedRooms || []),
         role: playerData.role || 'USER',
       },
       create: {
@@ -56,6 +57,7 @@ export class Database {
         metadata: JSON.stringify(playerData.metadata || {}),
         inventory: JSON.stringify(playerData.inventory),
         equipment: JSON.stringify(playerData.equipment || {}),
+        visitedRooms: JSON.stringify(playerData.visitedRooms || []),
         role: playerData.role || 'USER',
         account: {
           connectOrCreate: {
@@ -116,6 +118,7 @@ export class Database {
       metadata: JSON.parse(dbPlayer.metadata),
       inventory: JSON.parse(dbPlayer.inventory),
       equipment: JSON.parse(dbPlayer.equipment || "{}"),
+      visitedRooms: JSON.parse(dbPlayer.visitedRooms || "[]"),
       role: dbPlayer.role,
       itemInstances: dbPlayer.itemInstances.map(i => ({
         ...i,

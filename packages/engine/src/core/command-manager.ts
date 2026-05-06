@@ -12,7 +12,7 @@ export class CommandManager {
     const isAdmin = player.role === 'ADMIN' || player.name.toLowerCase() === 'perseo';
     if (!isAdmin) return { success: false, message: 'No tienes permisos para realizar comandos administrativos.' };
 
-    const ADMIN_SUBCOMMANDS = ['goto', 'summon', 'set-flag', 'give', 'spawn', 'player', 'room', 'refresh'];
+    const ADMIN_SUBCOMMANDS = ['goto', 'summon', 'set-flag', 'give', 'spawn', 'player', 'room', 'refresh', 'set-level', 'invul'];
     let resolvedSub = cmd?.toLowerCase();
 
     if (resolvedSub && !ADMIN_SUBCOMMANDS.includes(resolvedSub)) {
@@ -32,13 +32,32 @@ export class CommandManager {
       case 'spawn':
         return this.engine.admin.spawn(playerId, args[0]);
       case 'player':
-        const playerData = this.engine.admin.debugPlayer(args[0] || playerId);
-        return { success: true, message: `Datos de debug de ${args[0] || playerId} enviados a la consola.`, data: playerData };
+        const pData = this.engine.admin.debugPlayer(args[0] || playerId);
+        if (pData.error) return { success: false, message: pData.error };
+        let pMsg = `<cyan><b>[ DEBUG JUGADOR: ${pData.name} ]</b></cyan>\n`;
+        pMsg += `- ID: ${pData.id}\n- Sala: ${pData.roomId}\n- Nivel: ${pData.level}\n- HP: ${pData.hp}\n- Invul: ${pData.invul ? 'SÍ' : 'NO'}\n`;
+        pMsg += `- Stats: ${JSON.stringify(pData.stats)}\n`;
+        pMsg += `- Flags: ${pData.flags.join(', ') || 'ninguna'}\n`;
+        return { success: true, message: pMsg, data: pData };
       case 'room':
-        const roomData = this.engine.admin.inspectRoom(playerId);
-        return { success: true, message: `Inspección de sala enviada a la consola.`, data: roomData };
+        const rData = this.engine.admin.inspectRoom(playerId);
+        if (rData.error) return { success: false, message: rData.error };
+        let rMsg = `<cyan><b>[ INSPECCIÓN DE SALA: ${rData.name} ]</b></cyan>\n`;
+        rMsg += `- ID: ${rData.id} | Área: ${rData.area}\n`;
+        rMsg += `- Exits: ${rData.exits.map((e: any) => e.direction).join(', ') || 'ninguna'}\n`;
+        rMsg += `- Players: ${rData.players_active.map((p: any) => p.name).join(', ') || 'ninguno'}\n`;
+        rMsg += `- NPCs: ${rData.npcs_active.map((n: any) => n.name).join(', ') || 'ninguno'}\n`;
+        rMsg += `- Scenery: ${rData.scenery_keys.join(', ') || 'ninguno'}\n`;
+        return { success: true, message: rMsg, data: rData };
       case 'refresh':
         return this.engine.admin.refresh(playerId, args[0]);
+      case 'set-level':
+        const level = parseInt(args[0]);
+        if (isNaN(level)) return { success: false, message: 'Debes especificar un nivel numérico.' };
+        return this.engine.admin.setLevel(playerId, level, args[1]);
+      case 'invul':
+        const on = args[0] === 'on';
+        return this.engine.admin.invul(playerId, on, args[1]);
       default:
         return { success: false, message: `Subcomando admin "${cmd}" no reconocido. (Válidos: ${ADMIN_SUBCOMMANDS.join(', ')})` };
     }
@@ -139,7 +158,9 @@ export class CommandManager {
 
     return {
       room: roomData,
-      occupants: occupants
+      occupants: occupants,
+      areaMap: this.engine.map.getAreaMap(room.areaId || ''),
+      visitedRooms: player?.visitedRooms || []
     };
   }
 
@@ -172,6 +193,9 @@ export class CommandManager {
     if (!targetRoom) return { success: false, message: 'La salida parece llevar a ninguna parte...' };
 
     player.roomId = targetRoom.id;
+    if (!player.visitedRooms.includes(targetRoom.id)) {
+      player.visitedRooms.push(targetRoom.id);
+    }
 
     // Opposite direction helper
     const opposites: Record<string, string> = {
@@ -683,7 +707,8 @@ export class CommandManager {
       skills: player.metadata.skills,
       promptSettings: player.metadata.promptSettings,
       equipment: this.getEquipment(playerId),
-      bardState: player.bardState
+      bardState: player.bardState,
+      activeEffects: player.activeEffects
     };
 
     const formatName = (id: string) => {
@@ -765,6 +790,7 @@ export class CommandManager {
       .filter(npc => !!npc && this.matchEntityName(npc.name, targetName))[0];
 
     if (!target) return { success: false, message: `No ves a ningún "${targetName}" aquí.` };
+    if ((target.hpCurrent ?? 0) <= 0) return { success: false, message: `${target.name} ya está muerto.` };
 
     if (target.behaviorId !== 'hostile_beast' && target.behaviorId !== 'hostile_boss') {
       return { success: false, message: `¡No puedes atacar a ${target.name}! No es hostil.` };
@@ -912,7 +938,8 @@ export class CommandManager {
     }
 
     const healAmount = 20;
-    player.hpCurrent = Math.min((player.hpCurrent || maxHp) + healAmount, maxHp);
+    const newHP = Math.min((player.hpCurrent || maxHp) + healAmount, maxHp);
+    this.engine.updateEntityHP(playerId, newHP);
 
     return { success: true, message: `<green>Te concentras y usas tu energía vital. Recuperas ${healAmount} puntos de vida.</green>` };
   }
@@ -1197,6 +1224,7 @@ export class CommandManager {
       msg += `<b>ooc</b>                : Envía un mensaje a un canal global (Out Of Character).\n`;
       msg += `<b>prompt</b>             : Configura la barra de estado.\n`;
       msg += `<b>who</b>                : Muestra los jugadores conectados.\n`;
+      msg += `<b>slot <1-10> <cmd></b> : Configura tu barra de habilidades.\n`;
       msg += `<b>help / ayuda <item></b>: Muestra ayuda o detalles de un objeto.\n`;
       
       const isAdmin = player.role === 'ADMIN' || player.name.toLowerCase() === 'perseo';

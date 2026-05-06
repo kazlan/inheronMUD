@@ -44,6 +44,7 @@ interface Props {
   logs: Log[];
   onEntityClick?: (entity: ContextEntity) => void;
   onCommand?: (cmd: string) => void;
+  npcs?: any[];
 }
 
 // ──────────────────────────────────────────────────────────────
@@ -141,16 +142,49 @@ function LogLine({
   log,
   onEntityClick,
   onCommand,
+  npcs
 }: {
   log: Log;
   onEntityClick?: (e: ContextEntity) => void;
   onCommand?: (cmd: string) => void;
+  npcs?: any[];
 }) {
   // 1. Exits line?
   if (onCommand) {
     const exits = parseExits(log.text);
     if (exits) return <ExitsLine exits={exits} onCommand={onCommand} />;
   }
+
+  const handleTextClick = (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'B' || target.tagName === 'STRONG') {
+      const text = target.innerText.trim();
+      const keyword = text.split(/\s+/)[0].toLowerCase();
+      
+      if (keyword && onCommand) {
+        // Try to find if this keyword belongs to an NPC in the room
+        const npcMatch = npcs?.find(n => 
+          n.name.toLowerCase().includes(keyword) || 
+          n.id.toLowerCase().includes(keyword)
+        );
+
+        let cmd = `look ${keyword}`;
+        if (npcMatch) {
+          const isMob = npcMatch.isMob || npcMatch.flags?.includes('MOB');
+          if (!isMob) {
+            const isVendor = npcMatch.behaviors?.shop || 
+                            npcMatch.behaviors?.vendor || 
+                            npcMatch.name.toLowerCase().includes('vendedor') ||
+                            npcMatch.name.toLowerCase().includes('mercader');
+            cmd = isVendor ? `list ${keyword}` : `talk ${keyword}`;
+          }
+        }
+
+        onCommand(cmd);
+        e.stopPropagation(); // Prevent parent clicks (like entity menu)
+      }
+    }
+  };
 
   // 2. Entity line?
   const entity = onEntityClick ? parseEntity(log.text) : null;
@@ -159,28 +193,27 @@ function LogLine({
       <div
         className={`log-entry ${log.type} entity-link`}
         dangerouslySetInnerHTML={{ __html: parseMudColors(ansiUp.ansi_to_html(log.text)) }}
-        onClick={() => onEntityClick!(entity)}
+        onClick={(e) => {
+          handleTextClick(e);
+          if (!e.defaultPrevented) onEntityClick!(entity);
+        }}
         title={`Click to interact with ${entity.name}`}
         style={{ cursor: 'pointer' }}
       />
     );
   }
 
-  // 3. Plain ANSI
-  if (log.isAnsi) {
-    return (
-      <div
-        className={`log-entry ${log.type}`}
-        dangerouslySetInnerHTML={{ __html: parseMudColors(ansiUp.ansi_to_html(log.text)) }}
-      />
-    );
-  }
-
-  return <div className={`log-entry ${log.type}`} dangerouslySetInnerHTML={{ __html: parseMudColors(log.text) }} />;
+  return (
+    <div 
+      className={`log-entry ${log.type}`} 
+      dangerouslySetInnerHTML={{ __html: parseMudColors(log.isAnsi ? ansiUp.ansi_to_html(log.text) : log.text) }} 
+      onClick={handleTextClick}
+    />
+  );
 }
 
 // ──────────────────────────────────────────────────────────────
-export default function Viewport({ logs, onEntityClick, onCommand }: Props) {
+export default function Viewport({ logs, onEntityClick, onCommand, npcs }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -192,7 +225,13 @@ export default function Viewport({ logs, onEntityClick, onCommand }: Props) {
   return (
     <div className="viewport-container" ref={containerRef}>
       {logs.map(log => (
-        <LogLine key={log.id} log={log} onEntityClick={onEntityClick} onCommand={onCommand} />
+        <LogLine 
+          key={log.id} 
+          log={log} 
+          onEntityClick={onEntityClick} 
+          onCommand={onCommand} 
+          npcs={npcs}
+        />
       ))}
     </div>
   );

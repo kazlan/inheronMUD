@@ -20,6 +20,9 @@ export default function useMUD(url: string) {
     room: null,
     isConnected: false,
     pulse: [],
+    areaMap: {},
+    visitedRooms: [],
+    tickData: { tickMs: 2000, lastTickTime: Date.now() }
   });
 
   const socketRef = useRef<WebSocket | null>(null);
@@ -92,7 +95,12 @@ export default function useMUD(url: string) {
         case 'equipment': return { ...prev, equipment: data };
         case 'effects': return { ...prev, effects: data };
         case 'targets': return { ...prev, targets: data };
-        case 'room': return { ...prev, room: data };
+        case 'room': return { 
+          ...prev, 
+          room: data, 
+          areaMap: data.areaMap || prev.areaMap, 
+          visitedRooms: data.visitedRooms || prev.visitedRooms 
+        };
         case 'pulse': return { ...prev, pulse: data };
         default: return prev;
       }
@@ -113,7 +121,12 @@ export default function useMUD(url: string) {
           msg.combatLog.forEach((line: string) => addLog('combat', line, true));
         }
         if (msg.data) handleData('targets', msg.data);
-        if (msg.pulse) handleData('pulse', msg.pulse);
+        if (msg.pulse) {
+          handleData('pulse', msg.pulse);
+        }
+        if (msg.tickMs) {
+          setState(prev => ({ ...prev, tickData: { tickMs: msg.tickMs, lastTickTime: msg.lastTickTime } }));
+        }
         break;
       case 'CHAT':
         const { data } = msg;
@@ -127,6 +140,9 @@ export default function useMUD(url: string) {
       case 'RESPONSE':
         if (msg.success) {
           if (msg.message) addLog('text', msg.message, true);
+          if (msg.combatLog) {
+            msg.combatLog.forEach((line: string) => addLog('combat', line, true));
+          }
           
           // Map response data to state groups
           if (msg.data) {

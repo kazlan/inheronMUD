@@ -30,6 +30,7 @@ export class Player extends Entity {
   public equipment: Record<string, string> = {}; // equipSlot -> itemId
   public classId: string;
   public raceId: string;
+  public visitedRooms: string[] = [];
   public bardState?: BardState;
   public hpCurrent?: number;
   public energyCurrent?: number;
@@ -38,6 +39,7 @@ export class Player extends Entity {
   public role: string = 'USER';
   public coins: number = 0;
   public isOnline: boolean = false;
+  public isInvulnerable: boolean = false;
 
   constructor(
     accountId: string,
@@ -72,7 +74,8 @@ export class Player extends Entity {
       raceId: this.raceId,
       bardState: this.bardState,
       coins: this.coins,
-      role: this.role
+      role: this.role,
+      visitedRooms: this.visitedRooms
     };
   }
 
