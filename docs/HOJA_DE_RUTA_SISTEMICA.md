@@ -11,10 +11,15 @@ Sistemas transversales que permiten el desarrollo y la estabilidad del proyecto.
   - [x] Generación de referencia técnica desde JSDoc.
   - [x] Portal web "Códice de Inheron" unificado.
   - [x] Automatización de sincronización de manuales.
+  - [x] Sistema de ayuda (`help.yml`) externalizado y con hot-reload.
 - [x] **Herramientas Admin y Debug (`AdminManager`)**
   - [x] Comandos de teletransporte (`goto`, `summon`).
   - [x] Manipulación de estado (`set-flag`, `give-item`, `spawn`).
   - [x] Visualizador de "Ficha Oculta" (`debug-player`) y estado de sala (`inspect-room`).
+  - [x] Soporte para abreviaturas (fuzzy logic) en subcomandos admin.
+- [x] **Gestión de Objetos y Comodines**
+  - [x] Comodín `all` para `get` y `drop`.
+  - [x] Comodín `.` para recoger contenido de contenedores.
 - [x] **Validación de Integridad de Datos**
   - [x] Validador de esquemas YAML (Zod) para áreas, NPCs e ítems.
   - [x] Verificador de enlaces de salidas (`exits`) y referencias cruzadas.
@@ -29,6 +34,8 @@ Definir quién es el jugador, cómo crece y qué pasa cuando falla.
 - [ ] **Personajes, Clases y Progresión (1-60)**
   - [x] Sistema básico de niveles y XP.
   - [x] Implementación y bucle core de la clase Bardo (Voz, Trama, Armonías).
+  - [x] Sistema de regeneración por ticks (Voz basada en Presencia).
+  - [x] UI de Pulso Táctico (4 opciones fijas sobre el prompt).
   - [ ] Creación de personaje extendida (Orígenes y Trasfondos).
   - [ ] Árboles de habilidades y talentos por clase.
   - [ ] Especializaciones (subclases) a nivel 30.
@@ -118,9 +125,9 @@ El impacto del jugador en el lore y el reconocimiento de sus hazañas.
 ---
 
 ## 📜 Próximos Pasos Inmediatos
-1. **Diseñar el documento técnico de "Personajes, clases y progresión 1-60".**
-2. **Implementar el sistema de Tiempo y Calendario** (ya que afecta a casi todos los demás sistemas).
-3. **Expandir el CommandManager** con comandos sensoriales básicos (`oler`, `escuchar`).
+1. **Implementar el sistema de Tiempo y Calendario** (ya que afecta a casi todos los demás sistemas).
+2. **Expandir el CommandManager** con comandos sensoriales básicos (`oler`, `escuchar`).
+3. **Refinar el sistema de contenedores** (inventarios persistentes en ítems de sala).
 
 ---
 > [!NOTE]

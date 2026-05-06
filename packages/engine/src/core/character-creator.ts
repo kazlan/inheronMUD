@@ -42,9 +42,12 @@ export class CharacterCreator {
     player.metadata.racialTrait = race.racialTrait;
     player.metadata.gremioRank = 'COBRE';
 
-    // Initialize HP
+    // Initialize HP and Energy/Voice
     const derived = StatCalculator.calculate(player);
+    player.hpMax = derived.hpMax;
     player.hpCurrent = derived.hpMax;
+    player.energyMax = derived.energyMax;
+    player.energyCurrent = derived.energyMax;
 
     return player;
   }

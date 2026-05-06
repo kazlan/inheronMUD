@@ -55,6 +55,18 @@ Los comandos en InheronMUD se procesan en dos etapas: el enrutamiento en la sesi
 | `list` | `listar`, `tienda`| Muestra el inventario de un mercader. |
 | `buy` | `comprar` | Adquiere un objeto de un mercader. |
 | `sell` | `vender` | Vende un objeto de tu inventario al mercader. |
+| `admin` | - | Suite de comandos administrativos (Requiere rol Admin). |
+
+### Administración (Solo Rango Admin)
+| Comando | Parámetros | Descripción |
+| :--- | :--- | :--- |
+| `admin goto` | `<sala_id>` | Teletransporte instantáneo a una sala. |
+| `admin summon` | `<entidad_id>`| Atrae a un jugador o NPC ante ti. |
+| `admin give` | `<item_id>` | Genera un objeto del catálogo en tu inventario. |
+| `admin spawn` | `<npc_id>` | Crea una instancia de un NPC en la sala actual. |
+| `admin refresh`| `[target]` | Restaura HP/Energía al máximo y sincroniza stats. |
+| `admin player` | `<id>` | Muestra datos técnicos de persistencia de un jugador. |
+| `admin room` | - | Muestra el estado técnico de la sala (entidades, flags). |
 
 ## 3. Creación de Nuevos Comandos
 Para añadir un comando nuevo:

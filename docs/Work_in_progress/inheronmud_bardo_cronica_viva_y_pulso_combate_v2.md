@@ -2985,7 +2985,7 @@ Escribe 1-6, o un comando.
 Comando:
 
 ```text
-pulso
+pulso (o p)
 ```
 
 Salida:
@@ -3332,8 +3332,8 @@ cast himno
 cast sostener himno
 cast sostener copla
 cast cambiar_hilo copla
-pulso
-pulso modo tactico
+pulso (o p)
+pulso modo tactico (o p modo tactico)
 pulso modo manual
 ```
 

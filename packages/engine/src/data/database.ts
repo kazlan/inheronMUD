@@ -22,7 +22,8 @@ export class Database {
   static async savePlayer(playerData: any): Promise<Player> {
     const prisma = Database.getInstance();
     
-    return prisma.player.upsert({
+    // 1. Save Player Record
+    const player = await prisma.player.upsert({
       where: { id: playerData.id },
       update: {
         name: playerData.name,
@@ -64,12 +65,37 @@ export class Database {
         }
       }
     });
+
+    // 2. Save all item instances (inventory + equipment)
+    // We expect playerData.itemEntities to be a list of all Item objects currently held by the player
+    if (playerData.itemEntities && Array.isArray(playerData.itemEntities)) {
+       await prisma.item.deleteMany({ where: { playerId: player.id } });
+       
+       for (const item of playerData.itemEntities) {
+         await prisma.item.create({
+           data: {
+             id: item.id,
+             templateId: item.templateId || item.id.split('_')[0],
+             name: item.name,
+             description: item.description,
+             type: item.type,
+             value: item.value || 0,
+             equipSlot: item.equipSlot,
+             metadata: JSON.stringify(item.metadata || {}),
+             playerId: player.id
+           }
+         });
+       }
+    }
+
+    return player;
   }
 
   static async loadPlayer(id: string): Promise<any | null> {
     const prisma = Database.getInstance();
     const dbPlayer = await prisma.player.findUnique({
-      where: { id }
+      where: { id },
+      include: { itemInstances: true }
     });
 
     if (!dbPlayer) return null;
@@ -90,7 +116,11 @@ export class Database {
       metadata: JSON.parse(dbPlayer.metadata),
       inventory: JSON.parse(dbPlayer.inventory),
       equipment: JSON.parse(dbPlayer.equipment || "{}"),
-      role: dbPlayer.role
+      role: dbPlayer.role,
+      itemInstances: dbPlayer.itemInstances.map(i => ({
+        ...i,
+        metadata: JSON.parse(i.metadata)
+      }))
     };
   }
 

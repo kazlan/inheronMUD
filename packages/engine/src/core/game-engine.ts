@@ -37,6 +37,7 @@ export class GameEngine extends EventEmitter {
 
   public classesData: any[] = [];
   public racesData: any[] = [];
+  public helpData: Record<string, string> = {};
 
   private tickInterval: NodeJS.Timeout | null = null;
 
@@ -67,6 +68,7 @@ export class GameEngine extends EventEmitter {
     this.respawnManager.tick(now);
     this.ai.tick(now);
     this.effects.tick(now);
+    this.processRegeneration();
 
     for (const [combatId, combat] of this.activeCombats.entries()) {
       if (!combat.active) {
@@ -75,7 +77,25 @@ export class GameEngine extends EventEmitter {
       }
 
       const armoniaLogs = this.evaluateArmonias(combat);
+      
+      // Sincronizar HP de NPCs desde sus entidades (por si hubo regeneración o efectos externos)
+      combat.participants.forEach(p => {
+        if (!p.isPlayer) {
+          const npc = this.entities.getNPC(p.entityId);
+          if (npc) p.hpCurrent = npc.hpCurrent ?? p.hpCurrent;
+        }
+      });
+
       const log = combat.processRound();
+      
+      // Sincronizar HP de vuelta a las entidades NPCs
+      combat.participants.forEach(p => {
+        if (!p.isPlayer) {
+          const npc = this.entities.getNPC(p.entityId);
+          if (npc) npc.hpCurrent = p.hpCurrent;
+        }
+      });
+
       if (armoniaLogs.length > 0) log.unshift(...armoniaLogs);
 
       if (log.length > 0) {
@@ -355,19 +375,27 @@ export class GameEngine extends EventEmitter {
       }
     }
 
-    // Add enemies (simplified for now)
+    // Add enemies
     for (const id of enemyIds) {
       const npc = this.entities.getNPC(id);
       if (npc) {
+        const derived = StatCalculator.calculate(npc);
+        
+        // Persist the calculated max HP on the NPC if not already there
+        if (npc.hpCurrent === undefined) {
+          npc.hpMax = derived.hpMax;
+          npc.hpCurrent = derived.hpMax;
+        }
+
         participants.push({
           entityId: npc.id,
           name: npc.name,
-          iniciativa: npc.stats.destreza + npc.stats.percepcion,
+          iniciativa: derived.iniciativa,
           isPlayer: false,
-          hpMax: 50, // placeholder
-          hpCurrent: 50,
-          energyMax: 20,
-          energyCurrent: 20,
+          hpMax: derived.hpMax,
+          hpCurrent: npc.hpCurrent,
+          energyMax: derived.energyMax,
+          energyCurrent: derived.energyMax,
           resources: {},
           flags: npc.flags,
           equipment: (() => {
@@ -413,8 +441,58 @@ export class GameEngine extends EventEmitter {
   }
 
   endCombat(combatId: string): void {
+    const combat = this.activeCombats.get(combatId);
+    if (combat) {
+      combat.participants.filter(p => p.isPlayer).forEach(p => {
+        this.emit('combat_ended', p.entityId);
+      });
+    }
     this.activeCombats.delete(combatId);
     this.eventLog.log({ type: 'COMBAT_ENDED', data: { combatId } });
+  }
+
+  private processRegeneration(): void {
+    const onlinePlayers = this.entities.getPlayers().filter(p => p.isOnline);
+    
+    for (const player of onlinePlayers) {
+      const derived = StatCalculator.calculate(player);
+      const inCombat = !!this.getCombatByPlayerId(player.id);
+      
+      // HP Regen: 
+      // - Out of combat: 5% of max
+      // - In combat: 1% of max
+      const hpRegenBase = inCombat ? 0.01 : 0.05;
+      let hpRegen = Math.floor(derived.hpMax * hpRegenBase);
+      if (hpRegen < 1) hpRegen = 1;
+      
+      // Energy/Voice Regen:
+      let energyRegen = 0;
+      if (player.classId === 'bardo_cronica_viva') {
+        // Bard Formula: 8 + floor(presencia / 2)
+        // Document specifies this per round/tick.
+        const baseRegen = 8 + Math.floor((player.stats.presencia || 0) / 2);
+        // We give a small boost out of combat (1.5x) to maintain the "faster recovery when resting" feel
+        energyRegen = inCombat ? baseRegen : Math.floor(baseRegen * 1.5);
+      } else {
+        // Default for other classes
+        const energyRegenBase = inCombat ? 0.02 : 0.08;
+        energyRegen = Math.floor(derived.energyMax * energyRegenBase);
+      }
+      if (energyRegen < 1) energyRegen = 1;
+      
+      const oldHp = player.hpCurrent ?? derived.hpMax;
+      const oldEnergy = player.energyCurrent ?? derived.energyMax;
+      
+      if (oldHp >= derived.hpMax && oldEnergy >= derived.energyMax) continue;
+
+      player.hpCurrent = Math.min(derived.hpMax, oldHp + hpRegen);
+      player.energyCurrent = Math.min(derived.energyMax, oldEnergy + energyRegen);
+      
+      // Notify if changed
+      if (player.hpCurrent !== oldHp || player.energyCurrent !== oldEnergy) {
+         this.emit('save_player', player);
+      }
+    }
   }
 
   getCombatByPlayerId(playerId: string): CombatManager | undefined {

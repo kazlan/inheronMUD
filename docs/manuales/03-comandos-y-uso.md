@@ -72,3 +72,17 @@ Los mapas ahora pueden contener puzles lógicos y elementos inmersivos. Puedes e
 
 *   **`empujar <objeto>`**, **`tirar <objeto>`**, **`tocar <objeto>`**, **`subirse <objeto>`**, **`jugar <objeto>`**, etc.
     *   *Mecánica:* Si ingresas por ejemplo `empujar piedra`, el motor detectará que "empujar" no es un comando de combate estándar y lo derivará al escenario. Si hay una "piedra" que admita el verbo "empujar", desatará un evento (revelar un camino oculto, soltar loot, mostrar un texto, etc). Si no lo admite, dirá "No puedes empujar piedra."
+
+---
+
+## 7. Comandos de Administración (Staff Only)
+
+Estos comandos solo son accesibles para personajes con el rol `ADMIN`.
+
+*   **`admin goto <sala_id>`**: Teletransporte directo.
+*   **`admin summon <personaje>`**: Trae a un jugador a tu posición.
+*   **`admin give <item_id>`**: Te otorga cualquier objeto del juego.
+*   **`admin spawn <npc_id>`**: Spawnea un monstruo o NPC en la sala.
+*   **`admin refresh [target]`**: Cura por completo vida y recursos.
+*   **`admin player <nombre>`**: Inspecciona variables internas de un jugador.
+*   **`admin room`**: Inspecciona los metadatos de la sala.

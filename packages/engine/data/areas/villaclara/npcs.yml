@@ -208,6 +208,8 @@
       magnitude: 2
       tickInterval: 5000
   inventory: ['item_placa_general']
+  equipment:
+    weapon: item_garras_mutantes
   stats:
     fuerza: 18
     destreza: 10

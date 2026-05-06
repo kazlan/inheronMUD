@@ -6,8 +6,21 @@ export class CommandManager {
   constructor(private engine: GameEngine) {}
 
   admin(playerId: string, cmd: string, args: string[]): { success: boolean; message: string; data?: any } {
-    // For now, no permission check (simple demo)
-    switch (cmd) {
+    const player = this.engine.entities.getPlayer(playerId);
+    if (!player) return { success: false, message: 'Jugador no encontrado.' };
+
+    const isAdmin = player.role === 'ADMIN' || player.name.toLowerCase() === 'perseo';
+    if (!isAdmin) return { success: false, message: 'No tienes permisos para realizar comandos administrativos.' };
+
+    const ADMIN_SUBCOMMANDS = ['goto', 'summon', 'set-flag', 'give', 'spawn', 'player', 'room', 'refresh'];
+    let resolvedSub = cmd?.toLowerCase();
+
+    if (resolvedSub && !ADMIN_SUBCOMMANDS.includes(resolvedSub)) {
+      const match = ADMIN_SUBCOMMANDS.find(s => s.startsWith(resolvedSub));
+      if (match) resolvedSub = match;
+    }
+
+    switch (resolvedSub) {
       case 'goto':
         return this.engine.admin.goto(playerId, args[0]);
       case 'summon':
@@ -24,8 +37,10 @@ export class CommandManager {
       case 'room':
         const roomData = this.engine.admin.inspectRoom(playerId);
         return { success: true, message: `Inspección de sala enviada a la consola.`, data: roomData };
+      case 'refresh':
+        return this.engine.admin.refresh(playerId, args[0]);
       default:
-        return { success: false, message: `Subcomando admin "${cmd}" no reconocido.` };
+        return { success: false, message: `Subcomando admin "${cmd}" no reconocido. (Válidos: ${ADMIN_SUBCOMMANDS.join(', ')})` };
     }
   }
 
@@ -427,6 +442,42 @@ export class CommandManager {
     const room = this.engine.entities.getRoom(player.roomId);
     if (!room) return { success: false, message: 'Sala no encontrada.' };
 
+    const words = itemName.toLowerCase().trim().split(/\s+/);
+    const isAll = words[0] === 'todo' || words[0] === 'all' || words[0] === '.';
+
+    if (isAll) {
+      const filterWord = words.slice(1).join(' ');
+      let itemsToPick = room.entities
+        .map(id => this.engine.entities.getItem(id))
+        .filter((i): i is Item => !!i);
+
+      if (filterWord) {
+        const possibleContainer = itemsToPick.find(i => this.matchEntityName(i.name, filterWord) && Array.isArray(i.metadata?.inventory));
+        if (possibleContainer) {
+          itemsToPick = possibleContainer.metadata.inventory
+            .map((id: string) => this.engine.entities.getItem(id))
+            .filter((i: any): i is Item => !!i);
+          possibleContainer.metadata.inventory = [];
+        } else {
+          itemsToPick = itemsToPick.filter(i => i.name.toLowerCase().startsWith(filterWord) || this.matchEntityName(i.name, filterWord));
+        }
+      }
+
+      if (itemsToPick.length === 0) {
+        return { success: false, message: filterWord ? `No hay nada coincidente con "${filterWord}" para coger.` : 'No hay nada que coger aquí.' };
+      }
+
+      const pickedNames: string[] = [];
+      itemsToPick.forEach(item => {
+        if (room.entities.includes(item.id)) room.removeEntity(item.id);
+        player.inventory.push(item.id);
+        pickedNames.push(item.name);
+      });
+
+      this.engine.savePlayer(playerId);
+      return { success: true, message: `Recoges: ${pickedNames.join(', ')}.` };
+    }
+
     const item = room.entities
       .map(id => this.engine.entities.getItem(id))
       .filter((i): i is Item => !!i && this.matchEntityName(i.name, itemName))[0];
@@ -450,6 +501,41 @@ export class CommandManager {
     const player = this.engine.entities.getPlayer(playerId);
     if (!player) return { success: false, message: 'Jugador no encontrado.' };
 
+    const room = this.engine.entities.getRoom(player.roomId);
+
+    const words = itemName.toLowerCase().trim().split(/\s+/);
+    const isAll = words[0] === 'todo' || words[0] === 'all' || words[0] === '.';
+
+    if (isAll) {
+      const filterWord = words.slice(1).join(' ');
+      const itemsToDrop = player.inventory.filter(id => {
+        const item = this.engine.entities.getItem(id);
+        if (!item) return false;
+        if (filterWord) {
+           return item.name.toLowerCase().startsWith(filterWord) || this.matchEntityName(item.name, filterWord);
+        }
+        return true;
+      });
+
+      if (itemsToDrop.length === 0) {
+        return { success: false, message: filterWord ? `No tienes nada que coincida con "${filterWord}".` : 'No tienes nada que soltar.' };
+      }
+
+      const droppedNames: string[] = [];
+      itemsToDrop.forEach(id => {
+        const index = player.inventory.indexOf(id);
+        if (index > -1) {
+           const itemId = player.inventory.splice(index, 1)[0];
+           if (room) room.addEntity(itemId);
+           const item = this.engine.entities.getItem(itemId);
+           if (item) droppedNames.push(item.name);
+        }
+      });
+
+      this.engine.savePlayer(playerId);
+      return { success: true, message: `Sueltas: ${droppedNames.join(', ')}.` };
+    }
+
     const itemIndex = player.inventory.findIndex(id => {
       const item = this.engine.entities.getItem(id);
       return item && this.matchEntityName(item.name, itemName);
@@ -458,7 +544,6 @@ export class CommandManager {
     if (itemIndex === -1) return { success: false, message: `No llevas nada llamado "${itemName}".` };
 
     const itemId = player.inventory.splice(itemIndex, 1)[0];
-    const room = this.engine.entities.getRoom(player.roomId);
     if (room) room.addEntity(itemId);
 
     this.engine.getEventLog().log({
@@ -601,10 +686,23 @@ export class CommandManager {
       bardState: player.bardState
     };
 
+    const formatName = (id: string) => {
+      if (!id) return '';
+      const specialCases: Record<string, string> = {
+        'bardo_cronica_viva': 'Bardo',
+        'caballero_alba': 'Caballero del Alba',
+        'clerigo_sanador': 'Clérigo Sanador',
+        'humano_altherion': 'Humano de Altherion',
+        'humano_arvell': 'Humano de Arvell',
+      };
+      if (specialCases[id]) return specialCases[id];
+      return id.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    };
+
     // Formatted message for the chat
     let message = `<yellow><b>[ FICHA DE PERSONAJE ]</b></yellow>\n`;
-    message += `Nombre: <cyan>${player.name}</cyan> (Nivel ${player.level} ${className})\n`;
-    message += `Raza: ${raceName} | Monedas: <yellow>${player.coins} soles</yellow>\n`;
+    message += `Nombre: <cyan>${player.name}</cyan> (Nivel ${player.level} ${formatName(player.classId)})\n`;
+    message += `Raza: ${formatName(player.raceId)} | Monedas: <yellow>${player.coins} soles</yellow>\n`;
     message += `--------------------------------------------------\n`;
     message += `<b>Puntos de Vida:</b> <red>${player.hpCurrent}/${derived.hpMax}</red>\n`;
     const energyLabel = player.classId === 'bardo_cronica_viva' ? 'Voz' : 'Energía Vital';
@@ -1054,6 +1152,19 @@ export class CommandManager {
     return { success: true, message: `Opción de prompt '${option}' configurada a <yellow>${value.toUpperCase()}</yellow>.` };
   }
 
+  who(playerId: string): { success: boolean; message: string } {
+    const players = this.engine.entities.getPlayers().filter(p => p.isOnline);
+    
+    let msg = `<b>[ Jugadores Conectados (${players.length}) ]</b>\n`;
+    players.forEach(p => {
+      const cls = this.engine.classesData.find(c => c.id === p.classId)?.name || p.classId;
+      const race = this.engine.racesData.find(r => r.id === p.raceId)?.name || p.raceId;
+      msg += `- <yellow>${p.name}</yellow> [Nivel ${p.level} ${race} ${cls}]\n`;
+    });
+
+    return { success: true, message: msg };
+  }
+
   help(playerId: string, topic?: string): { success: boolean; message: string } {
     const player = this.engine.entities.getPlayer(playerId);
     if (!player) return { success: false, message: 'Jugador no encontrado.' };
@@ -1062,69 +1173,55 @@ export class CommandManager {
       let msg = `<cyan><b>[ AYUDA: COMANDOS DISPONIBLES ]</b></cyan>\n`;
       msg += `<b>look / l / mirar</b>   : Observa tu entorno o un objetivo.\n`;
       msg += `<b>move / mover</b>       : Desplázate (n, s, e, o, up, down).\n`;
+      msg += `<b>open / abrir</b>       : Abre puertas u objetos.\n`;
       msg += `<b>get / coger</b>        : Recoge un objeto del suelo.\n`;
       msg += `<b>drop / soltar</b>      : Suelta un objeto de tu inventario.\n`;
       msg += `<b>equip / equipo</b>     : Muestra tu equipo o equipa un objeto.\n`;
       msg += `<b>unequip / desequipar</b> : Desequipa un objeto.\n`;
+      msg += `<b>use / usar</b>         : Interactúa con objetos o utilízalos.\n`;
       msg += `<b>inventory / i</b>      : Muestra tu inventario.\n`;
       msg += `<b>score / puntuacion</b>   : Muestra tu ficha de personaje.\n`;
+      msg += `<b>cronica</b>            : Muestra tu diario de misiones e hitos.\n`;
       msg += `<b>skills / habilidades</b> : Lista o muestra información de habilidades.\n`;
       msg += `<b>cast / lanzar / c</b>    : Usa una habilidad en combate.\n`;
-      msg += `<b>pulso</b>              : Muestra sugerencias de combate.\n`;
+      msg += `<b>heal / curar</b>       : Regenera vida fuera de combate.\n`;
+      msg += `<b>pulso / p</b>          : Muestra sugerencias de combate.\n`;
       msg += `<b>kill / matar / k</b>     : Inicia un combate.\n`;
       msg += `<b>flee / huir</b>        : Intenta escapar de un combate.\n`;
+      msg += `<b>talk / hablar</b>      : Conversa con los NPCs o toma misiones.\n`;
+      msg += `<b>list / listar / buy</b>  : Interactúa con mercaderes para comprar.\n`;
+      msg += `<b>sell / vender</b>      : Vende objetos a los mercaderes.\n`;
       msg += `<b>say / decir</b>        : Habla con los que están en la sala.\n`;
       msg += `<b>tell / susurrar</b>    : Habla por privado con alguien.\n`;
+      msg += `<b>yell / gritar</b>      : Habla en toda el área.\n`;
+      msg += `<b>ooc</b>                : Envía un mensaje a un canal global (Out Of Character).\n`;
       msg += `<b>prompt</b>             : Configura la barra de estado.\n`;
+      msg += `<b>who</b>                : Muestra los jugadores conectados.\n`;
       msg += `<b>help / ayuda <item></b>: Muestra ayuda o detalles de un objeto.\n`;
+      
+      const isAdmin = player.role === 'ADMIN' || player.name.toLowerCase() === 'perseo';
+      if (isAdmin) {
+        msg += `<red><b>admin</b></red>            : Comandos de administración.\n`;
+      }
       return { success: true, message: msg };
     }
 
     // Check commands first
     const cmdTopic = topic.toLowerCase().trim();
-    const commandHelp: Record<string, string> = {
-      'look': 'Uso: look [objetivo]\nSinónimo: l, mirar\nTe permite observar tu entorno, un objeto, o a una persona para obtener más detalles.',
-      'mirar': 'Uso: mirar [objetivo]\nSinónimo: look, l\nTe permite observar tu entorno, un objeto, o a una persona para obtener más detalles.',
-      'l': 'Uso: l [objetivo]\nSinónimo: look, mirar\nTe permite observar tu entorno, un objeto, o a una persona para obtener más detalles.',
-      'move': 'Uso: move <dirección>\nSinónimo: mover, n, s, e, o, up, down\nTe desplazas hacia una salida abierta de la sala actual.',
-      'mover': 'Uso: mover <dirección>\nSinónimo: move, n, s, e, o, up, down\nTe desplazas hacia una salida abierta de la sala actual.',
-      'get': 'Uso: get <objeto>\nSinónimo: coger\nRecoges un objeto de la sala y lo guardas en tu inventario.',
-      'coger': 'Uso: coger <objeto>\nSinónimo: get\nRecoges un objeto de la sala y lo guardas en tu inventario.',
-      'drop': 'Uso: drop <objeto>\nSinónimo: soltar\nSueltas un objeto de tu inventario para dejarlo en la sala.',
-      'soltar': 'Uso: soltar <objeto>\nSinónimo: drop\nSueltas un objeto de tu inventario para dejarlo en la sala.',
-      'equip': 'Uso: equip [objeto]\nSinónimo: equipo, equipar\nSi no indicas nada, muestra tu equipamiento actual. Si indicas un objeto, lo equipa si es posible.',
-      'equipo': 'Uso: equipo [objeto]\nSinónimo: equip, equipar\nSi no indicas nada, muestra tu equipamiento actual. Si indicas un objeto, lo equipa si es posible.',
-      'equipar': 'Uso: equipar <objeto>\nSinónimo: equip, equipo\nTe equipas un objeto de tu inventario.',
-      'unequip': 'Uso: unequip <objeto|ranura>\nSinónimo: desequipar\nDesequipa un objeto que lleves puesto (ej: unequip arma).',
-      'desequipar': 'Uso: desequipar <objeto|ranura>\nSinónimo: unequip\nDesequipa un objeto que lleves puesto (ej: desequipar arma).',
-      'inventory': 'Uso: inventory\nSinónimo: inventario, i\nMuestra los objetos que llevas en la bolsa.',
-      'inventario': 'Uso: inventario\nSinónimo: inventory, i\nMuestra los objetos que llevas en la bolsa.',
-      'i': 'Uso: i\nSinónimo: inventory, inventario\nMuestra los objetos que llevas en la bolsa.',
-      'score': 'Uso: score\nSinónimo: puntuacion\nMuestra tus estadísticas principales, salud, recursos y atributos.',
-      'puntuacion': 'Uso: puntuacion\nSinónimo: score\nMuestra tus estadísticas principales, salud, recursos y atributos.',
-      'skills': 'Uso: skills\nSinónimo: habilidades\nMuestra las habilidades que conoces.',
-      'habilidades': 'Uso: habilidades\nSinónimo: skills\nMuestra las habilidades que conoces.',
-      'cast': 'Uso: cast <habilidad> [objetivo]\nSinónimo: lanzar, c\nEjecuta una habilidad o hechizo.',
-      'lanzar': 'Uso: lanzar <habilidad> [objetivo]\nSinónimo: cast, c\nEjecuta una habilidad o hechizo.',
-      'c': 'Uso: c <habilidad> [objetivo]\nSinónimo: cast, lanzar\nEjecuta una habilidad o hechizo.',
-      'pulso': 'Uso: pulso [opción]\nMuestra sugerencias de combate tácticas y te permite ejecutarlas rápidamente.',
-      'kill': 'Uso: kill <objetivo>\nSinónimo: matar, k\nInicias un combate contra la criatura o jugador indicado.',
-      'matar': 'Uso: matar <objetivo>\nSinónimo: kill, k\nInicias un combate contra la criatura o jugador indicado.',
-      'k': 'Uso: k <objetivo>\nSinónimo: kill, matar\nInicias un combate contra la criatura o jugador indicado.',
-      'flee': 'Uso: flee\nSinónimo: huir\nIntentas escapar de un combate activo.',
-      'huir': 'Uso: huir\nSinónimo: flee\nIntentas escapar de un combate activo.',
-      'say': 'Uso: say <mensaje>\nSinónimo: decir\nHablas en voz alta. Todo el que esté en la sala te escuchará.',
-      'decir': 'Uso: decir <mensaje>\nSinónimo: say\nHablas en voz alta. Todo el que esté en la sala te escuchará.',
-      'tell': 'Uso: tell <jugador> <mensaje>\nSinónimo: susurrar\nEnvías un mensaje privado a otro jugador.',
-      'susurrar': 'Uso: susurrar <jugador> <mensaje>\nSinónimo: tell\nEnvías un mensaje privado a otro jugador.',
-      'prompt': 'Uso: prompt [opción] [on|off]\nConfigura qué elementos visuales quieres ver en tu línea de estado.',
-      'help': 'Uso: help [comando|habilidad|objeto]\nSinónimo: ayuda\nMuestra información útil sobre el juego.',
-      'ayuda': 'Uso: ayuda [comando|habilidad|objeto]\nSinónimo: help\nMuestra información útil sobre el juego.'
-    };
+    const normalizedTopic = cmdTopic.replace(/\s+/g, '_');
+    
+    // Check in YAML helpData
+    let helpContent = this.engine.helpData[cmdTopic] || this.engine.helpData[normalizedTopic];
 
-    if (commandHelp[cmdTopic]) {
+    if (helpContent) {
+      // Special case for admin permissions
+      if (cmdTopic === 'admin') {
+        const isAdmin = player.role === 'ADMIN' || player.name.toLowerCase() === 'perseo';
+        if (!isAdmin) return { success: false, message: 'No tienes permisos para ver esta ayuda.' };
+      }
+
       let msg = `<cyan><b>[ AYUDA DEL COMANDO: ${cmdTopic.toUpperCase()} ]</b></cyan>\n`;
-      msg += commandHelp[cmdTopic];
+      msg += helpContent;
       return { success: true, message: msg };
     }
 
@@ -1134,7 +1231,7 @@ export class CommandManager {
     
     // Exact match or partial match for skills
     for (const skillId of knownSkills) {
-      const def = this.engine.skills.getSkillDef(skillId);
+      const def = this.engine.skills.getSkill(skillId);
       if (def) {
         const nameLower = def.name.toLowerCase();
         const idLower = def.id.toLowerCase();
@@ -1149,10 +1246,10 @@ export class CommandManager {
       let msg = `<cyan><b>[ INFO DE HABILIDAD: ${resolvedSkillDef.name} ]</b></cyan>\n`;
       msg += `Descripción: ${resolvedSkillDef.description}\n`;
       if (resolvedSkillDef.energyCost) msg += `Coste de Energía/Voz: <yellow>${resolvedSkillDef.energyCost}</yellow>\n`;
-      msg += `Tipo: ${resolvedSkillDef.isReactive ? 'Recreativa/Táctica' : 'Activa'}\n`;
+      msg += `Tipo: ${(resolvedSkillDef as any).isReactive ? 'Reactiva/Táctica' : 'Activa'}\n`;
       // Check for bard specific tags
-      if (resolvedSkillDef.metadata?.family) {
-        msg += `Familia (Armonía): <magenta>${resolvedSkillDef.metadata.family}</magenta>\n`;
+      if ((resolvedSkillDef as any).family) {
+        msg += `Familia (Armonía): <magenta>${(resolvedSkillDef as any).family}</magenta>\n`;
       }
       return { success: true, message: msg };
     }

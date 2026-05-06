@@ -17,7 +17,7 @@ export class ReactiveSkillService {
    * Generates a list of recommended skills (Pulso de Combate)
    * based on the current context of the player and their combat state.
    */
-  public getRecommendations(playerId: string, limit: number = 6): SkillRecommendation[] {
+  public getRecommendations(playerId: string, limit: number = 4): SkillRecommendation[] {
     const player = this.engine.entities.getPlayer(playerId);
     if (!player) return [];
 

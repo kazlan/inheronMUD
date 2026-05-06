@@ -44,10 +44,19 @@ const activeSessions = new Set<Session>();
 engine.on('combat_message', (playerId: string, log: string[]) => {
   for (const session of activeSessions) {
     if (session.playerId === playerId) {
-      const pulse = engine.reactiveSkills.getRecommendations(playerId, 6);
+      const pulse = engine.reactiveSkills.getRecommendations(playerId, 4);
+      const combat = engine.getCombatByPlayerId(playerId);
+      const targets = combat ? combat.participants.filter(p => !p.isPlayer).map(p => ({
+        id: p.entityId,
+        name: p.name,
+        hpCurrent: p.hpCurrent,
+        hpMax: p.hpMax
+      })) : [];
+
       session.send({
         type: 'COMBAT_UPDATE',
         combatLog: log,
+        data: targets,
         pulse
       });
       // Send dynamic attributes update (e.g. HP, Energy, BardState)
@@ -55,6 +64,20 @@ engine.on('combat_message', (playerId: string, log: string[]) => {
         type: 'data',
         group: 'attributes',
         data: engine.commands.getScore(playerId).data
+      });
+      break;
+    }
+  }
+});
+
+engine.on('combat_ended', (playerId: string) => {
+  for (const session of activeSessions) {
+    if (session.playerId === playerId) {
+      session.send({
+        type: 'COMBAT_UPDATE',
+        combatLog: [],
+        data: [],
+        pulse: []
       });
       break;
     }
@@ -121,7 +144,27 @@ engine.on('save_player', (player: Player) => {
     clearTimeout(playerSaveTimeouts.get(player.id)!);
   }
   const timeoutId = setTimeout(() => {
-    Database.savePlayer(player).catch(err => console.error(`Error defer-saving player ${player.name}:`, err));
+    // Gather all item entities from inventory and equipment
+    const itemEntities: any[] = [];
+    
+    // Inventory
+    player.inventory.forEach(id => {
+      const item = engine.entities.getItem(id);
+      if (item) itemEntities.push(item);
+    });
+
+    // Equipment
+    Object.values(player.equipment).forEach(id => {
+      const item = engine.entities.getItem(id);
+      if (item) itemEntities.push(item);
+    });
+
+    const saveData = {
+      ...player.toJSON(),
+      itemEntities
+    };
+
+    Database.savePlayer(saveData).catch(err => console.error(`Error defer-saving player ${player.name}:`, err));
     playerSaveTimeouts.delete(player.id);
   }, 5000); // Debounce for 5 seconds
   playerSaveTimeouts.set(player.id, timeoutId);
@@ -140,7 +183,6 @@ const start = async () => {
   }
 };
 
-start();
 
 fastify.register(async (fastify) => {
   fastify.get('/ws', { websocket: true }, (socket, req) => {
@@ -168,6 +210,7 @@ fastify.register(async (fastify) => {
       if (session.playerId) {
         const player = engine.getPlayer(session.playerId);
         if (player) {
+          player.isOnline = false;
           engine.emit('spatial_message', {
             roomId: player.roomId,
             message: `<yellow>${player.name} desaparece en un haz de luz de desconexión.</yellow>`,
@@ -179,3 +222,6 @@ fastify.register(async (fastify) => {
     });
   });
 });
+
+// Start the server after all registrations
+start();

@@ -25,6 +25,10 @@ export class WorldFactory {
       engine.racesData = systemData.races;
       console.log(`[WorldFactory] Loaded ${systemData.races.length} races from system data.`);
     }
+    if (systemData.help) {
+      engine.helpData = systemData.help;
+      console.log(`[WorldFactory] Loaded ${Object.keys(systemData.help).length} help entries from system data.`);
+    }
     
     const areasToLoad = areaNames || loader.getAllAreaNames();
 
@@ -388,6 +392,11 @@ export class WorldFactory {
             
             if (sysData.races && sysData.races.length > 0) {
               engine.racesData = sysData.races;
+            }
+
+            if (sysData.help && Object.keys(sysData.help).length > 0) {
+              engine.helpData = sysData.help;
+              console.log(`[Hot-Reload] Manuales de ayuda (help.yml) recargados con éxito.`);
             }
             
             watchTimeouts.delete('system');

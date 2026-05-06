@@ -39,33 +39,38 @@ export class DataLoader {
     };
   }
 
-  public loadSystem(): { skills: any[]; classes: any[]; races: any[] } {
+  public loadSystem(): { skills: any[]; classes: any[]; races: any[]; help: Record<string, string> } {
     const systemPath = path.join(this.baseDir, 'system');
     
     if (!fs.existsSync(systemPath)) {
       console.warn(`[DataLoader] System folder not found: ${systemPath}`);
-      return { skills: [], classes: [], races: [] };
+      return { skills: [], classes: [], races: [], help: {} };
     }
 
     return {
       skills: this.loadYamlFile(path.join(systemPath, 'skills.yml')),
       classes: this.loadYamlFile(path.join(systemPath, 'classes.yml')),
-      races: this.loadYamlFile(path.join(systemPath, 'races.yml'))
+      races: this.loadYamlFile(path.join(systemPath, 'races.yml')),
+      help: this.loadYamlObject(path.join(systemPath, 'help.yml'))
     };
   }
 
   private loadYamlFile(filePath: string): any[] {
+    const doc = this.loadYamlObject(filePath);
+    return Array.isArray(doc) ? doc : [];
+  }
+
+  private loadYamlObject(filePath: string): any {
     if (!fs.existsSync(filePath)) {
-      return [];
+      return null;
     }
 
     try {
       const fileContents = fs.readFileSync(filePath, 'utf8');
-      const doc = yaml.load(fileContents);
-      return Array.isArray(doc) ? doc : [];
+      return yaml.load(fileContents);
     } catch (e) {
       console.error(`[DataLoader] Failed to load ${filePath}:`, e);
-      return [];
+      return null;
     }
   }
 }

@@ -13,6 +13,8 @@ export class NPC extends Entity {
   public metadata: Record<string, any> = {};
   public enemies: string[] = [];
   public areaId?: string;
+  public hpCurrent?: number;
+  public hpMax?: number;
 
   constructor(
     name: string,

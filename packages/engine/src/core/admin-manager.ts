@@ -2,6 +2,7 @@ import { GameEngine } from './game-engine';
 import { Item } from '../models/item.model';
 import { NPC } from '../models/npc.model';
 import { WorldFactory } from './world-factory';
+import { StatCalculator } from './stat-calculator';
 
 /**
  * AdminManager handles administrative commands and debugging tools.
@@ -124,6 +125,26 @@ export class AdminManager {
     if (!npc) return { success: false, message: `Template de NPC "${npcTemplateId}" no encontrado.` };
 
     return { success: true, message: `Has invocado a [${npc.name}] en la sala.` };
+  }
+
+  /**
+   * Refreshes a player's stats to maximum.
+   */
+  refresh(adminId: string, targetId?: string): { success: boolean; message: string } {
+    const targetIdToUse = targetId || adminId;
+    const player = this.engine.entities.getPlayer(targetIdToUse);
+    if (!player) return { success: false, message: 'Jugador no encontrado.' };
+
+    const derived = StatCalculator.calculate(player);
+    player.hpMax = derived.hpMax;
+    player.hpCurrent = derived.hpMax;
+    player.energyMax = derived.energyMax;
+    player.energyCurrent = derived.energyMax;
+
+    this.engine.savePlayer(targetIdToUse);
+
+    const targetName = targetId ? player.name : 'ti mismo';
+    return { success: true, message: `Has restaurado HP y Energía/Voz a ${targetName}.` };
   }
 
   /**

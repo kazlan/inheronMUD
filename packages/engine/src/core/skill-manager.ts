@@ -1,4 +1,5 @@
 import { GameEngine } from './game-engine';
+import { StatCalculator } from './stat-calculator';
 
 export interface SkillResult {
   success: boolean;
@@ -47,11 +48,20 @@ export class SkillManager {
     const skill = this.skills.get(skillId);
     if (!skill) return { success: false, message: 'Habilidad desconocida.' };
 
-    const combat = engine.getCombatByPlayerId(casterId);
+    let combat = engine.getCombatByPlayerId(casterId);
     const caster = engine.entities.getPlayer(casterId);
     if (!caster) return { success: false, message: 'Jugador inválido.' };
 
-    if ((caster.energyCurrent || 0) < skill.energyCost) {
+    if (caster.energyCurrent === undefined) {
+      const derived = StatCalculator.calculate(caster);
+      caster.energyCurrent = derived.energyMax;
+    }
+
+    const currentEnergy = caster.energyCurrent!;
+    if (currentEnergy < skill.energyCost) {
+      if (caster.classId === 'bardo_cronica_viva') {
+        return { success: false, message: '<magenta>La voz no te responde.</magenta> Necesitas un momento para recuperar el aliento.' };
+      }
       return { success: false, message: 'Energía insuficiente.' };
     }
 
@@ -93,15 +103,17 @@ export class SkillManager {
             return npc && (npc.id === targetId || npc.name.toLowerCase().startsWith(targetId.toLowerCase()));
           });
           if (npcId) {
-            const npc = engine.entities.getNPC(npcId)!;
-            targetEntityId = npc.id;
-            targetEntityName = npc.name;
-            targetHpCurrent = npc.hpCurrent;
-            targetHpMax = npc.hpMax || 100;
+            const npc = engine.entities.getNPC(npcId);
+            if (npc) {
+              targetEntityId = npc.id;
+              targetEntityName = npc.name;
+              targetHpCurrent = (npc as any).hpCurrent;
+              targetHpMax = (npc as any).hpMax || 100;
+            }
           } else {
             // Look for Player
-            const otherPlayers = engine.getAllPlayers().filter(p => p.roomId === caster.roomId);
-            const otherPlayer = otherPlayers.find(p => p.id === targetId || p.name.toLowerCase().startsWith(targetId.toLowerCase()));
+            const otherPlayers = engine.entities.getPlayers().filter((p: any) => p.roomId === caster.roomId);
+            const otherPlayer = otherPlayers.find((p: any) => p.id === targetId || p.name.toLowerCase().startsWith(targetId.toLowerCase()));
             if (otherPlayer) {
               targetEntityId = otherPlayer.id;
               targetEntityName = otherPlayer.name;
@@ -151,7 +163,7 @@ export class SkillManager {
           } else {
             // Unreachable if combat initiated above, but just in case
             const npcTarget = engine.entities.getNPC(targetEntityId);
-            if (npcTarget) npcTarget.hpCurrent -= amount;
+            if (npcTarget) (npcTarget as any).hpCurrent -= amount;
           }
           combatLog.push(`<cyan>${caster.name}</cyan> utiliza <yellow>${skill.name}</yellow> sobre <red>${targetEntityName}</red> por ${amount} de daño.`);
           
@@ -176,7 +188,7 @@ export class SkillManager {
             }
           } else {
              const actualNpc = engine.entities.getNPC(targetEntityId);
-             if (actualNpc) actualNpc.hpCurrent = Math.min((actualNpc.hpCurrent || 0) + finalAmount, actualNpc.hpMax || 100);
+             if (actualNpc) (actualNpc as any).hpCurrent = Math.min(((actualNpc as any).hpCurrent || 0) + finalAmount, (actualNpc as any).hpMax || 100);
           }
 
           if (combat) {
@@ -235,7 +247,7 @@ export class SkillManager {
         if (combatCaster) combatCaster.energyCurrent = caster.energyCurrent;
         return { success: false, message: 'Necesitas 3 Aplausos para entonar el Himno de Victoria.' };
       }
-      caster.bardState.aplauso -= 3;
+      caster.bardState.aplauso = (caster.bardState.aplauso || 0) - 3;
       combatLog.push(`<magenta><b>¡${caster.name} entona el glorioso Himno de Victoria consumiendo 3 Aplausos!</b></magenta>`);
     }
 

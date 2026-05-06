@@ -140,3 +140,14 @@
     diceSides: 6
     modifier: 4
     rarity: épico
+- id: item_garras_mutantes
+  name: Garras de Pelusa
+  description: Garras afiladas e imbuidas de una energía salvaje y mutante.
+  type: EQUIPMENT
+  equipSlot: weapon
+  value: 0
+  metadata:
+    diceCount: 2
+    diceSides: 8
+    modifier: 5
+    rarity: épico

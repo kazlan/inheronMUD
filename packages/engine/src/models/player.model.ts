@@ -37,6 +37,7 @@ export class Player extends Entity {
   public energyMax?: number;
   public role: string = 'USER';
   public coins: number = 0;
+  public isOnline: boolean = false;
 
   constructor(
     accountId: string,

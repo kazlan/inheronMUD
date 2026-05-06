@@ -1400,7 +1400,7 @@ cast resonancia
 Pulso:
 
 ```text
-pulso
+pulso (o p)
 1
 usar 2
 rapida 3
@@ -1410,7 +1410,7 @@ rapida 3
 Modos:
 
 ```text
-pulso modo tactico
+pulso modo tactico (o p modo tactico)
 pulso modo soporte
 pulso modo manual
 ```
@@ -1550,7 +1550,7 @@ Preparar → Trenzar → Sostener → Activar Armonía → Rematar o Proteger
 Si no sabes qué hacer, usa:
 
 ```text
-pulso
+pulso (o p)
 ```
 
 Si quieres aprender de verdad, mira por qué el Pulso te recomienda algo y prueba variaciones manuales.

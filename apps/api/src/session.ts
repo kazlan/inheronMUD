@@ -1,4 +1,4 @@
-import { GameEngine, Database, Player } from 'engine';
+import { GameEngine, Database, Player, Item } from 'engine';
 
 export enum SessionState {
   AWAITING_USERNAME,
@@ -107,9 +107,18 @@ export class Session {
       this.sendSystemMessage("No tienes personajes. Escribe el NOMBRE de tu nuevo personaje:");
       // We hijack selection state for new name if they have 0
     } else {
-      let msg = "Personajes disponibles:\n";
+      let msg = "<b>Personajes disponibles:</b>\n";
+      const classColors: Record<string, string> = {
+        'bardo_cronica_viva': 'magenta',
+        'caballero_alba': 'yellow',
+        'clerigo_sol_quieto': 'cyan',
+        'inquisidor_llama': 'red',
+        'guardian_roca': 'green'
+      };
+
       players.forEach((p: any, i: number) => {
-        msg += `${i + 1}. ${p.name} (Nivel ${p.level})\n`;
+        const color = classColors[p.classId] || 'white';
+        msg += `${i + 1}. <${color}>${p.name}</${color}> (Nivel ${p.level})\n`;
       });
       msg += "Escribe el número para entrar, o el nombre para crear uno nuevo.";
       this.sendSystemMessage(msg);
@@ -245,6 +254,39 @@ export class Session {
       player.inventory = dbData.inventory;
       player.equipment = dbData.equipment;
       player.metadata = dbData.metadata || { skills: [] };
+
+      // Recreate item instances from DB
+      const recreatedIds = new Set<string>();
+      if (dbData.itemInstances && Array.isArray(dbData.itemInstances)) {
+        dbData.itemInstances.forEach((inst: any) => {
+          const item = new Item(inst.name, inst.description, inst.type as any, inst.id);
+          item.value = inst.value;
+          item.equipSlot = inst.equipSlot;
+          item.metadata = inst.metadata;
+          this.engine.registerItem(item);
+          recreatedIds.add(item.id);
+        });
+      }
+
+      // Legacy Recovery: If an ID in inventory is NOT in the engine and NOT recreated, 
+      // try to reconstruct from template.
+      const allInventory = [...player.inventory, ...Object.values(player.equipment)];
+      for (const id of allInventory) {
+        if (!this.engine.entities.getItem(id) && !recreatedIds.has(id)) {
+           // Try to find template ID (e.g. "item_pocion_vida_123" -> "item_pocion_vida")
+           const templateId = id.split('_').slice(0, -1).join('_') || id.split('_')[0];
+           const template = this.engine.entities.itemTemplates.get(templateId);
+           if (template) {
+             const recovered = new Item(template.name, template.description, template.type as any, id);
+             recovered.value = template.value;
+             recovered.equipSlot = template.equipSlot;
+             recovered.metadata = { ...template.metadata, recovered: true };
+             this.engine.registerItem(recovered);
+             console.log(`[Recovery] Recovered legacy item ${id} from template ${templateId}`);
+           }
+        }
+      }
+
       if (!player.metadata.promptSettings) {
         player.metadata.promptSettings = { hp: true, resource: true, trama: true, aplauso: true, emoji: true };
       }
@@ -257,6 +299,7 @@ export class Session {
       this.engine.registerPlayer(player);
     }
 
+    player.isOnline = true;
     this.playerId = id;
     this.state = SessionState.IN_GAME;
 
@@ -299,20 +342,24 @@ export class Session {
     };
 
     const VALID_COMMANDS = [
-      'look', 'mirar', 'l', 'move', 'mover', 'cronica', 'open', 'abrir', 'get', 'coger',
+      'cast', 'c', 'lanzar', 'look', 'mirar', 'l', 'move', 'mover', 'cronica', 'open', 'abrir', 'get', 'coger',
       'drop', 'soltar', 'inventory', 'inventario', 'i', 'score', 'puntuacion', 'equip', 'equipo', 'equipar',
       'help', 'ayuda',
       'unequip', 'desequipar', 'kill', 'matar', 'k', 'flee', 'huir', 'heal', 'curar', 'talk', 'hablar',
       'list', 'listar', 'tienda', 'buy', 'comprar', 'sell', 'vender', 'skills', 'habilidades',
-      'cast', 'c', 'lanzar', 'use', 'usar', 'interact', 'interactuar', 'tirar', 'say', 'decir',
-      'tell', 'susurrar', 'yell', 'gritar', 'channel', 'chat', 'pulso', 'prompt'
+      'use', 'usar', 'interact', 'interactuar', 'tirar', 'say', 'decir',
+      'tell', 'susurrar', 'yell', 'gritar', 'channel', 'ooc', 'pulso', 'p', 'prompt', 'who', 'admin'
     ];
 
     let resolvedCommand = command;
     if (!directions[command]) {
-      const matches = VALID_COMMANDS.filter(cmd => cmd.startsWith(command));
-      if (matches.length > 0) {
-        resolvedCommand = matches[0];
+      if (VALID_COMMANDS.includes(command)) {
+        resolvedCommand = command;
+      } else {
+        const matches = VALID_COMMANDS.filter(cmd => cmd.startsWith(command));
+        if (matches.length > 0) {
+          resolvedCommand = matches[0];
+        }
       }
     }
     // Para simplificar, actualizamos command a resolvedCommand
@@ -380,18 +427,24 @@ export class Session {
       response = this.engine.chat.yell(this.playerId, args.join(' '));
     } else if (command === 'channel') {
       response = await this.engine.chat.processAdminCommand(this.playerId, args);
-    } else if (command === 'chat') {
+    } else if (command === 'ooc') {
       response = await this.engine.chat.channelMessage(this.playerId, args[0], args.slice(1).join(' '));
-    } else if (command === 'pulso') {
-      response = { ...this.engine.commands.getPulso(this.playerId), command: 'pulso' };
+    } else if (command === 'pulso' || command === 'p') {
+      response = { ...this.engine.commands.getPulso(this.playerId, args[0]), command: 'pulso' };
     } else if (command === 'prompt') {
       response = { ...this.engine.commands.prompt(this.playerId, args), command: 'prompt' };
       // Sync attributes back to client so CommandLine updates immediately
       if (response.success) {
         this.send({ type: 'data', group: 'attributes', data: this.engine.commands.getScore(this.playerId).data });
       }
+    } else if (command === 'who') {
+      response = { ...this.engine.commands.who(this.playerId), command: 'who' };
     } else if (command === 'help' || command === 'ayuda') {
       response = { ...this.engine.commands.help(this.playerId, args.join(' ')), command: 'help' };
+    } else if (command === 'admin') {
+      const subCommand = args[0];
+      const subArgs = args.slice(1);
+      response = { ...this.engine.commands.admin(this.playerId, subCommand, subArgs), command: 'admin' };
     } else {
       // Intentar interacción contextual (ej. "empujar piedra")
       const targetStr = args.join(' ');

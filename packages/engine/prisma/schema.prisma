@@ -38,6 +38,7 @@ model Player {
   
   account        Account      @relation(fields: [accountId], references: [id])
   memoryFlags    MemoryFlag[]
+  itemInstances  Item[]
 }
 
 model MemoryFlag {
@@ -51,6 +52,23 @@ model MemoryFlag {
   player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
 
   @@unique([playerId, key])
+}
+
+model Item {
+  id          String   @id @default(uuid())
+  templateId  String   @default("unknown")
+  name        String
+  description String
+  type        String
+  value       Int      @default(0)
+  equipSlot   String?
+  metadata    String   @default("{}") // JSON encoded metadata (dice, charges, etc.)
+  playerId    String?  // If in a player's inventory
+  roomId      String?  // If dropped in a room
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  player      Player?  @relation(fields: [playerId], references: [id])
 }
 
 model Channel {

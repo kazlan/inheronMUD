@@ -113,7 +113,8 @@ export class EffectsManager {
     } else if (effect.type === 'heal') {
       const heal = effect.magnitude || 5;
       const isPlayer = !!this.engine.entities.getPlayer(entity.id);
-      const maxHp = isPlayer ? StatCalculator.calculate(entity).hpMax : (entity.stats?.constitucion ? entity.stats.constitucion * 10 : 50);
+      const derived = StatCalculator.calculate(entity);
+      const maxHp = derived.hpMax;
       entity.hpCurrent = Math.min((entity.hpCurrent || 0) + heal, maxHp);
 
       if (isPlayer) {
