@@ -66,8 +66,21 @@ const SpawnerSchema = z.object({
   intervalMs: z.number().int().min(1000).optional(),
   variants: z.array(z.object({
     npcId: z.string(),
-    weight: z.number().min(0).optional(),
+    chance: z.number().min(0).optional(),
+    unique: z.boolean().optional(),
   })).optional(),
+});
+
+const RumorSchema = z.object({
+  id: z.string(),
+  metadata: z.object({
+    type: z.enum(['rumor', 'cronica_viva']),
+    area: z.string().optional(),
+    title: z.string().optional(),
+    text: z.string(),
+    routes: z.array(z.any()).optional(),
+    clueFor: z.string().optional(),
+  }),
 });
 // --- END SCHEMAS ---
 
@@ -122,6 +135,7 @@ function runValidation() {
     validateFile(path.join(areaPath, 'npcs.yml'), NPCSchema, 'NPC');
     validateFile(path.join(areaPath, 'items.yml'), ItemSchema, 'Item');
     validateFile(path.join(areaPath, 'spawners.yml'), SpawnerSchema, 'Spawner');
+    validateFile(path.join(areaPath, 'rumors-cronica.yml'), RumorSchema, 'Rumor');
   }
 
   if (hasErrors) {

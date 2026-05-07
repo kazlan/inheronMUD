@@ -1,96 +1,42 @@
-- id: anciano_sabio
-  name: Anciano Sabio
-  description: Un anciano de barba larga y túnica raída que observa la plaza con ojos penetrantes. Se apoya en un bastón de madera nudosa, acariciando su barba pensativamente. Su sola presencia exige respeto.
-  behaviorId: idle
-  roomId: villaclara_plaza
-  flags: ['social']
-  stats:
-    fuerza: 5
-    destreza: 5
-    constitucion: 10
-    ingenio: 20
-    sabiduria: 25
-    presencia: 15
-    percepcion: 10
-  metadata:
-    raceId: humano_altherion
-    dialogues:
-      - requires_flag: quest_lobos_done
-        text: "La paz ha vuelto a los campos. Gracias a ti, joven héroe."
-      - requires_cronica:
-          key: lobos_muertos
-          min: 3
-        text: "¡Has eliminado a la plaga! Siento que el equilibrio se restaura."
-        set_flag: quest_lobos_done
-      - requires_not_flag: quest_lobos_assigned
-        text: "Las llanuras de ámbar están plagadas de bestias. ¿Te atreverías a cazar a 3 lobos hambrientos por el bien del pueblo?"
-        set_flag: quest_lobos_assigned
-      - text: "Ten cuidado ahí fuera, los lobos hambrientos no tienen piedad."
-
-- id: npc_clerigo_sanador
-  name: Hermano Tobías
-  description: Un clérigo joven vestido con túnicas blancas inmaculadas. Una suave luz dorada parece emanar de sus manos en reposo. Su rostro refleja una serenidad contagiosa.
-  behaviorId: idle
-  roomId: villaclara_iglesia
-  flags: ['social', 'healer']
-  stats:
-    fuerza: 5
-    destreza: 5
-    constitucion: 8
-    ingenio: 15
-    sabiduria: 20
-    presencia: 15
-    percepcion: 10
-  metadata:
-    raceId: humano_altherion
-
-- id: npc_nino_corriendo
-  name: Tomasito
-  description: Un niño desaliñado con las rodillas llenas de barro y una enorme sonrisa sin dientes. No puede quedarse quieto ni un segundo, jugueteando con un palo que finge es una espada.
-  behaviorId: idle
-  roomId: villaclara_plaza
-  flags: ['wandering']
-  stats:
-    fuerza: 2
-    destreza: 15
-    constitucion: 5
-    ingenio: 5
-    sabiduria: 5
-    presencia: 10
-    percepcion: 8
-  metadata:
-    raceId: humano_arvell
-
-- id: npc_guardia_patrulla
-  name: Guardia del Alba
-  description: Un soldado veterano con una cota de malla pulida y una lanza larga apoyada en el hombro. Su mirada escudriña las sombras constantemente buscando cualquier amenaza al pueblo.
-  behaviorId: idle
-  roomId: villaclara_puerta_norte
-  flags: ['patrol']
-  equipment:
-    weapon: item_lanza_guardia
-  metadata:
-    raceId: humano_altherion
-    patrolPath: ['villaclara_puerta_norte', 'villaclara_plaza', 'villaclara_gremio', 'villaclara_plaza', 'villaclara_panaderia', 'villaclara_plaza']
-  stats:
-    fuerza: 15
-    destreza: 12
-    constitucion: 15
-    ingenio: 8
-    sabiduria: 8
-    presencia: 12
-    percepcion: 14
+---
+# Villaclara MVP canónico — NPCs
+# Estado: propuesta no destructiva
 
 - id: npc_dona_marga
-  name: Doña Marga
-  description: Una mujer rolliza y de mejillas sonrosadas, cubierta de harina de la cabeza a los pies. Amasa pan con una energía y fuerza que muchos soldados envidiarían.
+  name: Doña Marga Panbendito
+  description: >-
+    Una panadera de mejillas sonrosadas, brazos de amasadora legendaria y ojos que
+    detectan tristeza a veinte pasos. Lleva harina en el pelo, una medalla de la Luz
+    en el delantal y la autoridad absoluta de quien alimenta a guardias, huérfanos
+    y aventureros que aún no saben atarse las grebas.
   behaviorId: idle
   roomId: villaclara_panaderia
-  flags: ['social']
+  flags: [social]
   metadata:
     raceId: humano_arvell
     merchant: true
-    inventory: ['item_pan_bendito', 'item_bollo_dulce']
+    inventory: [item_pan_bendito, item_bollo_dulce, item_miga_bendita]
+    ambientMessages:
+      - "sacude harina de su delantal con energía."
+      - "comprueba la temperatura de los hornos."
+      - "tararea una canción sobre masa madre."
+    greetings:
+      - "{npc} te ofrece un pedacito de pan recién hecho con una sonrisa."
+      - "{npc} se limpia las manos y saluda calurosamente a {player}."
+    services:
+      - id: bendecir_pan
+        type: minor_buff
+        cost: 5
+    dialogues:
+      - text: >-
+          Come primero, presume después. Y si el pozo te canta un nombre que no es tuyo,
+          no lo repitas con la boca llena.
+      - requires_cronica:
+          key: campo_norte_apaciguado
+          min: 1
+        text: >-
+          Hoy las campanas han sonado limpias. Toma una miga bendita, que hasta los héroes
+          hacen mejor ruido cuando no se desmayan.
   stats:
     fuerza: 12
     destreza: 10
@@ -100,54 +46,210 @@
     presencia: 14
     percepcion: 10
 
-- id: npc_maestro_gremio
-  name: Grom el Férreo
-  description: Un imponente Sombrío errante con cicatrices que le cruzan el rostro curtido. Su parche en el ojo izquierdo y sus brazos gruesos como troncos dejan claro que ya no ejerce de aventurero activo, sino de líder. Carga con el estigma de las Grietas de Sombral con una dignidad inquebrantable.
+- id: npc_pex
+  name: Pex
+  description: >-
+    Una criatura menuda, inclasificable y solemnemente húmeda, envuelta en una bufanda
+    demasiado larga. Observa el Pozo Cantante como quien escucha una ópera privada.
+    Cada vez que parpadea, parece haber entendido algo terrible y haber decidido pedir pan.
+  behaviorId: idle
+  roomId: villaclara_pozo_cantante
+  flags: [social, weird]
+  metadata:
+    raceId: desconocido_amable
+    ambientMessages:
+      - "se asoma al pozo y parece asentir."
+      - "ajusta su bufanda empapada."
+      - "murmura palabras sueltas que suenan a nombres."
+    greetings:
+      - "{npc} parpadea lentamente hacia {player} y ladea la cabeza."
+      - "{npc} señala el pozo y luego te señala a ti, sin decir palabra."
+    dialogues:
+      - text: >-
+          Pex no cayó al pozo. El pozo subió a mirar a Pex. Diferencia importantísima.
+      - text: >-
+          Hoy el agua cantó doce nombres y mordió el trece. Maleducada, pero afinada.
+    clueRoutes:
+      camara_mediodia_inmovil:
+        - dialogue
+        - look: agua
+  stats:
+    fuerza: 3
+    destreza: 14
+    constitucion: 8
+    ingenio: 16
+    sabiduria: 18
+    presencia: 11
+    percepcion: 20
+
+- id: npc_otilia_cuerda
+  name: Otilia Cuerda
+  description: >-
+    Una registradora de moño severo, dedos veloces y paciencia peligrosamente afilada.
+    Lleva cordeles de colores colgados del cinturón y recuerda nacimientos, deudas,
+    apodos vergonzosos y quién prometió devolver una escalera en primavera.
+  behaviorId: idle
+  roomId: villaclara_archivo_cuerdas
+  flags: [social]
+  metadata:
+    raceId: humano_altherion
+    role: registro_nombres
+    ambientMessages:
+      - "hace un nudo complicado en un cordel."
+      - "anota algo en el libro mayor con letra minúscula."
+      - "suspira y reordena las cuerdas de la pared."
+    greetings:
+      - "{npc} levanta la vista del libro mayor y asiente hacia {player}."
+      - "{npc} te saluda secamente, sin dejar de atar nudos."
+    dialogues:
+      - text: >-
+          Si alguien vive en Villaclara, tiene nudo. Si no tiene nudo, o está de paso...
+          o alguien ha metido tijera donde no debía.
+      - requires_cronica:
+          key: vio_tinta_blanca
+          min: 1
+        text: >-
+          No toques esa tinta. No mancha los dedos: mancha los recuerdos.
+    clueRoutes:
+      nombres_borrados:
+        - dialogue
+        - look: libro_mayor
+  stats:
+    fuerza: 6
+    destreza: 12
+    constitucion: 9
+    ingenio: 17
+    sabiduria: 18
+    presencia: 13
+    percepcion: 16
+
+- id: npc_bimba_cascabel
+  name: Bimba Cascabel
+  description: >-
+    Campanera, recadera y amenaza pública para cualquier silencio solemne. Lleva una
+    ristra de cascabeles en la muñeca y una libreta donde apunta qué campana sonó,
+    quién se sobresaltó y si merecía la pena contarlo.
+  behaviorId: idle
+  roomId: villaclara_plaza
+  flags: [social, wandering]
+  metadata:
+    raceId: humano_arvell
+    ambientMessages:
+      - "hace sonar un cascabel por accidente."
+      - "tacha algo en su libreta frenéticamente."
+      - "mira hacia el campanario con el ceño fruncido."
+    greetings:
+      - "{npc} agita la mano hacia {player}, haciendo sonar todos sus cascabeles."
+      - "¡Eh, tú! {npc} te saluda con entusiasmo desmedido."
+    routines:
+      - time: dawn
+        roomId: villaclara_plaza
+        emote: "Bimba hace sonar dos campanadas pequeñas y una disculpa grande."
+      - time: noon
+        roomId: villaclara_iglesia
+        emote: "Bimba cuenta los golpes de mediodía con el ceño fruncido."
+    dialogues:
+      - text: >-
+          Si la campana da trece al mediodía, no mires al escribano. Bueno, míralo,
+          pero de lado.
+  stats:
+    fuerza: 5
+    destreza: 15
+    constitucion: 8
+    ingenio: 11
+    sabiduria: 10
+    presencia: 14
+    percepcion: 15
+
+- id: npc_varo_nomenclaro
+  name: Varo Nomenclaro
+  description: >-
+    Un escribano pulcro, de sonrisa educada y tinta demasiado blanca para ser normal.
+    Habla con cortesía impecable y mira los nombres propios como un joyero mira piedras
+    valiosas: calculando cortes posibles.
   behaviorId: idle
   roomId: villaclara_gremio
-  flags: ['social']
+  flags: [social]
   metadata:
-    raceId: sombrio
-    merchant: true
-    inventory: ['item_contrato_conejos', 'item_espada_cobre', 'item_pocion_menor', 'item_varita_curacion']
+    raceId: humano_altherion
+    suspicion: subtle
+    ambientMessages:
+      - "limpia la plumilla con extremo cuidado."
+      - "sopla suavemente sobre un pergamino para secar la tinta."
+      - "sonríe de forma inquietantemente educada a la nada."
+    greetings:
+      - "{npc} hace una reverencia pulcra y saluda a {player}."
+      - "{npc} te dedica una sonrisa ensayada y un asentimiento perfecto."
+    dialogues:
+      - text: >-
+          Los registros solo ordenan lo que la memoria ensucia. Nadie debería temer
+          una corrección bien hecha.
+      - requires_cronica:
+          key: contrato_sospechoso_examinado
+          min: 1
+        text: >-
+          ¿Tinta blanca? Una herramienta administrativa. Muy útil para errores persistentes.
+    clueRoutes:
+      contratos_falsos:
+        - dialogue
+        - look: contrato_sospechoso
   stats:
-    fuerza: 25
-    destreza: 12
-    constitucion: 20
-    ingenio: 10
-    sabiduria: 15
-    presencia: 18
-    percepcion: 12
+    fuerza: 5
+    destreza: 10
+    constitucion: 8
+    ingenio: 18
+    sabiduria: 14
+    presencia: 16
+    percepcion: 13
 
-- id: npc_yunque_vivo
-  name: Ignis el Yunque
-  description: Un Duergrin musculoso cuyo vello facial está literalmente chamuscado por las chispas. Maneja un martillo casi tan grande como él con una destreza perturbadora propia de los forjadores de Skarn.
+- id: npc_silo_brincacepa
+  name: Silo Brincacepa
+  description: >-
+    Un guardia rural de botas embarradas, lanza honrada y bigote con vocación de brújula.
+    Conoce cada cerca rota del Campo Norte y habla de los conejos acorazados con el respeto
+    que otros reservan a dragones fiscales.
   behaviorId: idle
-  roomId: villaclara_forja
-  flags: ['social']
+  roomId: villaclara_puerta_norte
+  flags: [social, guard]
+  equipment:
+    weapon: item_lanza_guardia
   metadata:
-    raceId: duergrin
-    merchant: true
-    inventory: ['item_martillo_pesado', 'item_escudo_madera', 'item_linterna_minero']
+    raceId: humano_altherion
+    ambientMessages:
+      - "se atusa el bigote mirando hacia el norte."
+      - "golpea la base de su lanza contra el suelo para quitarle barro."
+      - "gruñe mirando una cerca rota a lo lejos."
+    greetings:
+      - "{npc} alza su lanza en señal de respeto hacia {player}."
+      - "{npc} asiente gravemente y te saluda con voz ronca."
+    dialogues:
+      - text: >-
+          Rango Cobre o no, si vas al Campo Norte mira la hierba. Cuando deja de moverse,
+          algo con placas está decidiendo ser problema.
+      - requires_flag: contrato_conejos_activo
+        text: >-
+          El General Pelusa no es chiste. Bueno, el nombre sí. Lo demás muerde.
   stats:
-    fuerza: 22
-    destreza: 14
-    constitucion: 22
-    ingenio: 12
-    sabiduria: 10
-    presencia: 10
-    percepcion: 12
+    fuerza: 14
+    destreza: 11
+    constitucion: 14
+    ingenio: 8
+    sabiduria: 11
+    presencia: 12
+    percepcion: 15
 
 # --- Mobs de las Zonas de Caza ---
 
 - id: npc_conejo_acorazado_1
   name: Conejo Acorazado
-  description: Una bestia del tamaño de un perro mediano, cubierta por placas queratinosas similares a las de un armadillo. Olisquea el suelo constantemente en busca de raíces, pareciendo ignorar todo lo demás.
+  description: >-
+    Una bestia del tamaño de un perro mediano, cubierta por placas queratinosas.
+    Olisquea el suelo constantemente en busca de raíces.
   behaviorId: hostile_beast
   roomId: villaclara_campo_norte
   level: 1
-  flags: ['wandering']
-  inventory: ['item_piel_armadillo']
+  flags: [wandering]
+  inventory: [item_piel_armadillo]
   stats:
     fuerza: 6
     destreza: 14
@@ -159,15 +261,14 @@
 
 - id: npc_lobo_hambriento
   name: Lobo Hambriento
-  description: Un canino escuálido con costillas marcadas bajo su pelaje gris. Sus ojos amarillos inyectados en sangre brillan con una mezcla de locura y hambre desesperada. Un leve gruñido gutural acompaña cada exhalación.
+  description: >-
+    Un canino escuálido con costillas marcadas. Sus ojos amarillos inyectados
+    en sangre brillan con una mezcla de locura y hambre desesperada.
   behaviorId: hostile_beast
   roomId: villaclara_campo_norte
   level: 2
-  flags: ['wandering']
-  enemies: ['npc_conejo_acorazado_1', 'npc_conejo_acorazado_2']
-  metadata:
-    enemyReactions: [20, 50, 30]
-  inventory: ['item_colmillo_lobo']
+  flags: [wandering]
+  inventory: [item_colmillo_lobo]
   stats:
     fuerza: 10
     destreza: 16
@@ -179,12 +280,14 @@
 
 - id: npc_conejo_acorazado_2
   name: Conejo Acorazado Veterano
-  description: Significativamente más grande que sus congéneres, esta bestia tiene cicatrices cruzando sus placas óseas. Sus zarpas son gruesas e inquietantemente afiladas.
+  description: >-
+    Significativamente más grande que sus congéneres, esta bestia tiene
+    cicatrices cruzando sus placas óseas.
   behaviorId: hostile_beast
   roomId: colinas_inicio
   level: 3
-  flags: ['wandering']
-  inventory: ['item_piel_armadillo', 'item_carne_dura']
+  flags: [wandering]
+  inventory: [item_piel_armadillo, item_carne_dura]
   stats:
     fuerza: 12
     destreza: 12
@@ -196,18 +299,14 @@
 
 - id: npc_conejo_general
   name: El General Pelusa
-  description: Un monstruoso mutante roedor del tamaño de un buey pequeño. Lleva fragmentos de armaduras incrustados entre sus placas naturales. Sus ojos rojos irradian una inteligencia maliciosa y cruel.
+  description: >-
+    Un monstruoso mutante roedor del tamaño de un buey pequeño.
+    Sus ojos rojos irradian una inteligencia maliciosa.
   behaviorId: hostile_boss
   roomId: colinas_madriguera
   level: 5
-  flags: ['agresivo']
-  effects:
-    - id: regeneracion_mutante
-      name: Regeneración Mutante
-      type: heal
-      magnitude: 2
-      tickInterval: 5000
-  inventory: ['item_placa_general']
+  flags: [agresivo]
+  inventory: [item_placa_general]
   equipment:
     weapon: item_garras_mutantes
   stats:
@@ -218,3 +317,4 @@
     sabiduria: 8
     presencia: 15
     percepcion: 10
+

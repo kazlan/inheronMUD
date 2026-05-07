@@ -1,4 +1,4 @@
-import { GameEngine, Database, Player, Item } from 'engine';
+import { GameEngine, Database, Player, Item, CharacterCreator } from 'engine';
 
 export enum SessionState {
   AWAITING_USERNAME,
@@ -170,60 +170,15 @@ export class Session {
 
     this.creationData.classId = text;
     
-    // Auto calculate stats
-    const race = this.engine.racesData.find(r => r.id === this.creationData.raceId);
-    
-    const baseStats = { fuerza: 5, destreza: 5, constitucion: 5, ingenio: 5, sabiduria: 5, presencia: 5, percepcion: 5 };
-    
-    // Add Race stats
-    if (race && race.baseStats) {
-      for (const [key, val] of Object.entries(race.baseStats)) {
-        if (key in baseStats) baseStats[key as keyof typeof baseStats] += val as number;
-      }
-    }
-    
-    // Add Class stats
-    if (cls.baseStats) {
-      for (const [key, val] of Object.entries(cls.baseStats)) {
-        if (key in baseStats) baseStats[key as keyof typeof baseStats] += val as number;
-      }
-    }
-
-    const newPlayer = new Player(
-      this.accountId!,
-      this.creationData.name,
-      baseStats,
-      this.creationData.classId,
-      this.creationData.raceId,
-      'villaclara_plaza'
-    );
-    newPlayer.hpCurrent = 100;
-    newPlayer.energyCurrent = 100;
-    
-    // Assign starting skills from class
-    newPlayer.metadata = { skills: [] };
-    if (cls.skills) {
-       cls.skills.forEach((s: any) => {
-         if (s.level === 1) newPlayer.metadata.skills.push(s.skillId);
-       });
-    }
-
-    if (this.creationData.classId === 'bardo_cronica_viva') {
-      newPlayer.bardState = {
-        estrofa: 0,
-        aplauso: 0,
-        tramaMax: 1
-      };
-    }
-
-    // Set default prompt settings
-    newPlayer.metadata.promptSettings = {
-      hp: true,
-      resource: true,
-      trama: true,
-      aplauso: true,
-      emoji: true
-    };
+    // Use the engine's CharacterCreator for a consistent character initialization
+    const newPlayer = CharacterCreator.create({
+      accountId: this.accountId!,
+      name: this.creationData.name,
+      raceId: this.creationData.raceId,
+      classId: this.creationData.classId,
+      distributedPoints: {}, // Default stats for now
+      startingRoomId: 'villaclara_plaza'
+    });
 
     await Database.savePlayer(newPlayer);
     this.sendSystemMessage("¡Personaje creado exitosamente! Entrando al mundo...");

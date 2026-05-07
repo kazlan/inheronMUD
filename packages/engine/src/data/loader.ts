@@ -19,23 +19,24 @@ export class DataLoader {
     if (!fs.existsSync(areasDir)) return [];
     
     return fs.readdirSync(areasDir, { withFileTypes: true })
-      .filter(dirent => dirent.isDirectory())
+      .filter(dirent => dirent.isDirectory() && !dirent.name.startsWith('.'))
       .map(dirent => dirent.name);
   }
 
-  public loadArea(areaName: string): { rooms: any[]; npcs: any[]; items: any[]; spawners: any[] } {
+  public loadArea(areaName: string): { rooms: any[]; npcs: any[]; items: any[]; spawners: any[]; rumors: any[] } {
     const areaPath = this.getAreaPath(areaName);
     
     if (!fs.existsSync(areaPath)) {
       console.warn(`[DataLoader] Area folder not found: ${areaPath}`);
-      return { rooms: [], npcs: [], items: [], spawners: [] };
+      return { rooms: [], npcs: [], items: [], spawners: [], rumors: [] };
     }
 
     return {
       rooms: this.loadYamlFile(path.join(areaPath, 'rooms.yml')),
       npcs: this.loadYamlFile(path.join(areaPath, 'npcs.yml')),
       items: this.loadYamlFile(path.join(areaPath, 'items.yml')),
-      spawners: this.loadYamlFile(path.join(areaPath, 'spawners.yml'))
+      spawners: this.loadYamlFile(path.join(areaPath, 'spawners.yml')),
+      rumors: this.loadYamlFile(path.join(areaPath, 'rumors-cronica.yml'))
     };
   }
 

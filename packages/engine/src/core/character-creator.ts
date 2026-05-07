@@ -9,7 +9,7 @@ export interface CharacterCreationData {
   raceId: string;
   classId: string;
   distributedPoints: Partial<Stats>;
-  startingRoomId: string;
+  startingRoomId?: string;
   id?: string;
 }
 
@@ -33,7 +33,7 @@ export class CharacterCreator {
       stats,
       data.classId,
       data.raceId,
-      data.startingRoomId,
+      data.startingRoomId || 'villaclara_plaza',
       data.id
     );
 
@@ -41,6 +41,15 @@ export class CharacterCreator {
     player.metadata.skills = [...charClass.startingSkills];
     player.metadata.racialTrait = race.racialTrait;
     player.metadata.gremioRank = 'COBRE';
+    
+    // Initialize default prompt settings
+    player.metadata.promptSettings = {
+      hp: true,
+      resource: true,
+      trama: true,
+      aplauso: true,
+      emoji: true
+    };
 
     // Initialize HP and Energy/Voice
     const derived = StatCalculator.calculate(player);
@@ -48,6 +57,15 @@ export class CharacterCreator {
     player.hpCurrent = derived.hpMax;
     player.energyMax = derived.energyMax;
     player.energyCurrent = derived.energyMax;
+
+    // Initialize Bard State if applicable
+    if (data.classId === 'bardo_cronica_viva' || data.classId === 'bardo_cronica') {
+      player.bardState = {
+        estrofa: 0,
+        aplauso: 0,
+        tramaMax: 1
+      };
+    }
 
     return player;
   }

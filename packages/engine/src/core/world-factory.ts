@@ -151,16 +151,15 @@ export class WorldFactory {
       });
 
       // 4. Create and register Spawners
-      if (areaData.spawners) {
-        areaData.spawners.forEach(data => {
-          const spawner = new Spawner(
-            data.id,
-            data.roomId,
-            data.maxActive || 1,
-            data.intervalMs || 30000,
-            data.variants || []
-          );
-          engine.entities.registerSpawner(spawner);
+      areaData.spawners.forEach(data => {
+        const spawner = new Spawner(data.id, data.roomId, data.maxActive || 1, data.intervalMs || 30000, data.variants || []);
+        engine.entities.registerSpawner(spawner);
+      });
+
+      // 6. Register rumors/cronica
+      if (areaData.rumors) {
+        areaData.rumors.forEach(data => {
+          engine.entities.rumors.set(data.id, data);
         });
       }
     }

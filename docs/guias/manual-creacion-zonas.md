@@ -58,12 +58,20 @@ Los NPCs se dividen en **Sociales** (Interactuables/Mercaderes) y **Hostiles** (
   metadata:
     raceId: humano_altherion
     merchant: true
+    ambientMessages:
+      - "limpia el mostrador tranquilamente."
+      - "organiza las pociones por color."
+    greetings:
+      - "{npc} te ofrece sus mejores mercancías, {player}."
     inventory: ['item_pocion_vida', 'item_espada_test']
     dialogues:
       - requires_not_flag: mision_aceptada
         text: "¿Podrías ayudarme con esos lobos?"
         set_flag: mision_aceptada
       - text: "Ten cuidado, forastero."
+
+> [!TIP]
+> **Vida y Atmósfera:** Usa `ambientMessages` (mensajes periódicos aleatorios) y `greetings` (saludo cuando un jugador entra) bajo `metadata` para dar vida a tus NPCs sociales. Puedes usar las variables `{npc}` y `{player}` dentro de `greetings` para que el motor las reemplace dinámicamente.
 ```
 
 ### Mob Hostil (Monstruo)
@@ -116,26 +124,97 @@ Cada objeto debe tener un propósito claro: mejora táctica o valor de venta.
         message: "<green>Tus heridas se cierran.</green>"
 ```
 
+### Objetos Narrativos y Misiones (QUEST / MISC)
+Los objetos de misión o pistas fundamentales alimentan el sistema de "Crónica Viva".
+
+```yaml
+- id: item_contrato_campana
+  name: "Contrato: La Campana que Sobra"
+  description: Encargo de Rango Cobre...
+  type: QUEST
+  value: 0
+  metadata:
+    rank: cobre
+    tags: [contrato, misterio]
+    clueRoutes: 
+      - dialogue: npc_bimba_cascabel
+```
+
+**Metadatos Narrativos:**
+- `rank`: Utilizado para definir la dificultad narrativa del contrato u objeto.
+- `tags`: Etiquetas (Array de strings) usadas por los NPCs para identificar tipos de objetos en su lógica o diálogos.
+- `clueFor` / `clueRoutes`: Enlazan el objeto con el sistema de pistas y "rumores" del motor, permitiendo avanzar en investigaciones de la Crónica Viva cuando el jugador los examina o los obtiene.
+
 ---
 
 ## 5. El Motor de Spawns (`spawners.yml`)
-Controla cuántos enemigos hay en una sala y qué tan rápido reaparecen.
+El archivo `spawners.yml` controla la generación automática de NPCs (habitualmente monstruos) en el mundo. Define cuántos enemigos puede haber, cada cuánto tiempo reaparecen y qué probabilidad hay de que aparezca una variante u otra.
 
+### Ejemplo de Spawner Básico
 ```yaml
 - id: spawner_bosque
   roomId: mi_zona_bosque
-  maxActive: 4       # Máximo de mobs a la vez
-  intervalMs: 30000  # Tiempo entre intentos de spawn
+  maxActive: 4       # Máximo de entidades vivas al mismo tiempo provenientes de este spawner
+  intervalMs: 30000  # Frecuencia (en milisegundos) con la que el motor intenta spawnear
   variants:
     - npcId: mob_lobo_test
-      chance: 80
+      chance: 80     # 80% de probabilidad de generar este NPC en cada tick
     - npcId: mob_lobo_alfa
-      chance: 20
+      chance: 20     # 20% de probabilidad de generar el Alfa
 ```
+
+### Ejemplo de Spawner de Jefe (`unique: true`)
+Para jefes o NPCs únicos, es crucial evitar que se multipliquen si la sala se vacía pero el jefe se movió, o para asegurar que solo haya uno vivo en todo momento.
+
+```yaml
+- id: spawner_boss_madriguera
+  roomId: colinas_madriguera
+  maxActive: 1
+  intervalMs: 120000 # 2 minutos de tiempo de respawn
+  variants:
+    - npcId: npc_conejo_general
+      chance: 100
+      unique: true   # GARANTIZA que el motor no generará otra instancia si ya existe una viva en TODO el mundo
+```
+
+### Parámetros Clave:
+- **`maxActive`**: Límite estricto de cuántas copias vivas puede mantener *este spawner en particular* al mismo tiempo dentro de su `roomId`.
+- **`intervalMs`**: Cada cuántos milisegundos el motor comprobará si la cantidad de NPCs vivos es menor a `maxActive`. Si es así, tirará los dados según el `chance` de las variantes.
+- **`variants`**: Lista de posibles NPCs a spawnear. La suma de sus `chance` puede o no sumar 100 (el motor calcula el peso relativo, pero es buena práctica que sumen 100).
+- **`unique: true`**: Ideal para Bosses o PNJs con nombre propio. Si se activa, el motor rastreará el `npcId` a nivel global y abortará el spawn si ese NPC ya existe en cualquier lugar de la memoria del servidor.
 
 ---
 
-## 6. Estándares de Balanceo (Nivel 1-10)
+## 6. Sistema de Crónica y Rumores (`rumors-cronica.yml`)
+Este archivo alimenta el sistema de investigación y Crónica Viva, permitiendo a los jugadores descubrir pistas y eventos del mundo interactuando con NPCs, escenarios y objetos.
+
+```yaml
+- id: rumor_campana_trece
+  metadata:
+    type: rumor
+    area: villaclara
+    text: >-
+      Dicen que si la campana del mediodía da trece golpes, alguien ha sido escrito...
+    routes:
+      - npc_bimba_cascabel
+      - scenery: campanario
+    clueFor: nombres_borrados
+
+- id: cronica_villaclara_dia_1
+  metadata:
+    type: cronica_viva
+    title: "Campanas limpias, tinta sucia"
+    text: "Villaclara despierta con olor a pan y una campana de más..."
+```
+
+### Parámetros Clave:
+- **`type`**: Define si es un `"rumor"` que se puede aprender por las calles o un hito narrativo global `"cronica_viva"`.
+- **`routes`**: Array de orígenes (entidades) donde se puede conseguir o escuchar este rumor. Puede ser el ID de un NPC (`npc_bimba_cascabel`), o un elemento del escenario (`scenery: campanario`).
+- **`clueFor`**: A qué secreto mayor de la zona pertenece este rumor (para estructurar la investigación de los jugadores).
+
+---
+
+## 7. Estándares de Balanceo (Nivel 1-10)
 Para asegurar una progresión justa, sigue estas métricas aproximadas:
 
 | Nivel Mob | Vida (HP) | Daño Base (DPR) | Atributo Principal | Recompensa (Soles) |

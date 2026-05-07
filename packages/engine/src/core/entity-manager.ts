@@ -3,6 +3,7 @@ import { Room } from '../models/room.model';
 import { NPC } from '../models/npc.model';
 import { Item } from '../models/item.model';
 import { Spawner } from '../models/spawner.model';
+import { StatCalculator } from './stat-calculator';
 
 export class EntityManager {
   public players: Map<string, Player> = new Map();
@@ -12,6 +13,7 @@ export class EntityManager {
   public itemTemplates: Map<string, any> = new Map();
   public items: Map<string, Item> = new Map();
   public spawners: Map<string, Spawner> = new Map();
+  public rumors: Map<string, any> = new Map();
 
   registerRoom(room: Room): void {
     this.rooms.set(room.id, room);
@@ -25,6 +27,9 @@ export class EntityManager {
   }
 
   registerNPC(npc: NPC): void {
+    const derived = StatCalculator.calculate(npc);
+    if (npc.hpCurrent === undefined) npc.hpCurrent = derived.hpMax;
+    if (npc.hpMax === undefined) npc.hpMax = derived.hpMax;
     this.npcs.set(npc.id, npc);
   }
 

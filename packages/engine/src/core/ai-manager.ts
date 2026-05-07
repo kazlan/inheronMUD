@@ -102,9 +102,16 @@ export class AIManager {
       if (!npc.aiState.greetedPlayers.has(player.id)) {
         npc.aiState.greetedPlayers.add(player.id);
         if (Math.random() < 0.5) {
+          let msgStr = `<cyan>${npc.name} saluda amablemente a ${player.name}.</cyan>`;
+          
+          if (npc.metadata?.greetings && Array.isArray(npc.metadata.greetings)) {
+            const rawMsg = npc.metadata.greetings[Math.floor(Math.random() * npc.metadata.greetings.length)];
+            msgStr = `<cyan>${rawMsg.replace(/{npc}/g, npc.name).replace(/{player}/g, player.name)}</cyan>`;
+          }
+
           this.engine.emit('spatial_message', {
             roomId: npc.roomId,
-            message: `<cyan>${npc.name} saluda amablemente a ${player.name}.</cyan>`
+            message: msgStr
           });
         }
       }

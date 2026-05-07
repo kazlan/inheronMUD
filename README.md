@@ -34,8 +34,11 @@ InheronMUD es un MUD (Multi-User Dungeon) de nueva generación, diseñado bajo u
 - **Diálogos y Misiones**: Motor de `talk` condicionado por la memoria. ✅
 - **Identificadores Visuales y Tácticos**: Rarezas de equipo coloreadas y niveles relativos de MOBs coloreados por peligrosidad. ✅
 - **Economía**: Moneda en base de datos (`coins`), comandos de tienda (`buy`, `sell`, `list`) gestionados por mercaderes. ✅
-- **Ecosistema Vivo**: Motor `RespawnManager` basado en configuraciones YAML (`spawners.yml`) con soporte para variantes raras de monstruos (bosses). ✅
+- **Ecosistema Vivo**: Motor `RespawnManager` basado en configuraciones YAML (`spawners.yml`) con soporte para variantes raras de monstruos (bosses) y restricciones de instancia única (`unique`). ✅
 - **Habilidades y Clases Data-Driven**: Sistema dinámico de `skills` configurables puramente en YAML (`skills.yml`, `classes.yml`) que interpretan tiradas de dados (N d M + X) y efectos variados. ✅
+- **Atmósfera y Vida**: Los NPCs soportan saludos dinámicos condicionados por plantilla y rutinas de ambiente personalizables mediante YAML (`ambientMessages`, `greetings`). ✅
+- **Crónica y Lore Objetual**: Los ítems revelan visualmente pistas y metadatos narrativos a través del comando `examine` (rareza, rango de contratos, etiquetas y pistas de Crónica). ✅
+- **Sistema de Rumores**: El motor asimila los archivos `rumors-cronica.yml` validados por esquemas estrictos de Zod, nutriendo el ecosistema de investigación social. ✅
 
 ### Milestone 5: Multijugador y Onboarding ✅
 - Login y creación de personajes vía WebSocket.

@@ -35,17 +35,31 @@
       modifier: 7
 
 - id: bardo_nota_cortante
-  name: Nota Cortante
+  name: Nota Cortante I
   description: Un acorde disonante y afilado que ataca la mente del enemigo.
-  energyCost: 15
+  energyCost: 12
   cooldown: 0
   type: damage
   family: nota
-  effects:
-    - type: damage
-      diceCount: 1
-      diceSides: 6
-      modifier: 2
+  level: 1
+  attributes:
+    power: presencia
+    accuracy: percepcion
+  damageFormula: "1d4 + 6 + presencia * 0.7 + level * 0.6"
+  onHit:
+    chanceEffects:
+      - effect: zumbido
+        chance: 25
+        duration: 2
+        chanceIfTargetHasAny:
+          effects: [distraido, burlado]
+          chance: 40
+  estrofa:
+    gainFamily: nota
+  repercussion:
+    onCriticalFailure:
+      applyToSelf: voz_quebrada
+      duration: 1
 
 - id: bardo_paso_liria
   name: Paso de Liria

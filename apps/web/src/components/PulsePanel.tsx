@@ -83,7 +83,7 @@ export default function PulsePanel({ options, onOptionClick, inCombat, activeEff
       </div>
 
       {combatEffects.length > 0 && (
-        <div className="combat-monitor" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '0.6rem', marginBottom: '1rem', padding: '0 0.4rem' }}>
+        <div className="combat-monitor" style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginBottom: '1rem', padding: '0 0.6rem' }}>
           {combatEffects.map((eff, i) => {
             const remainingMs = Math.max(0, (eff.startTime + eff.duration) - Date.now());
             const progress = (remainingMs / eff.duration) * 100;
@@ -95,21 +95,32 @@ export default function PulsePanel({ options, onOptionClick, inCombat, activeEff
                 key={i} 
                 className={`monitor-card ${isEcho ? 'echo-effect' : ''}`} 
                 style={{ 
-                  background: isEcho ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.4)', 
-                  padding: '0.4rem', 
-                  borderRadius: '3px', 
-                  border: `1px solid ${isEcho ? 'rgba(100,100,100,0.3)' : (isSelf ? 'var(--blue-bright)' : 'var(--hp-color)')}`,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  background: isEcho ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.3)', 
+                  padding: '4px 8px', 
+                  borderRadius: '2px', 
+                  borderLeft: `3px solid ${isEcho ? '#444' : (isSelf ? 'var(--blue-bright)' : 'var(--hp-color)')}`,
                   opacity: isEcho ? 0.7 : 1,
-                  filter: isEcho ? 'grayscale(0.5)' : 'none'
                 }}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.6rem', marginBottom: '3px' }}>
-                  <span style={{ color: isEcho ? '#aaa' : (isSelf ? 'var(--blue-bright)' : 'var(--hp-color)'), fontWeight: 'bold' }}>
+                <div style={{ flex: '1', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ 
+                    color: isEcho ? '#aaa' : 'white', 
+                    fontSize: '0.65rem',
+                    fontWeight: '500',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em'
+                  }}>
                     {eff.name}
                   </span>
-                  <span style={{ opacity: 0.7 }}>{isSelf ? 'TI' : eff.origin.substring(0, 3)}</span>
+                  <span style={{ fontSize: '0.55rem', opacity: 0.5, marginLeft: '4px' }}>
+                    {isSelf ? 'TI' : eff.origin.substring(0, 5)}
+                  </span>
                 </div>
-                <div className="stat-bar-bg" style={{ height: '4px', background: 'rgba(255,255,255,0.05)' }}>
+                
+                <div className="stat-bar-bg" style={{ width: '60px', height: '4px', background: 'rgba(255,255,255,0.05)', borderRadius: '1px', overflow: 'hidden' }}>
                   <div 
                     className="stat-bar-fill" 
                     style={{ 

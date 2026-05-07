@@ -45,7 +45,7 @@ export default function useMUD(url: string) {
       const occupants = data.occupants || [];
       
       // Print room header
-      addLog('text', `\n[ROOM] ${room.name}`, false);
+      addLog('text', `\n[ROOM] ${room.name || 'Lugar Desconocido'}`, false);
       addLog('text', room.description, false);
       
       // Print occupants with type brackets for Viewport parser

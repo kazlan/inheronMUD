@@ -7,6 +7,7 @@ export interface DerivedStats {
   energyCurrent: number;
   iniciativa: number;
   evasion: number;
+  resistencia: number;
 }
 
 export class StatCalculator {
@@ -29,13 +30,17 @@ export class StatCalculator {
     // Evasión: Destreza + Percepción / 2
     const evasion = Math.floor((stats.destreza + stats.percepcion) / 2);
 
+    // Resistencia: Sabiduría + (Nivel / 2)
+    const resistencia = stats.sabiduria + Math.floor(level / 2);
+
     return {
       hpMax,
       hpCurrent: entity.hpCurrent !== undefined ? entity.hpCurrent : hpMax,
       energyMax,
       energyCurrent: entity.energyCurrent !== undefined ? entity.energyCurrent : energyMax,
       iniciativa,
-      evasion
+      evasion,
+      resistencia
     };
   }
 }

@@ -118,7 +118,18 @@ export class CommandManager {
         return item && item.metadata && item.metadata.lightSource;
       });
       if (!hasLight) {
-        return { message: "Está demasiado oscuro para ver nada. Necesitas una fuente de luz." };
+        return { 
+          room: {
+            id: room.id,
+            name: 'Oscuridad Absoluta',
+            description: "Está demasiado oscuro para ver nada. Necesitas una fuente de luz.",
+            exits: []
+          },
+          occupants: [],
+          areaMap: this.engine.map.getAreaMap(room.areaId || ''),
+          visitedRooms: player?.visitedRooms || [],
+          message: "Está demasiado oscuro para ver nada. Necesitas una fuente de luz."
+        };
       }
     }
 
@@ -136,6 +147,7 @@ export class CommandManager {
       const item = this.engine.entities.getItem(id);
       
       if (npc) {
+        if ((npc.hpCurrent ?? 0) <= 0) return null; // Ignorar NPCs muertos hasta que el motor los limpie
         console.log(`[Command:Look] Found NPC: ${npc.name} (${npc.id})`);
         const json = npc.toJSON() as any;
         json.questIndicator = this.getQuestIndicator(playerId, npc.id);
@@ -184,7 +196,36 @@ export class CommandManager {
     const currentRoom = this.engine.entities.getRoom(player.roomId);
     if (!currentRoom) return { success: false, message: 'Sala actual no encontrada' };
 
-    const exit = currentRoom.exits.find(e => e.direction.toLowerCase() === direction.toLowerCase());
+    const dirLower = direction.toLowerCase().trim();
+    
+    // Normalization Map (covers both ways)
+    const dirMap: Record<string, string[]> = {
+      north: ['n', 'norte'],
+      south: ['s', 'sur'],
+      east: ['e', 'este'],
+      west: ['w', 'o', 'oeste'],
+      northeast: ['ne', 'noreste'],
+      northwest: ['nw', 'noroeste'],
+      southeast: ['se', 'sureste'],
+      southwest: ['sw', 'suroeste'],
+      up: ['u', 'arriba'],
+      down: ['d', 'abajo']
+    };
+
+    const exit = currentRoom.exits.find(e => {
+      const exitDir = e.direction.toLowerCase();
+      if (exitDir === dirLower) return true;
+      
+      // Check if they are aliases of the same canonical direction
+      for (const [canonical, aliases] of Object.entries(dirMap)) {
+        if ((exitDir === canonical || aliases.includes(exitDir)) && 
+            (dirLower === canonical || aliases.includes(dirLower))) {
+          return true;
+        }
+      }
+      return false;
+    });
+
     if (!exit) return { success: false, message: `No hay salida hacia el ${direction}.` };
 
     if (exit.locked) return { success: false, message: 'Esa puerta está cerrada con llave.' };
@@ -787,7 +828,7 @@ export class CommandManager {
 
     const target = room.entities
       .map(id => this.engine.entities.getNPC(id))
-      .filter(npc => !!npc && this.matchEntityName(npc.name, targetName))[0];
+      .filter(npc => !!npc && this.matchEntityName(npc.name, targetName) && (npc.hpCurrent ?? 0) > 0)[0];
 
     if (!target) return { success: false, message: `No ves a ningún "${targetName}" aquí.` };
     if ((target.hpCurrent ?? 0) <= 0) return { success: false, message: `${target.name} ya está muerto.` };
@@ -1314,6 +1355,14 @@ export class CommandManager {
       if (targetItem.equipSlot) msg += `Ranura de Equipo: <b>${targetItem.equipSlot}</b>\n`;
       
       if (targetItem.metadata) {
+        if (targetItem.metadata.rarity) {
+          const colors: Record<string, string> = { 'común': 'white', 'poco_común': 'green', 'raro': 'blue', 'épico': 'magenta', 'legendario': 'gold' };
+          const rColor = colors[targetItem.metadata.rarity.toLowerCase()] || 'white';
+          msg += `Rareza: <${rColor}>[${targetItem.metadata.rarity.toUpperCase()}]</${rColor}>\n`;
+        }
+        if (targetItem.metadata.rank) {
+          msg += `Rango Requerido: <gold>${targetItem.metadata.rank.toUpperCase()}</gold>\n`;
+        }
         if (targetItem.metadata.diceCount && targetItem.metadata.diceSides) {
           msg += `Daño de Arma: <b>${targetItem.metadata.diceCount}d${targetItem.metadata.diceSides} + ${targetItem.metadata.modifier || 0}</b>\n`;
         }
@@ -1322,6 +1371,12 @@ export class CommandManager {
         }
         if (targetItem.metadata.effects) {
           msg += `<i>Posee efectos especiales al usarse/equiparse.</i>\n`;
+        }
+        if (targetItem.metadata.clueFor || targetItem.metadata.clueRoutes) {
+          msg += `<i><cyan>Este objeto parece vibrar con resonancia narrativa. (Objeto de Misión/Pista)</cyan></i>\n`;
+        }
+        if (targetItem.metadata.tags && Array.isArray(targetItem.metadata.tags)) {
+          msg += `Etiquetas: <gray>${targetItem.metadata.tags.join(', ')}</gray>\n`;
         }
       }
       return { success: true, message: msg };

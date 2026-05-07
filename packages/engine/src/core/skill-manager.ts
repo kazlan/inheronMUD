@@ -22,9 +22,7 @@ export interface SkillDef {
 export class SkillManager {
   private skills: Map<string, SkillDef> = new Map();
 
-  constructor() {
-    // Loaded later by GameEngine / WorldFactory
-  }
+  constructor() {}
 
   public loadFromData(skillsData: any[]) {
     this.skills.clear();
@@ -52,6 +50,7 @@ export class SkillManager {
     const caster = engine.entities.getPlayer(casterId);
     if (!caster) return { success: false, message: 'Jugador inválido.' };
 
+    // Ensure energy
     if (caster.energyCurrent === undefined) {
       const derived = StatCalculator.calculate(caster);
       caster.energyCurrent = derived.energyMax;
@@ -65,60 +64,46 @@ export class SkillManager {
       return { success: false, message: 'Energía insuficiente.' };
     }
 
+    // Deduct cost
     caster.energyCurrent = (caster.energyCurrent || 0) - skill.energyCost;
-
     let combatCaster = combat?.participants.find(p => p.entityId === casterId);
     if (combatCaster) combatCaster.energyCurrent = caster.energyCurrent;
 
     let targetEntityId: string | undefined;
     let targetEntityName: string | undefined;
-    let targetHpCurrent: number | undefined;
-    let targetHpMax: number | undefined;
     let isTargetPlayer = false;
 
     // Resolve Target
     if (combat) {
-      const pTarget = combat.participants.find(p => targetId ? p.entityId === targetId || p.name.toLowerCase().startsWith(targetId.toLowerCase()) : (skill.type === 'heal' || skill.type === 'utility' ? p.entityId === casterId : !p.isPlayer));
+      const pTarget = combat.participants.find(p => {
+        const matches = targetId ? p.entityId === targetId || p.name.toLowerCase().startsWith(targetId.toLowerCase()) : (skill.type === 'heal' || skill.type === 'utility' ? p.entityId === casterId : !p.isPlayer);
+        return matches && (p.hpCurrent > 0 || skill.type === 'heal');
+      });
       if (pTarget) {
         targetEntityId = pTarget.entityId;
         targetEntityName = pTarget.name;
-        targetHpCurrent = pTarget.hpCurrent;
-        targetHpMax = pTarget.hpMax;
         isTargetPlayer = pTarget.isPlayer;
       }
     } else {
-      // Out of combat target resolution
       const room = engine.entities.getRoom(caster.roomId);
       if (room) {
         if (!targetId && (skill.type === 'heal' || skill.type === 'utility')) {
           targetEntityId = caster.id;
           targetEntityName = caster.name;
-          targetHpCurrent = caster.hpCurrent;
-          targetHpMax = caster.hpMax || 100;
           isTargetPlayer = true;
         } else if (targetId) {
-          // Look for NPC
           const npcId = room.entities.find(id => {
             const npc = engine.entities.getNPC(id);
-            return npc && (npc.id === targetId || npc.name.toLowerCase().startsWith(targetId.toLowerCase()));
+            return npc && (npc.id === targetId || npc.name.toLowerCase().startsWith(targetId.toLowerCase())) && (npc.hpCurrent ?? 0) > 0;
           });
           if (npcId) {
-            const npc = engine.entities.getNPC(npcId);
-            if (npc) {
-              targetEntityId = npc.id;
-              targetEntityName = npc.name;
-              targetHpCurrent = (npc as any).hpCurrent;
-              targetHpMax = (npc as any).hpMax || 100;
-            }
+            targetEntityId = npcId;
+            targetEntityName = engine.entities.getNPC(npcId)?.name;
           } else {
-            // Look for Player
-            const otherPlayers = engine.entities.getPlayers().filter((p: any) => p.roomId === caster.roomId);
-            const otherPlayer = otherPlayers.find((p: any) => p.id === targetId || p.name.toLowerCase().startsWith(targetId.toLowerCase()));
+            const otherPlayer = engine.entities.getPlayers().find(p => p.roomId === caster.roomId && (p.id === targetId || p.name.toLowerCase().startsWith(targetId.toLowerCase())));
             if (otherPlayer) {
               targetEntityId = otherPlayer.id;
               targetEntityName = otherPlayer.name;
-              targetHpCurrent = otherPlayer.hpCurrent;
-              targetHpMax = otherPlayer.hpMax || 100;
               isTargetPlayer = true;
             }
           }
@@ -127,191 +112,153 @@ export class SkillManager {
     }
 
     // Initiate combat if damage skill used out of combat
-    if (!combat && skill.effects?.some(e => e.type === 'damage')) {
+    if (!combat && (skill.effects?.some(e => e.type === 'damage') || (skill as any).damageFormula)) {
       if (!targetEntityId) return { success: false, message: 'Objetivo inválido.' };
-      if (isTargetPlayer) return { success: false, message: 'No puedes atacar a otros jugadores (PvP desactivado).' };
+      if (isTargetPlayer) return { success: false, message: 'No puedes atacar a otros jugadores.' };
       engine.initiateCombat([caster.id], [targetEntityId]);
       combat = engine.getCombatByPlayerId(caster.id);
       combatCaster = combat?.participants.find(p => p.entityId === casterId);
-      // Re-fetch target from combat state
-      const pTarget = combat?.participants.find(p => p.entityId === targetEntityId);
-      if (pTarget) {
-        targetHpCurrent = pTarget.hpCurrent;
-      }
     }
 
     const combatLog: string[] = [];
+    const stats = caster.stats;
+    const level = caster.level || 1;
 
-    // Process effects
-    if (skill.effects) {
-      for (const effect of skill.effects) {
-        
-        let amount = 0;
-        if (effect.diceCount && effect.diceSides) {
-          for (let i = 0; i < effect.diceCount; i++) {
-            amount += Math.floor(Math.random() * effect.diceSides) + 1;
-          }
-        }
-        if (effect.modifier) amount += effect.modifier;
-
-        if (effect.type === 'damage') {
-          if (!targetEntityId) return { success: false, message: 'Objetivo inválido.' };
-          
-          if (combat) {
-            const combatTarget = combat.participants.find(p => p.entityId === targetEntityId);
-            if (combatTarget) {
-              combatTarget.hpCurrent -= amount;
-              // Sync back to entity via engine helper to ensure consistency
-              engine.updateEntityHP(targetEntityId, combatTarget.hpCurrent);
-            }
-          } else {
-            const npcTarget = engine.entities.getNPC(targetEntityId);
-            if (npcTarget) {
-              const newHP = Math.max((npcTarget.hpCurrent || 0) - amount, 0);
-              engine.updateEntityHP(targetEntityId, newHP);
-            }
-          }
-          combatLog.push(`<cyan>${caster.name}</cyan> utiliza <yellow>${skill.name}</yellow> sobre <red>${targetEntityName}</red> por ${amount} de daño.`);
-          
-        } else if (effect.type === 'heal') {
-          if (!targetEntityId) {
-            targetEntityId = caster.id;
-            targetEntityName = caster.name;
-          }
-          const finalAmount = amount;
-          
-          if (combat) {
-            const combatTarget = combat.participants.find(p => p.entityId === targetEntityId);
-            if (combatTarget) {
-              combatTarget.hpCurrent = Math.min((combatTarget.hpCurrent || 0) + finalAmount, combatTarget.hpMax || 100);
-              // Sync back to entity via engine helper
-              engine.updateEntityHP(targetEntityId, combatTarget.hpCurrent);
-            }
-          }
-          
-          if (isTargetPlayer) {
-            const actualPlayer = engine.entities.getPlayer(targetEntityId);
-            if (actualPlayer) {
-              actualPlayer.hpCurrent = Math.min((actualPlayer.hpCurrent || 0) + finalAmount, actualPlayer.hpMax || 100);
-            }
-          } else {
-             const actualNpc = engine.entities.getNPC(targetEntityId);
-             if (actualNpc) (actualNpc as any).hpCurrent = Math.min(((actualNpc as any).hpCurrent || 0) + finalAmount, (actualNpc as any).hpMax || 100);
-          }
-
-          if (combat) {
-            combatLog.push(`<cyan>${caster.name}</cyan> invoca <yellow>${skill.name}</yellow> sobre <green>${targetEntityName}</green> sanando ${finalAmount} HP.`);
-          } else {
-            engine.emit('spatial_message', {
-              roomId: caster.roomId,
-              message: `<cyan>${caster.name}</cyan> invoca <yellow>${skill.name}</yellow> sobre <green>${targetEntityName}</green>.`
-            });
-            engine.savePlayer(casterId); // Sync caster
-            if (targetEntityId !== casterId && isTargetPlayer) engine.savePlayer(targetEntityId); // Sync target if another player
-            return { success: true, message: `Has lanzado ${skill.name} sobre ${targetEntityName}.` };
-          }
-        } else if (effect.type === 'buff' || effect.type === 'debuff') {
-          if (!targetEntityId) {
-            targetEntityId = caster.id;
-            targetEntityName = caster.name;
-          }
-          const actualTarget = isTargetPlayer ? engine.entities.getPlayer(targetEntityId) : engine.entities.getNPC(targetEntityId);
-          if (actualTarget) {
-            if (!actualTarget.activeEffects) actualTarget.activeEffects = [];
-            actualTarget.activeEffects.push({
-              id: `eff_${skill.id}_${Date.now()}`,
-              sourceSkillId: skill.id,
-              name: skill.name,
-              type: effect.type,
-              modifier: effect.modifier,
-              startTime: Date.now(),
-              duration: effect.duration || 30000 // 30 seconds default
-            });
-            const color = effect.type === 'buff' ? 'green' : 'red';
-            const actionWord = effect.type === 'buff' ? 'potencia' : 'debilita';
-            combatLog.push(`<cyan>${caster.name}</cyan> ${actionWord} a <${color}>${targetEntityName}</${color}> con <yellow>${skill.name}</yellow>.`);
-          }
-        }
-      }
-    }
-
-    // Hardcoded skill logics for Bard
-    if (skillId === 'bardo_sostener_compas') {
-      const extensionMs = 15000; // 15 seconds extension
-      engine.effects.extendEffects(caster.id, extensionMs);
-      if (combat) {
-        combat.participants.filter(p => p.isPlayer).forEach(p => engine.effects.extendEffects(p.entityId, extensionMs));
-      }
-      combatLog.push(`<cyan>${caster.name}</cyan> sostiene el compás, extendiendo los efectos de sus cantos.`);
-      
-      if (caster.bardState) {
-        caster.bardState.freeSustainAvailable = false;
-        // Cost was charged, unless it was free, but that logic goes to command parser.
-      }
-    } else if (skillId === 'bardo_himno_victoria') {
-      if (!caster.bardState || (caster.bardState.aplauso || 0) < 3) {
-        // Refund energy
-        caster.energyCurrent = (caster.energyCurrent || 0) + skill.energyCost;
-        if (combatCaster) combatCaster.energyCurrent = caster.energyCurrent;
-        return { success: false, message: 'Necesitas 3 Aplausos para entonar el Himno de Victoria.' };
-      }
-      caster.bardState.aplauso = (caster.bardState.aplauso || 0) - 3;
-      combatLog.push(`<magenta><b>¡${caster.name} entona el glorioso Himno de Victoria consumiendo 3 Aplausos!</b></magenta>`);
-    }
-
-    // Trama logic for Bard
-    if (caster.classId === 'bardo_cronica_viva' && caster.bardState && skill.family) {
-      if (caster.bardState.lastFamilyUsed === skill.family) {
-        caster.bardState.repeatedFamilyCount = (caster.bardState.repeatedFamilyCount || 0) + 1;
-      } else {
-        caster.bardState.repeatedFamilyCount = 0;
-        caster.bardState.lastFamilyUsed = skill.family;
-        
-        // Changing family increments the "estrofa" (stanza)
-        caster.bardState.estrofa = (caster.bardState.estrofa || 0) + 1;
-        
-        // Check "Trama" thresholds
-        if (caster.bardState.estrofa >= 3) {
-          caster.bardState.estrofa = 0; // Reset estrofa upon climax
-          caster.bardState.freeSustainAvailable = true;
-          combatLog.push(`<magenta>La Trama se entrelaza: Has alcanzado el clímax de la estrofa. Tienes un "Sostener Compás" gratuito.</magenta>`);
-        } else {
-          combatLog.push(`<yellow>Cambias a la melodía de ${skill.family}. Estrofa actual: ${caster.bardState.estrofa}/3.</yellow>`);
-        }
-      }
-    }
-
-    if (combatLog.length === 0) {
-      combatLog.push(`<cyan>${caster.name}</cyan> utiliza <yellow>${skill.name}</yellow>.`);
-    }
-
-    if (combat && combatLog.length > 0) {
-      engine.emit('combat_message', casterId, combatLog);
-      return { success: true, message: '' }; // Suppress duplicate message since combat_message handles it
-    }
-
-    return { 
-      success: true, 
-      message: combatLog.join('\n'), // Out of combat, show the log
-      combatLog
-    };
-  }
-
-  getSkill(nameOrId: string): SkillDef | undefined {
-    // Try exact ID
-    if (this.skills.has(nameOrId)) return this.skills.get(nameOrId);
+    // 1. Accuracy Check
+    const accuracyStat = (skill as any).attributes?.accuracy || 'percepcion';
+    const accuracyValue = (stats as any)[accuracyStat] || 10;
+    const d20 = Math.floor(Math.random() * 20) + 1;
+    const totalAccuracy = d20 + accuracyValue;
     
-    // Try substring matching name
-    const lower = nameOrId.toLowerCase();
-    for (const skill of this.skills.values()) {
-      if (skill.name.toLowerCase().includes(lower) || skill.id.toLowerCase().includes(lower)) {
-        return skill;
+    let targetEvasion = 10;
+    if (targetEntityId) {
+      const target = isTargetPlayer ? engine.entities.getPlayer(targetEntityId) : engine.entities.getNPC(targetEntityId);
+      if (target) targetEvasion = StatCalculator.calculate(target).evasion;
+    }
+
+    const isCrit = d20 === 20;
+    const isFumble = d20 === 1;
+    const isHit = isCrit || (totalAccuracy >= targetEvasion && !isFumble);
+
+    if (!isHit) {
+      combatLog.push(`<cyan>${caster.name}</cyan> intenta lanzar <yellow>${skill.name}</yellow> pero <gray>falla</gray>.`);
+      if (isFumble) {
+        const pifia = (skill as any).repercussion?.onCriticalFailure;
+        if (pifia?.applyToSelf) {
+          engine.entities.applyEffect(casterId, { id: pifia.applyToSelf, name: 'Pifia: ' + pifia.applyToSelf, duration: (pifia.duration || 1) * 10000, type: 'debuff' });
+          combatLog.push(`<red>¡Fallo Crítico! ${caster.name} sufre de ${pifia.applyToSelf}.</red>`);
+        }
+      }
+      return { success: true, message: 'Fallo.', combatLog };
+    }
+
+    // 2. Process Damage Formula
+    if ((skill as any).damageFormula && targetEntityId) {
+      let damage = this.evaluateFormula((skill as any).damageFormula, stats, level);
+      if (isCrit) {
+        damage = Math.floor(damage * 1.5);
+        combatLog.push(`<yellow>¡GOLPE CRÍTICO!</yellow>`);
+      }
+      const target = isTargetPlayer ? engine.entities.getPlayer(targetEntityId) : engine.entities.getNPC(targetEntityId);
+      if (target) {
+        engine.updateEntityHP(targetEntityId, Math.max((target.hpCurrent || 0) - damage, 0));
+        combatLog.push(`<cyan>${caster.name}</cyan> lanza <yellow>${skill.name}</yellow> sobre <red>${targetEntityName}</red> por ${damage} de daño.`);
       }
     }
-    return undefined;
+
+    // 3. Process Effects
+    for (const effect of (skill.effects || [])) {
+      let amount = 0;
+      if (effect.diceCount && effect.diceSides) {
+        for (let i = 0; i < effect.diceCount; i++) amount += Math.floor(Math.random() * effect.diceSides) + 1;
+      }
+      if (effect.modifier) amount += effect.modifier;
+
+      if (effect.type === 'damage' && targetEntityId) {
+        const target = isTargetPlayer ? engine.entities.getPlayer(targetEntityId) : engine.entities.getNPC(targetEntityId);
+        if (target) {
+          engine.updateEntityHP(targetEntityId, Math.max((target.hpCurrent || 0) - amount, 0));
+          combatLog.push(`<cyan>${caster.name}</cyan> utiliza <yellow>${skill.name}</yellow> sobre <red>${targetEntityName}</red> por ${amount} de daño.`);
+        }
+      } else if (effect.type === 'heal') {
+        const tid = targetEntityId || casterId;
+        const target = isTargetPlayer || tid === casterId ? engine.entities.getPlayer(tid) : engine.entities.getNPC(tid);
+        if (target) {
+          const maxHp = StatCalculator.calculate(target).hpMax;
+          engine.updateEntityHP(tid, Math.min((target.hpCurrent || 0) + amount, maxHp));
+          combatLog.push(`<cyan>${caster.name}</cyan> sana a <green>${target.name}</green> por ${amount} HP.`);
+        }
+      } else if (effect.type === 'buff' || effect.type === 'debuff') {
+        const tid = targetEntityId || casterId;
+        engine.entities.applyEffect(tid, {
+          sourceSkillId: skill.id,
+          name: skill.name,
+          type: effect.type,
+          modifier: effect.modifier,
+          duration: effect.duration || 30000
+        });
+        combatLog.push(`<cyan>${caster.name}</cyan> aplica <yellow>${skill.name}</yellow> sobre <white>${targetEntityName || caster.name}</white>.`);
+      }
+    }
+
+    // 4. onHit logic (Chance Effects)
+    const onHit = (skill as any).onHit;
+    if (onHit?.chanceEffects && targetEntityId) {
+      for (const ce of onHit.chanceEffects) {
+        // Conditional chance check & Resistance deduction
+        const target = isTargetPlayer ? engine.entities.getPlayer(targetEntityId) : engine.entities.getNPC(targetEntityId);
+        let chance = ce.chance || 0;
+        if (ce.chanceIfTargetHasAny && target) {
+          if (target.activeEffects?.some((e: any) => ce.chanceIfTargetHasAny.effects.includes(e.id))) {
+            chance = ce.chanceIfTargetHasAny.chance;
+          }
+        }
+
+        // Apply Resistance
+        const targetStats = target ? StatCalculator.calculate(target) : { resistencia: 0 };
+        const finalChance = Math.max(5, chance - (targetStats.resistencia || 0)); // Min 5% chance
+
+        if (Math.random() * 100 <= finalChance) {
+          engine.entities.applyEffect(targetEntityId, { id: ce.effect, name: ce.effect, duration: (ce.duration || 2) * 10000, type: 'debuff' });
+          combatLog.push(`<yellow>¡Efecto!</yellow> ${targetEntityName} sufre <magenta>${ce.effect}</magenta>.`);
+        }
+      }
+    }
+
+    // 5. Bard Mechanics (Estrofa & Trama)
+    if (caster.classId === 'bardo_cronica_viva' && caster.bardState) {
+      if ((skill as any).estrofa?.gainFamily) {
+        caster.bardState.estrofa = (caster.bardState.estrofa || 0) + 1;
+        if (caster.bardState.estrofa >= 3) {
+          caster.bardState.estrofa = 0;
+          caster.bardState.freeSustainAvailable = true;
+          combatLog.push(`<magenta><b>¡Trama Completa!</b></magenta> Sostener Compás disponible.`);
+        } else {
+          combatLog.push(`<magenta>Estrofa: ${caster.bardState.estrofa}/3</magenta>`);
+        }
+      }
+      engine.emit('save_player', caster);
+    }
+
+    if (combat) engine.emit('combat_message', casterId, combatLog);
+    return { success: true, message: combatLog.join('\n'), combatLog };
   }
 
-  getAllSkills(): SkillDef[] {
-    return Array.from(this.skills.values());
+  public getSkill(nameOrId: string): SkillDef | undefined {
+    if (this.skills.has(nameOrId)) return this.skills.get(nameOrId);
+    const lower = nameOrId.toLowerCase();
+    return Array.from(this.skills.values()).find(s => s.name.toLowerCase().includes(lower) || s.id.toLowerCase().includes(lower));
+  }
+
+  private evaluateFormula(formula: string, stats: any, level: number): number {
+    let expression = formula;
+    for (const [stat, value] of Object.entries(stats)) expression = expression.replace(new RegExp(`\\b${stat}\\b`, 'g'), value!.toString());
+    expression = expression.replace(/\blevel\b/g, level.toString());
+    expression = expression.replace(/(\d+)d(\d+)/g, (_, c, s) => {
+      let t = 0;
+      for (let i = 0; i < parseInt(c); i++) t += Math.floor(Math.random() * parseInt(s)) + 1;
+      return t.toString();
+    });
+    try { return Math.floor(new Function(`return ${expression}`)()); } catch { return 0; }
   }
 }

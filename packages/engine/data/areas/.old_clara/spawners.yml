@@ -1,0 +1,26 @@
+- id: spawner_campo_norte
+  roomId: villaclara_campo_norte
+  maxActive: 5
+  intervalMs: 15000
+  variants:
+    - npcId: npc_conejo_acorazado_1
+      chance: 70
+    - npcId: npc_lobo_hambriento
+      chance: 30
+
+- id: spawner_colinas_inicio
+  roomId: colinas_inicio
+  maxActive: 4
+  intervalMs: 25000
+  variants:
+    - npcId: npc_conejo_acorazado_2
+      chance: 100
+
+- id: spawner_boss_madriguera
+  roomId: colinas_madriguera
+  maxActive: 1
+  intervalMs: 120000 # 2 mins respawn
+  variants:
+    - npcId: npc_conejo_general
+      chance: 100
+      unique: true
