@@ -41,6 +41,7 @@ La sala es el bloque básico de construcción. Debe seguir la **Regla de los Tre
 
 ### Tips de Diseño
 - **Hub-and-Spoke:** Crea un punto central seguro y ramifica los peligros desde allí.
+- **Salas Seguras:** Para poblados o tabernas, incluye `safe: true` dentro de `metadata`. Esto bloquea por completo que los monstruos (`behaviorId: hostile_beast`) con el flag `wandering` puedan acceder a la sala por accidente, aunque compartan la misma zona o `areaId`.
 - **Interacciones:** Usa la propiedad `interactions` en `scenery` para mensajes personalizados al usar verbos como `tocar`, `empujar` o `sentarse`.
 
 ---
@@ -71,7 +72,9 @@ Los NPCs se dividen en **Sociales** (Interactuables/Mercaderes) y **Hostiles** (
       - text: "Ten cuidado, forastero."
 
 > [!TIP]
-> **Vida y Atmósfera:** Usa `ambientMessages` (mensajes periódicos aleatorios) y `greetings` (saludo cuando un jugador entra) bajo `metadata` para dar vida a tus NPCs sociales. Puedes usar las variables `{npc}` y `{player}` dentro de `greetings` para que el motor las reemplace dinámicamente.
+> **Vida y Atmósfera:** Usa `ambientMessages` y `greetings` bajo `metadata` para dar vida a tus NPCs sociales. 
+> - **`ambientMessages`**: Son rutinas periódicas. Escríbelas asumiendo que el motor pondrá el nombre del NPC delante automáticamente. (Ej: `"limpia el mostrador."` se leerá como `"Silas el Buhonero limpia el mostrador."`).
+> - **`greetings`**: Diálogos emitidos al entrar un jugador en la sala. Debes usar `{npc}` y `{player}` dentro de las cadenas para que el motor las reemplace dinámicamente.
 ```
 
 ### Mob Hostil (Monstruo)
