@@ -40,6 +40,7 @@
     - direction: southwest
       targetRoomId: villaclara_archivo_cuerdas
   metadata:
+    safe: true
     cronica:
       canonRole: hub_inicial
       motifs: [pan_bendito, campanas, nombres, pozo_cantante]
@@ -74,6 +75,7 @@
     - direction: up
       targetRoomId: villaclara_plaza
   metadata:
+    safe: true
     interactions:
       - action: message
         targetSceneryId: agua
@@ -107,6 +109,7 @@
     - direction: northeast
       targetRoomId: villaclara_plaza
   metadata:
+    safe: true
     cronica:
       clueRoutes:
         nombres_borrados:
@@ -132,6 +135,7 @@
     - direction: south
       targetRoomId: villaclara_gremio
   metadata:
+    safe: true
     board:
       rank: cobre
       contracts:
@@ -176,6 +180,7 @@
     - direction: north
       targetRoomId: villaclara_campo_norte
   metadata:
+    safe: true
     cronica:
       motifs: [muralla, portones, llanuras]
 
@@ -196,6 +201,7 @@
     - direction: north
       targetRoomId: villaclara_plaza
   metadata:
+    safe: true
     cronica:
       canonRole: santuario
       motifs: [luz, incienso, vidrieras]
@@ -220,6 +226,7 @@
     - direction: south
       targetRoomId: villaclara_forja
   metadata:
+    safe: true
     cronica:
       motifs: [pan, harina, calor]
 
@@ -242,6 +249,7 @@
     - direction: north
       targetRoomId: villaclara_tablon
   metadata:
+    safe: true
     cronica:
       canonRole: gremio
       motifs: [cerveza, cuero, contratos]
@@ -265,6 +273,7 @@
     - direction: northwest
       targetRoomId: villaclara_plaza
   metadata:
+    safe: true
     cronica:
       motifs: [fuego, hierro, martillo]
 

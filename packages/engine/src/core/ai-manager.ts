@@ -122,7 +122,7 @@ export class AIManager {
       npc.aiState.nextAmbientTime = now + 45000 + Math.random() * 45000;
       if (npc.metadata?.ambientMessages && Array.isArray(npc.metadata.ambientMessages)) {
         const msg = npc.metadata.ambientMessages[Math.floor(Math.random() * npc.metadata.ambientMessages.length)];
-        this.engine.emit('spatial_message', { roomId: npc.roomId, message: `<gray>${msg}</gray>` });
+        this.engine.emit('spatial_message', { roomId: npc.roomId, message: `<gray>${npc.name} ${msg}</gray>` });
       } else {
         const genericMessages = [
           "te observa con curiosidad.",
@@ -161,6 +161,11 @@ export class AIManager {
         if (!randomExit.targetRoomId.startsWith(npc.metadata.wanderArea)) return;
       } else if (npc.areaId && targetRoom.areaId !== npc.areaId) {
         return; // No salir del areaId asignado
+      }
+
+      // Prevent hostile beasts from entering safe rooms
+      if (npc.behaviorId === 'hostile_beast' && targetRoom.metadata?.safe) {
+        return;
       }
 
       // Move NPC
