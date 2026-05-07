@@ -76,7 +76,8 @@ export class SkillManager {
     // Resolve Target
     if (combat) {
       const pTarget = combat.participants.find(p => {
-        const matches = targetId ? p.entityId === targetId || p.name.toLowerCase().startsWith(targetId.toLowerCase()) : (skill.type === 'heal' || skill.type === 'utility' ? p.entityId === casterId : !p.isPlayer);
+        const isBeneficial = skill.type === 'heal' || skill.type === 'utility' || skill.type === 'buff';
+        const matches = targetId ? p.entityId === targetId || p.name.toLowerCase().startsWith(targetId.toLowerCase()) : (isBeneficial ? p.entityId === casterId : !p.isPlayer);
         return matches && (p.hpCurrent > 0 || skill.type === 'heal');
       });
       if (pTarget) {
@@ -87,7 +88,8 @@ export class SkillManager {
     } else {
       const room = engine.entities.getRoom(caster.roomId);
       if (room) {
-        if (!targetId && (skill.type === 'heal' || skill.type === 'utility')) {
+        const isBeneficial = skill.type === 'heal' || skill.type === 'utility' || skill.type === 'buff';
+        if (!targetId && isBeneficial) {
           targetEntityId = caster.id;
           targetEntityName = caster.name;
           isTargetPlayer = true;
@@ -125,20 +127,27 @@ export class SkillManager {
     const level = caster.level || 1;
 
     // 1. Accuracy Check
-    const accuracyStat = (skill as any).attributes?.accuracy || 'percepcion';
-    const accuracyValue = (stats as any)[accuracyStat] || 10;
-    const d20 = Math.floor(Math.random() * 20) + 1;
-    const totalAccuracy = d20 + accuracyValue;
-    
-    let targetEvasion = 10;
-    if (targetEntityId) {
-      const target = isTargetPlayer ? engine.entities.getPlayer(targetEntityId) : engine.entities.getNPC(targetEntityId);
-      if (target) targetEvasion = StatCalculator.calculate(target).evasion;
-    }
+    const isBeneficial = skill.type === 'heal' || skill.type === 'buff' || skill.type === 'utility';
+    let isHit = true;
+    let isCrit = false;
+    let isFumble = false;
 
-    const isCrit = d20 === 20;
-    const isFumble = d20 === 1;
-    const isHit = isCrit || (totalAccuracy >= targetEvasion && !isFumble);
+    if (!isBeneficial) {
+      const accuracyStat = (skill as any).attributes?.accuracy || 'percepcion';
+      const accuracyValue = (stats as any)[accuracyStat] || 10;
+      const d20 = Math.floor(Math.random() * 20) + 1;
+      const totalAccuracy = d20 + accuracyValue;
+      
+      let targetEvasion = 10;
+      if (targetEntityId) {
+        const target = isTargetPlayer ? engine.entities.getPlayer(targetEntityId) : engine.entities.getNPC(targetEntityId);
+        if (target) targetEvasion = StatCalculator.calculate(target).evasion;
+      }
+
+      isCrit = d20 === 20;
+      isFumble = d20 === 1;
+      isHit = isCrit || (totalAccuracy >= targetEvasion && !isFumble);
+    }
 
     if (!isHit) {
       combatLog.push(`<cyan>${caster.name}</cyan> intenta lanzar <yellow>${skill.name}</yellow> pero <gray>falla</gray>.`);
@@ -149,7 +158,12 @@ export class SkillManager {
           combatLog.push(`<red>¡Fallo Crítico! ${caster.name} sufre de ${pifia.applyToSelf}.</red>`);
         }
       }
-      return { success: true, message: 'Fallo.', combatLog };
+      if (combat) {
+        const others = combat.participants.filter(p => p.isPlayer && p.entityId !== casterId);
+        for (const p of others) engine.emit('combat_message', p.entityId, combatLog);
+        engine.emit('combat_message', casterId, []);
+      }
+      return { success: true, message: combatLog.join('\n') };
     }
 
     // 2. Process Damage Formula
@@ -240,8 +254,18 @@ export class SkillManager {
       engine.emit('save_player', caster);
     }
 
-    if (combat) engine.emit('combat_message', casterId, combatLog);
-    return { success: true, message: combatLog.join('\n'), combatLog };
+    if (combat) {
+      // Broadcast to all participants EXCEPT the caster, because caster gets it via response.message
+      const others = combat.participants.filter(p => p.isPlayer && p.entityId !== casterId);
+      for (const p of others) {
+        engine.emit('combat_message', p.entityId, combatLog);
+      }
+      // Send a ping to update the caster's UI without re-printing the log
+      engine.emit('combat_message', casterId, []);
+    }
+    
+    // Only return the message, do not include combatLog array to avoid double-printing in RESPONSE
+    return { success: true, message: combatLog.join('\n') };
   }
 
   public getSkill(nameOrId: string): SkillDef | undefined {
