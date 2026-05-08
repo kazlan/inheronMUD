@@ -478,8 +478,6 @@ body::before {
   padding: 0.5rem 0.75rem;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.6);
   z-index: 10;
-  max-height: 140px;
-  overflow-y: auto;
 }
 
 .pulse-header {

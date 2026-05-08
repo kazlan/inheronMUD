@@ -1,0 +1,154 @@
+---
+# Villaclara MVP canónico — items
+# Estado: propuesta no destructiva
+
+- id: item_miga_bendita
+  name: Miga Bendita
+  description: >-
+    Una miga dorada de pan consagrado por costumbre, cariño y una cantidad sospechosa
+    de mantequilla. Restaura muy poco, pero reconforta mucho.
+  type: CONSUMABLE
+  value: 2
+  metadata:
+    effects:
+      - id: consuelo_menor
+        name: Consuelo Menor
+        type: heal
+        magnitude: 3
+    tags: [pan_bendito, villaclara]
+
+- id: item_vale_rango_cobre
+  name: Vale de Encargo de Rango Cobre
+  description: >-
+    Un papel sellado por el gremio que autoriza a intentar tareas pequeñas, peligrosas
+    y oficialmente descritas como “probablemente educativas”.
+  type: QUEST
+  value: 0
+  metadata:
+    rank: cobre
+    tags: [gremio, contrato]
+
+- id: item_campanilla_agrietada
+  name: Campanilla Agrietada
+  description: >-
+    Una campanilla de bronce con una grieta fina. Al agitarla, suena una vez cerca
+    y otra vez en algún lugar que no está del todo aquí.
+  type: MISC
+  value: 12
+  metadata:
+    tags: [campanas, pista]
+    clueFor: camara_mediodia_inmovil
+
+- id: item_ficha_nombre_borrado
+  name: Ficha con Nombre Borrado
+  description: >-
+    Una ficha de archivo cubierta por tinta blanca. Sabes que ahí había un nombre,
+    pero tu memoria resbala al intentar rodear el hueco.
+  type: QUEST
+  value: 0
+  metadata:
+    tags: [nombres, registro, pista_critica]
+    clueRoutes:
+      - look: libro_mayor
+      - dialogue: npc_otilia_cuerda
+
+- id: item_contrato_campana_perdida
+  name: "Contrato: La Campana que Sobra"
+  description: >-
+    Encargo de Rango Cobre para averiguar por qué la campana menor sonó trece veces
+    al mediodía y por qué nadie recuerda el golpe número siete.
+  type: QUEST
+  value: 0
+  metadata:
+    rank: cobre
+    tags: [contrato, campanas, misterio]
+
+- id: item_pan_bendito
+  name: Pan de Alba Serena
+  description: >-
+    Un panecillo caliente que huele a bondad y hogar. Restaura un poco de vida
+    y calma el espíritu ansioso.
+  type: CONSUMABLE
+  value: 15
+  metadata:
+    tags: [pan_bendito, villaclara]
+    effects:
+      - id: consuelo_medio
+        type: heal
+        magnitude: 15
+
+- id: item_bollo_dulce
+  name: Bollo Dulce de Villaclara
+  description: >-
+    Relleno de una mermelada rojiza deliciosa. Ideal para recuperar energía.
+  type: CONSUMABLE
+  value: 10
+  metadata:
+    effects:
+      - id: energia_dulce
+        type: restore_energy
+        magnitude: 10
+
+- id: item_lanza_guardia
+  name: Lanza del Alba
+  description: >-
+    Arma reglamentaria de la guardia de Villaclara. Robusta, equilibrada y
+    con el sello del sol en la base de la cuchilla.
+  type: EQUIPMENT
+  equipSlot: weapon
+  value: 45
+  metadata:
+    diceCount: 1
+    diceSides: 10
+    modifier: 3
+
+- id: item_contrato_conejos
+  name: "Contrato: Plaga Acorazada"
+  description: >-
+    Encargo de Rango Cobre para abatir al infame General Pelusa en las colinas del norte.
+  type: QUEST
+  value: 0
+  metadata:
+    rank: cobre
+    tags: [contrato, combate]
+
+- id: item_piel_armadillo
+  name: Placa de Queratina
+  description: Un trozo duro desprendido del caparazón de un conejo acorazado.
+  type: MISC
+  value: 5
+
+- id: item_colmillo_lobo
+  name: Colmillo de Lobo
+  description: Un diente largo y aserrado.
+  type: MISC
+  value: 8
+
+- id: item_carne_dura
+  name: Trozo de Carne Correosa
+  description: Carne de monstruo muy dura.
+  type: MISC
+  value: 2
+
+- id: item_placa_general
+  name: Coraza del General Pelusa
+  description: Un peto tosco pero extremadamente resistente hecho de placas de hueso.
+  type: EQUIPMENT
+  equipSlot: body
+  value: 150
+  metadata:
+    rarity: raro
+
+- id: item_garras_mutantes
+  name: Garras de Pelusa
+  description: Garras afiladas e imbuidas de una energía salvaje.
+  type: EQUIPMENT
+  equipSlot: weapon
+  value: 0
+  metadata:
+    diceCount: 2
+    diceSides: 8
+    modifier: 5
+    rarity: épico
+
+

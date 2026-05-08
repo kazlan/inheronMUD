@@ -201,6 +201,42 @@ export class AdminManager {
   }
 
   /**
+   * Elimina NPCs instanciados que coincidan con la cadena de búsqueda.
+   */
+  exterminate(adminId: string, match: string): { success: boolean; message: string } {
+    if (!match) return { success: false, message: 'Debes proporcionar un término de búsqueda (ej. conejo).' };
+
+    const lowerMatch = match.toLowerCase();
+    let count = 0;
+    const npcsToRemove: string[] = [];
+
+    for (const [id, npc] of this.engine.entities.npcs.entries()) {
+      if (npc.name.toLowerCase().includes(lowerMatch) || id.toLowerCase().includes(lowerMatch)) {
+        npcsToRemove.push(id);
+      }
+    }
+
+    for (const npcId of npcsToRemove) {
+      // Remove from active combats if necessary
+      const combat = this.engine.getCombatByPlayerId(npcId);
+      if (combat) {
+        const participantIdx = combat.participants.findIndex(p => p.entityId === npcId);
+        if (participantIdx !== -1) {
+          combat.participants.splice(participantIdx, 1);
+          if (combat.participants.length <= 1) {
+             this.engine.endCombat(combat.id);
+          }
+        }
+      }
+
+      this.engine.entities.removeNPC(npcId);
+      count++;
+    }
+
+    return { success: true, message: `Exterminados ${count} mobs que coincidían con "${match}".` };
+  }
+
+  /**
    * Sets a player's level and recalculates stats.
    */
   setLevel(adminId: string, level: number, targetId?: string): { success: boolean; message: string } {

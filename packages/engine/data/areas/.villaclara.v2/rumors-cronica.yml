@@ -1,14 +1,14 @@
 ---
-# Villaclara — rumores / Crónica Viva 2026-05-08
-# Si el loader aún no consume este archivo, dejarlo como metadata lista para integración.
+# Villaclara MVP canónico — rumores / Crónica Viva
+# Estado: metadata extendida. BRECHA ENGINE si el loader no soporta entidades rumor.
 
 - id: rumor_campana_trece
   metadata:
     type: rumor
     area: villaclara
     text: >-
-      Dicen que si la campana menor da trece golpes al mediodía, alguien ha sido escrito dos veces...
-      o borrado una.
+      Dicen que si la campana del mediodía da trece golpes, alguien ha sido escrito
+      dos veces... o borrado una.
     routes:
       - npc_bimba_cascabel
       - scenery: campanario
@@ -19,7 +19,8 @@
     type: rumor
     area: villaclara
     text: >-
-      Doña Marga jura que el pan bendito sube mejor cuando todos los nombres del pueblo están bien puestos.
+      Doña Marga jura que el pan bendito sube mejor cuando todos los nombres del pueblo
+      están bien escritos.
     routes:
       - npc_dona_marga
       - item_pan_bendito
@@ -32,5 +33,5 @@
     title: "Campanas limpias, tinta sucia"
     text: >-
       Villaclara despierta con olor a pan y una campana de más. En el tablón del gremio,
-      un contrato conserva la recompensa pero ha perdido el nombre de quien lo pidió.
-      El Pozo Cantante tararea como si supiera el resto y prefiriera no cantarlo.
+      un contrato de Rango Cobre conserva la recompensa pero ha perdido el nombre de quien
+      lo pidió. El Pozo Cantante tararea como si supiera el estribillo y prefiriera no cantarlo.

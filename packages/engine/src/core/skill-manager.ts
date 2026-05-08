@@ -28,6 +28,7 @@ export class SkillManager {
     this.skills.clear();
     for (const data of skillsData) {
       const skillDef: SkillDef = {
+        ...data,
         id: data.id,
         name: data.name,
         description: data.description,
@@ -57,18 +58,28 @@ export class SkillManager {
     }
 
     const currentEnergy = caster.energyCurrent!;
-    if (currentEnergy < skill.energyCost) {
+    let actualEnergyCost = skill.energyCost;
+
+    if (skill.id === 'bardo_sostener_compas' && caster.bardState?.freeSustainAvailable) {
+      actualEnergyCost = 0;
+    }
+
+    if (currentEnergy < actualEnergyCost) {
       if (caster.classId === 'bardo_cronica_viva') {
         return { success: false, message: '<magenta>La voz no te responde.</magenta> Necesitas un momento para recuperar el aliento.' };
       }
       return { success: false, message: 'Energía insuficiente.' };
     }
 
-    // Deduct cost
-    caster.energyCurrent = (caster.energyCurrent || 0) - skill.energyCost;
-    let combatCaster = combat?.participants.find(p => p.entityId === casterId);
-    if (combatCaster) combatCaster.energyCurrent = caster.energyCurrent;
+    // Cooldown check
+    if (!caster.metadata.cooldowns) caster.metadata.cooldowns = {};
+    const cdEnd = caster.metadata.cooldowns[skill.id];
+    if (cdEnd && Date.now() < cdEnd) {
+      const remainingSecs = Math.ceil((cdEnd - Date.now()) / 1000);
+      return { success: false, message: `<red>La habilidad ${skill.name} está en recarga (${remainingSecs}s).</red>` };
+    }
 
+    let combatCaster = combat?.participants.find(p => p.entityId === casterId);
     let targetEntityId: string | undefined;
     let targetEntityName: string | undefined;
     let isTargetPlayer = false;
@@ -122,6 +133,15 @@ export class SkillManager {
       combatCaster = combat?.participants.find(p => p.entityId === casterId);
     }
 
+    // Deduct cost
+    caster.energyCurrent = (caster.energyCurrent || 0) - actualEnergyCost;
+    if (combatCaster) combatCaster.energyCurrent = caster.energyCurrent;
+
+    // Apply cooldown immediately so it's not bypassed by early returns (misses)
+    if (skill.cooldown && skill.cooldown > 0) {
+      caster.metadata.cooldowns[skill.id] = Date.now() + (skill.cooldown * 2500);
+    }
+
     const combatLog: string[] = [];
     const stats = caster.stats;
     const level = caster.level || 1;
@@ -163,6 +183,7 @@ export class SkillManager {
         for (const p of others) engine.emit('combat_message', p.entityId, combatLog);
         engine.emit('combat_message', casterId, []);
       }
+      engine.emit('save_player', caster);
       return { success: true, message: combatLog.join('\n') };
     }
 
@@ -239,6 +260,25 @@ export class SkillManager {
       }
     }
 
+    // 4.5 Sostener Compás logic
+    if (skill.id === 'bardo_sostener_compas') {
+      const extendMs = 15000; // Extend by 15 seconds
+      if (combat) {
+        for (const p of combat.participants) {
+          // You might only want to extend effects originating from the bard or all bard effects
+          engine.effects.extendEffects(p.entityId, extendMs, (eff) => eff.type === 'buff' || eff.type === 'debuff');
+        }
+      } else {
+        engine.effects.extendEffects(caster.id, extendMs, (eff) => eff.type === 'buff' || eff.type === 'debuff');
+      }
+      combatLog.push(`<magenta><b>¡Sostener Compás!</b></magenta> ${caster.name} extiende el ritmo de la batalla, prolongando los efectos activos.`);
+      
+      if (caster.bardState && caster.bardState.freeSustainAvailable) {
+        caster.bardState.freeSustainAvailable = false;
+        combatLog.push(`<cyan>El compás fluyó libremente (Trama consumida).</cyan>`);
+      }
+    }
+
     // 5. Bard Mechanics (Estrofa & Trama)
     if (caster.classId === 'bardo_cronica_viva' && caster.bardState) {
       if ((skill as any).estrofa?.gainFamily) {
@@ -246,12 +286,11 @@ export class SkillManager {
         if (caster.bardState.estrofa >= 3) {
           caster.bardState.estrofa = 0;
           caster.bardState.freeSustainAvailable = true;
-          combatLog.push(`<magenta><b>¡Trama Completa!</b></magenta> Sostener Compás disponible.`);
+          combatLog.push(`<magenta><b>¡Trama Completa!</b></magenta> Sostener Compás gratuito disponible.`);
         } else {
           combatLog.push(`<magenta>Estrofa: ${caster.bardState.estrofa}/3</magenta>`);
         }
       }
-      engine.emit('save_player', caster);
     }
 
     if (combat) {
@@ -265,6 +304,7 @@ export class SkillManager {
     }
     
     // Only return the message, do not include combatLog array to avoid double-printing in RESPONSE
+    engine.emit('save_player', caster);
     return { success: true, message: combatLog.join('\n') };
   }
 

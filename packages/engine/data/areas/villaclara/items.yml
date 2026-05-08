@@ -1,154 +1,114 @@
 ---
-# Villaclara MVP canónico — items
-# Estado: propuesta no destructiva
+# Villaclara — items de prueba 2026-05-08
+
+- id: item_pan_bendito
+  name: Pan Bendito
+  description: Una hogaza tibia de corteza dorada y miga aromática. Alimenta cuerpo, ánimo y reputación local.
+  type: CONSUMABLE
+  value: 8
+  metadata:
+    charges: 1
+    effects:
+      - type: heal
+        magnitude: 12
+        message: "<green>El pan te asienta el alma y la carne.</green>"
+
+- id: item_bollo_dulce
+  name: Bollo de Miel de Feria
+  description: Un bollo pegajoso y fragante que deja los dedos felices y la dignidad negociable.
+  type: CONSUMABLE
+  value: 5
+  metadata:
+    charges: 1
+    effects:
+      - type: heal
+        magnitude: 6
+        message: "<yellow>El dulzor te devuelve algo de fuerzas.</yellow>"
 
 - id: item_miga_bendita
   name: Miga Bendita
-  description: >-
-    Una miga dorada de pan consagrado por costumbre, cariño y una cantidad sospechosa
-    de mantequilla. Restaura muy poco, pero reconforta mucho.
+  description: Una miga dorada de pan consagrado por costumbre y mantequilla sospechosamente generosa.
   type: CONSUMABLE
   value: 2
   metadata:
+    charges: 1
     effects:
-      - id: consuelo_menor
-        name: Consuelo Menor
-        type: heal
+      - type: heal
         magnitude: 3
-    tags: [pan_bendito, villaclara]
+        message: "<green>Una paz pequeña te recompone.</green>"
 
-- id: item_vale_rango_cobre
-  name: Vale de Encargo de Rango Cobre
-  description: >-
-    Un papel sellado por el gremio que autoriza a intentar tareas pequeñas, peligrosas
-    y oficialmente descritas como “probablemente educativas”.
+- id: item_lanza_guardia
+  name: Lanza de Guardia Rural
+  description: Una lanza honrada, recta y bastante más útil que las bravatas.
+  type: EQUIPMENT
+  equipSlot: weapon
+  value: 24
+  metadata:
+    diceCount: 1
+    diceSides: 8
+    modifier: 1
+    rarity: comun
+
+- id: item_martillo_herrero
+  name: Martillo de Trabajo
+  description: Herramienta pesada de mango curtido y cabeza bien equilibrada.
+  type: EQUIPMENT
+  equipSlot: weapon
+  value: 20
+  metadata:
+    diceCount: 1
+    diceSides: 6
+    modifier: 2
+    rarity: comun
+
+- id: item_colmillo_lobo_flaco
+  name: Colmillo de Lobo Flaco
+  description: Un colmillo amarillento, pequeño pero todavía afilado.
+  type: QUEST
+  value: 1
+  metadata:
+    tags: [trofeo, lobo, campo_norte]
+
+- id: item_placa_conejo
+  name: Placa de Conejo Acorazado
+  description: Una lámina de caparazón ligera y ridículamente resistente para venir de un conejo.
+  type: QUEST
+  value: 3
+  metadata:
+    tags: [trofeo, conejo, cobre]
+
+- id: item_ficha_nombre_borrado
+  name: Ficha con Nombre Borrado
+  description: Una ficha de archivo cubierta con tinta blanca. Sabes que había un nombre, pero no lo alcanzas.
+  type: QUEST
+  value: 0
+  metadata:
+    tags: [registro, nombres, pista]
+    clueFor: nombres_borrados
+
+- id: item_campanilla_agrietada
+  name: Campanilla Agrietada
+  description: Una campanilla de bronce que suena una vez aquí y otra vez en alguna parte que no confiesa.
+  type: QUEST
+  value: 0
+  metadata:
+    tags: [campanas, pista]
+    clueFor: campana_trece
+
+- id: item_contrato_conejos
+  name: "Contrato: Conejos con Placas"
+  description: Encargo de Rango Cobre para reducir la población de conejos acorazados del Campo Norte.
   type: QUEST
   value: 0
   metadata:
     rank: cobre
-    tags: [gremio, contrato]
-
-- id: item_campanilla_agrietada
-  name: Campanilla Agrietada
-  description: >-
-    Una campanilla de bronce con una grieta fina. Al agitarla, suena una vez cerca
-    y otra vez en algún lugar que no está del todo aquí.
-  type: MISC
-  value: 12
-  metadata:
-    tags: [campanas, pista]
-    clueFor: camara_mediodia_inmovil
-
-- id: item_ficha_nombre_borrado
-  name: Ficha con Nombre Borrado
-  description: >-
-    Una ficha de archivo cubierta por tinta blanca. Sabes que ahí había un nombre,
-    pero tu memoria resbala al intentar rodear el hueco.
-  type: QUEST
-  value: 0
-  metadata:
-    tags: [nombres, registro, pista_critica]
-    clueRoutes:
-      - look: libro_mayor
-      - dialogue: npc_otilia_cuerda
+    tags: [contrato, cobre, campo_norte]
 
 - id: item_contrato_campana_perdida
   name: "Contrato: La Campana que Sobra"
-  description: >-
-    Encargo de Rango Cobre para averiguar por qué la campana menor sonó trece veces
-    al mediodía y por qué nadie recuerda el golpe número siete.
+  description: Encargo de Rango Cobre para investigar por qué la campana menor sonó trece veces al mediodía.
   type: QUEST
   value: 0
   metadata:
     rank: cobre
     tags: [contrato, campanas, misterio]
-
-- id: item_pan_bendito
-  name: Pan de Alba Serena
-  description: >-
-    Un panecillo caliente que huele a bondad y hogar. Restaura un poco de vida
-    y calma el espíritu ansioso.
-  type: CONSUMABLE
-  value: 15
-  metadata:
-    tags: [pan_bendito, villaclara]
-    effects:
-      - id: consuelo_medio
-        type: heal
-        magnitude: 15
-
-- id: item_bollo_dulce
-  name: Bollo Dulce de Villaclara
-  description: >-
-    Relleno de una mermelada rojiza deliciosa. Ideal para recuperar energía.
-  type: CONSUMABLE
-  value: 10
-  metadata:
-    effects:
-      - id: energia_dulce
-        type: restore_energy
-        magnitude: 10
-
-- id: item_lanza_guardia
-  name: Lanza del Alba
-  description: >-
-    Arma reglamentaria de la guardia de Villaclara. Robusta, equilibrada y
-    con el sello del sol en la base de la cuchilla.
-  type: EQUIPMENT
-  equipSlot: weapon
-  value: 45
-  metadata:
-    diceCount: 1
-    diceSides: 10
-    modifier: 3
-
-- id: item_contrato_conejos
-  name: "Contrato: Plaga Acorazada"
-  description: >-
-    Encargo de Rango Cobre para abatir al infame General Pelusa en las colinas del norte.
-  type: QUEST
-  value: 0
-  metadata:
-    rank: cobre
-    tags: [contrato, combate]
-
-- id: item_piel_armadillo
-  name: Placa de Queratina
-  description: Un trozo duro desprendido del caparazón de un conejo acorazado.
-  type: MISC
-  value: 5
-
-- id: item_colmillo_lobo
-  name: Colmillo de Lobo
-  description: Un diente largo y aserrado.
-  type: MISC
-  value: 8
-
-- id: item_carne_dura
-  name: Trozo de Carne Correosa
-  description: Carne de monstruo muy dura.
-  type: MISC
-  value: 2
-
-- id: item_placa_general
-  name: Coraza del General Pelusa
-  description: Un peto tosco pero extremadamente resistente hecho de placas de hueso.
-  type: EQUIPMENT
-  equipSlot: body
-  value: 150
-  metadata:
-    rarity: raro
-
-- id: item_garras_mutantes
-  name: Garras de Pelusa
-  description: Garras afiladas e imbuidas de una energía salvaje.
-  type: EQUIPMENT
-  equipSlot: weapon
-  value: 0
-  metadata:
-    diceCount: 2
-    diceSides: 8
-    modifier: 5
-    rarity: épico
-
-

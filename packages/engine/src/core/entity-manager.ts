@@ -57,6 +57,15 @@ export class EntityManager {
     return this.npcs.get(id);
   }
 
+  removeNPC(id: string): void {
+    const npc = this.npcs.get(id);
+    if (npc && npc.roomId) {
+      const room = this.rooms.get(npc.roomId);
+      if (room) room.removeEntity(id);
+    }
+    this.npcs.delete(id);
+  }
+
   getItem(id: string): Item | undefined {
     return this.items.get(id);
   }
@@ -65,14 +74,21 @@ export class EntityManager {
     return this.spawners.get(id);
   }
 
-  removeNPC(id: string): void {
-    this.npcs.delete(id);
-  }
-
   applyEffect(entityId: string, effect: any): void {
     const entity = this.players.get(entityId) || this.npcs.get(entityId) || this.rooms.get(entityId) || this.items.get(entityId);
     if (entity) {
       const effectCopy = { ...effect, startTime: Date.now(), id: effect.id || `eff_${Date.now()}_${Math.random()}` };
+      
+      if (effect.sourceSkillId) {
+        // Find existing effect from same skill and replace it to reset timer
+        const existingIdx = entity.activeEffects.findIndex((e: any) => e.sourceSkillId === effect.sourceSkillId);
+        if (existingIdx !== -1) {
+          effectCopy.id = entity.activeEffects[existingIdx].id; // Keep original ID if needed, or overwrite
+          entity.activeEffects[existingIdx] = effectCopy;
+          return;
+        }
+      }
+      
       entity.activeEffects.push(effectCopy);
     }
   }

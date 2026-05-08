@@ -85,27 +85,28 @@ export default function PulsePanel({ options, onOptionClick, inCombat, activeEff
       {combatEffects.length > 0 && (
         <div className="combat-monitor" style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginBottom: '1rem', padding: '0 0.6rem' }}>
           {combatEffects.map((eff, i) => {
-            const remainingMs = Math.max(0, (eff.startTime + eff.duration) - Date.now());
-            const progress = (remainingMs / eff.duration) * 100;
+            const duration = eff.duration || 1;
+            const remainingMs = Math.max(0, (eff.startTime + duration) - Date.now());
+            const progress = Math.max(0, Math.min(100, (remainingMs / duration) * 100));
             const isSelf = eff.origin === 'self';
             const isEcho = eff.isEcho || eff.name.toLowerCase().includes('eco');
             
             return (
               <div 
-                key={i} 
+                key={eff.id || i} 
                 className={`monitor-card ${isEcho ? 'echo-effect' : ''}`} 
                 style={{ 
                   display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
+                  flexDirection: 'column',
+                  gap: '4px',
                   background: isEcho ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.3)', 
-                  padding: '4px 8px', 
+                  padding: '6px 8px', 
                   borderRadius: '2px', 
-                  borderLeft: `3px solid ${isEcho ? '#444' : (isSelf ? 'var(--blue-bright)' : 'var(--hp-color)')}`,
+                  borderLeft: `3px solid ${isEcho ? '#444' : (eff.type === 'buff' ? 'var(--blue-bright)' : eff.type === 'heal' ? 'var(--green-bright)' : 'var(--orange)')}`,
                   opacity: isEcho ? 0.7 : 1,
                 }}
               >
-                <div style={{ flex: '1', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ 
                     color: isEcho ? '#aaa' : 'white', 
                     fontSize: '0.65rem',
@@ -115,19 +116,19 @@ export default function PulsePanel({ options, onOptionClick, inCombat, activeEff
                   }}>
                     {eff.name}
                   </span>
-                  <span style={{ fontSize: '0.55rem', opacity: 0.5, marginLeft: '4px' }}>
+                  <span style={{ fontSize: '0.55rem', opacity: 0.5 }}>
                     {isSelf ? 'TI' : eff.origin.substring(0, 5)}
                   </span>
                 </div>
                 
-                <div className="stat-bar-bg" style={{ width: '60px', height: '4px', background: 'rgba(255,255,255,0.05)', borderRadius: '1px', overflow: 'hidden' }}>
+                <div className="stat-bar-bg" style={{ width: '100%', height: '4px', background: 'rgba(255,255,255,0.05)', borderRadius: '1px', overflow: 'hidden' }}>
                   <div 
                     className="stat-bar-fill" 
                     style={{ 
                       width: `${progress}%`, 
                       height: '100%',
-                      background: isEcho ? '#444' : (isSelf ? 'var(--cyan)' : 'var(--hp-color)'),
-                      boxShadow: isEcho ? 'none' : `0 0 4px ${isSelf ? 'var(--cyan)' : 'var(--hp-color)'}`,
+                      background: isEcho ? '#444' : (eff.type === 'buff' ? 'var(--cyan)' : eff.type === 'heal' ? 'var(--green-bright)' : 'var(--orange)'),
+                      boxShadow: isEcho ? 'none' : `0 0 4px ${eff.type === 'buff' ? 'var(--cyan)' : eff.type === 'heal' ? 'var(--green-bright)' : 'var(--orange)'}`,
                       transition: 'width 1s linear'
                     }} 
                   />
