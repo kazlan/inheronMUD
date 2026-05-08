@@ -1,29 +1,31 @@
 ---
-# Villaclara MVP canónico — rooms
-# Estado: propuesta no destructiva
-# BRECHA ENGINE: confirmar si interactions va en metadata o raíz y si debe ser lista.
+# Villaclara — paquete YAML de prueba 2026-05-08
+# MVP compatible + metadata extendida
 
 - id: villaclara_plaza
   name: Plaza del Alba Chica
   description: >-
-    Adoquines claros forman un círculo ancho alrededor del Pozo Cantante,
-    donde el agua murmura nombres a media voz cuando nadie presume de escucharlos.
-    Desde el campanario bajo de la capilla llega un tañido amable, algo torpe,
-    como si la propia Villaclara saludara con migas en el delantal. Huele a pan
-    bendito, hierba tibia y tinta recién secada en algún registro cercano.
+    La plaza de Villaclara abre un claro de sol entre casas encaladas, bancos gastados y el
+    Pozo Cantante, cuyo brocal blanco guarda un murmullo que a veces suena a agua y a veces
+    a nombre mal recordado. Huele a pan bendito, cal tibia y tinta reciente. Desde el sur
+    llega el eco amable del campanario.
   scenery:
-    pozo: >-
-      Un pozo de piedra blanca con cuerda nueva y cubo viejo. Si acercas el oído,
-      el eco parece cantar nombres del pueblo... y a veces duda antes de terminar uno.
-    campanario: >-
-      No es alto ni solemne: es rechoncho, soleado y lleno de remiendos. La campana
-      menor tiene una grieta con forma de sonrisa cansada.
-    fuente: >-
-      La vieja fuente del caballero solar aún mana agua limpia, aunque los niños
-      discuten si el caballero guiña un ojo cuando repican las campanas.
-    registro_publico: >-
-      Una tablilla comunal cuelga junto al camino al gremio. Tiene nombres de vecinos,
-      turnos de pan, deudas pequeñas y una línea raspada con demasiado cuidado.
+    pozo:
+      description: >-
+        Un pozo de piedra blanca con cuerda nueva y cubo viejo. Si pegas la oreja al brocal,
+        el eco parece corregirse antes de terminar ciertos nombres.
+      interactions:
+        - verbs: [mirar, escuchar]
+          action: message
+          message: >-
+            El pozo tararea bajito. Reconoces nombres de vecinos... y un hueco redondo donde
+            debería haber otro.
+    bancos:
+      description: Bancos de madera al sol donde descansan vecinos, aprendices y rumores.
+    registro_publico:
+      description: >-
+        Una tablilla comunal con turnos de horno, recados y nombres de vecinos. Una línea ha
+        sido raspada con demasiado cuidado.
   exits:
     - direction: north
       targetRoomId: villaclara_puerta_norte
@@ -33,216 +35,71 @@
       targetRoomId: villaclara_panaderia
     - direction: west
       targetRoomId: villaclara_gremio
-    - direction: southeast
-      targetRoomId: villaclara_forja
     - direction: down
       targetRoomId: villaclara_pozo_cantante
-    - direction: southwest
+    - direction: sw
       targetRoomId: villaclara_archivo_cuerdas
   metadata:
     safe: true
     cronica:
-      canonRole: hub_inicial
       motifs: [pan_bendito, campanas, nombres, pozo_cantante]
-      clueRoutes:
-        nombres_borrados:
-          - look: registro_publico
-          - dialogue: npc_otilia_cuerda
-          - rumor: rumor_campana_trece
-      visibleConsequences:
-        - trigger: campo_norte_apaciguado
-          description: >-
-            Las campanas suenan sin prisa y Doña Marga deja una cesta de migas
-            benditas para los aprendices de Rango Cobre.
 
 - id: villaclara_pozo_cantante
   name: Brocal del Pozo Cantante
   description: >-
-    El interior del pozo conserva un fresco imposible incluso al mediodía. Las piedras
-    rezuman gotitas de luz pálida y el cubo baja con un chirrido que parece llevar ritmo.
-    Cada eco vuelve distinto: a veces agua, a veces canción, a veces un nombre que no
-    recuerdas haber pronunciado.
+    El interior del pozo está fresco incluso a mediodía. Las piedras rezuman brillo pálido,
+    la cuerda chirría con ritmo propio y cada eco vuelve un poco cambiado, como si el agua
+    pensara antes de responder.
   scenery:
-    agua: >-
-      Negra al fondo, dorada en los bordes. Refleja tu rostro con un pequeño retraso.
-    cuerda: >-
-      Una cuerda trenzada con nudos de colores. Uno de los nudos está deshecho y nadie
-      ha sabido explicar por qué.
-    marcas: >-
-      Hay iniciales talladas por niños, promesas de enamorados y un hueco liso donde
-      parece faltar una inscripción entera.
+    agua:
+      description: Agua oscura al fondo, dorada en los bordes, con un reflejo que tarda medio latido.
+      interactions:
+        - verbs: [mirar, escuchar, beber]
+          action: message
+          message: >-
+            El agua devuelve un murmullo de doce nombres y un silencio en lugar del decimotercero.
+    cuerda:
+      description: Una cuerda trenzada con nudos de colores. Uno está deshecho.
   exits:
     - direction: up
       targetRoomId: villaclara_plaza
   metadata:
     safe: true
-    interactions:
-      - action: message
-        targetSceneryId: agua
-        verbs: [mirar, escuchar, beber]
-        message: >-
-          El pozo canta bajito. Reconoces nombres de Villaclara, pero uno se convierte
-          en un silencio redondo antes de terminar.
-    cronica:
-      clueRoutes:
-        camara_mediodia_inmovil:
-          - look: agua
-          - dialogue: npc_pex
 
 - id: villaclara_archivo_cuerdas
   name: Archivo de Cuerdas y Nombres
   description: >-
-    Una casita estrecha, mitad oficina y mitad tendedero ceremonial. Cientos de cuerdas
-    con nudos, etiquetas y lacres cuelgan de vigas bajas. Cada nudo representa una casa,
-    una deuda, una promesa o un nacimiento. Huele a polvo amable, cera y paciencia vieja.
+    Una casita estrecha, mitad oficina y mitad tendedero ceremonial. Cuelgan cordeles con
+    nudos, etiquetas y lacres. Huele a cera, polvo amable y paciencia veterana.
   scenery:
-    cuerdas: >-
-      Filas de cordeles identifican familias y oficios. Una cuerda reciente tiene una
-      etiqueta sin nombre y un nudo apretado con rabia.
-    libro_mayor: >-
-      El libro de registro local. Sus márgenes están llenos de correcciones diminutas,
-      casi todas firmadas por Otilia. Una corrección está escrita con tinta blanca.
-    campanilla: >-
-      Una campanilla de mostrador con una grieta mínima. Al tocarla, suena como si
-      respondiera desde otra habitación.
+    cuerdas:
+      description: Filas de cuerdas de casas, deudas y nacimientos. Una etiqueta reciente no tiene nombre.
+    libro_mayor:
+      description: >-
+        Un libro de registro con correcciones minúsculas. Una entrada está cubierta con tinta blanca.
+      interactions:
+        - verbs: [mirar, leer, examinar]
+          action: message
+          message: >-
+            La tinta blanca no tapa del todo el trazo viejo. Tu memoria resbala al intentar leerlo.
+    campanilla:
+      description: Una campanilla de mostrador con una grieta tan fina que casi parece un pelo.
   exits:
-    - direction: northeast
+    - direction: ne
       targetRoomId: villaclara_plaza
   metadata:
     safe: true
-    cronica:
-      clueRoutes:
-        nombres_borrados:
-          - look: libro_mayor
-          - dialogue: npc_otilia_cuerda
-          - item: item_ficha_nombre_borrado
-
-- id: villaclara_tablon
-  name: Tablón de Contratos de Rango Cobre
-  description: >-
-    Pergaminos, recados vecinales y contratos de aprendiz cubren una pared reforzada
-    con más clavos que madera. Un cartel pintado a mano advierte: “Rango Cobre: si
-    sangra mucho, avisa antes de presumir”. Entre encargos de gallinas, setas y conejos
-    acorazados, un contrato parece haber sido reescrito durante la noche.
-  scenery:
-    tablon: >-
-      El tablón oficial del gremio. Tiene contratos simples, recompensas modestas y
-      alguna mancha de mermelada que nadie confiesa.
-    contrato_sospechoso: >-
-      Un pergamino con el nombre del solicitante raspado. La recompensa sigue intacta,
-      pero la firma parece escrita encima de otra firma.
-  exits:
-    - direction: south
-      targetRoomId: villaclara_gremio
-  metadata:
-    safe: true
-    board:
-      rank: cobre
-      contracts:
-        - item_contrato_conejos
-        - item_contrato_campana_perdida
-    interactions:
-      - action: message
-        targetSceneryId: tablon
-        verbs: [leer, revisar, mirar]
-        message: >-
-          Ves contratos de Rango Cobre: conejos acorazados al norte, recados de panadería
-          y una campanilla perdida cerca del Pozo Cantante.
-      - action: message
-        targetSceneryId: contrato_sospechoso
-        verbs: [leer, examinar]
-        message: >-
-          El contrato conserva la recompensa, pero no el nombre original. La tinta blanca
-          brilla un instante y luego finge no haber hecho nada.
-    cronica:
-      clueRoutes:
-        contratos_falsos:
-          - look: contrato_sospechoso
-          - dialogue: npc_varo_nomenclaro
-
-- id: villaclara_puerta_norte
-  name: Puerta Norte de Villaclara
-  description: >-
-    Dos enormes portones de roble reforzado con hierro marcan el límite entre la seguridad
-    del pueblo y la espesura salvaje de las llanuras. El viento silba al colarse por
-    las rendijas de la muralla, trayendo un aroma a hierba fresca y la promesa de
-    problemas con placas óseas.
-  scenery:
-    portones: >-
-      Maderas gruesas y tachuelas oxidadas que han resistido incontables asedios menores
-      y algún que otro cabezazo de lobo hambriento.
-    muralla: >-
-      Piedras grises cubiertas de enredaderas. Un pequeño hueco liso parece haber sido
-      raspado recientemente.
-  exits:
-    - direction: south
-      targetRoomId: villaclara_plaza
-    - direction: north
-      targetRoomId: villaclara_campo_norte
-  metadata:
-    safe: true
-    cronica:
-      motifs: [muralla, portones, llanuras]
-
-- id: villaclara_iglesia
-  name: Capilla de la Luz Eterna
-  description: >-
-    La suave luz dorada se filtra a través de vidrieras de colores, pintando arcoíris
-    sobre los bancos de roble pulido. El aire huele a incienso dulce, cera de velas
-    y a ese tipo de silencio que solo se consigue cuando mucha gente ha pedido lo mismo
-    durante siglos.
-  scenery:
-    vidrieras: >-
-      Cristales que representan la victoria de la Luz. En una esquina, una figura pequeña
-      parece estar contando campanas en lugar de rezar.
-    bancos: >-
-      Madera oscura y desgastada. Hay una muesca en forma de cascabel tallada en el último banco.
-  exits:
-    - direction: north
-      targetRoomId: villaclara_plaza
-  metadata:
-    safe: true
-    cronica:
-      canonRole: santuario
-      motifs: [luz, incienso, vidrieras]
-
-- id: villaclara_panaderia
-  name: Panadería Panbendito
-  description: >-
-    El intenso aroma a masa madre y levadura satura esta pequeña estancia enharinada.
-    Los hornos de piedra rústica crepitan con un calor reconfortante. Sacos de grano
-    se amontonan contra las paredes, dejando apenas espacio para que Doña Marga
-    ejerza su autoridad gastronómica.
-  scenery:
-    hornos: >-
-      Piedras ennegrecidas por el hollín. Irradian un calor que huele a hogar y a
-      mantequilla sospechosamente buena.
-    sacos: >-
-      Tela basta rebosante de grano dorado. Uno de los sacos tiene una etiqueta con un
-      nombre borrado por tinta blanca.
-  exits:
-    - direction: west
-      targetRoomId: villaclara_plaza
-    - direction: south
-      targetRoomId: villaclara_forja
-  metadata:
-    safe: true
-    cronica:
-      motifs: [pan, harina, calor]
 
 - id: villaclara_gremio
-  name: Gremio de Aventureros (La Jarra de Cuero)
+  name: Gremio de Oficios y Encargos
   description: >-
-    Banderines carmesí cuelgan del alto techo, meciéndose con las corrientes de aire.
-    Es un lugar de risas ruidosas, contratos peligrosos y jarras que nunca parecen
-    vaciarse del todo. El olor a cerveza enana y cuero curtido es la bienvenida oficial
-    a quien busca fortuna.
+    Una sala robusta de tablones oscuros, bancos duros y orgullo modesto. Aquí los rangos
+    pequeños reciben trabajos pequeños, y ambos suelen volver con barro.
   scenery:
-    banderines: >-
-      Estandartes raídos que muestran el emblema de una espada cruzando un escudo.
-    mesas: >-
-      Tablones de roble manchados de alcohol. En una mesa apartada, Varo Nomenclaro
-      revisa pergaminos con una pluma que brilla tenuemente.
+    escudo:
+      description: Un escudo de madera con el emblema local y varias muescas educativas.
+    mesa:
+      description: Una mesa larga con tinta, plumas, tasas y una cesta de clavos torcidos.
   exits:
     - direction: east
       targetRoomId: villaclara_plaza
@@ -250,119 +107,134 @@
       targetRoomId: villaclara_tablon
   metadata:
     safe: true
-    cronica:
-      canonRole: gremio
-      motifs: [cerveza, cuero, contratos]
+
+- id: villaclara_tablon
+  name: Tablón de Rango Cobre
+  description: >-
+    Pergaminos, recados y contratos modestos cubren una pared reforzada con más clavos que
+    madera. Un pergamino parece reescrito encima de otro.
+  scenery:
+    tablon:
+      description: El tablón oficial del gremio. Huele a tinta, polvo y mermelada antigua.
+      interactions:
+        - verbs: [leer, revisar, mirar]
+          action: message
+          message: >-
+            Ves encargos de gallinas, recados, conejos acorazados y una campana que sobró al mediodía.
+    contrato_sospechoso:
+      description: La recompensa sigue intacta, pero el nombre del solicitante fue raspado.
+      interactions:
+        - verbs: [leer, examinar]
+          action: message
+          message: >-
+            La tinta blanca reluce un instante. Bajo el raspado hubo otra firma.
+  exits:
+    - direction: south
+      targetRoomId: villaclara_gremio
+  metadata:
+    safe: true
+
+- id: villaclara_panaderia
+  name: Panadería Panbendito
+  description: >-
+    El aire está espeso de masa madre, corteza dorada y leña viva. Los hornos murmuran,
+    el mostrador luce migas como medallas y todo aquí promete consuelo comestible.
+  scenery:
+    hornos:
+      description: Hornos de piedra ennegrecida que irradian un calor reconfortante.
+    mostrador:
+      description: Un tablón pulido por codos, monedas y confidencias.
+    estanterias:
+      description: Hogazas, bollos y panecillos alineados con disciplina apenas aparente.
+  exits:
+    - direction: west
+      targetRoomId: villaclara_plaza
+    - direction: south
+      targetRoomId: villaclara_forja
+  metadata:
+    safe: true
 
 - id: villaclara_forja
-  name: Forja del Yunque Quebrado
+  name: Forja del Clavo Sereno
   description: >-
-    El sofocante calor de la fragua golpea como una pared física. Chispas brillantes
-    saltan en el aire seco, iluminando un taller lleno de armaduras a medio terminar
-    y herramientas que parecen haber visto más batallas que sus dueños. El ritmo del
-    martillo es la única ley aquí.
+    Carbón, hierro y sudor honrado llenan esta esquina de calor seco. El repique del yunque
+    responde a las campanas con menos fe, pero igual puntualidad.
   scenery:
-    fragua: >-
-      Un foso de carbón ardiente. El fuego baila con un color azulado inusual en el centro.
-    maniquies: >-
-      Soportes de madera con petos de hierro abollados. Uno de los petos tiene grabado
-      un nombre que tus ojos se niegan a enfocar.
+    yunque:
+      description: Un yunque marcado por años de trabajo y un par de errores heroicos.
+    brasero:
+      description: Brasas vivas que respiran como una bestia doméstica.
   exits:
     - direction: north
       targetRoomId: villaclara_panaderia
-    - direction: northwest
+  metadata:
+    safe: true
+
+- id: villaclara_iglesia
+  name: Atrio de la Luz Serena
+  description: >-
+    Un atrio humilde de piedra clara, rosales trepadores y campanas cercanas. El aire huele
+    a cera, tierra regada y pan que alguien dejó como ofrenda o excusa.
+  scenery:
+    campanario:
+      description: Bajo, robusto y algo rechoncho. La campana menor tiene una grieta en sonrisa.
+      interactions:
+        - verbs: [mirar, escuchar]
+          action: message
+          message: >-
+            Jurarías que falta un golpe en tu recuerdo... o sobra uno en la campana.
+    rosales:
+      description: Rosales claros con espinas honestas y pétalos muy bien cuidados.
+  exits:
+    - direction: north
       targetRoomId: villaclara_plaza
   metadata:
     safe: true
-    cronica:
-      motifs: [fuego, hierro, martillo]
+
+- id: villaclara_puerta_norte
+  name: Puerta Norte de Villaclara
+  description: >-
+    Los portones marcan el final de la costumbre y el inicio del barro necesario. Más allá
+    se abre el Campo Norte, donde las hierbas altas esconden conejos demasiado serios.
+  scenery:
+    portones:
+      description: Maderas gruesas reforzadas con hierro y paciencia.
+    garita:
+      description: Una garita con banco, jarra de agua y partes de patrulla salpicados de barro.
+  exits:
+    - direction: south
+      targetRoomId: villaclara_plaza
+    - direction: north
+      targetRoomId: villaclara_campo_norte
+  metadata:
+    safe: true
 
 - id: villaclara_campo_norte
-  name: Llanuras de Ámbar (Campo Norte)
+  name: Campo Norte
   description: >-
-    Llanuras de hierba dorada y alta se mecen bajo el cielo abierto. El canto agudo
-    de insectos zumba incesantemente. A lo lejos, las colinas dibujan una barrera natural.
-    Es un lugar hermoso, si ignoras que la hierba a veces se mueve en contra del viento.
+    Hierba alta, matas de trébol y surcos mal cerrados se extienden al norte del pueblo.
+    Huele a tierra húmeda, heno roto y al tipo de silencio que precede a un salto con incisivos.
+  scenery:
+    hierba:
+      description: Hierba alta que se mece con el viento... y a veces sin él.
+    surcos:
+      description: Surcos recientes, varios removidos por patas pequeñas y sorprendentemente tercas.
   exits:
     - direction: south
       targetRoomId: villaclara_puerta_norte
     - direction: north
-      targetRoomId: colinas_inicio
-  metadata:
-    area: prado_norte
-    cronica:
-      motifs: [hierba_dorada, viento, horizonte]
+      targetRoomId: villaclara_lindero_huertos
 
-- id: colinas_inicio
-  name: Colinas de los Conejos Acorazados
-  area: prado_norte
+- id: villaclara_lindero_huertos
+  name: Lindero de los Huertos
   description: >-
-    Montículos de tierra removida salpican esta colina escarpada y rocosa.
-    El sonido constante de rasguños contra la piedra emana de docenas de
-    pequeños túneles oscuros. Un olor terroso y rancio advierte de la
-    presencia de vida salvaje abundante.
+    Cercas bajas, huertos mordisqueados y espantapájaros resignados forman un borde rural de
+    apariencia pacífica. Varias marcas de garras y mordiscos niegan esa primera impresión.
   scenery:
-    tuneles: >-
-      Agujeros negros y rasgados en la tierra, demasiado pequeños para un
-      humano, pero perfectos para alimañas blindadas.
+    cercas:
+      description: Cercas remendadas con cuerdas, clavos y mala voluntad hacia los conejos.
+    espantapajaros:
+      description: Un espantapájaros inclinado que parece haber perdido una discusión.
   exits:
     - direction: south
       targetRoomId: villaclara_campo_norte
-    - direction: down
-      targetRoomId: colinas_madriguera
-  metadata:
-    cronica:
-      motifs: [tierra, rocas, tuneles]
-
-- id: colinas_madriguera
-  name: Madriguera Principal (Hogar de Pelusa)
-  area: prado_norte
-  description: >-
-    Una caverna subterránea excavada con sorprendente precisión geométrica.
-    Huesos roídos y pedazos de metal abollado ensucian el suelo de tierra apisonada.
-    El aire es denso y sofocante, vibrando con siseos amenazantes.
-  effects:
-    - id: oscuridad
-      name: Oscuridad Subterránea
-      type: oscuridad
-  scenery:
-    huesos: >-
-      Restos blanqueados de pequeños depredadores que subestimaron a los
-      inquilinos de esta cueva.
-    antorcha: >-
-      Una antorcha de metal frío que parece estar unida a un mecanismo.
-      Tirar de ella podría revelar algo.
-  exits:
-    - direction: up
-      targetRoomId: colinas_inicio
-    - direction: north
-      targetRoomId: colinas_tesoro
-      locked: true
-  metadata:
-    cronica:
-      motifs: [oscuridad, huesos, madriguera]
-    interactions:
-      - action: "unlock_exit"
-        target: "north"
-        verbs: ["tirar", "pull"]
-        message: "Tiras de la antorcha. Un mecanismo de piedra se activa revelando una salida al norte."
-
-- id: colinas_tesoro
-  name: Reserva Secreta del General
-  area: prado_norte
-  description: >-
-    Una pequeña cámara oculta cuyas paredes brillan débilmente por el musgo
-    luminiscente. El aire aquí está quieto y frío, oliendo a humedad y a metal viejo.
-    Un cofre de madera podrida descansa en el centro.
-  scenery:
-    cofre: >-
-      Un arcón destartalado que parece contener objetos "recuperados" por los conejos.
-    musgo: >-
-      Manchas verdes fosforescentes que emiten un resplandor fantasmal.
-  exits:
-    - direction: south
-      targetRoomId: colinas_madriguera
-  metadata:
-    cronica:
-      motifs: [musgo, cofre, secreto]
-

@@ -64,6 +64,7 @@ Los comandos en InheronMUD se procesan en dos etapas: el enrutamiento en la sesi
 | `admin summon` | `<entidad_id>`| Atrae a un jugador o NPC ante ti. |
 | `admin give` | `<item_id>` | Genera un objeto del catálogo en tu inventario. |
 | `admin spawn` | `<npc_id>` | Crea una instancia de un NPC en la sala actual. |
+| `admin exterminate` | `<match>` | Elimina mobs instanciados a nivel global que coincidan con la cadena. |
 | `admin refresh`| `[target]` | Restaura HP/Energía al máximo y sincroniza stats. |
 | `admin player` | `<id>` | Muestra datos técnicos de persistencia de un jugador. |
 | `admin room` | - | Muestra el estado técnico de la sala (entidades, flags). |

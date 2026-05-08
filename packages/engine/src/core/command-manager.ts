@@ -12,7 +12,7 @@ export class CommandManager {
     const isAdmin = player.role === 'ADMIN' || player.name.toLowerCase() === 'perseo';
     if (!isAdmin) return { success: false, message: 'No tienes permisos para realizar comandos administrativos.' };
 
-    const ADMIN_SUBCOMMANDS = ['goto', 'summon', 'set-flag', 'give', 'spawn', 'player', 'room', 'refresh', 'set-level', 'invul'];
+    const ADMIN_SUBCOMMANDS = ['goto', 'summon', 'set-flag', 'give', 'spawn', 'player', 'room', 'refresh', 'set-level', 'invul', 'exterminate'];
     let resolvedSub = cmd?.toLowerCase();
 
     if (resolvedSub && !ADMIN_SUBCOMMANDS.includes(resolvedSub)) {
@@ -31,6 +31,8 @@ export class CommandManager {
         return this.engine.admin.giveItem(playerId, args[0]);
       case 'spawn':
         return this.engine.admin.spawn(playerId, args[0]);
+      case 'exterminate':
+        return this.engine.admin.exterminate(playerId, args.join(' '));
       case 'player':
         const pData = this.engine.admin.debugPlayer(args[0] || playerId);
         if (pData.error) return { success: false, message: pData.error };
@@ -483,10 +485,15 @@ export class CommandManager {
     let targetName = '';
     const combat = this.engine.getCombatByPlayerId(playerId);
     if (combat) {
-        const enemy = combat.participants.find(p => !p.isPlayer && p.hpCurrent > 0);
-        if (enemy) {
-            const npc = this.engine.entities.getNPC(enemy.entityId);
-            if (npc) targetName = npc.name.split(' ')[0]; // use first word
+        const skillDef = this.engine.skills.getSkill(rec.skillId);
+        const isBeneficial = skillDef?.type === 'heal' || skillDef?.type === 'buff' || skillDef?.type === 'utility';
+        
+        if (!isBeneficial) {
+          const enemy = combat.participants.find(p => !p.isPlayer && p.hpCurrent > 0);
+          if (enemy) {
+              const npc = this.engine.entities.getNPC(enemy.entityId);
+              if (npc) targetName = npc.name.split(' ')[0]; // use first word
+          }
         }
     } else if (!option) {
        // If not in combat and no option passed, just list

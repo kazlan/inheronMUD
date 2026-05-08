@@ -76,11 +76,15 @@ export default function CombatPanel({ targets, effects, onCommand }: CombatPanel
         <div className="effects-section" style={{ marginTop: '1rem', borderTop: '1px solid var(--gold-dim)', paddingTop: '0.8rem' }}>
           <div style={{ fontSize: '0.65rem', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '0.4rem', letterSpacing: '0.1em' }}>Estados</div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
-            {effects.map((effect, idx) => (
-              <div key={idx} title={effect.description} style={{ fontSize: '0.65rem', padding: '2px 6px', background: 'rgba(74, 158, 222, 0.2)', border: '1px solid var(--blue-gem)', borderRadius: '2px', color: 'var(--blue-bright)' }}>
-                {effect.name} ({effect.duration}r)
-              </div>
-            ))}
+            {effects.map((effect, idx) => {
+              const remainingMs = Math.max(0, (effect.startTime + (effect.duration || 0)) - Date.now());
+              const remainingSecs = Math.ceil(remainingMs / 1000);
+              return (
+                <div key={idx} title={effect.description} style={{ fontSize: '0.65rem', padding: '2px 6px', background: 'rgba(74, 158, 222, 0.2)', border: '1px solid var(--blue-gem)', borderRadius: '2px', color: 'var(--blue-bright)' }}>
+                  {effect.name} ({remainingSecs}s)
+                </div>
+              );
+            })}
           </div>
         </div>
       )}

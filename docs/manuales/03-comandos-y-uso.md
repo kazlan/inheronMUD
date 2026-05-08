@@ -83,6 +83,7 @@ Estos comandos solo son accesibles para personajes con el rol `ADMIN`.
 *   **`admin summon <personaje>`**: Trae a un jugador a tu posición.
 *   **`admin give <item_id>`**: Te otorga cualquier objeto del juego.
 *   **`admin spawn <npc_id>`**: Spawnea un monstruo o NPC en la sala.
+*   **`admin exterminate <match>`**: Elimina NPCs/mobs instanciados a nivel global según el término dado.
 *   **`admin refresh [target]`**: Cura por completo vida y recursos.
 *   **`admin player <nombre>`**: Inspecciona variables internas de un jugador.
 *   **`admin room`**: Inspecciona los metadatos de la sala.
