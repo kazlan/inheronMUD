@@ -1,6 +1,7 @@
 import { GameEngine } from './game-engine';
 import { StatCalculator } from './stat-calculator';
 
+
 export interface SkillResult {
   success: boolean;
   message: string;
@@ -314,15 +315,101 @@ export class SkillManager {
     return Array.from(this.skills.values()).find(s => s.name.toLowerCase().includes(lower) || s.id.toLowerCase().includes(lower));
   }
 
+  /**
+   * Safe arithmetic expression evaluator.
+   * Only allows: numbers, whitespace, +, -, *, /, (, ), and the floor() function.
+   * Rejects anything else to prevent code injection.
+   */
   private evaluateFormula(formula: string, stats: any, level: number): number {
     let expression = formula;
-    for (const [stat, value] of Object.entries(stats)) expression = expression.replace(new RegExp(`\\b${stat}\\b`, 'g'), value!.toString());
+    // Substitute stat names with their numeric values
+    for (const [stat, value] of Object.entries(stats)) {
+      expression = expression.replace(new RegExp(`\\b${stat}\\b`, 'g'), value!.toString());
+    }
     expression = expression.replace(/\blevel\b/g, level.toString());
+    // Resolve NdM dice notation: e.g. 2d6 -> sum of 2d6 rolls
     expression = expression.replace(/(\d+)d(\d+)/g, (_, c, s) => {
       let t = 0;
       for (let i = 0; i < parseInt(c); i++) t += Math.floor(Math.random() * parseInt(s)) + 1;
       return t.toString();
     });
-    try { return Math.floor(new Function(`return ${expression}`)()); } catch { return 0; }
+    // Replace floor() with a safe placeholder
+    expression = expression.replace(/\bfloor\b/g, '__floor__');
+    // Security: after substitutions only digits, operators, spaces, parens and __floor__ are allowed
+    if (!/^[\d\s+\-*/().]+$/.test(expression.replace(/__floor__/g, ''))) {
+      console.warn(`[SkillManager] Rejected unsafe formula expression: "${expression}"`);
+      return 0;
+    }
+    // Restore floor() and evaluate using safe recursive descent parser
+    expression = expression.replace(/__floor__/g, 'floor');
+    try {
+      return Math.floor(this.safeEval(expression));
+    } catch {
+      return 0;
+    }
+  }
+
+  /** Tiny recursive-descent parser: handles +, -, *, /, unary -, parentheses, floor() */
+  private safeEval(expr: string): number {
+    let pos = 0;
+    const peek = () => expr[pos];
+    const consume = () => expr[pos++];
+    const skipWs = () => { while (pos < expr.length && expr[pos] === ' ') pos++; };
+
+    const parseExpr = (): number => {
+      let left = parseTerm();
+      skipWs();
+      while (pos < expr.length && (peek() === '+' || peek() === '-')) {
+        const op = consume(); skipWs();
+        const right = parseTerm();
+        left = op === '+' ? left + right : left - right;
+        skipWs();
+      }
+      return left;
+    };
+
+    const parseTerm = (): number => {
+      let left = parseUnary();
+      skipWs();
+      while (pos < expr.length && (peek() === '*' || peek() === '/')) {
+        const op = consume(); skipWs();
+        const right = parseUnary();
+        left = op === '*' ? left * right : (right !== 0 ? left / right : 0);
+        skipWs();
+      }
+      return left;
+    };
+
+    const parseUnary = (): number => {
+      skipWs();
+      if (peek() === '-') { consume(); return -parsePrimary(); }
+      return parsePrimary();
+    };
+
+    const parsePrimary = (): number => {
+      skipWs();
+      // floor()
+      if (expr.startsWith('floor', pos)) {
+        pos += 5; skipWs();
+        if (consume() !== '(') return 0;
+        const val = parseExpr();
+        skipWs(); consume(); // consume ')'
+        return Math.floor(val);
+      }
+      // parentheses
+      if (peek() === '(') {
+        consume();
+        const val = parseExpr();
+        skipWs(); consume(); // consume ')'
+        return val;
+      }
+      // number
+      let numStr = '';
+      if (peek() === '-') { numStr += consume(); }
+      while (pos < expr.length && /[\d.]/.test(peek())) numStr += consume();
+      return numStr ? parseFloat(numStr) : 0;
+    };
+
+    return parseExpr();
   }
 }

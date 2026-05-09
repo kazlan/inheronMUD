@@ -1,28 +1,43 @@
 ---
 # Villaclara — spawners de prueba 2026-05-08
-# Compatible con contrato confirmado: id, npcId, roomId, maxCount, respawnTime
+# Contrato actualizado: id, npcId, roomId, maxActive, intervalMs, variants opcional, unique opcional.
 
 - id: spawner_lobos_campo_norte
   npcId: mob_lobo_flaco
   roomId: villaclara_campo_norte
-  maxCount: 2
-  respawnTime: 45
+  maxActive: 2
+  intervalMs: 45000
+  variants:
+    - mob_lobo_flaco
   metadata:
+    legacy:
+      maxCount: 2
+      respawnTime: 45
     notes: Fauna hostil ligera para prueba de combate inicial.
 
 - id: spawner_conejos_lindero
   npcId: mob_conejo_acorazado
   roomId: villaclara_lindero_huertos
-  maxCount: 3
-  respawnTime: 35
+  maxActive: 3
+  intervalMs: 35000
+  variants:
+    - mob_conejo_acorazado
   metadata:
+    legacy:
+      maxCount: 3
+      respawnTime: 35
     notes: Objetivo de contrato de Rango Cobre.
 
 - id: spawner_general_pelusa
   npcId: mob_general_pelusa
   roomId: villaclara_lindero_huertos
-  maxCount: 1
-  respawnTime: 180
+  maxActive: 1
+  intervalMs: 180000
+  variants:
+    - mob_general_pelusa
+  unique: true
   metadata:
-    unique: true
-    notes: Mini-jefe de prueba; metadata.unique hasta confirmar soporte nativo.
+    legacy:
+      maxCount: 1
+      respawnTime: 180
+    notes: Mini-jefe de prueba; unique en raíz según contrato actualizado.

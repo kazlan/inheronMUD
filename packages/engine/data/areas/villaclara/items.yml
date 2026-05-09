@@ -61,6 +61,30 @@
     modifier: 2
     rarity: comun
 
+- id: item_cuchilla_mellada
+  name: Cuchilla Mellada de Forastero
+  description: Una cuchilla corta, oxidada y con filo irregular. Sigue sirviendo para probar el sistema mejor que para inspirar confianza.
+  type: EQUIPMENT
+  equipSlot: weapon
+  value: 14
+  metadata:
+    diceCount: 1
+    diceSides: 5
+    modifier: 1
+    rarity: comun
+    tags: [arma, prueba, loot]
+
+- id: item_peto_placas_remendado
+  name: Peto de Placas Remendado
+  description: Un peto ligero hecho con placas reaprovechadas y correas rurales. Feo, funcional y excelente para probar armaduras.
+  type: EQUIPMENT
+  equipSlot: chest
+  value: 18
+  metadata:
+    protection: 2
+    rarity: comun
+    tags: [armadura, prueba, loot]
+
 - id: item_colmillo_lobo_flaco
   name: Colmillo de Lobo Flaco
   description: Un colmillo amarillento, pequeño pero todavía afilado.
@@ -103,6 +127,23 @@
   metadata:
     rank: cobre
     tags: [contrato, cobre, campo_norte]
+    contractId: quest_conejos_con_placas
+    giverNpcId: npc_silo_brincacepa
+    boardRoomId: villaclara_tablon
+    turnInNpcId: npc_varo_nomenclaro
+    objectives:
+      - type: kill
+        targetNpcId: mob_conejo_acorazado
+        amount: 3
+      - type: collect
+        targetItemId: item_placa_conejo
+        amount: 2
+    rewards:
+      soles: 18
+      items: [item_miga_bendita]
+    visibleOutcome:
+      cronicaFlag: campo_norte_mas_tranquilo
+      note: "El tablón marca menos daños en huertos y Silo deja de maldecir vegetales con tanta intensidad."
 
 - id: item_contrato_campana_perdida
   name: "Contrato: La Campana que Sobra"
@@ -112,3 +153,52 @@
   metadata:
     rank: cobre
     tags: [contrato, campanas, misterio]
+    contractId: quest_campana_que_sobra
+    giverNpcId: npc_bimba_cascabel
+    boardRoomId: villaclara_tablon
+    turnInNpcId: npc_varo_nomenclaro
+    objectives:
+      - type: inspect
+        targetRoomId: villaclara_iglesia
+        targetSceneryId: campanario
+      - type: inspect
+        targetRoomId: villaclara_pozo_cantante
+        targetSceneryId: agua
+      - type: talk
+        targetNpcId: npc_otilia_cuerda
+    rewards:
+      soles: 15
+      items: [item_campanilla_agrietada]
+    visibleOutcome:
+      cronicaFlag: campanas_vigiladas
+      note: "Bimba anota las campanadas en limpio y el tablón muestra una corrección con tinta menos sospechosa."
+
+- id: item_contrato_otilia_no_existe
+  name: "Contrato: Otilia No Existe"
+  description: >-
+    Un encargo incómodo: comprobar por qué el archivo guarda trabajo firmado por alguien a quien
+    algunos registros niegan.
+  type: QUEST
+  value: 0
+  metadata:
+    rank: cobre
+    tags: [contrato, archivo, nombres, misterio]
+    contractId: quest_otilia_no_existe
+    giverNpcId: npc_varo_nomenclaro
+    boardRoomId: villaclara_tablon
+    turnInNpcId: npc_hermana_lua
+    objectives:
+      - type: inspect
+        targetRoomId: villaclara_archivo_cuerdas
+        targetSceneryId: libro_mayor
+      - type: talk
+        targetNpcId: npc_otilia_cuerda
+      - type: inspect
+        targetRoomId: camposanto_villaclara
+        targetSceneryId: lapidas
+    rewards:
+      soles: 22
+      items: [item_ficha_nombre_borrado]
+    visibleOutcome:
+      cronicaFlag: duda_sobre_otilia
+      note: "La Crónica local registra que varios vecinos corrigen el nombre de Otilia dos veces en la misma tarde."

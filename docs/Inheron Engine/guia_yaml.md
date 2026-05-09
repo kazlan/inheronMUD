@@ -39,6 +39,8 @@ Define los habitantes y monstruos.
     - `merchant` (boolean): Si permite comercio.
     - `dialogues` (lista): Nodos de conversación condicionada.
     - `patrolPath` (lista): IDs de salas para la ruta de patrulla.
+    - `patrolMsgLeave` (string, opcional): Mensaje personalizado cuando el NPC sale de una sala durante su patrulla.
+    - `patrolMsgArrive` (string, opcional): Mensaje personalizado cuando el NPC entra en una sala durante su patrulla.
     - `ambientMessages` (lista): Frases aleatorias que dice el NPC.
 
 ## 3. Items (`items.yml`)

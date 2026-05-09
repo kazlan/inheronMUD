@@ -1,4 +1,5 @@
 import { GameEngine, Database, Player, Item, CharacterCreator } from 'engine';
+import * as bcrypt from 'bcrypt';
 
 export enum SessionState {
   AWAITING_USERNAME,
@@ -82,7 +83,24 @@ export class Session {
 
   private async handleAwaitingPassword(password: string) {
     const account = await this.prisma.account.findUnique({ where: { id: this.accountId! } });
-    if (account?.password === password || !account?.password) {
+    
+    // For backwards compatibility during migration, we check if the password matches directly (old way)
+    // or matches via bcrypt.
+    let isMatch = false;
+    if (!account?.password) {
+      isMatch = true;
+    } else {
+      isMatch = await bcrypt.compare(password, account.password);
+      // Legacy plain text check (remove after full migration)
+      if (!isMatch && account.password === password) {
+        isMatch = true;
+        // Optionally auto-migrate the password here
+        const newHash = await bcrypt.hash(password, 10);
+        await this.prisma.account.update({ where: { id: this.accountId! }, data: { password: newHash } });
+      }
+    }
+
+    if (isMatch) {
       this.sendSystemMessage("Login correcto.");
       await this.showCharacterSelection();
     } else {
@@ -91,8 +109,9 @@ export class Session {
   }
 
   private async handleAwaitingNewPassword(password: string) {
+    const hashedPassword = await bcrypt.hash(password, 10);
     const account = await this.prisma.account.create({
-      data: { username: this.tempUsername, password }
+      data: { username: this.tempUsername, password: hashedPassword }
     });
     this.accountId = account.id;
     this.sendSystemMessage("Cuenta creada con éxito.");
@@ -348,7 +367,7 @@ export class Session {
       response = { ...this.engine.commands.equip(this.playerId, args.join(' ')), command: 'equip' };
     } else if (command === 'unequip' || command === 'desequipar') {
       response = { ...this.engine.commands.unequip(this.playerId, args.join(' ')), command: 'unequip' };
-    } else if (command === 'kill' || command === 'matar') {
+    } else if (command === 'kill' || command === 'matar' || command === 'k') {
       response = { ...this.engine.commands.kill(this.playerId, args.join(' ')), command: 'kill' };
     } else if (command === 'flee' || command === 'huir') {
       response = { ...this.engine.commands.flee(this.playerId), command: 'flee' };
@@ -373,7 +392,11 @@ export class Session {
       const targetName = args.slice(1).join(' ');
       response = { ...this.engine.commands.cast(this.playerId, skillName, targetName), command: 'cast' };
     } else if (command === 'use' || command === 'usar' || command === 'interact' || command === 'interactuar' || command === 'tirar') {
-      response = { ...this.engine.commands.interact(this.playerId, args.join(' ')), command: 'interact' };
+      const interactRes = this.engine.commands.interact(this.playerId, args.join(' '));
+      response = { ...interactRes, command: 'interact' };
+      if (interactRes.success) {
+         this.send({ type: 'data', group: 'inventory', data: this.engine.commands.getInventory(this.playerId) });
+      }
     } else if (command === 'say' || command === 'decir') {
       response = this.engine.chat.say(this.playerId, args.join(' '));
     } else if (command === 'tell' || command === 'susurrar') {
@@ -383,7 +406,7 @@ export class Session {
     } else if (command === 'channel') {
       response = await this.engine.chat.processAdminCommand(this.playerId, args);
     } else if (command === 'ooc') {
-      response = await this.engine.chat.channelMessage(this.playerId, args[0], args.slice(1).join(' '));
+      response = await this.engine.chat.channelMessage(this.playerId, 'ooc', args.join(' '));
     } else if (command === 'pulso' || command === 'p') {
       response = { ...this.engine.commands.getPulso(this.playerId, args[0]), command: 'pulso' };
     } else if (command === 'prompt') {

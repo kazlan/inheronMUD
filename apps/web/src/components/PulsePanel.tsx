@@ -89,7 +89,7 @@ export default function PulsePanel({ options, onOptionClick, inCombat, activeEff
             const remainingMs = Math.max(0, (eff.startTime + duration) - Date.now());
             const progress = Math.max(0, Math.min(100, (remainingMs / duration) * 100));
             const isSelf = eff.origin === 'self';
-            const isEcho = eff.isEcho || eff.name.toLowerCase().includes('eco');
+            const isEcho = eff.isEcho || (eff.name || '').toLowerCase().includes('eco');
             
             return (
               <div 

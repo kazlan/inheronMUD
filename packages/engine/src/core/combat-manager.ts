@@ -27,6 +27,7 @@ export class CombatManager {
   public participants: CombatParticipant[] = [];
   public currentRound: number = 0;
   public active: boolean = true;
+  public lastActivityTime: number = Date.now();
 
   constructor(
     participants: CombatParticipant[],
@@ -34,6 +35,7 @@ export class CombatManager {
   ) {
     this.id = uuidv4();
     this.participants = this.sortParticipants(participants);
+    this.lastActivityTime = Date.now();
   }
 
   private sortParticipants(participants: CombatParticipant[]): CombatParticipant[] {
@@ -45,6 +47,7 @@ export class CombatManager {
     if (!this.active) return [];
     
     this.currentRound++;
+    this.lastActivityTime = Date.now();
     const log: string[] = [];
 
     for (const participant of this.participants) {

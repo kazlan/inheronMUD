@@ -210,13 +210,16 @@ export class AIManager {
         npc.roomId = targetRoom.id;
         targetRoom.addEntity(npc.id);
 
+        const leaveMsg = npc.metadata.patrolMsgLeave || `<gray>${npc.name} se marcha.</gray>`;
+        const arriveMsg = npc.metadata.patrolMsgArrive || `<gray>${npc.name} entra en la sala.</gray>`;
+
         this.engine.emit('spatial_message', {
           roomId: room.id,
-          message: `<gray>${npc.name} continúa su patrulla.</gray>`
+          message: leaveMsg
         });
         this.engine.emit('spatial_message', {
           roomId: targetRoom.id,
-          message: `<gray>${npc.name} llega patrullando la zona.</gray>`
+          message: arriveMsg
         });
       }
     }

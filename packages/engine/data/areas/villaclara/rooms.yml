@@ -2,43 +2,96 @@
 # Villaclara — paquete YAML de prueba 2026-05-08
 # MVP compatible + metadata extendida
 
+- id: villaclara_puerta_norte
+  name: Puerta Norte de Villaclara
+  description: >-
+    Dos enormes portones de roble reforzado con hierro marcan el límite entre la seguridad
+    del pueblo y la espesura del Campo Norte. El traqueteo de carros, el murmullo de los
+    guardias y el olor a heno húmedo anuncian que aquí termina la costumbre y empieza la
+    necesidad de llevar lanza.
+  scenery:
+    portones:
+      description: Maderas gruesas y tachuelas oxidadas que han resistido lluvias, bestias y comerciantes tercos.
+    muralla:
+      description: Piedras grises cubiertas de enredaderas que protegen el asentamiento.
+    garita:
+      description: Una pequeña garita con banco, jarra de agua y registros de patrulla llenos de manchas de barro.
+  exits:
+    - direction: south
+      targetRoomId: calle_del_norte
+    - direction: north
+      targetRoomId: villaclara_campo_norte
+  metadata:
+    safe: true
+    questHooks: [quest_conejos_con_placas]
+
+- id: calle_del_norte
+  name: Calle del Norte
+  description: >-
+    Una vía ancha de tierra apisonada y canto rodado baja desde la Puerta Norte hasta el
+    corazón de Villaclara. Carretas, botas embarradas y aprendices con demasiada prisa
+    comparten paso bajo toldos de lino y balcones bajos llenos de macetas.
+  scenery:
+    balcones:
+      description: Barandillas de madera con ropa tendida, geranios y una lanza vieja usada como perchero.
+    huellas:
+      description: Marcas de ruedas, botas y pezuñas pequeñas cruzan la calle en todas direcciones.
+    carteles:
+      description: Tablillas pintadas a mano señalan la plaza, la capilla y la posada.
+  exits:
+    - direction: north
+      targetRoomId: villaclara_puerta_norte
+    - direction: south
+      targetRoomId: villaclara_plaza
+    - direction: west
+      targetRoomId: calle_mayor_sol_poniente
+    - direction: east
+      targetRoomId: calle_mayor_sol_naciente
+  metadata:
+    safe: true
+
 - id: villaclara_plaza
   name: Plaza del Alba Chica
   description: >-
-    La plaza de Villaclara abre un claro de sol entre casas encaladas, bancos gastados y el
-    Pozo Cantante, cuyo brocal blanco guarda un murmullo que a veces suena a agua y a veces
-    a nombre mal recordado. Huele a pan bendito, cal tibia y tinta reciente. Desde el sur
-    llega el eco amable del campanario.
+    La plaza abre su respiro en mitad de la villa como si el pueblo hubiese apartado un
+    instante las casas para dejar sitio al sol, al Pozo Cantante y a los encuentros. Huele
+    a pan bendito, agua limpia, cuero, campanas y noticias a medio contar.
   scenery:
     pozo:
       description: >-
-        Un pozo de piedra blanca con cuerda nueva y cubo viejo. Si pegas la oreja al brocal,
-        el eco parece corregirse antes de terminar ciertos nombres.
+        Un pozo de piedra blanca con brocal gastado. Si acercas el oído, el eco casi parece
+        corregirse antes de decir un nombre.
       interactions:
         - verbs: [mirar, escuchar]
           action: message
           message: >-
             El pozo tararea bajito. Reconoces nombres de vecinos... y un hueco redondo donde
             debería haber otro.
+    campanario:
+      description: Más allá del sur se alza el campanario bajo de la capilla, visible entre tejados y ramas de ciprés.
     bancos:
-      description: Bancos de madera al sol donde descansan vecinos, aprendices y rumores.
+      description: Bancos de madera donde se sientan veteranos, madres cansadas y aspirantes a héroe con vendajes optimistas.
+    adoquines:
+      description: Piedras claras pulidas por generaciones de mercado, procesiones, lluvia y carreras infantiles.
     registro_publico:
       description: >-
         Una tablilla comunal con turnos de horno, recados y nombres de vecinos. Una línea ha
         sido raspada con demasiado cuidado.
   exits:
     - direction: north
-      targetRoomId: villaclara_puerta_norte
+      targetRoomId: calle_del_norte
     - direction: south
-      targetRoomId: villaclara_iglesia
+      targetRoomId: cuesta_de_las_campanas
     - direction: east
-      targetRoomId: villaclara_panaderia
+      targetRoomId: calle_mayor_sol_naciente
     - direction: west
-      targetRoomId: villaclara_gremio
+      targetRoomId: calle_mayor_sol_poniente
     - direction: down
       targetRoomId: villaclara_pozo_cantante
     - direction: sw
       targetRoomId: villaclara_archivo_cuerdas
+    - direction: se
+      targetRoomId: jardincillo_del_brocal
   metadata:
     safe: true
     cronica:
@@ -90,6 +143,137 @@
   metadata:
     safe: true
 
+- id: calle_mayor_sol_naciente
+  name: Calle Mayor del Sol Naciente
+  description: >-
+    La calle principal se estira al este en una franja amplia y luminosa donde los tenderetes,
+    las fachadas encaladas y los aleros floridos hacen sombra amable al paseante. El aroma
+    dominante es el de Panbendito, con notas de harina, miel y leña recién avivada.
+  scenery:
+    fachadas:
+      description: Casas bajas de adobe blanco con vigas vistas y puertas pintadas en azules y ocres suaves.
+    tenderetes:
+      description: Mesas plegables donde a veces aparecen quesos, huevos, cintas, peines o pepinillos heroicamente encurtidos.
+    golondrinas:
+      description: Golondrinas negras cruzan la calle como si conocieran atajos entre campanas.
+  exits:
+    - direction: west
+      targetRoomId: villaclara_plaza
+    - direction: east
+      targetRoomId: calleja_del_horno
+    - direction: south
+      targetRoomId: posada_cantaro_manso
+    - direction: north
+      targetRoomId: jardincillo_del_brocal
+  metadata:
+    safe: true
+
+- id: calleja_del_horno
+  name: Calleja del Horno
+  description: >-
+    La calle se estrecha entre muros tibios y respiraderos de ladrillo por donde sale una
+    exhalación constante de pan, ceniza y masa viva. Aquí cada piedra parece haber absorbido
+    años de harina, pisadas apresuradas y recetas defendidas con fervor religioso.
+  scenery:
+    respiraderos:
+      description: Pequeñas bocas de ladrillo dejan escapar el aliento caliente de los hornos.
+    harina:
+      description: Un velo blanco cubre alféizares, cubos y huellas recientes.
+    cajas:
+      description: Cajones de reparto con marcas de tiza esperan junto a la pared de la panadería.
+  exits:
+    - direction: west
+      targetRoomId: calle_mayor_sol_naciente
+    - direction: east
+      targetRoomId: villaclara_panaderia
+    - direction: south
+      targetRoomId: almacen_panbendito
+  metadata:
+    safe: true
+
+- id: almacen_panbendito
+  name: Almacén de Panbendito
+  description: >-
+    Sacos de harina, cestas de hogazas en reposo, tarros de miel y estantes con especias
+    humildes convierten este almacén en el verdadero pulmón de la panadería.
+  scenery:
+    sacos:
+      description: Tela basta rebosante de trigo, centeno y mezclas secretas que Doña Marga vigila como si fueran reliquias.
+    cestas:
+      description: Cestas cubiertas con paños donde la masa fermenta en un silencio solemne.
+    miel:
+      description: Tarros dorados que atrapan la luz como si fueran pequeños atardeceres en conserva.
+  exits:
+    - direction: north
+      targetRoomId: calleja_del_horno
+    - direction: west
+      targetRoomId: villaclara_panaderia
+  metadata:
+    safe: true
+
+- id: villaclara_panaderia
+  name: Panadería Panbendito
+  description: >-
+    El aire está espeso de masa madre, corteza dorada y leña viva. Los hornos murmuran,
+    el mostrador luce migas como medallas y todo aquí promete consuelo comestible.
+  scenery:
+    hornos:
+      description: Hornos de piedra ennegrecida que irradian un calor reconfortante.
+    mostrador:
+      description: Un tablón pulido por codos, monedas y confidencias.
+    estanterias:
+      description: Hogazas, bollos y panecillos alineados con disciplina apenas aparente.
+  exits:
+    - direction: west
+      targetRoomId: calleja_del_horno
+    - direction: south
+      targetRoomId: villaclara_forja
+    - direction: east
+      targetRoomId: almacen_panbendito
+  metadata:
+    safe: true
+
+- id: villaclara_forja
+  name: Forja del Clavo Sereno
+  description: >-
+    Carbón, hierro y sudor honrado llenan esta esquina de calor seco. El repique del yunque
+    responde a las campanas con menos fe, pero igual puntualidad.
+  scenery:
+    yunque:
+      description: Un yunque marcado por años de trabajo y un par de errores heroicos.
+    brasero:
+      description: Brasas vivas que respiran como una bestia doméstica.
+  exits:
+    - direction: north
+      targetRoomId: villaclara_panaderia
+  metadata:
+    safe: true
+
+- id: calle_mayor_sol_poniente
+  name: Calle Mayor del Sol Poniente
+  description: >-
+    Al oeste de la plaza la calle principal se vuelve un poco más reposada, con fachadas de
+    oficio, pilares de madera oscura y toldos más sobrios. Huele a cuero, vino rebajado,
+    sopa de mediodía y lluvia vieja retenida entre los tablones.
+  scenery:
+    pilares:
+      description: Postes de madera gruesa sostienen aleros donde se refugian vecinos y chismorreos cuando arrecia el agua.
+    cubos:
+      description: Cubos de agua y barriles pequeños esperan junto a puertas bien usadas.
+    gatos:
+      description: Un par de gatos patrullan este tramo con la severidad de alguaciles de barrio.
+  exits:
+    - direction: east
+      targetRoomId: villaclara_plaza
+    - direction: west
+      targetRoomId: callejon_sombra_corta
+    - direction: south
+      targetRoomId: gremio_traspatio
+    - direction: north
+      targetRoomId: posada_cantaro_manso
+  metadata:
+    safe: true
+
 - id: villaclara_gremio
   name: Gremio de Oficios y Encargos
   description: >-
@@ -102,9 +286,29 @@
       description: Una mesa larga con tinta, plumas, tasas y una cesta de clavos torcidos.
   exits:
     - direction: east
-      targetRoomId: villaclara_plaza
+      targetRoomId: gremio_traspatio
     - direction: north
       targetRoomId: villaclara_tablon
+  metadata:
+    safe: true
+
+- id: gremio_traspatio
+  name: Traspatio del Gremio
+  description: >-
+    Detrás del gremio se abre un patio de entrenamiento con muñecos de paja, barriles partidos
+    y una pértiga torcida que alguien sigue llamando obstáculo reglamentario.
+  scenery:
+    munecos:
+      description: Figuras de paja cosidas una y otra vez tras demasiadas demostraciones marciales.
+    barriles:
+      description: Barriles abiertos usados como bancos, blancos improvisados o excusas lamentables.
+    pertiga:
+      description: Un poste torcido con marcas de espada, lanza y alguna dentellada difícil de explicar.
+  exits:
+    - direction: north
+      targetRoomId: calle_mayor_sol_poniente
+    - direction: west
+      targetRoomId: villaclara_gremio
   metadata:
     safe: true
 
@@ -133,49 +337,153 @@
       targetRoomId: villaclara_gremio
   metadata:
     safe: true
+    board:
+      rank: cobre
+      contracts:
+        - item_contrato_conejos
+        - item_contrato_campana_perdida
+        - item_contrato_otilia_no_existe
+    questHooks: [quest_conejos_con_placas, quest_campana_que_sobra, quest_otilia_no_existe]
 
-- id: villaclara_panaderia
-  name: Panadería Panbendito
+- id: posada_cantaro_manso
+  name: Posada del Cántaro Manso
   description: >-
-    El aire está espeso de masa madre, corteza dorada y leña viva. Los hornos murmuran,
-    el mostrador luce migas como medallas y todo aquí promete consuelo comestible.
+    Una posada de dos plantas con paredes encaladas, vigas robustas y faroles de vidrio ámbar
+    que prometen descanso más honesto que lujoso.
   scenery:
-    hornos:
-      description: Hornos de piedra ennegrecida que irradian un calor reconfortante.
-    mostrador:
-      description: Un tablón pulido por codos, monedas y confidencias.
-    estanterias:
-      description: Hogazas, bollos y panecillos alineados con disciplina apenas aparente.
+    letrero:
+      description: Un cántaro pintado con gesto beatífico y una grieta decorativa que nadie admite haber causado.
+    faroles:
+      description: Faroles de vidrio miel que suavizan la fachada al caer la tarde.
+    puerta:
+      description: Una puerta ancha con pomo brillante de tanto huésped indeciso.
   exits:
-    - direction: west
-      targetRoomId: villaclara_plaza
     - direction: south
-      targetRoomId: villaclara_forja
+      targetRoomId: calle_mayor_sol_naciente
+    - direction: north
+      targetRoomId: comedor_cantaro_manso
+    - direction: west
+      targetRoomId: calle_mayor_sol_poniente
   metadata:
     safe: true
 
-- id: villaclara_forja
-  name: Forja del Clavo Sereno
+- id: comedor_cantaro_manso
+  name: Comedor del Cántaro Manso
   description: >-
-    Carbón, hierro y sudor honrado llenan esta esquina de calor seco. El repique del yunque
-    responde a las campanas con menos fe, pero igual puntualidad.
+    Mesas largas, bancos firmes y una chimenea de piedra convierten el comedor en el vientre
+    social de la posada. Aquí hierven sopas, se exageran hazañas y se comparten noticias con
+    el mismo entusiasmo que el pan.
   scenery:
-    yunque:
-      description: Un yunque marcado por años de trabajo y un par de errores heroicos.
-    brasero:
-      description: Brasas vivas que respiran como una bestia doméstica.
+    mesas:
+      description: Tablones de roble marcados por jarras, dados, cuchillos romos y alguna declaración de amor arrepentida.
+    chimenea:
+      description: Una chimenea amplia donde siempre queda un rescoldo dispuesto a fingirse hogar.
+    barra:
+      description: Una barra corta con vasos desparejados y un barril que promete más de lo que cumple.
+  exits:
+    - direction: south
+      targetRoomId: posada_cantaro_manso
+    - direction: up
+      targetRoomId: segundo_piso_cantaro_manso
+  metadata:
+    safe: true
+
+- id: segundo_piso_cantaro_manso
+  name: Segundo Piso del Cántaro Manso
+  description: >-
+    El suelo cruje con franqueza bajo un corredor largo iluminado por ventanas pequeñas. El
+    aire huele a jabón humilde, mantas secadas al sol y el resto de sopa que ha subido desde
+    abajo con la testarudez de los buenos guisos.
+  scenery:
+    corredor:
+      description: Un pasillo de tablas viejas con alfombra corta y remiendos meticulosamente cosidos.
+    ventanas:
+      description: Ventanas estrechas dejan entrar luz inclinada y el tañido amortiguado de las campanas.
+    puertas:
+      description: Cuatro puertas sencillas guardan habitaciones modestas pero limpias.
+  exits:
+    - direction: down
+      targetRoomId: comedor_cantaro_manso
+    - direction: east
+      targetRoomId: pasillo_habitaciones_cantaro
+  metadata:
+    safe: true
+
+- id: pasillo_habitaciones_cantaro
+  name: Pasillo de Habitaciones
+  description: >-
+    Un pasillo más estrecho remata el segundo piso, con puertas a ambos lados y una mesa auxiliar
+    donde descansa una jarra de agua, una vela apagada y un libro de cuentas que jura no escuchar
+    conversaciones ajenas.
+  scenery:
+    jarra:
+      description: Una jarra de barro con agua fresca y dos vasos de estaño abollado.
+    vela:
+      description: Una vela gruesa salpicada de cera antigua.
+    libro:
+      description: Un cuaderno de huéspedes donde algunos nombres están escritos con caligrafía dudosa.
+  exits:
+    - direction: west
+      targetRoomId: segundo_piso_cantaro_manso
+  metadata:
+    safe: true
+
+- id: cuesta_de_las_campanas
+  name: Cuesta de las Campanas
+  description: >-
+    Una calle en ligera pendiente desciende desde la plaza hacia la capilla. El sonido del
+    campanario cae aquí con claridad de cobre, rebotando en muros blancos cubiertos de rosales.
+  scenery:
+    rosales:
+      description: Rosales trepan por las paredes con flores claras y espinas honestas.
+    escalones:
+      description: Algunos tramos muestran escalones bajos gastados por procesiones y botas de barro.
+    ecos:
+      description: Cada campanada parece tardar un instante más del debido en apagarse.
   exits:
     - direction: north
-      targetRoomId: villaclara_panaderia
+      targetRoomId: villaclara_plaza
+    - direction: south
+      targetRoomId: atrio_de_la_luz
+    - direction: west
+      targetRoomId: callejon_sombra_corta
+  metadata:
+    safe: true
+
+- id: atrio_de_la_luz
+  name: Atrio de la Luz
+  description: >-
+    Un patio abierto antecede a la capilla, con suelo de piedra clara, bancos de oración y
+    macetas de lirios blancos que perfuman el aire con una serenidad casi irreal.
+  scenery:
+    lirios:
+      description: Flores blancas cuidadas con devoción y una obstinación admirable contra las cabras del vecindario.
+    bancos:
+      description: Bancos sobrios para rezar, esperar o fingir cualquiera de las dos cosas.
+    puerta:
+      description: Las puertas de la capilla muestran pequeñas marcas de manos, siglos y lluvia.
+  exits:
+    - direction: north
+      targetRoomId: cuesta_de_las_campanas
+    - direction: south
+      targetRoomId: jardines_de_la_capilla
+    - direction: east
+      targetRoomId: villaclara_iglesia
   metadata:
     safe: true
 
 - id: villaclara_iglesia
-  name: Atrio de la Luz Serena
+  name: Capilla de la Luz Eterna
   description: >-
-    Un atrio humilde de piedra clara, rosales trepadores y campanas cercanas. El aire huele
-    a cera, tierra regada y pan que alguien dejó como ofrenda o excusa.
+    La luz dorada se filtra a través de vidrieras coloridas y pinta el interior con bandas suaves
+    de rojo, azul y miel. Huele a cera, incienso y piedra fresca.
   scenery:
+    vidrieras:
+      description: Cristales de colores que narran victorias de la Luz y milagros tan modestos como necesarios.
+    bancos:
+      description: Madera oscura desgastada por generaciones de fieles y visitantes prudentes.
+    altar:
+      description: Un altar sencillo, limpio y cubierto por paños que huelen a sol y lavanda.
     campanario:
       description: Bajo, robusto y algo rechoncho. La campana menor tiene una grieta en sonrisa.
       interactions:
@@ -183,37 +491,114 @@
           action: message
           message: >-
             Jurarías que falta un golpe en tu recuerdo... o sobra uno en la campana.
-    rosales:
-      description: Rosales claros con espinas honestas y pétalos muy bien cuidados.
+  exits:
+    - direction: west
+      targetRoomId: atrio_de_la_luz
+    - direction: south
+      targetRoomId: jardines_de_la_capilla
+  metadata:
+    safe: true
+    questHooks: [quest_campana_que_sobra]
+
+- id: jardines_de_la_capilla
+  name: Jardines de la Capilla
+  description: >-
+    Senderos de grava clara serpentean entre setos bajos, hierbas medicinales, rosales y pequeños
+    árboles frutales. El murmullo del pueblo llega amortiguado, mezclado con pájaros y campanas.
+  scenery:
+    setos:
+      description: Setos recortados con esmero suficiente para parecer ordenados sin volverse arrogantes.
+    hierbas:
+      description: Romero, salvia, melisa y otras plantas de cura suave crecen en parterres bien etiquetados.
+    banco_piedra:
+      description: Un banco de piedra tibia al sol donde se sientan dolientes, clérigos y enamorados con sentido del drama.
   exits:
     - direction: north
-      targetRoomId: villaclara_plaza
+      targetRoomId: atrio_de_la_luz
+    - direction: south
+      targetRoomId: camposanto_villaclara
+    - direction: west
+      targetRoomId: jardincillo_del_brocal
+    - direction: east
+      targetRoomId: villaclara_iglesia
+  metadata:
+    safe: true
+    questHooks: [quest_otilia_no_existe]
+
+- id: camposanto_villaclara
+  name: Camposanto de Villaclara
+  description: >-
+    Un recinto humilde y cuidado donde lápidas bajas, cruces de madera y piedras grabadas reposan
+    bajo cipreses delgados. No hay grandiosidad aquí, solo memoria, duelo y una paz rural que a
+    veces se quiebra cuando un nombre parece más nuevo o más viejo de lo que debería.
+  scenery:
+    lapidas:
+      description: Piedras sencillas con nombres, fechas y epitafios breves, algunos tan prácticos como conmovedores.
+    cipreses:
+      description: Árboles altos y quietos que filtran el viento en susurros largos.
+    verja:
+      description: Una verja de hierro negro con flores frescas entre los barrotes.
+  exits:
+    - direction: north
+      targetRoomId: jardines_de_la_capilla
+  metadata:
+    safe: true
+    questHooks: [quest_otilia_no_existe]
+    cronica:
+      clueRoutes:
+        nombres_borrados:
+          - look: lapidas
+          - dialogue: npc_otilia_cuerda
+
+- id: callejon_sombra_corta
+  name: Callejón de la Sombra Corta
+  description: >-
+    Un callejón estrecho corre entre tapias altas y cobertizos traseros, fresco incluso bajo el
+    sol del mediodía. La sombra aquí no resulta maligna, pero sí lo bastante larga como para
+    guardar cuchicheos, gatos desconfiados y alguna entrega discreta.
+  scenery:
+    tapias:
+      description: Muros altos con cal descascarillada y señales de enredaderas arrancadas.
+    cubos:
+      description: Cubos viejos, leña apilada y una escoba digna de epopeya doméstica.
+    marcas:
+      description: Arañazos en la pared y tiza borrada sugieren juegos infantiles... o rutas discretas.
+  exits:
+    - direction: east
+      targetRoomId: cuesta_de_las_campanas
+    - direction: west
+      targetRoomId: calle_mayor_sol_poniente
   metadata:
     safe: true
 
-- id: villaclara_puerta_norte
-  name: Puerta Norte de Villaclara
+- id: jardincillo_del_brocal
+  name: Jardincillo del Brocal
   description: >-
-    Los portones marcan el final de la costumbre y el inicio del barro necesario. Más allá
-    se abre el Campo Norte, donde las hierbas altas esconden conejos demasiado serios.
+    Un pequeño jardín vecinal abraza el lateral suroriental de la plaza con muretes bajos, hiedra,
+    caléndulas y un peral modesto. Las abejas trabajan con entusiasmo y los niños lo usan como
+    escondite hasta que alguien los manda lavarse las manos.
   scenery:
-    portones:
-      description: Maderas gruesas reforzadas con hierro y paciencia.
-    garita:
-      description: Una garita con banco, jarra de agua y partes de patrulla salpicados de barro.
+    peral:
+      description: Un árbol pequeño y torcido que da peras discretas pero honestas.
+    calendulas:
+      description: Flores anaranjadas que alegran incluso los rincones donde la piedra insiste en parecer seria.
+    murete:
+      description: Un borde de piedra donde se dejan cestas, recados o cuerpos cansados.
   exits:
-    - direction: south
+    - direction: nw
       targetRoomId: villaclara_plaza
-    - direction: north
-      targetRoomId: villaclara_campo_norte
+    - direction: west
+      targetRoomId: jardines_de_la_capilla
+    - direction: south
+      targetRoomId: calle_mayor_sol_naciente
   metadata:
     safe: true
 
 - id: villaclara_campo_norte
   name: Campo Norte
   description: >-
-    Hierba alta, matas de trébol y surcos mal cerrados se extienden al norte del pueblo.
-    Huele a tierra húmeda, heno roto y al tipo de silencio que precede a un salto con incisivos.
+    Hierba alta, matas de trébol y surcos mal cerrados se extienden al norte del pueblo. Huele
+    a tierra húmeda, heno roto y al tipo de silencio que precede a un salto con incisivos.
   scenery:
     hierba:
       description: Hierba alta que se mece con el viento... y a veces sin él.
@@ -224,6 +609,8 @@
       targetRoomId: villaclara_puerta_norte
     - direction: north
       targetRoomId: villaclara_lindero_huertos
+  metadata:
+    questHooks: [quest_conejos_con_placas]
 
 - id: villaclara_lindero_huertos
   name: Lindero de los Huertos
@@ -238,3 +625,5 @@
   exits:
     - direction: south
       targetRoomId: villaclara_campo_norte
+  metadata:
+    questHooks: [quest_conejos_con_placas]
