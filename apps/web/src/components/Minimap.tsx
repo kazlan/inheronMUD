@@ -29,8 +29,8 @@ export default function Minimap({ areaMap, currentRoomId, visitedRooms, radius =
   };
 
   return (
-    <div className="minimap-svg-container" style={{ width: '100%', height: '220px', background: 'rgba(0,0,0,0.4)', borderRadius: '4px', overflow: 'hidden', position: 'relative' }}>
-      <svg width="220" height="220" viewBox="0 0 220 220">
+    <div className="minimap-svg-container" style={{ width: '100%', height: '180px', background: 'rgba(0,0,0,0.4)', borderRadius: '4px', overflow: 'hidden', position: 'relative' }}>
+      <svg width="100%" height="100%" viewBox="0 0 220 220" preserveAspectRatio="xMidYMid slice">
         {/* Connection Lines */}
         {visibleRooms.map(room => {
           const isVisited = visitedRooms.includes(room.id);

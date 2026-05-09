@@ -18,9 +18,11 @@ Este paquete amplía Villaclara como zona inicial jugable con identidad propia:
 - Archivo de cuerdas y nombres.
 - Gremio + tablón de Rango Cobre.
 - Panadería, forja, atrio/capilla y acceso al Campo Norte.
-- Posada, jardines y camposanto en capa urbana ampliada.
+- Capa urbana ampliada: Calle del Norte, calles mayores, calleja del horno, traspatio del gremio, posada, comedor, segundo piso, pasillo de huéspedes, jardines, camposanto, callejón y jardincillo.
 - NPCs memorables con comercio, voz local y pistas redundantes.
+- Contratos de Rango Cobre preparados en metadata de tablón e ítems de quest: conejos, campana y Otilia.
 - Hostiles de prueba para combate inicial: lobo flaco, conejo acorazado y General Pelusa.
+- Loot de prueba para sistemas: arma (`item_cuchilla_mellada`) y armadura (`item_peto_placas_remendado`) en mobs hostiles.
 - Rumores y entradas de Crónica Viva preparados para integración.
 
 ## Qué testear al subir
@@ -28,10 +30,11 @@ Este paquete amplía Villaclara como zona inicial jugable con identidad propia:
 2. `admin goto villaclara_plaza`
 3. `inspect-room`
 4. Navegación básica:
-   - plaza -> pozo
-   - plaza -> gremio -> tablón
-   - plaza -> panadería -> forja
-   - plaza -> iglesia/capilla
+   - puerta norte -> calle del norte -> plaza
+   - plaza -> calles este/oeste
+   - calle del sol naciente -> calleja del horno -> panadería -> forja
+   - calle del sol poniente -> posada -> comedor -> segundo piso
+   - plaza -> cuesta -> atrio -> capilla -> jardines -> camposanto
    - puerta norte -> campo norte -> lindero
 5. Interacciones de scenery:
    - `look pozo`
@@ -40,42 +43,25 @@ Este paquete amplía Villaclara como zona inicial jugable con identidad propia:
    - `leer contrato_sospechoso`
    - `leer libro_mayor`
    - `escuchar campanario`
+   - comprobar metadata de `board.contracts` en tablón
 6. NPCs:
-   - hablar con Doña Marga
-   - hablar con Otilia
-   - hablar con Bimba
-   - hablar con Pex
-   - hablar con Silo
-   - probar comercio con Doña Marga y Tarin
+   - hablar con Doña Marga, Otilia, Bimba, Pex, Silo
+   - hablar con Arnel, Lina, Greta, Hermana Lúa, Mirta, Brin
+   - probar comercio con Doña Marga, Tarin, Arnel y Mirta
 7. Combate:
    - `admin spawn mob_conejo_acorazado`
    - `admin spawn mob_lobo_flaco`
+   - `admin spawn mob_general_pelusa`
+   - validar caída/loot de `item_cuchilla_mellada` y `item_peto_placas_remendado`
    - validar respawn automático en Campo Norte/Lindero
 8. Validar que `rumors-cronica.yml`:
    - cargue correctamente, o
    - sea ignorado sin romper el área
 
-## Qué implementar o confirmar después
-- Confirmar contrato real del loader para `rumors-cronica.yml`.
-- Confirmar si `metadata.unique` en spawners debe subir a raíz como `unique: true`.
-- Confirmar si `ambientMessages`, `greetings` y `dialogues` están soportados tal cual en runtime.
-- Confirmar si `flags: [patrol]`, `flags: [healer]` o `flags: [weird]` tienen efecto real o son solo semántica por ahora.
-- Integrar contratos jugables reales del tablón si ya existe sistema de quest/board activo.
-- Revisar si alguna room ampliada debe entrar en `rooms.yml` final o dejarse para fase 2 según tamaño deseado del pueblo.
-
 ## Riesgos / brechas engine
-- BRECHA ENGINE POSIBLE: `rumors-cronica.yml` puede estar documentado pero no cargado todavía.
-- BRECHA ENGINE POSIBLE: algunas metadata narrativas pueden ser inocuas si el motor aún no las consume.
-- BRECHA ENGINE POSIBLE: `interactions` se usa con forma conservadora, pero conviene validar contra el parser real.
-
-## Sugerencia de prueba rápida mínima
-- Refrescar área.
-- Entrar en plaza.
-- Leer tablón.
-- Mirar pozo.
-- Hablar con Bimba y Otilia.
-- Spawnear conejo acorazado.
-- Verificar comercio de panadería.
+- BRECHA ENGINE POSIBLE: `metadata.patrolPath`, `flags: [patrol|wandering|healer]` e `innkeeper: true` pueden ser solo semánticos si el runtime aún no los consume.
+- BRECHA ENGINE VIGILADA: `spawners.yml` queda en contrato actualizado (`maxActive`, `intervalMs`, `variants`, `unique` raíz) y conserva valores legacy dentro de `metadata.legacy` solo como referencia.
+- BRECHA ENGINE POSIBLE: la nueva malla de exits toca rutas existentes; conviene verificar colisiones tras el refresh.
 
 ## Nota de continuidad
-No hay referencias de Ranvier en este paquete. Está pensado para motor propio Custom TypeScript con contenido YAML y metadata extendida.
+No hay referencias operativas a Ranvier. Este paquete está orientado al motor propio Custom TypeScript con contenido YAML y metadata extendida.

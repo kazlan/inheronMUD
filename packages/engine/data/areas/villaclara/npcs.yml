@@ -13,6 +13,8 @@
     raceId: humano_arvell
     merchant: true
     inventory: [item_pan_bendito, item_bollo_dulce, item_miga_bendita]
+    role: panadera_refugio
+    questHooks: [quest_campana_que_sobra]
     ambientMessages:
       - "limpia el mostrador con una severidad maternal."
       - "golpea una hogaza y asiente, satisfecha con su sonido."
@@ -30,6 +32,33 @@
     presencia: 14
     percepcion: 10
 
+- id: npc_brin_tahonero
+  name: Brin Tahonero
+  description: >-
+    Un mozo de panadería flaco, rápido y siempre empolvado de harina hasta las pestañas.
+  behaviorId: idle
+  roomId: almacen_panbendito
+  flags: [social]
+  metadata:
+    raceId: humano_altherion
+    role: mozo_de_almacen
+    ambientMessages:
+      - "repasa sacos y cajas con la tensión de quien teme decepcionar a Doña Marga."
+      - "se sacude harina del pelo y descubre que había más debajo."
+    greetings:
+      - "{npc} alza un saco a medio contar. 'Si vienes a ayudar, bendita seas. Si vienes a tocar harina, aléjate con respeto, {player}.'"
+    dialogues:
+      - text: "No, no puedes dormir sobre los sacos. Sí, ya lo intentaron antes."
+      - text: "La harina no se cuenta sola, pero se desparrama con un entusiasmo admirable."
+  stats:
+    fuerza: 8
+    destreza: 13
+    constitucion: 9
+    ingenio: 10
+    sabiduria: 9
+    presencia: 9
+    percepcion: 12
+
 - id: npc_otilia_cuerda
   name: Otilia Cuerda
   description: >-
@@ -40,6 +69,8 @@
   flags: [social]
   metadata:
     raceId: humano_altherion
+    role: guardiana_del_registro
+    questHooks: [quest_campana_que_sobra, quest_otilia_no_existe]
     ambientMessages:
       - "revisa un nudo, frunce el ceño y vuelve a revisarlo."
       - "sopla sobre el libro mayor sin apartar la mirada de la tinta blanca."
@@ -64,9 +95,14 @@
     en la muñeca y una libreta donde apunta golpes, caras y supersticiones.
   behaviorId: idle
   roomId: villaclara_plaza
-  flags: [social]
+  flags: [social, patrol]
   metadata:
     raceId: humano_arvell
+    role: campanera_y_recadera
+    questHooks: [quest_campana_que_sobra]
+    patrolPath: [villaclara_plaza, cuesta_de_las_campanas, atrio_de_la_luz, jardines_de_la_capilla, cuesta_de_las_campanas, villaclara_plaza]
+    patrolMsgLeave: "<gray>Bimba Cascabel sale trotando mientras agita sus cascabeles.</gray>"
+    patrolMsgArrive: "<gray>Bimba Cascabel llega corriendo, dejando un rastro de tintineos.</gray>"
     ambientMessages:
       - "cuenta campanadas con los dedos y vuelve a empezar por desconfianza."
       - "agita la muñeca y sus cascabeles responden antes que ella."
@@ -84,6 +120,65 @@
     presencia: 14
     percepcion: 15
 
+- id: npc_hermana_lua
+  name: Hermana Lúa Candela
+  description: >-
+    Una clériga de voz baja, manos cálidas y mirada atenta. Tiende a las hierbas del jardín,
+    a los heridos del pueblo y a las dudas que llegan con barro en las botas.
+  behaviorId: idle
+  roomId: jardines_de_la_capilla
+  flags: [social, healer]
+  metadata:
+    raceId: humano_altherion
+    role: cleriga_sanadora
+    questHooks: [quest_otilia_no_existe]
+    ambientMessages:
+      - "ordena vendas y hierbas con una calma casi contagiosa."
+      - "revisa los lirios como si también atendiera sus dolencias."
+    greetings:
+      - "{npc} inclina la cabeza. 'Pasa con paz. Si no la traes, aún podemos improvisarla un poco, {player}.'"
+    dialogues:
+      - text: "La Luz no siempre responde con truenos. A veces responde con vendajes limpios y sopa caliente."
+      - text: "En el camposanto reposan los nombres. Por eso duele tanto cuando uno parece moverse."
+  stats:
+    fuerza: 5
+    destreza: 8
+    constitucion: 10
+    ingenio: 14
+    sabiduria: 20
+    presencia: 15
+    percepcion: 13
+
+- id: npc_mirta_jardinera
+  name: Mirta de los Setos
+  description: >-
+    Una jardinera robusta, de manos terrosas y paciencia vegetal. Recorta rosales, trasplanta
+    hierbas y habla con las raíces como si le debieran respuestas atrasadas.
+  behaviorId: idle
+  roomId: jardines_de_la_capilla
+  flags: [social]
+  metadata:
+    raceId: humano_arvell
+    merchant: true
+    inventory: [item_miga_bendita]
+    role: jardinera_del_atrio
+    ambientMessages:
+      - "aprieta la tierra alrededor de una planta con precisión casi judicial."
+      - "mira un rosal torcido como si estuviera confesando algo."
+    greetings:
+      - "{npc} te mide las botas. 'Písame los setos y te entierro con educación, {player}.'"
+    dialogues:
+      - text: "Las plantas y la gente se parecen más de lo que admiten: ambas se tuercen cuando las cambian de nombre demasiadas veces."
+      - text: "Si ves tierra removida donde no toca, avisa. O cava. Pero avisa primero."
+  stats:
+    fuerza: 11
+    destreza: 10
+    constitucion: 13
+    ingenio: 9
+    sabiduria: 14
+    presencia: 10
+    percepcion: 14
+
 - id: npc_pex
   name: Pex
   description: >-
@@ -91,16 +186,17 @@
     larga. Observa el pozo como quien escucha una ópera privada.
   behaviorId: idle
   roomId: villaclara_pozo_cantante
-  flags: [social, weird]
+  flags: [social, weird, wandering]
   metadata:
     raceId: desconocido_amable
+    role: testigo_errante_del_pozo
     ambientMessages:
       - "inclina la cabeza hacia el agua y asiente como si la hubiera contradicho."
     greetings:
       - "{npc} te mira con gravedad anfibia. 'No cayó Pex al pozo. Subió el pozo a mirar a Pex, {player}.'"
     dialogues:
       - text: "Hoy el agua cantó doce nombres y mordió el trece. Muy mala educación."
-      - text: "Si una campana sobra y un nombre falta, eso ya casi es aritmética." 
+      - text: "Si una campana sobra y un nombre falta, eso ya casi es aritmética."
   stats:
     fuerza: 3
     destreza: 14
@@ -119,6 +215,8 @@
   flags: [social]
   metadata:
     raceId: humano_altherion
+    role: escribano_del_gremio
+    questHooks: [quest_conejos_con_placas, quest_campana_que_sobra, quest_otilia_no_existe]
     ambientMessages:
       - "endereza un pliego con una delicadeza quirúrgica."
     greetings:
@@ -141,13 +239,17 @@
     Un guardia rural de botas embarradas, lanza honrada y bigote con vocación de brújula.
   behaviorId: idle
   roomId: villaclara_puerta_norte
-  flags: [social, guard]
+  flags: [social, guard, patrol]
   equipment:
     weapon: item_lanza_guardia
   metadata:
     raceId: humano_altherion
+    role: guardia_de_frontera
+    questHooks: [quest_conejos_con_placas]
+    patrolPath: [villaclara_puerta_norte, calle_del_norte, villaclara_plaza, calle_del_norte, villaclara_puerta_norte]
     ambientMessages:
       - "clava la culata de la lanza en el suelo y examina la hierba al norte."
+      - "sigue rastros en el barro como si leyera una carta molesta."
     greetings:
       - "{npc} resopla. 'Si vas al Campo Norte, mira la hierba antes que el cielo, {player}.'"
     dialogues:
@@ -188,12 +290,102 @@
     presencia: 11
     percepcion: 11
 
+- id: npc_posadero_arnel
+  name: Arnel Cántaro
+  description: >-
+    Un posadero ancho de hombros, barba corta y voz de manta gruesa. Seca jarras, recuerda
+    deudas pequeñas y detecta peleas inminentes con precisión de meteorólogo cansado.
+  behaviorId: idle
+  roomId: comedor_cantaro_manso
+  flags: [social]
+  metadata:
+    raceId: humano_arvell
+    merchant: true
+    inventory: [item_pan_bendito, item_bollo_dulce]
+    innkeeper: true
+    role: posadero
+    ambientMessages:
+      - "seca una jarra y vigila la sala con calma profesional."
+      - "recoloca un banco como si hubiera ganado la discusión antes de empezar."
+    greetings:
+      - "{npc} asiente. 'Si traes barro, historias o heridas, entra por ese orden, {player}.'"
+    dialogues:
+      - text: "En mi comedor se puede mentir sobre monstruos, pero no sobre quién rompió la silla."
+      - text: "Si buscas cama, sopa o silencio relativo, aquí aún nos defendemos bien."
+  stats:
+    fuerza: 13
+    destreza: 8
+    constitucion: 14
+    ingenio: 11
+    sabiduria: 12
+    presencia: 13
+    percepcion: 11
+
+- id: npc_lina_jarras
+  name: Lina Jarras
+  description: >-
+    Una camarera de trenza firme y ceja escéptica que atraviesa el comedor esquivando codos,
+    cuentos y jarras vacías como si hubiera nacido entre mesas en movimiento.
+  behaviorId: idle
+  roomId: comedor_cantaro_manso
+  flags: [social]
+  metadata:
+    raceId: humano_arvell
+    role: camarera_y_radar_social
+    ambientMessages:
+      - "cruza la sala con una jarra en cada mano y una opinión en reserva."
+      - "mira a un cliente fanfarrón como quien ya conoce el final del cuento."
+    greetings:
+      - "{npc} ladea la cabeza. 'Si buscas mesa, aún quedan. Si buscas drama, espera diez minutos, {player}.'"
+    dialogues:
+      - text: "Si alguien dice que venció solo a seis lobos, pregunta cuántos estaban ya muertos."
+      - text: "La sopa de hoy no mata. Lo de mañana aún está en discusión."
+  stats:
+    fuerza: 7
+    destreza: 15
+    constitucion: 10
+    ingenio: 11
+    sabiduria: 10
+    presencia: 12
+    percepcion: 14
+
+- id: npc_greta_huespedes
+  name: Greta de los Libros Bajos
+  description: >-
+    Una viuda de modales tranquilos que vigila el pasillo de habitaciones con un chal, una
+    llave maestra y la sospecha permanente de que los huéspedes esconden algo bajo la cama.
+  behaviorId: idle
+  roomId: segundo_piso_cantaro_manso
+  flags: [social]
+  metadata:
+    raceId: humano_arvell
+    role: guardiana_de_huespedes
+    ambientMessages:
+      - "alisa su chal y escucha el crujido del suelo como si tomara notas."
+      - "comprueba una puerta cerrada con la delicadeza de quien no confía del todo en nadie."
+    greetings:
+      - "{npc} sostiene una llave. 'Habitación limpia, llave honrada y nada de morirse en las escaleras, {player}.'"
+    dialogues:
+      - text: "Si el suelo cruje de madrugada, puede ser un huésped, un borracho o un secreto. Los tres pagan distinto."
+      - text: "Apunto entradas y salidas. Algunas personas olvidan eso; las tablas no."
+  stats:
+    fuerza: 7
+    destreza: 9
+    constitucion: 11
+    ingenio: 13
+    sabiduria: 15
+    presencia: 12
+    percepcion: 15
+
 - id: mob_lobo_flaco
   name: Lobo Flaco
   description: Un lobo gris de costillas marcadas, ojos atentos y paciencia de carroñero oportunista.
   behaviorId: hostile_beast
   roomId: villaclara_campo_norte
   level: 2
+  metadata:
+    lootContext:
+      testWeapon: item_cuchilla_mellada
   stats:
     fuerza: 9
     destreza: 12
@@ -202,7 +394,7 @@
     sabiduria: 5
     presencia: 7
     percepcion: 11
-  inventory: [item_colmillo_lobo_flaco]
+  inventory: [item_colmillo_lobo_flaco, item_cuchilla_mellada]
 
 - id: mob_conejo_acorazado
   name: Conejo Acorazado
@@ -210,6 +402,9 @@
   behaviorId: hostile_beast
   roomId: villaclara_lindero_huertos
   level: 1
+  metadata:
+    lootContext:
+      contract: quest_conejos_con_placas
   stats:
     fuerza: 7
     destreza: 13
@@ -226,6 +421,10 @@
   behaviorId: hostile_beast
   roomId: villaclara_lindero_huertos
   level: 3
+  metadata:
+    lootContext:
+      testArmor: item_peto_placas_remendado
+      miniboss: true
   stats:
     fuerza: 12
     destreza: 14
@@ -234,4 +433,4 @@
     sabiduria: 4
     presencia: 10
     percepcion: 12
-  inventory: [item_placa_conejo]
+  inventory: [item_placa_conejo, item_peto_placas_remendado]

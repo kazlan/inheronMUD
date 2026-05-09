@@ -75,6 +75,8 @@ Los NPCs y monstruos tienen atributos avanzados que dictan su comportamiento y c
 *   `metadata.merchant`: Si es `true`, el NPC venderá el contenido de su `inventory`.
 *   `metadata.wanderTime`: (Solo para flag `wandering`). Define el tiempo base en segundos que tarda en deambular de una sala a otra. Por defecto es 60s. Valores bajos hacen NPCs escurridizos (ej. 15s), valores altos (ej. 120s) hacen NPCs muy lentos.
 *   `metadata.patrolTime`: (Solo para flag `patrol`). Define el tiempo base en segundos entre movimientos de su ruta de patrulla. Por defecto es 30s.
+*   `metadata.patrolMsgLeave`: (Solo para flag `patrol`). Mensaje que se muestra en la sala al irse (ej: `"Silas el mercader sale de la posada"`).
+*   `metadata.patrolMsgArrive`: (Solo para flag `patrol`). Mensaje que se muestra en la sala de destino al entrar (ej: `"Silas el mercader entra en la plaza"`).
 *   `enemies`: Lista de IDs (o base IDs) de otros NPCs a los que considera enemigos naturales.
 *   `metadata.enemyReactions`: Array opcional de 3 números `[ignorar, gruñir, atacar]` sumando 100%. Dicta la probabilidad de reacción cuando se cruza con un enemigo de su lista `enemies`. Por defecto es `[50, 40, 10]`.
 

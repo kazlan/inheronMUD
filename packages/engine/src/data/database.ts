@@ -36,7 +36,10 @@ export class Database {
         experience: playerData.experience || 0,
         coins: playerData.coins || 0,
         stats: JSON.stringify(playerData.stats),
-        metadata: JSON.stringify(playerData.metadata || {}),
+        metadata: JSON.stringify({
+          ...(playerData.metadata || {}),
+          _bardState: playerData.bardState || null,
+        }),
         inventory: JSON.stringify(playerData.inventory),
         equipment: JSON.stringify(playerData.equipment || {}),
         visitedRooms: JSON.stringify(playerData.visitedRooms || []),
@@ -54,7 +57,10 @@ export class Database {
         experience: playerData.experience || 0,
         coins: playerData.coins || 0,
         stats: JSON.stringify(playerData.stats),
-        metadata: JSON.stringify(playerData.metadata || {}),
+        metadata: JSON.stringify({
+          ...(playerData.metadata || {}),
+          _bardState: playerData.bardState || null,
+        }),
         inventory: JSON.stringify(playerData.inventory),
         equipment: JSON.stringify(playerData.equipment || {}),
         visitedRooms: JSON.stringify(playerData.visitedRooms || []),
@@ -102,6 +108,9 @@ export class Database {
 
     if (!dbPlayer) return null;
 
+    const rawMetadata = JSON.parse(dbPlayer.metadata);
+    const { _bardState, ...cleanMetadata } = rawMetadata;
+
     return {
       id: dbPlayer.id,
       accountId: dbPlayer.accountId,
@@ -115,7 +124,8 @@ export class Database {
       experience: dbPlayer.experience,
       coins: dbPlayer.coins,
       stats: JSON.parse(dbPlayer.stats),
-      metadata: JSON.parse(dbPlayer.metadata),
+      metadata: cleanMetadata,
+      bardState: _bardState || null,
       inventory: JSON.parse(dbPlayer.inventory),
       equipment: JSON.parse(dbPlayer.equipment || "{}"),
       visitedRooms: JSON.parse(dbPlayer.visitedRooms || "[]"),

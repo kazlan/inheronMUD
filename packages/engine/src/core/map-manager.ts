@@ -35,44 +35,50 @@ export class MapManager {
     if (rooms.length === 0) return {};
 
     const coords: Record<string, RoomCoord> = {};
-    const queue: { roomId: string; x: number; y: number }[] = [];
-
-    // Start with the first room at 0,0
-    const startRoom = rooms[0];
-    queue.push({ roomId: startRoom.id, x: 0, y: 0 });
-
     const visited = new Set<string>();
 
-    while (queue.length > 0) {
-      const { roomId, x, y } = queue.shift()!;
-      if (visited.has(roomId)) continue;
-      visited.add(roomId);
+    let unmappedRooms = rooms.filter(r => !visited.has(r.id));
+    let clusterOffset = 0;
 
-      const room = this.engine.entities.getRoom(roomId);
-      if (!room) continue;
+    while (unmappedRooms.length > 0) {
+      const queue: { roomId: string; x: number; y: number }[] = [];
+      const startRoom = unmappedRooms[0];
+      queue.push({ roomId: startRoom.id, x: clusterOffset, y: 0 });
 
-      const isShop = this.checkIsShop(room);
+      while (queue.length > 0) {
+        const { roomId, x, y } = queue.shift()!;
+        if (visited.has(roomId)) continue;
+        visited.add(roomId);
 
-      coords[roomId] = {
-        id: roomId,
-        x,
-        y,
-        areaId,
-        isShop,
-        name: room.name,
-        exits: room.exits.map(e => ({ direction: e.direction, targetRoomId: e.targetRoomId }))
-      };
+        const room = this.engine.entities.getRoom(roomId);
+        if (!room) continue;
 
-      // Process exits
-      for (const exit of room.exits) {
-        const targetRoom = this.engine.entities.getRoom(exit.targetRoomId);
-        if (targetRoom && targetRoom.areaId === areaId && !visited.has(targetRoom.id)) {
-          const nextCoord = this.getNextCoord(x, y, exit.direction);
-          if (nextCoord) {
-            queue.push({ roomId: targetRoom.id, x: nextCoord.x, y: nextCoord.y });
+        const isShop = this.checkIsShop(room);
+
+        coords[roomId] = {
+          id: roomId,
+          x,
+          y,
+          areaId,
+          isShop,
+          name: room.name,
+          exits: room.exits.map(e => ({ direction: e.direction, targetRoomId: e.targetRoomId }))
+        };
+
+        // Process exits
+        for (const exit of room.exits) {
+          const targetRoom = this.engine.entities.getRoom(exit.targetRoomId);
+          if (targetRoom && targetRoom.areaId === areaId && !visited.has(targetRoom.id)) {
+            const nextCoord = this.getNextCoord(x, y, exit.direction);
+            if (nextCoord) {
+              queue.push({ roomId: targetRoom.id, x: nextCoord.x, y: nextCoord.y });
+            }
           }
         }
       }
+
+      clusterOffset += 10; // offset the next disconnected cluster far away
+      unmappedRooms = rooms.filter(r => !visited.has(r.id));
     }
 
     return coords;
@@ -81,21 +87,25 @@ export class MapManager {
   private checkIsShop(room: Room): boolean {
     const npcs = this.engine.entities.getNPCsInRoom(room.id);
     return npcs.some(npc => {
-      const behaviors = (npc as any).behaviors || {};
-      return behaviors.shop || behaviors.vendor || npc.name.toLowerCase().includes('vendedor') || npc.name.toLowerCase().includes('mercader');
+      return npc.metadata?.merchant || npc.name.toLowerCase().includes('vendedor') || npc.name.toLowerCase().includes('mercader');
     });
   }
 
   private getNextCoord(x: number, y: number, direction: string): { x: number; y: number } | null {
     const dir = direction.toLowerCase();
-    if (dir === 'north' || dir === 'norte') return { x, y: y - 1 };
-    if (dir === 'south' || dir === 'sur') return { x, y: y + 1 };
-    if (dir === 'east' || dir === 'este') return { x, y: x + 1 };
-    if (dir === 'west' || dir === 'oeste') return { x, y: x - 1 };
-    if (dir === 'northeast' || dir === 'noreste') return { x: x + 1, y: y - 1 };
-    if (dir === 'northwest' || dir === 'noroeste') return { x: x - 1, y: y - 1 };
-    if (dir === 'southeast' || dir === 'sureste') return { x: x + 1, y: y + 1 };
-    if (dir === 'southwest' || dir === 'suroeste') return { x: x - 1, y: y + 1 };
+    if (['north', 'norte', 'n'].includes(dir)) return { x, y: y - 1 };
+    if (['south', 'sur', 's'].includes(dir)) return { x, y: y + 1 };
+    if (['east', 'este', 'e'].includes(dir)) return { x: x + 1, y };
+    if (['west', 'oeste', 'w', 'o'].includes(dir)) return { x: x - 1, y };
+    if (['northeast', 'noreste', 'ne'].includes(dir)) return { x: x + 1, y: y - 1 };
+    if (['northwest', 'noroeste', 'nw', 'no'].includes(dir)) return { x: x - 1, y: y - 1 };
+    if (['southeast', 'sureste', 'se'].includes(dir)) return { x: x + 1, y: y + 1 };
+    if (['southwest', 'suroeste', 'sw', 'so'].includes(dir)) return { x: x - 1, y: y + 1 };
+    
+    // For vertical movement, offset slightly to show stacking without breaking grid too much
+    if (['up', 'arriba', 'u'].includes(dir)) return { x: x + 0.2, y: y - 0.2 };
+    if (['down', 'abajo', 'd'].includes(dir)) return { x: x - 0.2, y: y + 0.2 };
+    
     return null;
   }
 }

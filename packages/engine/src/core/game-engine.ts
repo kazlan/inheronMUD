@@ -77,6 +77,17 @@ export class GameEngine extends EventEmitter {
     this.effects.tick(now);
     this.processRegeneration();
 
+    // 0.5 — Purge orphaned combats (active=true but no living participants, or stale > 5min)
+    const COMBAT_TIMEOUT_MS = 5 * 60 * 1000;
+    for (const [combatId, combat] of this.activeCombats.entries()) {
+      const hasLivingParticipants = combat.participants.some(p => p.hpCurrent > 0);
+      const isStale = (now - combat.lastActivityTime) > COMBAT_TIMEOUT_MS;
+      if (combat.active && (!hasLivingParticipants || isStale)) {
+        console.warn(`[Engine] Purging orphaned combat ${combatId}`);
+        this.endCombat(combatId);
+      }
+    }
+
     for (const [combatId, combat] of this.activeCombats.entries()) {
       if (!combat.active) {
         this.endCombat(combatId);
@@ -115,65 +126,10 @@ export class GameEngine extends EventEmitter {
         });
       }
 
-      // Inmediata rutina de muerte para jugadores caídos en la ronda
+      // Process player deaths that occurred in this round
       combat.participants.forEach(p => {
         if (p.isPlayer && p.hpCurrent <= 0) {
-          const player = this.getPlayer(p.entityId);
-          // Verificar si ya procesamos su muerte (para no repetir en rondas siguientes si sigue en la lista)
-          if (player && (player as any).isDead) return;
-          
-          if (player) {
-            (player as any).isDead = true;
-            const oldRoom = this.getRoom(player.roomId);
-            const spawnRoomId = 'villaclara_plaza'; // Punto de respawn por defecto
-
-            this.emit('spatial_message', {
-              roomId: player.roomId,
-              message: `<red>¡${player.name} ha caído en combate!</red> Su cuerpo se desvanece en un haz de luz.`,
-              excludeId: player.id
-            });
-
-            const score = this.commands.getScore(player.id);
-            const hpMax = score?.data?.derived?.hpMax || 100;
-            
-            // Perder un 10% de la experiencia del nivel actual
-            const xpLost = Math.floor(player.experience * 0.10);
-            player.experience = Math.max(0, player.experience - xpLost);
-            
-            // Reaparece con un 10% de vida
-            player.hpCurrent = Math.floor(hpMax * 0.10);
-            
-            // Cambiar de sala
-            if (oldRoom) {
-              // El jugador no está en room.entities, pero el motor lo emite en spatial
-            }
-            player.roomId = spawnRoomId;
-            
-            this.emit('combat_message', player.id, [
-              `\n<red><b>¡HAS MUERTO!</b></red>`,
-              `Reapareces en tu punto de guardado.`,
-              `Has perdido <yellow>${xpLost}</yellow> puntos de experiencia.`,
-              `Tu salud está en estado crítico.`
-            ]);
-
-            this.emit('spatial_message', {
-              roomId: spawnRoomId,
-              message: `<yellow>Un haz de luz desciende y forma el cuerpo malherido de ${player.name}.</yellow>`,
-              excludeId: player.id
-            });
-
-            // Retirar del combate
-            combat.removeParticipant(player.id);
-
-            // Guardar jugador
-            Database.savePlayer(player).catch(err => console.error('Error guardando jugador tras muerte:', err));
-
-            // Forzar un "look" asíncrono para que vea la plaza
-            setTimeout(() => {
-              (player as any).isDead = false; // Reset flag
-              this.emit('force_look', player.id);
-            }, 500);
-          }
+          this.handlePlayerDeath(p.entityId, combat);
         }
       });
 
@@ -270,30 +226,7 @@ export class GameEngine extends EventEmitter {
            });
         }
 
-        // Handle Dead Players
-        const deadPlayers = combat.participants.filter(p => p.isPlayer && p.hpCurrent <= 0);
-        deadPlayers.forEach(p => {
-            const player = this.getPlayer(p.entityId);
-            if (player) {
-                const derived = this.commands.getScore(player.id).derived;
-                // Respawn with full HP (or a fraction)
-                player.hpCurrent = derived.hpMax;
-                
-                // Move them to plaza
-                const oldRoom = this.getRoom(player.roomId);
-                if (oldRoom) oldRoom.removeEntity(player.id);
-                
-                player.roomId = 'villaclara_plaza';
-                const spawnRoom = this.getRoom(player.roomId);
-                if (spawnRoom) spawnRoom.addEntity(player.id);
-
-                this.emit('combat_message', player.id, ['\n<red>Has caído en combate. Los Guardianes de la Luz te han llevado de vuelta a la Plaza.</red>']);
-                this.emit('force_look', player.id);
-                
-                // Save state so inventory changes aren't lost
-                Database.savePlayer(player).catch(err => console.error('Error saving player post-combat death:', err));
-            }
-        });
+        // (Dead players were already handled per-round above by handlePlayerDeath)
         this.endCombat(combatId);
       }
     }
@@ -332,6 +265,73 @@ export class GameEngine extends EventEmitter {
     if (player) {
       this.emit('save_player', player);
     }
+  }
+
+  /**
+   * 0.4 — Centralized player death handler.
+   * Called once per player per combat round. Handles XP loss, respawn, messaging and save.
+   */
+  public handlePlayerDeath(playerId: string, combat: CombatManager): void {
+    const player = this.getPlayer(playerId);
+    if (!player || (player as any).isDead) return;
+
+    (player as any).isDead = true;
+    const spawnRoomId = 'villaclara_plaza';
+
+    // Notify others in the room
+    this.emit('spatial_message', {
+      roomId: player.roomId,
+      message: `<red>¡${player.name} ha caído en combate!</red> Su cuerpo se desvanece en un haz de luz.`,
+      excludeId: player.id
+    });
+
+    const score = this.commands.getScore(player.id);
+    const hpMax = score?.data?.derived?.hpMax ?? 100;
+
+    // Lose 10% of current experience
+    const xpLost = Math.floor(player.experience * 0.10);
+    player.experience = Math.max(0, player.experience - xpLost);
+
+    // Respawn with 10% HP
+    player.hpCurrent = Math.max(1, Math.floor(hpMax * 0.10));
+
+    // Move to respawn room
+    player.roomId = spawnRoomId;
+
+    // Reset bard Trama on death (per spec)
+    if (player.bardState) {
+      player.bardState.estrofa = 0;
+      player.bardState.aplauso = 0;
+      player.bardState.freeSustainAvailable = false;
+    }
+    // Clear active effects
+    player.activeEffects = [];
+
+    // Notify player
+    this.emit('combat_message', player.id, [
+      `\n<red><b>¡HAS MUERTO!</b></red>`,
+      `Reapareces en tu punto de guardado.`,
+      xpLost > 0 ? `Has perdido <yellow>${xpLost}</yellow> puntos de experiencia.` : '',
+      `Tu salud está en estado crítico.`
+    ].filter(Boolean));
+
+    this.emit('spatial_message', {
+      roomId: spawnRoomId,
+      message: `<yellow>Un haz de luz desciende y forma el cuerpo malherido de ${player.name}.</yellow>`,
+      excludeId: player.id
+    });
+
+    // Remove from combat
+    combat.removeParticipant(player.id);
+
+    // Persist
+    Database.savePlayer(player).catch(err => console.error('[Engine] Error saving player after death:', err));
+
+    // After brief delay: reset flag and trigger look at spawn room
+    setTimeout(() => {
+      (player as any).isDead = false;
+      this.emit('force_look', player.id);
+    }, 500);
   }
 
   getEventLog(): EventLog {
